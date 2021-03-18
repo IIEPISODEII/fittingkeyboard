@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:inset="@dimen/keyInset">
+    <layer-list>
+        <item>
+            <shape android:shape="rectangle">
+                <corners android:radius="5dp" />
+                <gradient
+                    android:angle="0"
+                    android:endColor="#00FFFF"
+                    android:startColor="#00FF00" />
+            </shape>
+        </item>
+
+        <item
+            android:bottom="@dimen/theme02stroke"
+            android:left="@dimen/theme02stroke"
+            android:right="@dimen/theme02stroke"
+            android:top="@dimen/theme02stroke">
+            <shape android:shape="rectangle">
+                <corners android:radius="5dp" />
+                <solid
+                    android:color="@color/black" />
+            </shape>
+        </item>
+    </layer-list>
+</inset>

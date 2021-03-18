@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">피팅키보드</string>
+    <string name="button">Button</string>
+    <string name="btnSPECIAL">!@#</string>
+    <string name="english">English</string>
+    <string name="korean">한글</string>
+    <string name="special1">특수 1</string>
+    <string name="special2">특수 2</string>
+    <string name="textView_try">테스트해보세요</string>
+    <string name="keyboard_division_help_text">키보드에서 왼쪽/오른쪽을 분리하여 버튼 크기를 바꿉니다.\n쿼티 자판에서만 적용됩니다.\n이 기능을 사용하여 오타를 줄여보세요.</string>
+    <string name="keyboard_right_size_help_text">왼쪽 대비 오른쪽 자판의 전체적인 크기 비율을 조절합니다.</string>
+    <string name="keyboard_bot_margin_help_text">키보드의 하단 여백 크기를 조절합니다.</string>
+    <string name="keyboard_leftside_margin_help_text">키보드의 좌측 여백 크기를 조절합니다.</string>
+    <string name="keyboard_rightside_margin_help_text">키보드의 우측 여백 크기를 조절합니다.</string>
+    <string name="keyboard_height_help_text">키보드의 세로 길이를 조절합니다.</string>
+    <string name="keyboard_holding_help_text">키보드 버튼을 길게 누를 때 초기 지연시간을 조절합니다.</string>
+    <string name="keyboard_vibration_help_text">키보드 진동 사용 여부를 설정합니다. \n부분사용 설정 시 일부 키에만 진동이 발생합니다.</string>
+    <string name="keyboard_toggleSet_help_text">키보드 제일 윗줄에 위치한 툴바 표시 여부를 설정합니다.\n\n비활성화 시 일부 편의기능을 사용할 수 없습니다.</string>
+    <string name="keyboard_enable_help_text">현재 스마트폰에서 사용 중인 키보드를 바꾸려면 어플 상단 우측의 설정 버튼을 눌러주세요.</string>
+    <string name="keyboard_autoCapital_help_text">영어자판 사용 시 첫 글자를 대문자로 설정합니다.</string>
+    <string name="keyboard_autoModeChange_help_text">특수문자 자판에서 스페이스바를 누르면 원래 자판으로 돌아옵니다.</string>
+    <string name="admin1_help_text"><b><i>STEP 1</i></b> : 키보드 관리 화면에서 "피팅키보드"를 활성화해주세요.</string>
+    <string name="admin2_help_text"><b><i>STEP 2</i></b> : 키보드 변경 화면에서 "피팅키보드"를 선택해주세요.</string>
+    <string name="specialkeyAddon_help_text">특수문자키를 길게 누를 때 부가기능을 설정합니다.</string>
+    <string name="enterkeyAddon_help_text">엔터키를 길게 누를 때 부가기능을 설정합니다.</string>
+    <string name="applicationInfo">Version 1.03\n\n이 어플리케이션은 사용자의 입력 정보를 수집하지 않습니다.</string>
+    <string name="inputMethodKR_help_text">사용할 한글입력기를 선택합니다.</string>
+</resources>

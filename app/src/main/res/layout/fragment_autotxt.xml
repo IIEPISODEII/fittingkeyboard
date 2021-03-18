@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/frag_autotxt_linearlayot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:fadeScrollbars="false"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="0">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/frag_autoText1"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구1"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+
+
+                    <Button
+                        android:id="@+id/frag_autoText3"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구3"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/frag_autoText5"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구5"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/frag_autoText7"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구7"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/frag_autoText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구2"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/frag_autoText4"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구4"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/frag_autoText6"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구6"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/frag_autoText8"
+                        android:layout_width="match_parent"
+                        android:layout_height="125dp"
+                        android:background="@drawable/view_setting"
+                        android:gravity="center"
+                        android:text="상용구8"
+                        android:textAllCaps="false"
+                        android:textColor="@color/darkgrey"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".4"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/frag_next"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_setting"
+                android:gravity="center"
+                android:text="다음"
+                android:textAllCaps="false"
+                android:textColor="@color/darkgrey"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/frag_delete"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_setting"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/keyic_delete_black"
+                android:textColor="@color/darkgrey"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/frag_space"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_setting"
+                android:gravity="center"
+                android:text="SPACE"
+                android:textColor="@color/darkgrey"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/frag_enter"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_setting"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/keyic_enter_black"
+                android:textColor="@color/darkgrey"
+                android:textSize="12sp" />
+
+            <ImageButton
+                android:id="@+id/frag_keyboard"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/view_setting"
+                android:elevation="2dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_keyboard_black" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

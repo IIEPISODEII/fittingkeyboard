@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/dialog_FontType_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="글꼴 선택"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_FontType_rg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/dialog_FontType_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_FontType_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_FontType_tv">
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_basic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="기본(시스템 글꼴)"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_aritta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="아리따 돋움"
+            android:fontFamily="@font/aritta"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_dovemayo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="둘기마요"
+            android:fontFamily="@font/dovemayo"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_imcresoojin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="임크리 수진"
+            android:fontFamily="@font/imcresoojin"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_maplestorylight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="메이플스토리"
+            android:fontFamily="@font/maplestorylight"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_nanumbarungothic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나눔바른고딕"
+            android:fontFamily="@font/nanumbarungothic"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_nanumsquarer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나눔스퀘어"
+            android:fontFamily="@font/nanumsquarer"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_seoulnamsan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="서울남산 장체"
+            android:fontFamily="@font/seoulnamsan"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_tttogether"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TT투게더"
+            android:fontFamily="@font/tttogether"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_cookierun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="쿠키런체"
+            android:fontFamily="@font/cookierun"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_tmoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="티머니"
+            android:fontFamily="@font/tmoney"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_FontType_tadaktadak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="타닥타닥"
+            android:fontFamily="@font/tadaktadak"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/dialog_FontType_ok"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center"
+        android:layout_margin="3dp"
+        android:background="@color/white"
+        android:text="확인"
+        android:textColor="#299FFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_FontType_rg" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

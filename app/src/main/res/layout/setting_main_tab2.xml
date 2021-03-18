@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/setting_main_tab2_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/main_activity_background"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_fontsize"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="폰트 크기"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    tools:ignore="HardcodedText" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_fontsize"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".75"
+                        android:max="4"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:progress="1"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".75"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="작게"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="크게"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_division_bool"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="왼/오른 자판 분리"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <Switch
+                    android:id="@+id/setting_keyboard_division_bool"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:paddingRight="20dp"
+                    android:thumb="@drawable/view_switch_thumb"
+                    android:track="@drawable/view_switch_track"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_rightsize"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="오른편 자판 상대크기"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_rightsize"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:max="40"
+                        android:progress="20"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_keyboard_rightsize_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textIsSelectable="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_holding"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="긴 입력 지연 시간"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_holding"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:max="400"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_keyboard_holding_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textIsSelectable="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_vibration"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="진동 사용"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help"
+                    tools:ignore="HardcodedText" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_vibration"
+                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".75"
+                        android:max="2"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:progress="1"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight=".75"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:singleLine="true"
+                            android:text="미사용"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:singleLine="true"
+                            android:text="부분"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:singleLine="true"
+                            android:text="전체"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="진동 세기"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_vibration_intensity"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="50"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_keyboard_vibration_intensity"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textIsSelectable="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_autoCapital"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="자동대문자 설정"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <Switch
+                    android:id="@+id/setting_keyboard_autoCapital"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:paddingRight="20dp"
+                    android:thumb="@drawable/view_switch_thumb"
+                    android:track="@drawable/view_switch_track"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_autoModeChange"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="특수문자 자동전환"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <Switch
+                    android:id="@+id/setting_keyboard_autoModeChange"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:paddingRight="20dp"
+                    android:thumb="@drawable/view_switch_thumb"
+                    android:track="@drawable/view_switch_track"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_toggleToolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="툴바 표시"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <Switch
+                    android:id="@+id/setting_keyboard_toggleToolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:paddingRight="20dp"
+                    android:thumb="@drawable/view_switch_thumb"
+                    android:track="@drawable/view_switch_track"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_toggleNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="숫자행 표시"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2" />
+
+                <Switch
+                    android:id="@+id/setting_keyboard_toggleNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:paddingRight="20dp"
+                    android:thumb="@drawable/view_switch_thumb"
+                    android:track="@drawable/view_switch_track"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_bot_margin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="하단 여백"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_bot_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:max="199"
+                        android:progress="1"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_keyboard_bot_margin_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textIsSelectable="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_leftside_margin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="좌측 여백"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_leftside_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:max="25"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_keyboard_leftside_margin_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textIsSelectable="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tv_keyboard_rightside_margin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="우측 여백"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp"
+                    android:background="@drawable/button2"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/setting_keyboard_rightside_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:max="25"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_keyboard_rightside_margin_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textIsSelectable="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

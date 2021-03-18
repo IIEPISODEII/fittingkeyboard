@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/dialog_InputMethodKR_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:text="한글입력기 선택"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/dialog_InputMethodKRSelect_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/dialog_InputMethodKRSelect_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_InputMethodKR_tv">
+
+        <RadioButton
+            android:id="@+id/dialog_InputMethodKRSelect_QWERTY"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="쿼티(기본)"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_InputMethodKRSelect_CHUN"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="천지인"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_InputMethodKRSelect_NA"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="나랏글"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_InputMethodKRSelect_CHUNA"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="천지인 양손"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/dialog_InputMethodKRSelect_ok"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center"
+        android:layout_margin="3dp"
+        android:background="@color/white"
+        android:text="확인"
+        android:textColor="#299FFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_InputMethodKRSelect_rg" />
+</androidx.constraintlayout.widget.ConstraintLayout>
