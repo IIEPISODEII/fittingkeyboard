@@ -42,12 +42,6 @@ class SettingThemeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         myView = inflater.inflate(R.layout.setting_main_tab4, container, false)
 
-//        val customizeTheme: Button = myView.findViewById(R.id.customizeTheme)
-//        customizeTheme.setOnClickListener {
-//            val intent = Intent(activity, CustomizeTheme::class.java)
-//            startActivity(intent)
-//            saveData()
-//        }
         themeList = arrayListOf(
             KeyboardThemes(R.drawable.thumbnail_01),
             KeyboardThemes(R.drawable.thumbnail_02),
@@ -104,10 +98,6 @@ class SettingThemeFragment : Fragment() {
             myFontType.show(fragmentManager!!, "fontTypePicker")
             saveData()
         }
-//        myView.findViewById<SwitchMaterial>(R.id.applyCustomTheme).setOnCheckedChangeListener { buttonView, _ ->
-//            customizeThemeEnabled = buttonView.isChecked
-//            saveData()
-//        }
         myRecyclerView.layoutManager = GridLayoutManager(activity, 3)
         myRecyclerView.setHasFixedSize(true)
         myRecyclerView.adapter = myAdapter

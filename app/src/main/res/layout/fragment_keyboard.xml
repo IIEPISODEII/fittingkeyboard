@@ -70,6 +70,7 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/blank"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -140,7 +141,6 @@
 
             <Button
                 android:id="@+id/btnA"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.3"
@@ -151,7 +151,6 @@
 
             <Button
                 android:id="@+id/btnS"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -162,7 +161,6 @@
 
             <Button
                 android:id="@+id/btnD"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -173,7 +171,6 @@
 
             <Button
                 android:id="@+id/btnF"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -184,7 +181,6 @@
 
             <Button
                 android:id="@+id/btnG"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -195,7 +191,6 @@
 
             <Button
                 android:id="@+id/btnH"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -206,7 +201,6 @@
 
             <Button
                 android:id="@+id/btnJ"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -217,7 +211,6 @@
 
             <Button
                 android:id="@+id/btnK"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -228,7 +221,6 @@
 
             <Button
                 android:id="@+id/btnL"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.3"

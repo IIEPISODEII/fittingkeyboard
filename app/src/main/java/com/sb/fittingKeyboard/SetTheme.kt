@@ -1,7 +1,9 @@
 package com.sb.fittingKeyboard
 
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 
 class SetTheme(
@@ -143,6 +145,25 @@ class SetTheme(
         }
         for (item in array5) {
             item.setBackgroundResource(R.drawable.keydesign_10_function)
+        }
+    }
+
+    fun setTheme07() {
+        layout.setImageResource(R.drawable.theme_gradation07)
+        for (item in array1) {
+            item.setBackgroundResource(R.drawable.keydesign_02_a)
+        }
+        for (item in array2) {
+            item.setBackgroundResource(R.drawable.keydesign_02_a)
+        }
+        for (item in array3) {
+            item.setBackgroundResource(R.drawable.keydesign_02_a)
+        }
+        for (item in array4) {
+            item.setBackgroundResource(R.drawable.keydesign_02_a)
+        }
+        for (item in array5) {
+            item.setBackgroundResource(R.drawable.keydesign_02_a)
         }
     }
 
