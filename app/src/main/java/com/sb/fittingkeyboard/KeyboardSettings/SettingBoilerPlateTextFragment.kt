@@ -1,15 +1,15 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.KeyboardSettings
 
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.sb.fittingKeyboard.R
 
 class SettingBoilerPlateTextFragment : Fragment() {
 
@@ -19,7 +19,17 @@ class SettingBoilerPlateTextFragment : Fragment() {
 
         loadData()
 
-        val settingAutoTextArray = arrayOf(myView.findViewById(R.id.setting_autoText_1), myView.findViewById<EditText>(R.id.setting_autoText_2), myView.findViewById(R.id.setting_autoText_3), myView.findViewById(R.id.setting_autoText_4), myView.findViewById(R.id.setting_autoText_5), myView.findViewById(R.id.setting_autoText_6), myView.findViewById(R.id.setting_autoText_7), myView.findViewById(R.id.setting_autoText_8), myView.findViewById(R.id.setting_autoText_9), myView.findViewById(R.id.setting_autoText_10), myView.findViewById(R.id.setting_autoText_11), myView.findViewById(R.id.setting_autoText_12), myView.findViewById(R.id.setting_autoText_13), myView.findViewById(R.id.setting_autoText_14), myView.findViewById(R.id.setting_autoText_15), myView.findViewById(R.id.setting_autoText_16))
+        val settingAutoTextArray = arrayOf(myView.findViewById(R.id.setting_autoText_1), myView.findViewById<EditText>(
+            R.id.setting_autoText_2
+        ), myView.findViewById(R.id.setting_autoText_3), myView.findViewById(R.id.setting_autoText_4), myView.findViewById(
+            R.id.setting_autoText_5
+        ), myView.findViewById(R.id.setting_autoText_6), myView.findViewById(R.id.setting_autoText_7), myView.findViewById(
+            R.id.setting_autoText_8
+        ), myView.findViewById(R.id.setting_autoText_9), myView.findViewById(R.id.setting_autoText_10), myView.findViewById(
+            R.id.setting_autoText_11
+        ), myView.findViewById(R.id.setting_autoText_12), myView.findViewById(R.id.setting_autoText_13), myView.findViewById(
+            R.id.setting_autoText_14
+        ), myView.findViewById(R.id.setting_autoText_15), myView.findViewById(R.id.setting_autoText_16))
 
 
         for ( i in settingAutoTextArray.indices ) {

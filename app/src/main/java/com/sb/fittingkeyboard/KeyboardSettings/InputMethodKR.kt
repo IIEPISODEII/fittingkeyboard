@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.KeyboardSettings
 
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.sb.fittingKeyboard.R
 import kotlinx.android.synthetic.main.dialog_inputmethodkr.*
 import kotlinx.android.synthetic.main.dialog_inputmethodkr.view.*
 

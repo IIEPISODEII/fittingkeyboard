@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.KeyboardSettings
 
 import android.content.Context
 import android.content.DialogInterface

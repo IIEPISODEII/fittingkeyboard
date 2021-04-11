@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.KeyboardSettings
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.sb.fittingKeyboard.R
 import kotlinx.android.synthetic.main.admin_keyboard.view.*
 
 class AdminKeyboard() : DialogFragment() {

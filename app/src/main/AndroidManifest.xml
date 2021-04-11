@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode">
         <service
-            android:name="com.sb.fittingKeyboard.KeyboardService"
+            android:name="com.sb.fittingKeyboard.service.KeyboardService"
             android:enabled="true"
             android:exported="true"
             android:label="@string/app_name"
@@ -27,7 +27,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name="com.sb.fittingKeyboard.MainActivity">
+        <activity android:name="com.sb.fittingKeyboard.KeyboardSettings.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

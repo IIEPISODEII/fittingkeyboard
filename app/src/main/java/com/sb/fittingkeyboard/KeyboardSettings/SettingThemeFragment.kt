@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.KeyboardSettings
 
 import android.content.Context
 import android.os.Build
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
+import com.sb.fittingKeyboard.R
 
 class SettingThemeFragment : Fragment() {
 
@@ -81,8 +82,8 @@ class SettingThemeFragment : Fragment() {
         loadData()
         customizeThemeEnabled = myView.findViewById<SwitchMaterial>(R.id.applyCustomTheme).isChecked
         myAdapter.setPosition(selectedKbdTheme)
-        myDefaultFontColor.companion.setFontColour(selectedFontColor)
-        myFunctionFontColorPicker.companion.setFontColour(selectedFunctionFontColor)
+        DefaultFontColorPicker.setFontColour(selectedFontColor)
+        FunctionFontColorPicker.setFontColour(selectedFunctionFontColor)
         myFontType.setFontType(selectedFontType)
         myView.findViewById<Button>(R.id.setting_default_font_color).setOnClickListener {
             myDefaultFontColor.show(fragmentManager!!, "colorPicker")
@@ -123,8 +124,8 @@ class SettingThemeFragment : Fragment() {
     fun saveData() {
         val prefSetting = activity?.getSharedPreferences("keyboardSetting", Context.MODE_PRIVATE)
         selectedKbdTheme = myAdapter.newPosition
-        selectedFontColor = myDefaultFontColor.companion.fontColor
-        selectedFunctionFontColor = myFunctionFontColorPicker.companion.fontColor
+        selectedFontColor = DefaultFontColorPicker.fontColor
+        selectedFunctionFontColor = FunctionFontColorPicker.fontColor
         selectedFontType = myFontType.checkedFontType
         prefSetting?.edit()?.putInt("KeyboardTheme", selectedKbdTheme)?.apply()
         prefSetting?.edit()?.putInt("KeyboardDefaultFontColor", selectedFontColor)?.apply()
@@ -186,113 +187,113 @@ class ThemeRecyclerAdapter(private val themeList: ArrayList<KeyboardThemes>) : R
             when ( newPosition ) {
                 0 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFF000000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFF000000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFF000000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFF000000.toInt()).apply()
                 }
                 1 -> {
                     SettingThemeFragment.setSelected(0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFFFFFFFF.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFFFFFF.toInt()).apply()
                 }
                 2 -> {
                     SettingThemeFragment.setSelected(0xFF343434.toInt(), 0xFFFFFFFF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF343434.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF343434.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF343434.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFFFFFF.toInt()).apply()
                 }
                 3 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFFFF0000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFF0000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFF0000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFF0000.toInt()).apply()
                 }
                 4 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFFFF0000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFF0000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFF0000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFF0000.toInt()).apply()
                 }
                 5 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFFFFFFFF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFFFFFF.toInt()).apply()
                 }
                 6 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFF0000FF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFF0000FF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFF0000FF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFF0000FF.toInt()).apply()
                 }
                 7, 8, 9 -> {
                     SettingThemeFragment.setSelected(0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFFFFFFFF.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFFFFFF.toInt()).apply()
                 }
                 10, 11 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFF000000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFF000000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFF000000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFF000000.toInt()).apply()
                 }
                 12 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFFFFFFFF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFFFFFF.toInt()).apply()
                 }
                 13 -> {
                     SettingThemeFragment.setSelected(0xFF0000FF.toInt(), 0xFF000000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF0000FF.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFF000000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF0000FF.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFF000000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF0000FF.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFF000000.toInt()).apply()
                 }
                 14 -> {
                     SettingThemeFragment.setSelected(0xFF7F00FF.toInt(), 0xFF000000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF7F00FF.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFF000000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF7F00FF.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFF000000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF7F00FF.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFF000000.toInt()).apply()
                 }
                 15 -> {
                     SettingThemeFragment.setSelected(0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFFFFFFFF.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFFFFFF.toInt()).apply()
                 }
                 16 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFF000000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFF000000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFF000000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFF000000.toInt()).apply()
                 }
                 17 -> {
                     SettingThemeFragment.setSelected(0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFFFFFFFF.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFFFFFFFF.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFFFFFFFF.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFFFFFFFF.toInt()).apply()
                 }
                 18 -> {
                     SettingThemeFragment.setSelected(0xFF000000.toInt(), 0xFF000000.toInt())
-                    DefaultFontColorPicker().companion.setFontColour(0xFF000000.toInt())
-                    FunctionFontColorPicker().companion.setFontColour(0xFF000000.toInt())
+                    DefaultFontColorPicker.setFontColour(0xFF000000.toInt())
+                    FunctionFontColorPicker.setFontColour(0xFF000000.toInt())
                     prefSetting.edit().putInt("KeyboardDefaultFontColor", 0xFF000000.toInt()).apply()
                     prefSetting.edit().putInt("KeyboardFunctionFontColor", 0xFF000000.toInt()).apply()
                 }

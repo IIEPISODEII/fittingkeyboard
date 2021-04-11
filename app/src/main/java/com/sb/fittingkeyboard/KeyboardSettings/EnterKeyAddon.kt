@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.KeyboardSettings
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.sb.fittingKeyboard.R
 
 class EnterKeyAddon : DialogFragment() {
     var checkedFunction: Int = 0

@@ -1,10 +1,11 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.KeyboardSettings
 
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.sb.fittingKeyboard.R
 
 class SetTheme(
     private val layout: ImageView,
