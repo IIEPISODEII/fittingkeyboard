@@ -1,4 +1,4 @@
-package com.sb.AndroidKeyboard
+package com.sb.androidKeyboard
 
 import org.junit.Test
 

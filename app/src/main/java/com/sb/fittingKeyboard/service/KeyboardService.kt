@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.service
 
 import RepeatListener
 import android.annotation.SuppressLint
@@ -26,10 +26,11 @@ import androidx.core.view.setPadding
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import com.chargingwatts.livedata.sharedpref.booleanLiveData
-import com.chargingwatts.livedata.sharedpref.intLiveData
-import com.chargingwatts.livedata.sharedpref.stringLiveData
-import com.sb.fittingKeyboard.KeyboardSettings.SetTheme
+import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.koreanAutomata.CHUNJIIN_Hangul
+import com.sb.fittingKeyboard.koreanAutomata.NARATGUL_Hangul
+import com.sb.fittingKeyboard.koreanAutomata.QWERTY_Hangul
+import com.sb.fittingKeyboard.keyboardSettings.SetTheme
 import kotlinx.android.synthetic.main.fragment_bp.view.*
 import kotlinx.android.synthetic.main.fragment_cursor.view.*
 import kotlinx.android.synthetic.main.fragment_keyboard.view.*

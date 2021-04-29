@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.KeyboardSettings
+package com.sb.fittingKeyboard.keyboardSettings
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface

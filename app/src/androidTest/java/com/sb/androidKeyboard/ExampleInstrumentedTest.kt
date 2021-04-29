@@ -1,4 +1,4 @@
-package com.sb.AndroidKeyboard
+package com.sb.androidKeyboard
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

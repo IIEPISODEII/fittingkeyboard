@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.KeyboardSettings
+package com.sb.fittingKeyboard.keyboardSettings
 
 import android.content.Intent
 import android.os.Bundle

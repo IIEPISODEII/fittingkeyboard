@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard;
+package com.sb.fittingKeyboard.service
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData

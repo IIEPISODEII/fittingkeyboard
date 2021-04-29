@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.koreanAutomata
 
 import android.view.inputmethod.InputConnection
 
