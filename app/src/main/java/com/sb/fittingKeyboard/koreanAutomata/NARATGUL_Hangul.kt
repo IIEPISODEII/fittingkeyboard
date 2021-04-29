@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingKeyboard.koreanAutomata
 
 import android.view.inputmethod.InputConnection
 
@@ -483,30 +483,15 @@ class NARATGUL_Hangul {
                 }
                 'ㅜ' -> when (c) {
                     'ㅏ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅜ'
-                            middleSubChar = 'ㅏ'
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(
-                                middleChar.toString() + middleSubChar.toString(),
-                                1
-                            )
-                        } else {
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅝ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        }
+                        firstChar = nullChar
+                        firstSubChar = nullChar
+                        middleChar = 'ㅝ'
+                        middleSubChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        inputConnection.setComposingText(middleChar.toString(), 1)
                     }
                     'ㅗ' -> {
                         if (middleSubChar == nullChar) {
@@ -2939,26 +2924,13 @@ class NARATGUL_Hangul {
                 }
                 'ㅜ' -> when (c) {
                     'ㅏ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstSubChar = nullChar
-                            middleChar = 'ㅜ'
-                            middleSubChar = 'ㅏ'
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + middleSubChar.toString(),
-                                1
-                            )
-                        } else {
-                            firstSubChar = nullChar
-                            middleChar = 'ㅝ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
-                        }
+                        firstSubChar = nullChar
+                        middleChar = 'ㅝ'
+                        middleSubChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        inputConnection.setComposingText(composedResult.toString(), 1)
                     }
                     'ㅗ' -> {
                         if (middleSubChar == nullChar) {
