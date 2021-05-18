@@ -2,7 +2,7 @@ package com.sb.fittingKeyboard.koreanAutomata
 
 import android.view.inputmethod.InputConnection
 
-class CHUNJIIN_Hangul {
+class CHUNJIIN_Hangul: AutomataInterface {
     private val baseInt: Int = 0xAC00
     private val nullChar: Char = '\u0000'
 
@@ -32,7 +32,7 @@ class CHUNJIIN_Hangul {
     private var finalCharIndex = finalCharArray.indexOf(finalChar.toInt())
     private var composedResult: Char = '\u0000'
 
-    fun composeResult() {
+    override fun composeResult() {
         firstCharIndex = firstCharArray.indexOf(firstChar.toInt())
         middleCharIndex = middleCharArray.indexOf(middleChar.toInt())
         finalCharIndex = finalCharArray.indexOf(finalChar.toInt())
@@ -914,6 +914,12 @@ class CHUNJIIN_Hangul {
                         composedResult = nullChar
                         inputConnection.setComposingText(firstChar.toString(), 1)
                     }
+                }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
                 }
             }
             1 -> when (firstChar) {
@@ -2442,6 +2448,12 @@ class CHUNJIIN_Hangul {
                         inputConnection.setComposingText(firstChar.toString(), 1)
                     }
                 }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
+                }
             }
             2 -> when (middleChar) {
                 'ㅐ', 'ㅒ', 'ㅔ', 'ㅖ', 'ㅙ', 'ㅛ', 'ㅞ', 'ㅟ', 'ㅢ' -> when (c) {
@@ -2971,6 +2983,12 @@ class CHUNJIIN_Hangul {
                         composedResult = nullChar
                         inputConnection.setComposingText(firstChar.toString(), 1)
                     }
+                }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
                 }
             }
             3 -> when (finalChar) {
@@ -4590,6 +4608,12 @@ class CHUNJIIN_Hangul {
                         }
                     }
                 }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
+                }
             }
         }
     } //한글 오토마타
@@ -4875,7 +4899,7 @@ class CHUNJIIN_Hangul {
         }
     } //delete 발생
 
-    fun initChar() {
+    override fun initChar() {
         firstChar = nullChar
         firstSubChar = nullChar
         middleChar = nullChar
@@ -4883,11 +4907,11 @@ class CHUNJIIN_Hangul {
         finalSubChar = nullChar
     } //자모 초기화
 
-    fun initState() {
+    override fun initState() {
         state = 0
     }
 
-    fun initResult() {
+    override fun initResult() {
         composedResult = nullChar
     }
 }

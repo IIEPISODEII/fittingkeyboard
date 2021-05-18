@@ -62,6 +62,7 @@ class SettingBasicFragment : Fragment() {
             1 -> "천지인"
             2 -> "나랏글"
             3 -> "천지인 양손"
+            4 -> " 단모음"
             else -> "쿼티(기본)"
         }
 

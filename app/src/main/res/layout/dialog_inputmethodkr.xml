@@ -56,6 +56,13 @@
             android:layout_height="50dp"
             android:text="천지인 양손"
             android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/dialog_InputMethodKRSelect_DANMOUM"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="단모음"
+            android:textSize="18sp" />
     </RadioGroup>
 
     <Button

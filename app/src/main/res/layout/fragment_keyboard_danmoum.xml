@@ -15,108 +15,97 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnQ"
+                android:id="@+id/btnDanQ"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Q"
+                android:text="ㅂ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnW"
+                android:id="@+id/btnDanW"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="W"
+                android:text="ㅈ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnE"
+                android:id="@+id/btnDanE"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="E"
+                android:text="ㄷ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnR"
+                android:id="@+id/btnDanR"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="R"
+                android:text="ㄱ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnT"
+                android:id="@+id/btnDanT"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="T"
+                android:text="ㅅ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
                 android:id="@+id/blank"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.35"
                 android:background="@color/transparent" />
 
             <Button
-                android:id="@+id/btnY"
+                android:id="@+id/btnDanH"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Y"
+                android:text="ㅗ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnU"
+                android:id="@+id/btnDanO"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="U"
+                android:text="ㅐ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnI"
+                android:id="@+id/btnDanP"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="I"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btnO"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="O"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btnP"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="P"
+                android:text="ㅔ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
@@ -129,91 +118,81 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnA"
+                android:id="@+id/btnDanA"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.3"
-                android:text="A"
+                android:text="ㅁ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnS"
+                android:id="@+id/btnDanS"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="S"
+                android:text="ㄴ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnD"
+                android:id="@+id/btnDanD"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="D"
+                android:text="ㅇ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnF"
+                android:id="@+id/btnDanF"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="F"
+                android:text="ㄹ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnG"
+                android:id="@+id/btnDanG"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="G"
+                android:text="ㅎ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnH"
+                android:id="@+id/btnDanJ"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="H"
+                android:text="ㅓ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnJ"
+                android:id="@+id/btnDanK"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="J"
+                android:text="ㅏ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnK"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="K"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btnL"
+                android:id="@+id/btnDanL"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.3"
-                android:text="L"
+                android:text="ㅣ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
@@ -225,96 +204,82 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/btnSHIFT"
+            <Button
+                android:id="@+id/blank2"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
                 android:layout_weight="1.3"
-                android:elevation="2dp"
-                android:padding="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/keyic_shift_deactivated_black" />
+                android:background="@color/transparent" />
 
             <Button
-                android:id="@+id/btnZ"
+                android:id="@+id/btnDanZ"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Z"
+                android:text="ㅋ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnX"
+                android:id="@+id/btnDanX"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="X"
+                android:text="ㅌ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnC"
+                android:id="@+id/btnDanC"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="C"
+                android:text="ㅊ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnV"
+                android:id="@+id/btnDanV"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="V"
+                android:text="ㅍ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnB"
+                android:id="@+id/btnDanN"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="B"
+                android:text="ㅜ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <Button
-                android:id="@+id/btnN"
+                android:id="@+id/btnDanM"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="N"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/btnM"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="M"
+                android:text="ㅡ"
                 android:textAllCaps="false"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
             <ImageButton
-                android:id="@+id/btnDEL"
+                android:id="@+id/btnDanDEL"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
@@ -332,7 +297,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnSPECIAL"
+                android:id="@+id/btnDanSPECIAL"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -342,7 +307,7 @@
                 android:textSize="12sp" />
 
             <ImageButton
-                android:id="@+id/btnLANG"
+                android:id="@+id/btnDanLANG"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
@@ -353,7 +318,7 @@
                 android:src="@drawable/keyic_language_black" />
 
             <Button
-                android:id="@+id/btnCOMMA"
+                android:id="@+id/btnDanCOMMA"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
@@ -363,17 +328,17 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btnSPACE"
+                android:id="@+id/btnDanSPACE"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:text="@string/english"
+                android:text="@string/korean"
                 android:textColor="#000000"
                 android:textSize="18sp"/>
 
             <Button
-                android:id="@+id/btnDOT"
+                android:id="@+id/btnDanDOT"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
@@ -383,7 +348,7 @@
                 android:textSize="12sp" />
 
             <ImageButton
-                android:id="@+id/btnENTER"
+                android:id="@+id/btnDanENTER"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"

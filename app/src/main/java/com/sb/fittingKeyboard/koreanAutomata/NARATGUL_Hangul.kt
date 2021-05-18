@@ -2,14 +2,13 @@ package com.sb.fittingKeyboard.koreanAutomata
 
 import android.view.inputmethod.InputConnection
 
-class NARATGUL_Hangul {
+class NARATGUL_Hangul : AutomataInterface {
     private val baseInt: Int = 0xAC00
     private val nullChar: Char = '\u0000'
 
     private var firstChar: Char = nullChar
     private var firstSubChar: Char = nullChar
     private var middleChar: Char = nullChar
-    private var middleSubChar: Char = nullChar
     private var finalChar: Char = nullChar
     private var finalSubChar: Char = nullChar
 
@@ -25,7 +24,7 @@ class NARATGUL_Hangul {
     private var finalCharIndex = finalCharArray.indexOf(finalChar.toInt())
     private var composedResult: Char = '\u0000'
 
-    fun composeResult() {
+    override fun composeResult() {
         firstCharIndex = firstCharArray.indexOf(firstChar.toInt())
         middleCharIndex = middleCharArray.indexOf(middleChar.toInt())
         finalCharIndex = finalCharArray.indexOf(finalChar.toInt())
@@ -40,7 +39,6 @@ class NARATGUL_Hangul {
                     firstChar = c
                     firstSubChar = nullChar
                     middleChar = nullChar
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -55,13 +53,17 @@ class NARATGUL_Hangul {
                     firstChar = nullChar
                     firstSubChar = nullChar
                     middleChar = c
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     state = -1
                     inputConnection.setComposingText(middleChar.toString(), 1)
+                }
+                else -> {
+                    initChar()
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
                 }
             }
             -1 -> when (middleChar) {
@@ -70,7 +72,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅓ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -82,7 +83,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -93,7 +93,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅐ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -104,7 +103,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅑ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -120,7 +118,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -134,7 +131,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -150,7 +146,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -164,7 +159,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -175,7 +169,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅏ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -186,7 +179,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅒ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -202,7 +194,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -215,7 +206,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅏ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -227,7 +217,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -238,7 +227,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅔ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -249,7 +237,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅕ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -265,7 +252,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -279,7 +265,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -290,7 +275,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅓ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -304,7 +288,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅖ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -317,7 +300,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -330,7 +312,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅘ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -341,7 +322,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅜ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -353,7 +333,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -364,7 +343,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅚ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -375,7 +353,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅛ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -391,7 +368,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -405,7 +381,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -416,7 +391,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅗ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -432,7 +406,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -446,7 +419,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -457,7 +429,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅙ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -473,7 +444,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -486,7 +456,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅝ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -494,35 +463,21 @@ class NARATGUL_Hangul {
                         inputConnection.setComposingText(middleChar.toString(), 1)
                     }
                     'ㅗ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅗ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        } else {
-                            inputConnection.finishComposingText()
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = c
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        }
+                        inputConnection.finishComposingText()
+                        firstChar = nullChar
+                        firstSubChar = nullChar
+                        middleChar = c
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        inputConnection.setComposingText(middleChar.toString(), 1)
                     }
                     'ㅡ' -> {
                         inputConnection.finishComposingText()
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -530,91 +485,9 @@ class NARATGUL_Hangul {
                         inputConnection.setComposingText(middleChar.toString(), 1)
                     }
                     'ㅣ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅟ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        } else {
-                            inputConnection.finishComposingText()
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅐ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        }
-                    }
-                    'ᆞ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅠ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        } else {
-                            inputConnection.finishComposingText()
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅑ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        }
-                    }
-                    'ᆢ' -> {
-
-                    }
-                    else -> {
-                        if (middleSubChar == nullChar) {
-                            inputConnection.commitText(middleChar.toString(), 1)
-                            state = 1
-                            firstChar = c
-                            firstSubChar = nullChar
-                            middleChar = nullChar
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
-                        } else {
-                            inputConnection.finishComposingText()
-                            state = 1
-                            firstChar = c
-                            firstSubChar = nullChar
-                            middleChar = nullChar
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
-                        }
-                    }
-                }
-                'ㅠ' -> when (c) {
-                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
-                        middleSubChar = nullChar
+                        middleChar = 'ㅟ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -624,8 +497,7 @@ class NARATGUL_Hangul {
                     'ᆞ' -> {
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅜ'
-                        middleSubChar = nullChar
+                        middleChar = 'ㅠ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -641,7 +513,44 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        inputConnection.setComposingText(firstChar.toString(), 1)
+                    }
+                }
+                'ㅠ' -> when (c) {
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
+                        inputConnection.commitText(middleChar.toString(), 1)
+                        firstChar = nullChar
+                        firstSubChar = nullChar
+                        middleChar = c
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        inputConnection.setComposingText(middleChar.toString(), 1)
+                    }
+                    'ᆞ' -> {
+                        firstChar = nullChar
+                        firstSubChar = nullChar
+                        middleChar = 'ㅜ'
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        inputConnection.setComposingText(middleChar.toString(), 1)
+                    }
+                    'ᆢ' -> {
+
+                    }
+                    else -> {
+                        inputConnection.commitText(middleChar.toString(), 1)
+                        state = 1
+                        firstChar = c
+                        firstSubChar = nullChar
+                        middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -655,7 +564,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -666,7 +574,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅞ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -682,7 +589,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -696,7 +602,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -707,7 +612,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = 'ㅢ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -723,7 +627,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -737,7 +640,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -753,13 +655,18 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
                         inputConnection.setComposingText(firstChar.toString(), 1)
                     }
+                }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
                 }
             }
             1 -> when (firstChar) {
@@ -770,7 +677,6 @@ class NARATGUL_Hangul {
                                 firstChar = 'ㅋ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
-                                middleSubChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
@@ -781,7 +687,6 @@ class NARATGUL_Hangul {
                                 firstChar = 'ㄱ'
                                 firstSubChar = 'ㅊ'
                                 middleChar = nullChar
-                                middleSubChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
@@ -795,7 +700,6 @@ class NARATGUL_Hangul {
                                 firstChar = 'ㄳ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
-                                middleSubChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
@@ -812,7 +716,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄲ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -823,7 +726,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄳ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -836,7 +738,6 @@ class NARATGUL_Hangul {
                             state = 2
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -848,7 +749,6 @@ class NARATGUL_Hangul {
                             firstChar = firstSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -860,7 +760,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄳ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -872,7 +771,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -886,7 +784,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -898,7 +795,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -915,7 +811,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -926,7 +821,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -937,7 +831,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -950,7 +843,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄱ'
                         firstSubChar = 'ㅈ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -965,7 +857,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅆ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -978,7 +869,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -989,7 +879,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1003,7 +892,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄷ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1014,7 +902,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄵ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1025,7 +912,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄶ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1036,7 +922,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄴ'
                             firstSubChar = 'ㅅ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1052,7 +937,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄵ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1068,7 +952,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄴ'
                             firstSubChar = 'ㅅ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1080,7 +963,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1094,7 +976,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄴ'
                             firstSubChar = 'ㅇ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1106,7 +987,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1119,7 +999,6 @@ class NARATGUL_Hangul {
                             state = 2
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1131,7 +1010,6 @@ class NARATGUL_Hangul {
                             firstChar = firstSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1144,7 +1022,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1156,7 +1033,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1170,7 +1046,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄴ'
                         firstSubChar = 'ㅊ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1184,7 +1059,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄴ'
                         firstSubChar = 'ㅉ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1197,7 +1071,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1208,7 +1081,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1221,7 +1093,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄴ'
                         firstSubChar = 'ㅇ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1240,7 +1111,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1251,7 +1121,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1264,7 +1133,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅌ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1275,7 +1143,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄸ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1286,7 +1153,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1297,7 +1163,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1313,7 +1178,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄷ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1324,7 +1188,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1335,7 +1198,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1352,7 +1214,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅀ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1363,7 +1224,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄹ'
                             firstSubChar = 'ㅊ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1377,7 +1237,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄽ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1388,7 +1247,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄺ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1407,7 +1265,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄺ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1418,7 +1275,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄼ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1429,7 +1285,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄽ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1445,7 +1300,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄺ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1457,7 +1311,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1470,7 +1323,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄻ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1482,7 +1334,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1495,7 +1346,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄽ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1507,7 +1357,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1520,7 +1369,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄹ'
                             firstSubChar = 'ㅇ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1532,7 +1380,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1545,7 +1392,6 @@ class NARATGUL_Hangul {
                             state = 2
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1557,7 +1403,6 @@ class NARATGUL_Hangul {
                             firstChar = firstSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1570,7 +1415,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1582,7 +1426,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1596,7 +1439,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅋ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1610,7 +1452,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㄲ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1626,7 +1467,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1637,7 +1477,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1650,7 +1489,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄼ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1666,7 +1504,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1677,7 +1514,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1690,7 +1526,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄿ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1701,7 +1536,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅃ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1717,7 +1551,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1728,7 +1561,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1741,7 +1573,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅈ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1755,7 +1586,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅆ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1771,7 +1601,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1782,7 +1611,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1795,7 +1623,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅁ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1811,7 +1638,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1822,7 +1648,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1835,7 +1660,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅇ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1854,7 +1678,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1865,7 +1688,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1878,7 +1700,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1892,7 +1713,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1903,7 +1723,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -1917,7 +1736,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅍ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1928,7 +1746,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅂ'
                             firstSubChar = 'ㅈ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1939,7 +1756,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅄ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1955,7 +1771,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅃ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1966,7 +1781,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅄ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1977,7 +1791,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅂ'
                             firstSubChar = 'ㅉ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -1988,7 +1801,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅂ'
                             firstSubChar = 'ㅈ'
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -2004,7 +1816,6 @@ class NARATGUL_Hangul {
                             state = 2
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -2016,7 +1827,6 @@ class NARATGUL_Hangul {
                             firstChar = firstSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -2028,7 +1838,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅄ'
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -2040,7 +1849,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -2054,7 +1862,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -2066,7 +1873,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -2083,7 +1889,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2094,7 +1899,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2105,7 +1909,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2118,7 +1921,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅂ'
                         firstSubChar = 'ㅈ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2132,7 +1934,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅂ'
                         firstSubChar = 'ㅆ'
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2145,7 +1946,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2156,7 +1956,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2169,7 +1968,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2180,7 +1978,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅆ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2191,7 +1988,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2202,7 +1998,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2218,7 +2013,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2229,7 +2023,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2240,7 +2033,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2253,7 +2045,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2267,7 +2058,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2278,7 +2068,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2291,7 +2080,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅊ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2302,7 +2090,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅉ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2313,7 +2100,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2324,7 +2110,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2340,7 +2125,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2351,7 +2135,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2362,7 +2145,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2375,7 +2157,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2389,7 +2170,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2400,7 +2180,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2413,7 +2192,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2427,7 +2205,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2438,7 +2215,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2451,7 +2227,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄷ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2465,7 +2240,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2476,7 +2250,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2489,7 +2262,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2503,7 +2275,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2514,7 +2285,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2527,7 +2297,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅇ'
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2541,7 +2310,6 @@ class NARATGUL_Hangul {
                         state = 2
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2552,7 +2320,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2560,13 +2327,18 @@ class NARATGUL_Hangul {
                         inputConnection.setComposingText(firstChar.toString(), 1)
                     }
                 }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
+                }
             }
             2 -> when (middleChar) {
                 'ㅏ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅑ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2578,7 +2350,6 @@ class NARATGUL_Hangul {
                     'ㅏ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅓ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2590,7 +2361,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2600,7 +2370,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅐ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2609,7 +2378,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2623,7 +2391,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2636,7 +2403,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2650,7 +2416,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2660,7 +2425,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅏ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2669,7 +2433,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅒ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2681,7 +2444,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2692,7 +2454,6 @@ class NARATGUL_Hangul {
                     'ㅏ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅏ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2704,7 +2465,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2714,7 +2474,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅔ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2723,7 +2482,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅕ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2735,7 +2493,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2749,7 +2506,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2759,7 +2515,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅓ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2771,7 +2526,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅖ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2780,7 +2534,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2791,7 +2544,6 @@ class NARATGUL_Hangul {
                     'ㅏ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅘ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2800,7 +2552,6 @@ class NARATGUL_Hangul {
                     'ㅗ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅜ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2812,7 +2563,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2822,7 +2572,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅚ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2831,7 +2580,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅛ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2843,7 +2591,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2857,7 +2604,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2867,7 +2613,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅗ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2879,7 +2624,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2893,7 +2637,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2903,7 +2646,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅙ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2915,7 +2657,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -2926,52 +2667,25 @@ class NARATGUL_Hangul {
                     'ㅏ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅝ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         inputConnection.setComposingText(composedResult.toString(), 1)
                     }
                     'ㅗ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstSubChar = nullChar
-                            middleChar = 'ㅗ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
-                        } else {
-                            inputConnection.commitText(
-                                composedResult.toString() + middleSubChar.toString(),
-                                1
-                            )
-                            state = -1
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = c
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        }
+                        firstSubChar = nullChar
+                        middleChar = 'ㅗ'
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        inputConnection.setComposingText(composedResult.toString(), 1)
                     }
                     'ㅡ' -> {
-                        if (middleSubChar == nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
-                        } else {
-                            inputConnection.commitText(
-                                composedResult.toString() + middleSubChar.toString(),
-                                1
-                            )
-                        }
+                        inputConnection.commitText(composedResult.toString(), 1)
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -2979,95 +2693,16 @@ class NARATGUL_Hangul {
                         inputConnection.setComposingText(middleChar.toString(), 1)
                     }
                     'ㅣ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstSubChar = nullChar
-                            middleChar = 'ㅟ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
-                        } else {
-                            inputConnection.commitText(composedResult.toString(), 1)
-                            state = -1
-                            firstSubChar = nullChar
-                            middleChar = 'ㅐ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        }
-                    }
-                    'ᆞ' -> {
-                        if (middleSubChar == nullChar) {
-                            firstSubChar = nullChar
-                            middleChar = 'ㅠ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
-                        } else {
-                            inputConnection.commitText(composedResult.toString(), 1)
-                            state = -1
-                            firstChar = nullChar
-                            firstSubChar = nullChar
-                            middleChar = 'ㅑ'
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(middleChar.toString(), 1)
-                        }
-                    }
-                    'ᆢ' -> {
-
-                    }
-                    else -> {
-                        if (middleSubChar == nullChar) {
-                            state = 3
-                            firstSubChar = nullChar
-                            middleSubChar = nullChar
-                            finalChar = c
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
-                        } else {
-                            inputConnection.commitText(composedResult.toString() + middleSubChar.toString(), 1)
-                            state = 1
-                            firstChar = c
-                            firstSubChar = nullChar
-                            middleChar = nullChar
-                            middleSubChar = nullChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
-                        }
-                    }
-                }
-                'ㅠ' -> when (c) {
-                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
-                        state = -1
-                        firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
-                        middleSubChar = nullChar
+                        middleChar = 'ㅟ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        inputConnection.setComposingText(composedResult.toString(), 1)
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleChar = 'ㅜ'
-                        middleSubChar = nullChar
+                        middleChar = 'ㅠ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3079,7 +2714,39 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
+                        finalChar = c
+                        finalSubChar = nullChar
+                        composeResult()
+                        inputConnection.setComposingText(composedResult.toString(), 1)
+                    }
+                }
+                'ㅠ' -> when (c) {
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
+                        inputConnection.commitText(composedResult.toString(), 1)
+                        state = -1
+                        firstChar = nullChar
+                        firstSubChar = nullChar
+                        middleChar = c
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        inputConnection.setComposingText(middleChar.toString(), 1)
+                    }
+                    'ᆞ' -> {
+                        firstSubChar = nullChar
+                        middleChar = 'ㅜ'
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        inputConnection.setComposingText(composedResult.toString(), 1)
+                    }
+                    'ᆢ' -> {
+
+                    }
+                    else -> {
+                        state = 3
+                        firstSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -3093,7 +2760,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3103,7 +2769,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅞ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3115,7 +2780,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -3129,7 +2793,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3139,7 +2802,6 @@ class NARATGUL_Hangul {
                     'ㅣ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅢ'
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3151,7 +2813,6 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
@@ -3165,7 +2826,6 @@ class NARATGUL_Hangul {
                         firstChar = nullChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3178,12 +2838,17 @@ class NARATGUL_Hangul {
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = c
                         finalSubChar = nullChar
                         composeResult()
                         inputConnection.setComposingText(composedResult.toString(), 1)
                     }
+                }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
                 }
             }
             3 -> when (finalChar) {
@@ -3191,7 +2856,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅋ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3199,7 +2863,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄱ'
                             finalSubChar = 'ㅊ'
                             composeResult()
@@ -3210,7 +2873,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅊ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄳ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3223,7 +2885,6 @@ class NARATGUL_Hangul {
                     'ᆢ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄲ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3231,7 +2892,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄱ'
                             finalSubChar = 'ㅉ'
                             composeResult()
@@ -3242,7 +2902,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅆ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄳ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3250,7 +2909,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄱ'
                             finalSubChar = 'ㅈ'
                             composeResult()
@@ -3272,7 +2930,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄱ'
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3284,7 +2941,6 @@ class NARATGUL_Hangul {
                             firstChar = finalSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3294,7 +2950,6 @@ class NARATGUL_Hangul {
                     'ㅅ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄳ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3309,7 +2964,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3324,7 +2978,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3340,7 +2993,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3355,7 +3007,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄱ'
                         finalSubChar = nullChar
                         composeResult()
@@ -3369,7 +3020,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄲ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         inputConnection.setComposingText(composedResult.toString(), 1)
@@ -3380,7 +3030,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3391,7 +3040,6 @@ class NARATGUL_Hangul {
                 'ㄳ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄱ'
                         finalSubChar = 'ㅈ'
                         composeResult()
@@ -3402,7 +3050,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄱ'
                         finalSubChar = 'ㅆ'
                         composeResult()
@@ -3419,7 +3066,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3431,7 +3077,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3443,7 +3088,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄷ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3451,7 +3095,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅅ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄵ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3459,7 +3102,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅇ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄶ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3467,7 +3109,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅊ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅅ'
                             composeResult()
@@ -3481,9 +3122,18 @@ class NARATGUL_Hangul {
                         nullChar -> {
 
                         }
+                        'ㅅ' -> {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄴ'
+                            finalSubChar = 'ㅆ'
+                            composeResult()
+                            inputConnection.setComposingText(
+                                composedResult.toString() + finalSubChar.toString(),
+                                1
+                            )
+                        }
                         'ㅆ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅅ'
                             composeResult()
@@ -3494,7 +3144,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄵ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3507,7 +3156,6 @@ class NARATGUL_Hangul {
                     'ㅅ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅅ'
                             composeResult()
@@ -3525,7 +3173,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3535,7 +3182,6 @@ class NARATGUL_Hangul {
                     'ㅇ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅇ'
                             composeResult()
@@ -3550,7 +3196,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3567,7 +3212,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄴ'
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3579,7 +3223,6 @@ class NARATGUL_Hangul {
                             firstChar = finalSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3593,7 +3236,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3609,7 +3251,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3621,7 +3262,6 @@ class NARATGUL_Hangul {
                 'ㄵ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄴ'
                         finalSubChar = 'ㅊ'
                         composeResult()
@@ -3632,7 +3272,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄴ'
                         finalSubChar = 'ㅉ'
                         composeResult()
@@ -3649,7 +3288,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3661,7 +3299,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3672,7 +3309,6 @@ class NARATGUL_Hangul {
                 'ㄶ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄴ'
                         finalSubChar = 'ㅇ'
                         composeResult()
@@ -3692,7 +3328,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3704,7 +3339,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3715,7 +3349,6 @@ class NARATGUL_Hangul {
                 'ㄷ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅌ'
                         finalSubChar = nullChar
                         composeResult()
@@ -3723,7 +3356,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = 'ㄸ'
                         composeResult()
@@ -3737,7 +3369,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄷ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3749,7 +3380,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -3764,7 +3394,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅋ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄺ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3772,7 +3401,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅇ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅀ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3780,7 +3408,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅊ'
                             composeResult()
@@ -3791,7 +3418,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅊ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄽ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3807,7 +3433,6 @@ class NARATGUL_Hangul {
                         }
                         'ㄲ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄺ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3815,7 +3440,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅃ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄼ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3823,7 +3447,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅆ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄽ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3831,7 +3454,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅉ'
                             composeResult()
@@ -3842,7 +3464,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅈ'
                             composeResult()
@@ -3858,7 +3479,6 @@ class NARATGUL_Hangul {
                     'ㄱ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄺ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3870,7 +3490,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3881,7 +3500,6 @@ class NARATGUL_Hangul {
                     'ㅁ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄻ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3896,7 +3514,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3907,7 +3524,6 @@ class NARATGUL_Hangul {
                     'ㅅ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄽ'
                             finalSubChar = nullChar
                             composeResult()
@@ -3922,7 +3538,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3933,7 +3548,6 @@ class NARATGUL_Hangul {
                     'ㅇ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅇ'
                             composeResult()
@@ -3951,7 +3565,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3968,7 +3581,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㄹ'
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3980,7 +3592,6 @@ class NARATGUL_Hangul {
                             firstChar = finalSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -3994,7 +3605,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -4010,7 +3620,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -4022,7 +3631,6 @@ class NARATGUL_Hangul {
                 'ㄺ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅋ'
                         composeResult()
@@ -4033,7 +3641,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㄲ'
                         composeResult()
@@ -4047,7 +3654,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4059,7 +3665,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4070,7 +3675,6 @@ class NARATGUL_Hangul {
                 'ㄻ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄼ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4087,7 +3691,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4099,7 +3702,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4110,7 +3712,6 @@ class NARATGUL_Hangul {
                 'ㄼ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄿ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4118,7 +3719,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅃ'
                         composeResult()
@@ -4135,7 +3735,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4147,7 +3746,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4158,7 +3756,6 @@ class NARATGUL_Hangul {
                 'ㄽ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅈ'
                         composeResult()
@@ -4169,7 +3766,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅆ'
                         composeResult()
@@ -4186,7 +3782,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4198,7 +3793,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4209,7 +3803,6 @@ class NARATGUL_Hangul {
                 'ㄿ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄻ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4226,7 +3819,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4238,7 +3830,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4249,7 +3840,6 @@ class NARATGUL_Hangul {
                 'ㅀ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅇ'
                         composeResult()
@@ -4269,7 +3859,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4281,7 +3870,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4292,7 +3880,6 @@ class NARATGUL_Hangul {
                 'ㅁ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅂ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4309,7 +3896,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4321,7 +3907,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4333,7 +3918,6 @@ class NARATGUL_Hangul {
                     'ᆞ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅍ'
                             finalSubChar = nullChar
                             composeResult()
@@ -4341,7 +3925,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅂ'
                             finalSubChar = 'ㅊ'
                             composeResult()
@@ -4352,7 +3935,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅊ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅄ'
                             finalSubChar = nullChar
                             composeResult()
@@ -4365,7 +3947,6 @@ class NARATGUL_Hangul {
                     'ᆢ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = 'ㅃ'
                             composeResult()
@@ -4376,7 +3957,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅆ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅄ'
                             finalSubChar = nullChar
                             composeResult()
@@ -4384,7 +3964,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅂ'
                             finalSubChar = 'ㅈ'
                             composeResult()
@@ -4406,7 +3985,6 @@ class NARATGUL_Hangul {
                             firstChar = 'ㅂ'
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -4418,7 +3996,6 @@ class NARATGUL_Hangul {
                             firstChar = finalSubChar
                             firstSubChar = nullChar
                             middleChar = c
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -4428,7 +4005,6 @@ class NARATGUL_Hangul {
                     'ㅅ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅄ'
                             finalSubChar = nullChar
                             composeResult()
@@ -4443,7 +4019,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -4458,7 +4033,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -4471,7 +4045,6 @@ class NARATGUL_Hangul {
                             firstChar = c
                             firstSubChar = nullChar
                             middleChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
@@ -4483,7 +4056,6 @@ class NARATGUL_Hangul {
                 'ㅄ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅂ'
                         finalSubChar = 'ㅈ'
                         composeResult()
@@ -4494,7 +4066,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅂ'
                         finalSubChar = 'ㅆ'
                         composeResult()
@@ -4511,7 +4082,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4523,7 +4093,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4534,7 +4103,6 @@ class NARATGUL_Hangul {
                 'ㅅ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅈ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4542,7 +4110,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅆ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4556,7 +4123,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4568,7 +4134,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4582,7 +4147,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅅ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4596,7 +4160,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅆ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4608,7 +4171,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4619,7 +4181,6 @@ class NARATGUL_Hangul {
                 'ㅇ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅎ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4636,7 +4197,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅇ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4648,7 +4208,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4659,7 +4218,6 @@ class NARATGUL_Hangul {
                 'ㅈ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅊ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4667,7 +4225,6 @@ class NARATGUL_Hangul {
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = 'ㅉ'
                         composeResult()
@@ -4684,7 +4241,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4696,7 +4252,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4707,7 +4262,6 @@ class NARATGUL_Hangul {
                 'ㅊ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅅ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4724,7 +4278,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅊ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4736,7 +4289,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4747,7 +4299,6 @@ class NARATGUL_Hangul {
                 'ㅋ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄱ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4764,7 +4315,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅋ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4776,7 +4326,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4787,7 +4336,6 @@ class NARATGUL_Hangul {
                 'ㅌ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㄴ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4804,7 +4352,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅌ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4816,7 +4363,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4827,7 +4373,6 @@ class NARATGUL_Hangul {
                 'ㅍ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅁ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4844,7 +4389,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4856,7 +4400,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4867,7 +4410,6 @@ class NARATGUL_Hangul {
                 'ㅎ' -> when (c) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = 'ㅇ'
                         finalSubChar = nullChar
                         composeResult()
@@ -4884,7 +4426,6 @@ class NARATGUL_Hangul {
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4896,7 +4437,6 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4911,7 +4451,6 @@ class NARATGUL_Hangul {
                     'ᆢ' -> when (finalSubChar) {
                         'ㄸ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㄷ'
                             finalSubChar = nullChar
                             composeResult()
@@ -4919,7 +4458,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅃ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅂ'
                             finalSubChar = nullChar
                             composeResult()
@@ -4927,7 +4465,6 @@ class NARATGUL_Hangul {
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
-                            middleSubChar = nullChar
                             finalChar = 'ㅈ'
                             finalSubChar = nullChar
                             composeResult()
@@ -4940,7 +4477,6 @@ class NARATGUL_Hangul {
                         firstChar = finalSubChar
                         firstSubChar = nullChar
                         middleChar = c
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
@@ -4952,13 +4488,18 @@ class NARATGUL_Hangul {
                         firstChar = c
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        middleSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
                         inputConnection.setComposingText(firstChar.toString(), 1)
                     }
+                }
+                else -> {
+                    initChar()
+                    state = 0
+                    composedResult = nullChar
+                    inputConnection.commitText(c.toString(), 1)
                 }
             }
         }
@@ -4980,87 +4521,67 @@ class NARATGUL_Hangul {
                 'ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅠ', 'ㅡ', 'ㅣ' -> {
                     state = 0
                     middleChar = nullChar
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText("", 1)
                 }
                 'ㅐ' -> {
                     middleChar = 'ㅏ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
                 'ㅘ', 'ㅚ' -> {
                     middleChar = 'ㅗ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
-                'ㅜ' -> when ( middleSubChar ) {
-                    nullChar -> {
-                        state = 0
-                        middleChar = nullChar
-                        middleSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        inputConnection.setComposingText("", 1)
-                    }
-                    else -> {
-                        middleChar = 'ㅜ'
-                        middleSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
-                    }
+                'ㅜ' -> {
+                    state = 0
+                    middleChar = nullChar
+                    composeResult()
+                    composedResult = nullChar
+                    inputConnection.setComposingText("", 1)
                 }
                 'ㅝ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
                 }
                 'ㅢ' -> {
                     middleChar = 'ㅡ'
-                    middleSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     inputConnection.setComposingText(middleChar.toString(), 1)
@@ -5117,7 +4638,6 @@ class NARATGUL_Hangul {
                     state = 1
                     firstSubChar = nullChar
                     middleChar = nullChar
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5126,7 +4646,6 @@ class NARATGUL_Hangul {
                 }
                 'ㅐ' -> {
                     middleChar = 'ㅏ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5134,7 +4653,6 @@ class NARATGUL_Hangul {
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5142,7 +4660,6 @@ class NARATGUL_Hangul {
                 }
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5150,7 +4667,6 @@ class NARATGUL_Hangul {
                 }
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5158,7 +4674,6 @@ class NARATGUL_Hangul {
                 }
                 'ㅘ', 'ㅚ' -> {
                     middleChar = 'ㅗ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5166,35 +4681,23 @@ class NARATGUL_Hangul {
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
                     inputConnection.setComposingText(composedResult.toString(), 1)
                 }
-                'ㅜ' -> when ( middleSubChar ) {
-                    nullChar -> {
-                        state = 1
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        middleSubChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
-                    }
-                    else -> {
-                        middleSubChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
-                    }
+                'ㅜ' -> {
+                    state = 1
+                    firstSubChar = nullChar
+                    middleChar = nullChar
+                    finalChar = nullChar
+                    finalSubChar = nullChar
+                    composeResult()
+                    composedResult = nullChar
+                    inputConnection.setComposingText(firstChar.toString(), 1)
                 }
                 'ㅝ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5202,7 +4705,6 @@ class NARATGUL_Hangul {
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5210,7 +4712,6 @@ class NARATGUL_Hangul {
                 }
                 'ㅢ' -> {
                     middleChar = 'ㅡ'
-                    middleSubChar = nullChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
@@ -5262,20 +4763,19 @@ class NARATGUL_Hangul {
         }
     } //delete 발생
 
-    fun initChar() {
+    override fun initChar() {
         firstChar = nullChar
         firstSubChar = nullChar
         middleChar = nullChar
-        middleSubChar = nullChar
         finalChar = nullChar
         finalSubChar = nullChar
     } //자모 초기화
 
-    fun initState() {
+    override fun initState() {
         state = 0
     }
 
-    fun initResult() {
+    override fun initResult() {
         composedResult = nullChar
     }
 }

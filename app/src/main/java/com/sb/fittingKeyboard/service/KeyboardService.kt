@@ -30,11 +30,13 @@ import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.koreanAutomata.CHUNJIIN_Hangul
 import com.sb.fittingKeyboard.koreanAutomata.NARATGUL_Hangul
 import com.sb.fittingKeyboard.koreanAutomata.QWERTY_Hangul
+import com.sb.fittingKeyboard.koreanAutomata.DANMOUM_Hangul
 import com.sb.fittingKeyboard.keyboardSettings.SetTheme
 import kotlinx.android.synthetic.main.fragment_bp.view.*
 import kotlinx.android.synthetic.main.fragment_cursor.view.*
 import kotlinx.android.synthetic.main.fragment_keyboard.view.*
 import kotlinx.android.synthetic.main.fragment_keyboard_chunjiin_basic.view.*
+import kotlinx.android.synthetic.main.fragment_keyboard_danmoum.view.*
 import kotlinx.android.synthetic.main.fragment_keyboard_naratgul_basic.view.*
 import kotlinx.android.synthetic.main.fragment_keyboard_number.view.*
 import kotlinx.android.synthetic.main.key_layout_normal.view.*
@@ -53,10 +55,12 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var qwertyHangul: QWERTY_Hangul
     private lateinit var chunjiinHangul: CHUNJIIN_Hangul
     private lateinit var naratgulHangul: NARATGUL_Hangul
+    private lateinit var danHangul: DANMOUM_Hangul
     private lateinit var fragmentKeyboardQWERTY: FrameLayout
     private lateinit var fragmentKeyboardChunjiin: FrameLayout
     private lateinit var fragmentKeyboardNaratgul: FrameLayout
     private lateinit var fragmentKeyboardChunjiinA: FrameLayout
+    private lateinit var fragmentKeyboardDan: FrameLayout
     private lateinit var fragmentKeyboardNumber: FrameLayout
     private lateinit var fragmentBpText: FrameLayout
     private lateinit var fragmentCursor: FrameLayout
@@ -251,6 +255,37 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var btnNaENTER: ImageButton
     private lateinit var btnNaLANG: ImageButton
     private lateinit var naratgulCharacterArray: Array<Button>
+    private lateinit var btnDanQ : Button
+    private lateinit var btnDanW : Button
+    private lateinit var btnDanE : Button
+    private lateinit var btnDanR : Button
+    private lateinit var btnDanT : Button
+    private lateinit var btnDanH : Button
+    private lateinit var btnDanO : Button
+    private lateinit var btnDanP : Button
+    private lateinit var btnDanA : Button
+    private lateinit var btnDanS : Button
+    private lateinit var btnDanD : Button
+    private lateinit var btnDanF : Button
+    private lateinit var btnDanG : Button
+    private lateinit var btnDanJ : Button
+    private lateinit var btnDanK : Button
+    private lateinit var btnDanL : Button
+    private lateinit var btnDanZ : Button
+    private lateinit var btnDanX : Button
+    private lateinit var btnDanC : Button
+    private lateinit var btnDanV : Button
+    private lateinit var btnDanN : Button
+    private lateinit var btnDanM : Button
+    private lateinit var btnDanDEL : ImageButton
+    private lateinit var btnDanSPECIAL : Button
+    private lateinit var btnDanLANG : ImageButton
+    private lateinit var btnDanSPACE : Button
+    private lateinit var btnDanCOMMA : Button
+    private lateinit var btnDanDOT : Button
+    private lateinit var btnDanENTER : ImageButton
+    private lateinit var danmoumCharacterArray: Array<Button>
+
     private lateinit var numBtn1: Button
     private lateinit var numBtn2: Button
     private lateinit var numBtn3: Button
@@ -271,7 +306,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var numBtnLANG: ImageButton
     private lateinit var numberArray: Array<Button>
 
-    private lateinit var buttonSetVibrate: Array<Button>
+    private lateinit var buttonVibrationList: Array<Button>
     private lateinit var btnBasicList: Array<Button>
     private lateinit var btnShiftList: Array<Button>
     private lateinit var btnCharList: Array<Button>
@@ -312,17 +347,12 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
 
     //</editor-fold>
 
-    inner class SetAutomata : Thread() {
-        override fun run() {
-            qwertyHangul = QWERTY_Hangul()
-            chunjiinHangul = CHUNJIIN_Hangul()
-            naratgulHangul = NARATGUL_Hangul()
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
-
+        qwertyHangul = QWERTY_Hangul()
+        naratgulHangul = NARATGUL_Hangul()
+        chunjiinHangul = CHUNJIIN_Hangul()
+        danHangul = DANMOUM_Hangul()
         lifecycleRegistry = LifecycleRegistry(this)
         lifecycleRegistry.currentState = Lifecycle.State.CREATED
 
@@ -335,6 +365,8 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_ambi, null) as FrameLayout
         fragmentKeyboardNaratgul =
             layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null) as FrameLayout
+        fragmentKeyboardDan =
+            layoutInflater.inflate(R.layout.fragment_keyboard_danmoum, null) as FrameLayout
         fragmentKeyboardNumber =
             layoutInflater.inflate(R.layout.fragment_keyboard_number, null) as FrameLayout
         fragmentBpText = layoutInflater.inflate(R.layout.fragment_bp, null) as FrameLayout
@@ -460,6 +492,36 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         btnNaENTER = fragmentKeyboardNaratgul.btnNaENTER
         btnNaLANG = fragmentKeyboardNaratgul.btnNaLANG
 
+        btnDanQ = fragmentKeyboardDan.btnDanQ
+        btnDanW = fragmentKeyboardDan.btnDanW
+        btnDanE = fragmentKeyboardDan.btnDanE
+        btnDanR = fragmentKeyboardDan.btnDanR
+        btnDanT = fragmentKeyboardDan.btnDanT
+        btnDanH = fragmentKeyboardDan.btnDanH
+        btnDanO = fragmentKeyboardDan.btnDanO
+        btnDanP = fragmentKeyboardDan.btnDanP
+        btnDanA = fragmentKeyboardDan.btnDanA
+        btnDanS = fragmentKeyboardDan.btnDanS
+        btnDanD = fragmentKeyboardDan.btnDanD
+        btnDanF = fragmentKeyboardDan.btnDanF
+        btnDanG = fragmentKeyboardDan.btnDanG
+        btnDanJ = fragmentKeyboardDan.btnDanJ
+        btnDanK = fragmentKeyboardDan.btnDanK
+        btnDanL = fragmentKeyboardDan.btnDanL
+        btnDanZ = fragmentKeyboardDan.btnDanZ
+        btnDanX = fragmentKeyboardDan.btnDanX
+        btnDanC = fragmentKeyboardDan.btnDanC
+        btnDanV = fragmentKeyboardDan.btnDanV
+        btnDanN = fragmentKeyboardDan.btnDanN
+        btnDanM = fragmentKeyboardDan.btnDanM
+        btnDanDEL = fragmentKeyboardDan.btnDanDEL
+        btnDanSPECIAL = fragmentKeyboardDan.btnDanSPECIAL
+        btnDanLANG = fragmentKeyboardDan.btnDanLANG
+        btnDanCOMMA = fragmentKeyboardDan.btnDanCOMMA
+        btnDanSPACE = fragmentKeyboardDan.btnDanSPACE
+        btnDanDOT = fragmentKeyboardDan.btnDanDOT
+        btnDanENTER = fragmentKeyboardDan.btnDanENTER
+
         numBtn0 = fragmentKeyboardNumber.numBtn0
         numBtn1 = fragmentKeyboardNumber.numBtn1
         numBtn2 = fragmentKeyboardNumber.numBtn2
@@ -517,7 +579,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         fragCursorForeDEL = fragmentCursor.frag_cursor_foredelete
         fragCursorKBD = fragmentCursor.frag_cursor_kbd
 
-        buttonSetVibrate =
+        buttonVibrationList =
             arrayOf(btnQ, btnW, btnA, btnS, btnZ, btnX, btnO, btnP, btnK, btnL, btnN, btnM)
         btnBasicList = arrayOf(
             btn1,
@@ -656,6 +718,28 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             btnNaM,
             btnNaSHIFT,
             btnNaADD,
+            btnDanQ,
+            btnDanW,
+            btnDanE,
+            btnDanR,
+            btnDanT,
+            btnDanH,
+            btnDanO,
+            btnDanP,
+            btnDanA,
+            btnDanS,
+            btnDanD,
+            btnDanF,
+            btnDanG,
+            btnDanJ,
+            btnDanK,
+            btnDanL,
+            btnDanZ,
+            btnDanX,
+            btnDanC,
+            btnDanV,
+            btnDanN,
+            btnDanM,
             numBtn0,
             numBtn1,
             numBtn2,
@@ -711,6 +795,10 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             btnNaDOT,
             btnNaSPECIAL,
             btnNaSPACE,
+            btnDanDOT,
+            btnDanSPACE,
+            btnDanSPECIAL,
+            btnDanCOMMA,
             numBtnSPACE,
             numBtnDOT,
             numBtnCOMMA
@@ -732,6 +820,8 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             btnChunInita,
             btnNaDEL,
             btnNaLANG,
+            btnDanDEL,
+            btnDanLANG,
             numBtnDEL,
             numBtnLANG
         )
@@ -743,6 +833,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             fragAutoENTER,
             fragCursorENTER,
             btnNaENTER,
+            btnDanENTER,
             numBtnENTER
         )
         chunjiinCharacterArray = arrayOf(
@@ -769,6 +860,8 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         )
         naratgulCharacterArray =
             arrayOf(btnNaR, btnNaS, btnNaF, btnNaA, btnNaT, btnNaD, btnNaK, btnNaH, btnNaL, btnNaM)
+        danmoumCharacterArray =
+            arrayOf(btnDanQ, btnDanW, btnDanE, btnDanR, btnDanT, btnDanH, btnDanO, btnDanP, btnDanA, btnDanS, btnDanD, btnDanF, btnDanG, btnDanJ, btnDanK, btnDanL, btnDanZ, btnDanX, btnDanC, btnDanV, btnDanN, btnDanM)
         numberArray = arrayOf(
             numBtn0,
             numBtn1,
@@ -913,21 +1006,19 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
-    override fun onCreateInputView(): View? {
-        val thread = SetAutomata()
-        thread.start()
+    override fun onCreateInputView(): View {
         val keyboardSetting =
             applicationContext.getSharedPreferences("keyboardSetting", MODE_PRIVATE)
         val myKeyboardRightSizeLiveData = keyboardSetting.intLiveData("KeyboardMoSize", 20)
-        myKeyboardRightSizeLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardRightSizeLiveData.observe(this, {
             myKeyboardRightSize = it + 80
         })
         val myKeyboardDivisionLiveData = keyboardSetting.booleanLiveData("KeyboardDivision", true)
-        myKeyboardDivisionLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardDivisionLiveData.observe(this, {
             myKeyboardDivision = it
         })
         val myKeyboardHoldingLiveData = keyboardSetting.intLiveData("KeyboardHolding", 200)
-        myKeyboardHoldingLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardHoldingLiveData.observe(this, {
             myKeyboardHolding = it + 100
         })
         val myKeyboardViewLiveData = keyboardSetting.viewLivedata(
@@ -938,7 +1029,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             25,
             0
         )
-        myKeyboardViewLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardViewLiveData.observe(this, {
             myKeyboardToggleNum = it[0] as Boolean
             myKeyboardHeight = it[1] as Int + 75
             myKeyboardBotMargin = it[2] as Int
@@ -947,31 +1038,31 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             keyboardViewBotMargin.requestLayout()
         })
         val myKeyboardVibrationLiveData = keyboardSetting.intLiveData("KeyboardVibration", 2)
-        myKeyboardVibrationLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardVibrationLiveData.observe(this, {
             myKeyboardVibration = it
         })
         val myKeyboardVibrationIntensityLiveData =
             keyboardSetting.intLiveData("KeyboardVibrationIntensity", 0)
-        myKeyboardVibrationIntensityLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardVibrationIntensityLiveData.observe(this, {
             myKeyboardVibrationIntensity = it
         })
         val myKeyboardThemeLiveData = keyboardSetting.intLiveData("KeyboardTheme", 0)
-        myKeyboardThemeLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardThemeLiveData.observe(this, {
             myKeyboardTheme = it
         })
         val myDefaultFontColorLiveData =
             keyboardSetting.intLiveData("KeyboardDefaultFontColor", 0xFF000000.toInt())
-        myDefaultFontColorLiveData.observe(this, androidx.lifecycle.Observer {
+        myDefaultFontColorLiveData.observe(this, {
             myDefaultFontColor = it
         })
         val myFunctionFontColorLiveData =
             keyboardSetting.intLiveData("KeyboardFunctionFontColor", 0xFF000000.toInt())
-        myFunctionFontColorLiveData.observe(this, androidx.lifecycle.Observer {
+        myFunctionFontColorLiveData.observe(this, {
             myFunctionFontColor = it
         })
         val myKeyboardLeftSideMarginLiveData =
             keyboardSetting.intLiveData("KeyboardLeftSideMargin", 1)
-        myKeyboardLeftSideMarginLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardLeftSideMarginLiveData.observe(this, {
             myKeyboardLeftSideMargin = it
             keyboardViewNumLeftMargin.layoutParams.width = it * 3
             keyboardViewCharLeftMargin.layoutParams.width = it * 3
@@ -980,7 +1071,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         })
         val myKeyboardRightSideMarginLiveData =
             keyboardSetting.intLiveData("KeyboardRightSideMargin", 1)
-        myKeyboardRightSideMarginLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardRightSideMarginLiveData.observe(this, {
             myKeyboardRightSideMargin = it
             keyboardViewNumRightMargin.layoutParams.width = it * 3
             keyboardViewCharRightMargin.layoutParams.width = it * 3
@@ -988,12 +1079,12 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             keyboardViewLinearLayout.requestLayout()
         })
         val myKeyboardFontTypeLiveData = keyboardSetting.intLiveData("KeyboardFontType", 0)
-        myKeyboardFontTypeLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardFontTypeLiveData.observe(this, {
             myKeyboardFontType = it
         })
         val myKeyboardToggleToolbarLiveData =
             keyboardSetting.booleanLiveData("KeyboardToggleToolBar", true)
-        myKeyboardToggleToolbarLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardToggleToolbarLiveData.observe(this, {
             myKeyboardToggleToolbar = it
             keyboardToolbar.visibility = when (myKeyboardToggleToolbar) {
                 true -> View.VISIBLE
@@ -1001,94 +1092,94 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             }
         })
         val myKeyboardFontSizeLiveData = keyboardSetting.intLiveData("KeyboardFontSize", 1)
-        myKeyboardFontSizeLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardFontSizeLiveData.observe(this, {
             myKeyboardFontSize = it
         })
         val myKeyboardAutoCapitalLiveData =
             keyboardSetting.booleanLiveData("KeyboardAutoCapital", true)
-        myKeyboardAutoCapitalLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoCapitalLiveData.observe(this, {
             myKeyboardAutoCapital = it
         })
         val myKeyboardAutoModeChangeLiveData =
             keyboardSetting.booleanLiveData("KeyboardAutoModeChange", true)
-        myKeyboardAutoModeChangeLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoModeChangeLiveData.observe(this, {
             myKeyboardAutoModeChange = it
         })
         val myKeyboardAutoText1LiveData = keyboardSetting.stringLiveData("AutoText0", "")
-        myKeyboardAutoText1LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText1LiveData.observe(this, {
             myKeyboardAutoText1 = it
         })
         val myKeyboardAutoText2LiveData = keyboardSetting.stringLiveData("AutoText1", "")
-        myKeyboardAutoText2LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText2LiveData.observe(this, {
             myKeyboardAutoText2 = it
         })
         val myKeyboardAutoText3LiveData = keyboardSetting.stringLiveData("AutoText2", "")
-        myKeyboardAutoText3LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText3LiveData.observe(this, {
             myKeyboardAutoText3 = it
         })
         val myKeyboardAutoText4LiveData = keyboardSetting.stringLiveData("AutoText3", "")
-        myKeyboardAutoText4LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText4LiveData.observe(this, {
             myKeyboardAutoText4 = it
         })
         val myKeyboardAutoText5LiveData = keyboardSetting.stringLiveData("AutoText4", "")
-        myKeyboardAutoText5LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText5LiveData.observe(this, {
             myKeyboardAutoText5 = it
         })
         val myKeyboardAutoText6LiveData = keyboardSetting.stringLiveData("AutoText5", "")
-        myKeyboardAutoText6LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText6LiveData.observe(this, {
             myKeyboardAutoText6 = it
         })
         val myKeyboardAutoText7LiveData = keyboardSetting.stringLiveData("AutoText6", "")
-        myKeyboardAutoText7LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText7LiveData.observe(this, {
             myKeyboardAutoText7 = it
         })
         val myKeyboardAutoText8LiveData = keyboardSetting.stringLiveData("AutoText7", "")
-        myKeyboardAutoText8LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText8LiveData.observe(this, {
             myKeyboardAutoText8 = it
         })
         val myKeyboardAutoText9LiveData = keyboardSetting.stringLiveData("AutoText8", "")
-        myKeyboardAutoText9LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText9LiveData.observe(this, {
             myKeyboardAutoText9 = it
         })
         val myKeyboardAutoText10LiveData = keyboardSetting.stringLiveData("AutoText9", "")
-        myKeyboardAutoText10LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText10LiveData.observe(this, {
             myKeyboardAutoText10 = it
         })
         val myKeyboardAutoText11LiveData = keyboardSetting.stringLiveData("AutoText10", "")
-        myKeyboardAutoText11LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText11LiveData.observe(this, {
             myKeyboardAutoText11 = it
         })
         val myKeyboardAutoText12LiveData = keyboardSetting.stringLiveData("AutoText11", "")
-        myKeyboardAutoText12LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText12LiveData.observe(this, {
             myKeyboardAutoText12 = it
         })
         val myKeyboardAutoText13LiveData = keyboardSetting.stringLiveData("AutoText12", "")
-        myKeyboardAutoText13LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText13LiveData.observe(this, {
             myKeyboardAutoText13 = it
         })
         val myKeyboardAutoText14LiveData = keyboardSetting.stringLiveData("AutoText13", "")
-        myKeyboardAutoText14LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText14LiveData.observe(this, {
             myKeyboardAutoText14 = it
         })
         val myKeyboardAutoText15LiveData = keyboardSetting.stringLiveData("AutoText14", "")
-        myKeyboardAutoText15LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText15LiveData.observe(this, {
             myKeyboardAutoText15 = it
         })
         val myKeyboardAutoText16LiveData = keyboardSetting.stringLiveData("AutoText15", "")
-        myKeyboardAutoText16LiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardAutoText16LiveData.observe(this, {
             myKeyboardAutoText16 = it
         })
         val myKeyboardSpecialLiveData = keyboardSetting.intLiveData("KeyboardSpecialkeyAddon", 0)
-        myKeyboardSpecialLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardSpecialLiveData.observe(this, {
             myKeyboardSpecialKeyAddon = it
         })
         val myKeyboardEnterLiveData = keyboardSetting.intLiveData("KeyboardEnterkeyAddon", 0)
-        myKeyboardEnterLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardEnterLiveData.observe(this, {
             myKeyboardEnterKeyAddon = it
         })
         val myKeyboardInputMethodKRLiveData =
             keyboardSetting.intLiveData("KeyboardInputMethodKR", 0)
-        myKeyboardInputMethodKRLiveData.observe(this, androidx.lifecycle.Observer {
+        myKeyboardInputMethodKRLiveData.observe(this, {
             myKeyboardInputMethodKR = it
         })
         return keyboardView
@@ -1111,19 +1202,15 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             clearComposing()
         }
         /** TextField의 첫글자로 돌아갔을 때 대문자로 수정 **/
-        if (myKeyboardAutoCapital && currentInputConnection.requestCursorUpdates(
-                CURSOR_UPDATE_IMMEDIATE
-            ) && modeValue == 2
-        ) {
-            var autoCapitalConditionArray = BooleanArray(10)
+        if (myKeyboardAutoCapital
+            && currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)
+            && modeValue == 2) {
             var autoCapitalCondition: Boolean = false
-            for (i in autoCapitalConditionArray.indices) {
-                autoCapitalConditionArray[i] =
-                    currentInputConnection.getTextBeforeCursor(i + 2, GET_TEXT_WITH_STYLES)
-                        .toString().replace("\\s".toRegex(), "") == "."
-            }
-            if (autoCapitalConditionArray.indexOf(true) in autoCapitalConditionArray.indices) {
-                autoCapitalCondition = true
+            for (i in 0..3) {
+                if (currentInputConnection.getTextBeforeCursor(i + 2, GET_TEXT_WITH_STYLES)
+                    .toString().replace("\\s".toRegex(), "") == ".") {
+                    autoCapitalCondition = true
+                }
             }
             if ((newSelStart == 0 && newSelEnd == 0 && candidatesStart == -1 && candidatesEnd == -1) || autoCapitalCondition) {
                 modeValue = 1
@@ -1203,6 +1290,12 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         buttonCursorFragment.setImageResource(R.drawable.ic_move)
         getNumberFrag.setImageResource(R.drawable.ic_number_keypad)
         initializeLayout()
+        if (!myKeyboardAutoCapital) { /** 자동대문자 비활성화 상태에서 영어키보드로 텍스트 입력을 시작할 경우 무조건 소문자 키보드로 바꿈 **/
+            if (modeValue in arrayOf(0, 1, 2)) {
+                modeValue = 2
+                setLayoutByMode(fontTypeIndex, modeValue)
+            }
+        }
         if (myKeyboardDivision) {
             changeRightSize(myKeyboardRightSize)
         } else {
@@ -1250,6 +1343,10 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             7 -> {
                 theme.setTheme07()
                 fragmentKeyboardQWERTY.findViewById<Button>(R.id.blank)
+                    .setBackgroundColor(applicationContext.resources.getColor(R.color.black))
+                fragmentKeyboardDan.findViewById<Button>(R.id.blank)
+                    .setBackgroundColor(applicationContext.resources.getColor(R.color.black))
+                fragmentKeyboardDan.findViewById<Button>(R.id.blank2)
                     .setBackgroundColor(applicationContext.resources.getColor(R.color.black))
                 keyboardViewBotMargin.setBackgroundColor(applicationContext.resources.getColor(R.color.black))
                 keyboardViewNumLeftMargin.setBackgroundColor(applicationContext.resources.getColor(R.color.black))
@@ -1333,21 +1430,13 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 else {
                     currentFragment = 0
                     when (myKeyboardInputMethodKR) {
-                        0 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                         1 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiin)
                         2 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNaratgul)
                         3 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiinA)
+                        4 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardDan)
                         else -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                     }
-                    if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                        keyboardViewFirstLine.visibility = View.VISIBLE
-                        keyboardViewLayout.layoutParams.height =
-                            changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                    } else {
-                        keyboardViewFirstLine.visibility = View.GONE
-                        keyboardViewLayout.layoutParams.height =
-                            changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                    }
+                    adjustLayoutSize()
                 } //일반키보드로 되돌아가기
             }
             keyboardBackgroundImage.layoutParams.height = keyboardViewLayout.layoutParams.height
@@ -1385,21 +1474,13 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 else {
                     currentFragment = 0
                     when (myKeyboardInputMethodKR) {
-                        0 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                         1 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiin)
                         2 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNaratgul)
                         3 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiinA)
+                        4 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardDan)
                         else -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                     }
-                    if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                        keyboardViewFirstLine.visibility = View.VISIBLE
-                        keyboardViewLayout.layoutParams.height =
-                            changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                    } else {
-                        keyboardViewFirstLine.visibility = View.GONE
-                        keyboardViewLayout.layoutParams.height =
-                            changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                    }
+                    adjustLayoutSize()
                 } //일반키보드로 되돌아가기
             }
             keyboardBackgroundImage.layoutParams.height = keyboardViewLayout.layoutParams.height
@@ -1431,21 +1512,13 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 else {
                     currentFragment = 0
                     when (myKeyboardInputMethodKR) {
-                        0 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                         1 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiin)
                         2 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNaratgul)
                         3 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiinA)
+                        4 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardDan)
                         else -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                     }
-                    if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                        keyboardViewFirstLine.visibility = View.VISIBLE
-                        keyboardViewLayout.layoutParams.height =
-                            changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                    } else {
-                        keyboardViewFirstLine.visibility = View.GONE
-                        keyboardViewLayout.layoutParams.height =
-                            changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                    }
+                    adjustLayoutSize()
                 } //일반키보드로 되돌아가기
             }
             keyboardBackgroundImage.layoutParams.height = keyboardViewLayout.layoutParams.height
@@ -1598,14 +1671,19 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                                 if (cursorCS != null && cursorCS.isNotEmpty()) {
                                     clearComposing()
                                 }
-                                chunjiinHangul.initState()
-                                chunjiinHangul.initChar()
-                                chunjiinHangul.initResult()
-                                naratgulHangul.initState()
-                                naratgulHangul.initChar()
-                                naratgulHangul.initResult()
+                                else {
+                                    chunjiinHangul.initState()
+                                    chunjiinHangul.initChar()
+                                    chunjiinHangul.initResult()
+                                    naratgulHangul.initState()
+                                    naratgulHangul.initChar()
+                                    naratgulHangul.initResult()
+                                    danHangul.initState()
+                                    danHangul.initChar()
+                                    danHangul.initResult()
+                                }
                                 if (myKeyboardInputMethodKR != 0) currentInputConnection.finishComposingText()
-                                qwertyHangul.composeChar(btn.text.single(), currentInputConnection)
+                                currentInputConnection.commitText(btn.text.single().toString(), 1)
                                 if (modeValue == 4 && btn in btnCharList) { //쌍자음 모드에서 아무 버튼을 누르면 기본 자모로 돌아옴
                                     modeValue = 3
                                     setLayoutByMode(fontTypeIndex, modeValue)
@@ -1616,7 +1694,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                                 }
                                 /**진동 세기 설정**/
                                 if (myKeyboardVibration == 1) {
-                                    if (btn in buttonSetVibrate) vibrateByButton(
+                                    if (btn in buttonVibrationList) vibrateByButton(
                                         myKeyboardVibrationIntensity
                                     )
                                 } else if (myKeyboardVibration == 2) {
@@ -1680,6 +1758,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 )
             }
             setOnLongClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
                 addFunction(myKeyboardSpecialKeyAddon)
                 true
             }
@@ -1721,6 +1802,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 enterFunction()
             }
             setOnLongClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
                 addFunction(myKeyboardEnterKeyAddon)
                 true
             }
@@ -1751,7 +1835,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                                     }
                                 langSaveValue = 1 //초기화
                             }
-                            1, 2, 3 -> {
+                            1, 2, 3, 4 -> {
                                 modeValue = 3
                                 setLayoutByMode(fontTypeIndex, modeValue)
                             }
@@ -1790,11 +1874,11 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 enterFunction()
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
+            }
+            setOnLongClickListener {
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
-            }
-            setOnLongClickListener {
                 addFunction(myKeyboardEnterKeyAddon)
                 true
             }
@@ -1862,6 +1946,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 )
             }
             setOnLongClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
                 addFunction(myKeyboardSpecialKeyAddon)
                 true
             }
@@ -1870,6 +1957,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             setPadding(changeDPtoPX(10).toInt())
             setOnClickListener {
                 clearComposing()
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         btnChunSPACEa.run {
@@ -1887,11 +1977,11 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 enterFunction()
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
+            }
+            setOnLongClickListener {
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
-            }
-            setOnLongClickListener {
                 addFunction(myKeyboardEnterKeyAddon)
                 true
             }
@@ -1953,12 +2043,15 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 setLayoutByMode(fontTypeIndex, modeValue)
                 for (item in btnRight) item.setTextColor(myDefaultFontColor)
                 keyboardViewLayout.layoutParams.height =
-                    keyboardViewLinearLayout.height + keyboardViewBotMargin.height + keyboardViewFirstLine.height
+                    changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
             }
             setOnLongClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
                 addFunction(myKeyboardSpecialKeyAddon)
                 true
             }
@@ -1966,6 +2059,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         btnChunInita.run {
             setPadding(changeDPtoPX(10).toInt())
             setOnClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
                 clearComposing()
             }
         }
@@ -2012,11 +2108,11 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 enterFunction()
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
+            }
+            setOnLongClickListener {
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
-            }
-            setOnLongClickListener {
                 addFunction(myKeyboardEnterKeyAddon)
                 true
             }
@@ -2075,6 +2171,127 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 )
             }
             setOnLongClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
+                addFunction(myKeyboardSpecialKeyAddon)
+                true
+            }
+        }
+        //</editor-fold>
+        //<editor-fold desc="단모음키보드">
+        for (item in danmoumCharacterArray) {
+            item.run {
+                setOnTouchListener(
+                    RepeatListener(
+                        myKeyboardHolding.toLong(),
+                        normalInterval,
+                        View.OnClickListener {
+                            danHangul.composeChar(item.text[0], currentInputConnection, inputTime = System.currentTimeMillis())
+                            if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                                myKeyboardVibrationIntensity
+                            )
+                        })
+                )
+            }
+        }
+        btnDanSPACE.run {
+            setOnTouchListener(
+                RepeatListener(
+                    myKeyboardHolding.toLong(),
+                    normalInterval,
+                    View.OnClickListener {
+                        clearComposing()
+                        currentInputConnection.commitText(" ", 1)
+                        if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                            myKeyboardVibrationIntensity
+                        )
+                    })
+            )
+        }
+        btnDanENTER.run {
+            setPadding(changeDPtoPX(10).toInt())
+            setOnClickListener {
+                enterFunction()
+                isSelectingActivated = false
+                fragCursorSelectWord.text = "선택"
+            }
+            setOnLongClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
+                addFunction(myKeyboardEnterKeyAddon)
+                true
+            }
+        }
+        btnDanDEL.run {
+            setPadding(changeDPtoPX(10).toInt())
+            setOnTouchListener(
+                RepeatListener(
+                    myKeyboardHolding.toLong(),
+                    normalInterval,
+                    View.OnClickListener {
+                        delFunction(myKeyboardInputMethodKR)
+                        if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                            myKeyboardVibrationIntensity
+                        )
+                    })
+            )
+        }
+        btnDanLANG.run {
+            setPadding(changeDPtoPX(12).toInt())
+            setOnClickListener {
+                modeValue = langSaveValue // modeValue = 1 || 2
+                setLayoutByMode(fontTypeIndex, modeValue)
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
+            }
+        }
+        btnDanDOT.run {
+            setOnTouchListener(
+                RepeatListener(
+                    myKeyboardHolding.toLong(),
+                    normalInterval,
+                    View.OnClickListener {
+                        clearComposing()
+                        currentInputConnection.commitText(".", 1)
+                        if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                            myKeyboardVibrationIntensity
+                        )
+                    })
+            )
+        }
+        btnDanCOMMA.run {
+            setOnTouchListener(
+                RepeatListener(
+                    myKeyboardHolding.toLong(),
+                    normalInterval,
+                    View.OnClickListener {
+                        clearComposing()
+                        currentInputConnection.commitText(",", 1)
+                        if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                            myKeyboardVibrationIntensity
+                        )
+                    })
+            )
+        }
+        btnDanSPECIAL.run {
+            setOnClickListener {
+                modeValue = 5
+                langSaveValue = 1
+                setLayoutByMode(fontTypeIndex, modeValue)
+                for (item in btnRight) item.setTextColor(myDefaultFontColor)
+                keyboardViewLayout.layoutParams.height =
+                    changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
+            }
+            setOnLongClickListener {
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
                 addFunction(myKeyboardSpecialKeyAddon)
                 true
             }
@@ -2104,11 +2321,11 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 enterFunction()
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
+            }
+            setOnLongClickListener {
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
-            }
-            setOnLongClickListener {
                 addFunction(myKeyboardEnterKeyAddon)
                 true
             }
@@ -2177,6 +2394,14 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                                     fragmentKeyboardChunjiinA
                                 )
                             }
+                            4 -> {
+                                modeValue = 3
+                                setLayoutByMode(fontTypeIndex, modeValue)
+                                keyboardView.keyboardViewFrameLayout.removeAllViews()
+                                keyboardView.keyboardViewFrameLayout.addView(
+                                    fragmentKeyboardDan
+                                )
+                            }
                         }
                     }
                 }
@@ -2197,8 +2422,14 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 setOnClickListener {
                     clearComposing()
                     currentInputConnection.commitText(autoTextArray[index].text.toString(), 1)
+                    if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                        myKeyboardVibrationIntensity
+                    )
                 }
                 setOnLongClickListener {
+                    if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                        myKeyboardVibrationIntensity
+                    )
                     val intent =
                         applicationContext.packageManager.getLaunchIntentForPackage("com.sb.fittingKeyboard")
                     clearComposing()
@@ -2284,6 +2515,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                     bpPage = 1
                 }
                 fragAutoNEXT.text = "$bpPage/2"
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragBpKBD.run {
@@ -2292,10 +2526,10 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 currentFragment = 0
                 keyboardView.keyboardViewFrameLayout.removeAllViews()
                 when (myKeyboardInputMethodKR) {
-                    0 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                     1 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiin)
                     2 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNaratgul)
                     3 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiinA)
+                    4 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardDan)
                     else -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                 }
                 buttonBoilerPlateTxt.setImageResource(R.drawable.ic_boilerplatetext_black)
@@ -2308,6 +2542,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                     keyboardViewLayout.layoutParams.height =
                         changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
                 }
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         //</editor-fold>
@@ -2364,17 +2601,26 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
             setPadding(changeDPtoPX(10).toInt())
             setOnClickListener {
                 moveCursorToFirst()
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragCursorLASTCHAR.run {
             setPadding(changeDPtoPX(10).toInt())
             setOnClickListener {
                 moveCursorToLast()
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragCursorSelectAll.run {
             setOnClickListener {
                 selectAll()
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragCursorSelectWord.run {
@@ -2385,6 +2631,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 ).selectionStart
                 savedCursorPosition = temp
                 selectWord()
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragCursorSelectCut.run {
@@ -2392,6 +2641,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 cutText()
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragCursorSelectCopy.run {
@@ -2399,6 +2651,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 copyText()
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragCursorSelectPaste.run {
@@ -2406,6 +2661,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 pasteText()
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         fragCursorENTER.run {
@@ -2477,6 +2735,9 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
                 setLayoutByMode(fontTypeIndex, modeValue)
+                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+                    myKeyboardVibrationIntensity
+                )
             }
         }
         //</editor-fold>
@@ -2510,15 +2771,16 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 btnSPACE.text = getString(R.string.english)
                 keyboardView.keyboardViewFrameLayout.removeAllViews()
                 keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
-                if ((myKeyboardToggleNum && currentInputEditorInfo.inputType !in inputTypeNumbers) || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                    keyboardViewFirstLine.visibility = View.VISIBLE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                } else {
-                    keyboardViewFirstLine.visibility = View.GONE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                }
+//                if ((myKeyboardToggleNum && currentInputEditorInfo.inputType !in inputTypeNumbers) || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
+//                    keyboardViewFirstLine.visibility = View.VISIBLE
+//                    keyboardViewLayout.layoutParams.height =
+//                        changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
+//                } else {
+//                    keyboardViewFirstLine.visibility = View.GONE
+//                    keyboardViewLayout.layoutParams.height =
+//                        changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
+//                }
+                adjustLayoutSize()
             }
             1 -> {
                 for (index in btnCharList.indices) {
@@ -2532,15 +2794,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 keyboardView.keyboardViewFrameLayout.removeAllViews()
                 keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                 btnSPECIAL.visibility = View.VISIBLE
-                if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                    keyboardViewFirstLine.visibility = View.VISIBLE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                } else {
-                    keyboardViewFirstLine.visibility = View.GONE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                }
+                adjustLayoutSize()
             }
             2 -> {
                 for (index in btnCharList.indices) {
@@ -2554,15 +2808,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 keyboardView.keyboardViewFrameLayout.removeAllViews()
                 keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
                 btnSPECIAL.visibility = View.VISIBLE
-                if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                    keyboardViewFirstLine.visibility = View.VISIBLE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                } else {
-                    keyboardViewFirstLine.visibility = View.GONE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                }
+                adjustLayoutSize()
             }
             3 -> {
                 for (index in btnCharList.indices) {
@@ -2580,18 +2826,11 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                         1 -> fragmentKeyboardChunjiin
                         2 -> fragmentKeyboardNaratgul
                         3 -> fragmentKeyboardChunjiinA
+                        4 -> fragmentKeyboardDan
                         else -> fragmentKeyboardQWERTY
                     }
                 )
-                if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                    keyboardViewFirstLine.visibility = View.VISIBLE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                } else {
-                    keyboardViewFirstLine.visibility = View.GONE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                }
+                adjustLayoutSize()
             }
             4 -> {
                 for (index in btnCharList.indices) {
@@ -2604,15 +2843,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 btnSHIFT.setColorFilter(myFunctionFontColor)
                 btnSHIFT.setPadding(changeDPtoPX(10).toInt())
                 btnSPACE.text = getString(R.string.korean)
-                if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
-                    keyboardViewFirstLine.visibility = View.VISIBLE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                } else {
-                    keyboardViewFirstLine.visibility = View.GONE
-                    keyboardViewLayout.layoutParams.height =
-                        changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                }
+                adjustLayoutSize()
             }
             5 -> {
                 for (index in btnCharList.indices) {
@@ -2704,6 +2935,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 1 -> chunjiinHangul.delete(cursorPosition, currentInputConnection)
                 2 -> naratgulHangul.delete(cursorPosition, currentInputConnection)
                 3 -> chunjiinHangul.delete(cursorPosition, currentInputConnection)
+                4 -> danHangul.delete(cursorPosition, currentInputConnection, inputTime = System.currentTimeMillis())
                 else -> qwertyHangul.delete(cursorPosition, currentInputConnection)
             }
         } else {
@@ -3144,6 +3376,10 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         naratgulHangul.initChar()
         naratgulHangul.composeResult()
         naratgulHangul.initResult()
+        danHangul.initState()
+        danHangul.initChar()
+        danHangul.composeResult()
+        danHangul.initResult()
     }
 
     private fun addFunction(int: Int) {
@@ -3212,12 +3448,16 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         if (currentFragment == 3) {
             keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNumber)
         } else {
-            when (myKeyboardInputMethodKR) {
-                1 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiin)
-                2 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNaratgul)
-                3 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiinA)
-                else -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
+            if (modeValue in arrayOf(3, 4)) {
+                when (myKeyboardInputMethodKR) {
+                    1 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiin)
+                    2 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNaratgul)
+                    3 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiinA)
+                    4 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardDan)
+                    else -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
+                }
             }
+            else keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
         }
         if ((myKeyboardToggleNum && currentInputEditorInfo.inputType !in inputTypeNumbers) || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
             if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
@@ -3251,5 +3491,17 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
 
     override fun getLifecycle(): Lifecycle {
         return lifecycleRegistry
+    }
+
+    private fun adjustLayoutSize() {
+        if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
+            keyboardViewFirstLine.visibility = View.VISIBLE
+            keyboardViewLayout.layoutParams.height =
+                changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
+        } else {
+            keyboardViewFirstLine.visibility = View.GONE
+            keyboardViewLayout.layoutParams.height =
+                changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
+        }
     }
 }

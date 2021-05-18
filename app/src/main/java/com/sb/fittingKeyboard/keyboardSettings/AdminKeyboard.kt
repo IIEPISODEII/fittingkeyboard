@@ -11,11 +11,7 @@ import com.sb.fittingKeyboard.R
 import kotlinx.android.synthetic.main.admin_keyboard.view.*
 
 class AdminKeyboard() : DialogFragment() {
-
-    private lateinit var mainActivity: MainActivity
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mainActivity = MainActivity()
         val dialogView = inflater.inflate(R.layout.admin_keyboard, container, false)
 
 
