@@ -1010,6 +1010,7 @@ class DANMOUM_Hangul : AutomataInterface {
                                             composedResult.toString(),
                                             1
                                         )
+                                        setFirstInputTimer(inputTime = inputTime)
                                     }
                                     'ㄺ' -> {
                                         if (secondInputTime - firstInputTime >= separationTime2) { // 갉+ㄱ -> 갉ㄱ
@@ -1136,6 +1137,7 @@ class DANMOUM_Hangul : AutomataInterface {
                                             composedResult.toString(),
                                             1
                                         )
+                                        setFirstInputTimer(inputTime = inputTime)
                                     }
                                     'ㄼ' -> {
                                         if (secondInputTime - firstInputTime >= separationTime2) { // 밟+ㅂ -> 밟ㅂ
@@ -1226,6 +1228,7 @@ class DANMOUM_Hangul : AutomataInterface {
                                             composedResult.toString(),
                                             1
                                         )
+                                        setFirstInputTimer(inputTime = inputTime)
                                     }
                                     'ㄳ' -> {
                                         if (secondInputTime - firstInputTime >= separationTime2) { // 삯+ㅅ -> 삯ㅅ
@@ -1268,6 +1271,7 @@ class DANMOUM_Hangul : AutomataInterface {
                                             composedResult.toString(),
                                             1
                                         )
+                                        setFirstInputTimer(inputTime = inputTime)
                                     }
                                     'ㄽ' -> {
                                         if (secondInputTime - firstInputTime >= separationTime2) { // 삸+ㅅ -> 삸ㅅ
@@ -1310,6 +1314,7 @@ class DANMOUM_Hangul : AutomataInterface {
                                             composedResult.toString(),
                                             1
                                         )
+                                        setFirstInputTimer(inputTime = inputTime)
                                     }
                                     'ㅄ' -> {
                                         if (secondInputTime - firstInputTime >= separationTime2) { // 삾+ㅅ -> 삾ㅅ
@@ -1389,6 +1394,7 @@ class DANMOUM_Hangul : AutomataInterface {
                                             composedResult.toString(),
                                             1
                                         )
+                                        setFirstInputTimer(inputTime = inputTime)
                                     }
                                     'ㄵ' -> {
                                         if (secondInputTime - firstInputTime >= separationTime2) { // 잕+ㅈ -> 잕ㅈ

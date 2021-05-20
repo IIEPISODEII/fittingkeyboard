@@ -1683,7 +1683,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                                     danHangul.initResult()
                                 }
                                 if (myKeyboardInputMethodKR != 0) currentInputConnection.finishComposingText()
-                                currentInputConnection.commitText(btn.text.single().toString(), 1)
+                                qwertyHangul.composeChar(btn.text.toString().single(), currentInputConnection)
                                 if (modeValue == 4 && btn in btnCharList) { //쌍자음 모드에서 아무 버튼을 누르면 기본 자모로 돌아옴
                                     modeValue = 3
                                     setLayoutByMode(fontTypeIndex, modeValue)
