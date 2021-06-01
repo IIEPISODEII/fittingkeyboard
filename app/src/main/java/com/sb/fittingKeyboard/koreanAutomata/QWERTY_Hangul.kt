@@ -1,5 +1,6 @@
 package com.sb.fittingKeyboard.koreanAutomata
 
+import android.util.Log
 import android.view.inputmethod.InputConnection
 
 class QWERTY_Hangul : AutomataInterface {
@@ -31,7 +32,6 @@ class QWERTY_Hangul : AutomataInterface {
     fun composeChar(c: Char, inputConnection: InputConnection) {
         val isInputCharFirstChar = c.toInt() in firstCharArray
         val isInputCharMiddleChar = c.toInt() in middleCharArray
-        val isInputCharFinalChar = c.toInt() in finalCharArray
         when ( state ) {
             0 -> { // 아무것도 없는 상태. 자음 혹은 모음이 들어올 수 있다
                 when {
@@ -198,8 +198,9 @@ class QWERTY_Hangul : AutomataInterface {
             }
             2 -> { // 자음+모음이 들어온 상태(중성)
                 when {
-                    isInputCharFinalChar -> {
-                        if (c in arrayOf('ㅃ', 'ㅉ', 'ㄸ')) {
+                    isInputCharFirstChar -> {
+                        if (c in arrayOf('ㅃ', 'ㄸ', 'ㅉ')) {
+                            Log.d("TAG", "???")
                             inputConnection.commitText(composedResult.toString(), 1)
                             initChar()
                             state = 1

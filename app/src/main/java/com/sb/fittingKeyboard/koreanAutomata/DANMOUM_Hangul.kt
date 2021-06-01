@@ -669,7 +669,7 @@ class DANMOUM_Hangul : AutomataInterface {
                             }
                             'ㅐ' -> {
                                 when (middleChar) {
-                                    'ㅏ' -> {
+                                    'ㅐ' -> {
                                         if (secondInputTime - firstInputTime >= separationTime1) {
                                             inputConnection.commitText(composedResult.toString(), 1)
                                             state = -1

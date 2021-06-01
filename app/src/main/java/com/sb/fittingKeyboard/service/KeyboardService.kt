@@ -2301,6 +2301,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         for (item in numberArray) {
             item.run {
                 setOnClickListener {
+                    clearComposing()
                     currentInputConnection.commitText(item.text[0].toString(), 1)
                     if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                         myKeyboardVibrationIntensity
@@ -2734,7 +2735,27 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 buttonCursorFragment.setImageResource(R.drawable.ic_move)
                 isSelectingActivated = false
                 fragCursorSelectWord.text = "선택"
-                setLayoutByMode(fontTypeIndex, modeValue)
+//                setLayoutByMode(fontTypeIndex, modeValue)
+//                if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
+//                    myKeyboardVibrationIntensity
+//                )
+                keyboardView.keyboardViewFrameLayout.removeAllViews()
+                when (myKeyboardInputMethodKR) {
+                    1 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiin)
+                    2 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardNaratgul)
+                    3 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardChunjiinA)
+                    4 -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardDan)
+                    else -> keyboardView.keyboardViewFrameLayout.addView(fragmentKeyboardQWERTY)
+                }
+                if (myKeyboardToggleNum || (!myKeyboardToggleNum && (modeValue == 5 || modeValue == 6))) {
+                    keyboardViewFirstLine.visibility = View.VISIBLE
+                    keyboardViewLayout.layoutParams.height =
+                        changeDPtoPX(220 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
+                } else {
+                    keyboardViewFirstLine.visibility = View.GONE
+                    keyboardViewLayout.layoutParams.height =
+                        changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
+                }
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
@@ -3487,6 +3508,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                 keyboardViewLinearLayout.layoutParams.height + myKeyboardBotMargin
         }
         keyboardBackgroundImage.layoutParams.height = keyboardViewLayout.layoutParams.height
+
     }
 
     override fun getLifecycle(): Lifecycle {
