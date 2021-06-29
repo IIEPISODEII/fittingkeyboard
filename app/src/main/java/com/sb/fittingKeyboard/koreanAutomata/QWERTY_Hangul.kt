@@ -200,7 +200,6 @@ class QWERTY_Hangul : AutomataInterface {
                 when {
                     isInputCharFirstChar -> {
                         if (c in arrayOf('ㅃ', 'ㄸ', 'ㅉ')) {
-                            Log.d("TAG", "???")
                             inputConnection.commitText(composedResult.toString(), 1)
                             initChar()
                             state = 1
@@ -229,6 +228,7 @@ class QWERTY_Hangul : AutomataInterface {
                             inputConnection.setComposingText(c.toString(), 1)
                         }
                     }
+
                     else -> {
                         inputConnection.finishComposingText()
                         state = 0
