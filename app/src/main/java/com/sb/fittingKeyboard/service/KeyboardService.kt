@@ -27,10 +27,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.koreanAutomata.CHUNJIIN_Hangul
-import com.sb.fittingKeyboard.koreanAutomata.NARATGUL_Hangul
-import com.sb.fittingKeyboard.koreanAutomata.QWERTY_Hangul
-import com.sb.fittingKeyboard.koreanAutomata.DANMOUM_Hangul
+import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
+import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
+import com.sb.fittingKeyboard.koreanAutomata.HanguelQWERTY
+import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
 import com.sb.fittingKeyboard.keyboardSettings.SetTheme
 import kotlinx.android.synthetic.main.fragment_bp.view.*
 import kotlinx.android.synthetic.main.fragment_cursor.view.*
@@ -52,10 +52,10 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var lifecycleRegistry: LifecycleRegistry
 
     private lateinit var theme: SetTheme
-    private lateinit var qwertyHangul: QWERTY_Hangul
-    private lateinit var chunjiinHangul: CHUNJIIN_Hangul
-    private lateinit var naratgulHangul: NARATGUL_Hangul
-    private lateinit var danHangul: DANMOUM_Hangul
+    private lateinit var hanguelQwerty: HanguelQWERTY
+    private lateinit var hanguelChunjiin: HanguelChunjiin
+    private lateinit var hanguelNaratgul: HanguelNARATGUL
+    private lateinit var danHangul: HanguelDanmoum
     private lateinit var fragmentKeyboardQWERTY: FrameLayout
     private lateinit var fragmentKeyboardChunjiin: FrameLayout
     private lateinit var fragmentKeyboardNaratgul: FrameLayout
@@ -349,10 +349,10 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
 
     override fun onCreate() {
         super.onCreate()
-        qwertyHangul = QWERTY_Hangul()
-        naratgulHangul = NARATGUL_Hangul()
-        chunjiinHangul = CHUNJIIN_Hangul()
-        danHangul = DANMOUM_Hangul()
+        hanguelQwerty = HanguelQWERTY()
+        hanguelNaratgul = HanguelNARATGUL()
+        hanguelChunjiin = HanguelChunjiin()
+        danHangul = HanguelDanmoum()
         lifecycleRegistry = LifecycleRegistry(this)
         lifecycleRegistry.currentState = Lifecycle.State.CREATED
 
@@ -1606,7 +1606,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                             normalInterval,
                             View.OnClickListener {
                                 clearComposing()
-                                qwertyHangul.composeChar(' ', currentInputConnection)
+                                hanguelQwerty.composeChar(' ', currentInputConnection)
                                 if (myKeyboardAutoModeChange) { //스페이스바로 자동으로 모드 전환
                                     when (modeValue) {
                                         5, 6 -> {
@@ -1649,7 +1649,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                             normalInterval,
                             View.OnClickListener {
                                 clearComposing()
-                                qwertyHangul.composeChar(
+                                hanguelQwerty.composeChar(
                                     btnCOMMA.text.single(),
                                     currentInputConnection
                                 )
@@ -1672,18 +1672,18 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                                     clearComposing()
                                 }
                                 else {
-                                    chunjiinHangul.initState()
-                                    chunjiinHangul.initChar()
-                                    chunjiinHangul.initResult()
-                                    naratgulHangul.initState()
-                                    naratgulHangul.initChar()
-                                    naratgulHangul.initResult()
+                                    hanguelChunjiin.initState()
+                                    hanguelChunjiin.initChar()
+                                    hanguelChunjiin.initResult()
+                                    hanguelNaratgul.initState()
+                                    hanguelNaratgul.initChar()
+                                    hanguelNaratgul.initResult()
                                     danHangul.initState()
                                     danHangul.initChar()
                                     danHangul.initResult()
                                 }
                                 if (myKeyboardInputMethodKR != 0) currentInputConnection.finishComposingText()
-                                qwertyHangul.composeChar(btn.text.toString().single(), currentInputConnection)
+                                hanguelQwerty.composeChar(btn.text.toString().single(), currentInputConnection)
                                 if (modeValue == 4 && btn in btnCharList) { //쌍자음 모드에서 아무 버튼을 누르면 기본 자모로 돌아옴
                                     modeValue = 3
                                     setLayoutByMode(fontTypeIndex, modeValue)
@@ -1852,7 +1852,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         for (item in chunjiinCharacterArray) {
             item.run {
                 setOnClickListener {
-                    chunjiinHangul.composeChar(item.text[0], currentInputConnection)
+                    hanguelChunjiin.composeChar(item.text[0], currentInputConnection)
                     if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                         myKeyboardVibrationIntensity
                     )
@@ -2070,7 +2070,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         for (item in naratgulCharacterArray) {
             item.run {
                 setOnClickListener {
-                    naratgulHangul.composeChar(item.text[0], currentInputConnection)
+                    hanguelNaratgul.composeChar(item.text[0], currentInputConnection)
                     if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                         myKeyboardVibrationIntensity
                     )
@@ -2079,7 +2079,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         }
         btnNaSHIFT.run {
             setOnClickListener {
-                naratgulHangul.composeChar('ᆢ', currentInputConnection)
+                hanguelNaratgul.composeChar('ᆢ', currentInputConnection)
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
@@ -2087,7 +2087,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         }
         btnNaADD.run {
             setOnClickListener {
-                naratgulHangul.composeChar('ᆞ', currentInputConnection)
+                hanguelNaratgul.composeChar('ᆞ', currentInputConnection)
                 if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton(
                     myKeyboardVibrationIntensity
                 )
@@ -2475,7 +2475,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                     normalInterval,
                     View.OnClickListener {
                         clearComposing()
-                        qwertyHangul.composeChar(' ', currentInputConnection)
+                        hanguelQwerty.composeChar(' ', currentInputConnection)
                         if (myKeyboardAutoModeChange) { //스페이스바로 자동으로 모드 전환
                             when (modeValue) {
                                 5, 6 -> {
@@ -2681,7 +2681,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                     isSelectingActivated = false
                     fragCursorSelectWord.text = "선택"
                     clearComposing()
-                    qwertyHangul.composeChar(' ', currentInputConnection)
+                    hanguelQwerty.composeChar(' ', currentInputConnection)
                     if (myKeyboardAutoModeChange) { //스페이스바로 자동으로 모드 전환
                         when (modeValue) {
                             5, 6 -> {
@@ -2952,12 +2952,12 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         val cursorPosition = currentInputConnection?.getSelectedText(GET_TEXT_WITH_STYLES)?.get(0)
         if (TextUtils.isEmpty(selectedText)) {
             when (inputMethodKR) {
-                0 -> qwertyHangul.delete(cursorPosition, currentInputConnection)
-                1 -> chunjiinHangul.delete(cursorPosition, currentInputConnection)
-                2 -> naratgulHangul.delete(cursorPosition, currentInputConnection)
-                3 -> chunjiinHangul.delete(cursorPosition, currentInputConnection)
+                0 -> hanguelQwerty.delete(cursorPosition, currentInputConnection)
+                1 -> hanguelChunjiin.delete(cursorPosition, currentInputConnection)
+                2 -> hanguelNaratgul.delete(cursorPosition, currentInputConnection)
+                3 -> hanguelChunjiin.delete(cursorPosition, currentInputConnection)
                 4 -> danHangul.delete(cursorPosition, currentInputConnection, inputTime = System.currentTimeMillis())
-                else -> qwertyHangul.delete(cursorPosition, currentInputConnection)
+                else -> hanguelQwerty.delete(cursorPosition, currentInputConnection)
             }
         } else {
             clearComposing()
@@ -3385,18 +3385,18 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
 
     private fun clearComposing() {
         currentInputConnection.finishComposingText()
-        qwertyHangul.initState()
-        qwertyHangul.initChar()
-        qwertyHangul.composeResult()
-        qwertyHangul.initResult()
-        chunjiinHangul.initState()
-        chunjiinHangul.initChar()
-        chunjiinHangul.composeResult()
-        chunjiinHangul.initResult()
-        naratgulHangul.initState()
-        naratgulHangul.initChar()
-        naratgulHangul.composeResult()
-        naratgulHangul.initResult()
+        hanguelQwerty.initState()
+        hanguelQwerty.initChar()
+        hanguelQwerty.composeResult()
+        hanguelQwerty.initResult()
+        hanguelChunjiin.initState()
+        hanguelChunjiin.initChar()
+        hanguelChunjiin.composeResult()
+        hanguelChunjiin.initResult()
+        hanguelNaratgul.initState()
+        hanguelNaratgul.initChar()
+        hanguelNaratgul.composeResult()
+        hanguelNaratgul.initResult()
         danHangul.initState()
         danHangul.initChar()
         danHangul.composeResult()
