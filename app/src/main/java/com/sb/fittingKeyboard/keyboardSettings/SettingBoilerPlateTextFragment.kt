@@ -32,8 +32,8 @@ class SettingBoilerPlateTextFragment : Fragment() {
         ), myView.findViewById(R.id.setting_autoText_15), myView.findViewById(R.id.setting_autoText_16))
 
 
-        for ( i in settingAutoTextArray.indices ) {
-            settingAutoTextArray[i].addTextChangedListener(object: TextWatcher {
+        settingAutoTextArray.forEach {
+            it.addTextChangedListener(object: TextWatcher {
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
 

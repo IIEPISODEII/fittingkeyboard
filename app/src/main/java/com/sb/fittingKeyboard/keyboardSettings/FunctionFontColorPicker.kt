@@ -22,7 +22,6 @@ class FunctionFontColorPicker() : DialogFragment() {
             fontColor = color
         }
     }
-    val companion = Companion
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

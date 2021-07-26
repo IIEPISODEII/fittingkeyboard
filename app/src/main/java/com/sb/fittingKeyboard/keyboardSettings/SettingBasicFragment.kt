@@ -10,6 +10,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
 
 class SettingBasicFragment : Fragment() {
 

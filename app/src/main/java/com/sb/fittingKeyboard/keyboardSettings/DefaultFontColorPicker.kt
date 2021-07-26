@@ -14,15 +14,13 @@ import top.defaults.colorpicker.ColorPickerView
 import java.util.*
 
 
-class DefaultFontColorPicker() : DialogFragment() {
+class DefaultFontColorPicker : DialogFragment() {
     companion object {
         var fontColor: Int = 0xFF000000.toInt()
         fun setFontColour(color: Int) {
             fontColor = color
         }
     }
-
-    val companion = Companion
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -1,8 +1,9 @@
 package com.sb.fittingKeyboard.koreanAutomata
 
-open class Automata {
+abstract class Automata {
     val BASE_INT: Int = 0xAC00
     val nullChar: Char = '\u0000'
+    var currChar = nullChar
     val firstCharArray: Array<Int> = arrayOf(
         0x3131,
         0x3132,

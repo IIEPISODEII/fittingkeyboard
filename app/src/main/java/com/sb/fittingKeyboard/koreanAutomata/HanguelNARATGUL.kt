@@ -1,13 +1,11 @@
 package com.sb.fittingKeyboard.koreanAutomata
 
-import android.view.inputmethod.InputConnection
-
-class HanguelNARATGUL : Automata() {
-    fun composeChar(c: Char, inputConnection: InputConnection) {
+object HanguelNARATGUL : Automata() {
+    fun composeChar(inputChar: Char): UpdatedChars {
         when (state) {
-            0 -> when (c) {
+            0 -> when (inputChar) {
                 'ㄱ', 'ㄴ', 'ㄹ', 'ㅁ', 'ㅅ', 'ㅇ' -> {
-                    firstChar = c
+                    firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
                     finalChar = nullChar
@@ -15,30 +13,30 @@ class HanguelNARATGUL : Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    currChar = firstChar
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ᆞ', 'ᆢ' -> {
-
+                    return UpdatedChars(null, null)
                 }
                 'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                     firstChar = nullChar
                     firstSubChar = nullChar
-                    middleChar = c
+                    middleChar = inputChar
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
                     state = -1
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 else -> {
-                    initChar()
-                    composedResult = nullChar
-                    inputConnection.commitText(c.toString(), 1)
+                    return UpdatedChars(null, null)
                 }
             }
             -1 -> when (middleChar) {
-                'ㅏ' -> when (c) {
+                'ㅏ' -> when (inputChar) {
                     'ㅏ' -> {
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -47,18 +45,20 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -68,7 +68,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -78,63 +79,68 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅐ', 'ㅔ', 'ㅒ', 'ㅖ', 'ㅙ', 'ㅚ', 'ㅞ', 'ㅟ', 'ㅢ' -> when (c) {
+                'ㅐ', 'ㅔ', 'ㅒ', 'ㅖ', 'ㅙ', 'ㅚ', 'ㅞ', 'ㅟ', 'ㅢ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅑ' -> when (c) {
+                'ㅑ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -144,7 +150,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -154,25 +161,27 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅓ' -> when (c) {
+                'ㅓ' -> when (inputChar) {
                     'ㅏ' -> {
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -181,18 +190,20 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -202,7 +213,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -212,35 +224,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅕ' -> when (c) {
+                'ㅕ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -250,10 +265,11 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -263,22 +279,24 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅗ' -> when (c) {
+                'ㅗ' -> when (inputChar) {
                     'ㅏ' -> {
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -287,7 +305,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅗ' -> {
                         firstChar = nullChar
@@ -297,18 +316,20 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -318,7 +339,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -328,35 +350,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅛ' -> when (c) {
+                'ㅛ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -366,35 +391,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅘ' -> when (c) {
+                'ㅘ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -404,25 +432,27 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅜ' -> when (c) {
+                'ㅜ' -> when (inputChar) {
                     'ㅏ' -> {
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -431,29 +461,30 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅗ' -> {
-                        inputConnection.finishComposingText()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.finishComposingText()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -463,7 +494,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -473,35 +505,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅠ' -> when (c) {
+                'ㅠ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -511,35 +546,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅝ' -> when (c) {
+                'ㅝ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -549,35 +587,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅡ' -> when (c) {
+                'ㅡ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstChar = nullChar
@@ -587,61 +628,66 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅣ' -> when (c) {
+                'ㅣ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
-                        inputConnection.commitText(middleChar.toString(), 1)
+                        val temp = middleChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 else -> {
                     initChar()
                     state = 0
                     composedResult = nullChar
-                    inputConnection.commitText(c.toString(), 1)
+                    currChar = nullChar
+                    return UpdatedChars(inputChar.toString(), null)
                 }
             }
             1 -> when (firstChar) {
-                'ㄱ' -> when (c) {
+                'ㄱ' -> when (inputChar) {
                     'ᆞ' -> {
                         when (firstSubChar) {
                             nullChar -> {
@@ -652,7 +698,8 @@ class HanguelNARATGUL : Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                currChar = firstChar
+                                return UpdatedChars(null, firstChar.toString())
                             }
                             'ㅈ' -> {
                                 firstChar = 'ㄱ'
@@ -662,9 +709,10 @@ class HanguelNARATGUL : Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(
-                                    firstChar.toString() + firstSubChar.toString(),
-                                    1
+                                currChar = firstSubChar
+                                return UpdatedChars(
+                                    null,
+                                    firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㅊ' -> {
@@ -675,10 +723,11 @@ class HanguelNARATGUL : Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                currChar = firstChar
+                                return UpdatedChars(null, firstChar.toString())
                             }
                             else -> {
-
+                                return UpdatedChars(null, null)
                             }
                         }
                     }
@@ -691,7 +740,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅆ' -> {
                             firstChar = 'ㄳ'
@@ -701,32 +751,35 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                     }
-                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when ( firstSubChar ) {
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (firstSubChar) {
                         nullChar -> {
                             state = 2
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅆ' -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
+                            val temp = firstChar.toString()
                             state = 2
                             firstChar = firstSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
-                    'ㅅ' -> when ( firstSubChar ) {
+                    'ㅅ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄳ'
                             firstSubChar = nullChar
@@ -735,48 +788,52 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
-                    else -> when ( firstSubChar ) {
+                    else -> when (firstSubChar) {
                         nullChar -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㄲ' -> when (c) {
+                'ㄲ' -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> {
                         firstChar = 'ㄱ'
@@ -786,30 +843,33 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄳ' -> when (c) {
+                'ㄳ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄱ'
                         firstSubChar = 'ㅈ'
@@ -818,13 +878,11 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = "ㄱ"
                         firstChar = 'ㅆ'
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -832,33 +890,36 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄱ", 1)
+                        val temp = firstChar.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄴ' -> when (c) {
-                    'ᆞ' -> when ( firstSubChar ) {
+                'ㄴ' -> when (inputChar) {
+                    'ᆞ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄷ'
                             firstSubChar = nullChar
@@ -867,7 +928,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅅ' -> {
                             firstChar = 'ㄵ'
@@ -877,7 +939,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅇ' -> {
                             firstChar = 'ㄶ'
@@ -887,7 +950,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅊ' -> {
                             firstChar = 'ㄴ'
@@ -897,13 +961,14 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
-                    'ᆢ' -> when ( firstSubChar ) {
+                    'ᆢ' -> when (firstSubChar) {
                         'ㅉ' -> {
                             firstChar = 'ㄵ'
                             firstSubChar = nullChar
@@ -912,13 +977,14 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
-                    'ㅅ' -> when ( firstSubChar ) {
+                    'ㅅ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄴ'
                             firstSubChar = 'ㅅ'
@@ -927,22 +993,26 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString() + firstSubChar.toString(), 1)
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
-
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
-                    'ㅇ' -> when ( firstSubChar ) {
+                    'ㅇ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄴ'
                             firstSubChar = 'ㅇ'
@@ -951,68 +1021,77 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString() + firstSubChar.toString(), 1)
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
-                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when ( firstSubChar ) {
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (firstSubChar) {
                         nullChar -> {
                             state = 2
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
+                            val temp = firstChar.toString()
                             state = 2
                             firstChar = firstSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
-                    else -> when ( firstSubChar ) {
+                    else -> when (firstSubChar) {
                         nullChar -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㄵ' -> when (c) {
+                'ㄵ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄴ'
                         firstSubChar = 'ㅊ'
@@ -1021,10 +1100,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㄴ'
@@ -1034,32 +1111,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString()+firstSubChar.toString(), 1)
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄴ", 1)
+                        val temp = 'ㄴ'.toString()
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄶ' -> when (c) {
+                'ㄶ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄴ'
                         firstSubChar = 'ㅇ'
@@ -1068,38 +1148,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄴ", 1)
+                        val temp = "ㄴ"
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄷ' -> when (c) {
+                'ㄷ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅌ'
                         firstSubChar = nullChar
@@ -1108,7 +1188,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㄸ'
@@ -1118,32 +1199,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄸ' -> when (c) {
+                'ㄸ' -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> {
                         firstChar = 'ㄷ'
@@ -1153,33 +1237,36 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄹ' -> when (c) {
-                    'ᆞ' -> when ( firstSubChar ) {
+                'ㄹ' -> when (inputChar) {
+                    'ᆞ' -> when (firstSubChar) {
                         nullChar -> {
-
+                            return UpdatedChars(null, null)
                         }
                         'ㅇ' -> {
                             firstChar = 'ㅀ'
@@ -1189,7 +1276,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅈ' -> {
                             firstChar = 'ㄹ'
@@ -1199,9 +1287,10 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(
-                                firstChar.toString() + firstSubChar.toString(),
-                                1
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
                             )
                         }
                         'ㅊ' -> {
@@ -1212,7 +1301,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅋ' -> {
                             firstChar = 'ㄺ'
@@ -1222,16 +1312,14 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
-                    'ᆢ' -> when ( firstSubChar ) {
-                        nullChar -> {
-
-                        }
+                    'ᆢ' -> when (firstSubChar) {
                         'ㄲ' -> {
                             firstChar = 'ㄺ'
                             firstSubChar = nullChar
@@ -1240,7 +1328,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅃ' -> {
                             firstChar = 'ㄼ'
@@ -1250,7 +1339,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅆ' -> {
                             firstChar = 'ㄽ'
@@ -1260,13 +1350,14 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
-                    'ㄱ' -> when ( firstSubChar ) {
+                    'ㄱ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄺ'
                             firstSubChar = nullChar
@@ -1275,21 +1366,23 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
-                    'ㅁ' -> when ( firstSubChar ) {
+                    'ㅁ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄻ'
                             firstSubChar = nullChar
@@ -1298,21 +1391,23 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
-                    'ㅅ' -> when ( firstSubChar ) {
+                    'ㅅ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄽ'
                             firstSubChar = nullChar
@@ -1321,21 +1416,23 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
-                    'ㅇ' -> when ( firstSubChar ) {
+                    'ㅇ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㄹ'
                             firstSubChar = 'ㅇ'
@@ -1344,68 +1441,80 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString() + firstSubChar.toString(), 1)
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString() + firstSubChar.toString(), 1)
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                temp,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                     }
-                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when ( firstSubChar ) {
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (firstSubChar) {
                         nullChar -> {
                             state = 2
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
+                            val temp = firstChar.toString()
                             state = 2
                             firstChar = firstSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
-                    else -> when ( firstSubChar ) {
+                    else -> when (firstSubChar) {
                         nullChar -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㄺ' -> when (c) {
+                'ㄺ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅋ'
@@ -1414,10 +1523,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㄹ'
@@ -1427,35 +1534,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄻ' -> when (c) {
+                'ㄻ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄼ'
                         firstSubChar = nullChar
@@ -1464,35 +1571,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄼ' -> when (c) {
+                'ㄼ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄿ'
                         firstSubChar = nullChar
@@ -1501,7 +1611,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㄹ'
@@ -1511,35 +1622,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄽ' -> when (c) {
+                'ㄽ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅈ'
@@ -1548,10 +1659,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㄹ'
@@ -1561,35 +1670,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄿ' -> when (c) {
+                'ㄿ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅁ'
@@ -1598,35 +1707,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString()+firstSubChar.toString(), 1)
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅀ' -> when (c) {
+                'ㅀ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄹ'
                         firstSubChar = 'ㅇ'
@@ -1635,38 +1747,38 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅁ' -> when (c) {
+                'ㅁ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
@@ -1675,34 +1787,37 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅂ' -> when (c) {
-                    'ᆞ' -> when ( firstSubChar ) {
+                'ㅂ' -> when (inputChar) {
+                    'ᆞ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㅍ'
                             firstSubChar = nullChar
@@ -1711,7 +1826,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅈ' -> {
                             firstChar = 'ㅂ'
@@ -1721,7 +1837,11 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString()+firstSubChar.toString(), 1)
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                         'ㅊ' -> {
                             firstChar = 'ㅄ'
@@ -1731,13 +1851,14 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
-                    'ᆢ' -> when ( firstSubChar ) {
+                    'ᆢ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㅃ'
                             firstSubChar = nullChar
@@ -1746,7 +1867,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅆ' -> {
                             firstChar = 'ㅄ'
@@ -1756,7 +1878,8 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         'ㅈ' -> {
                             firstChar = 'ㅂ'
@@ -1766,7 +1889,11 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString()+firstSubChar.toString(), 1)
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                         'ㅉ' -> {
                             firstChar = 'ㅂ'
@@ -1776,35 +1903,41 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString()+firstSubChar.toString(), 1)
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
-                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when ( firstSubChar ) {
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (firstSubChar) {
                         nullChar -> {
                             state = 2
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
+                            val temp = firstChar.toString()
                             state = 2
                             firstChar = firstSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
-                    'ㅅ' -> when ( firstSubChar ) {
+                    'ㅅ' -> when (firstSubChar) {
                         nullChar -> {
                             firstChar = 'ㅄ'
                             firstSubChar = nullChar
@@ -1813,48 +1946,52 @@ class HanguelNARATGUL : Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
-                    else -> when ( firstSubChar ) {
+                    else -> when (firstSubChar) {
                         nullChar -> {
-                            inputConnection.commitText(firstChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(firstChar.toString()+firstSubChar.toString(), 1)
-                            firstChar = c
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㅃ' -> when (c) {
+                'ㅃ' -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> {
                         firstChar = 'ㅂ'
@@ -1864,30 +2001,33 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅄ' -> when (c) {
+                'ㅄ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅂ'
                         firstSubChar = 'ㅈ'
@@ -1896,10 +2036,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
-                        )
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㅂ'
@@ -1909,32 +2047,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString() + firstSubChar.toString(), 1)
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅅ' -> when (c) {
+                'ㅅ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
@@ -1943,7 +2084,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㅆ'
@@ -1953,32 +2095,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅆ' -> when (c) {
+                'ㅆ' -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> {
                         firstChar = 'ㅅ'
@@ -1988,30 +2133,33 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅇ' -> when (c) {
+                'ㅇ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
@@ -2020,33 +2168,36 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅈ' -> when (c) {
+                'ㅈ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅊ'
                         firstSubChar = nullChar
@@ -2055,7 +2206,8 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
                         firstChar = 'ㅉ'
@@ -2065,32 +2217,35 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅉ' -> when (c) {
+                'ㅉ' -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> {
                         firstChar = 'ㅈ'
@@ -2100,30 +2255,33 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅊ' -> when (c) {
+                'ㅊ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
@@ -2132,33 +2290,36 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅋ' -> when (c) {
+                'ㅋ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
@@ -2167,33 +2328,36 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅌ' -> when (c) {
+                'ㅌ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㄷ'
                         firstSubChar = nullChar
@@ -2202,33 +2366,36 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅍ' -> when (c) {
+                'ㅍ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
@@ -2237,33 +2404,36 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅎ' -> when (c) {
+                'ㅎ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstChar = 'ㅇ'
                         firstSubChar = nullChar
@@ -2272,51 +2442,56 @@ class HanguelNARATGUL : Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         state = 2
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
-                        firstChar = c
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 else -> {
                     initChar()
                     state = 0
                     composedResult = nullChar
-                    inputConnection.commitText(c.toString(), 1)
+                    currChar = nullChar
+                    return UpdatedChars(inputChar.toString(), null)
                 }
             }
             2 -> when (middleChar) {
-                'ㅏ' -> when (c) {
+                'ㅏ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅑ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ' -> {
                         firstSubChar = nullChar
@@ -2324,19 +2499,21 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2344,54 +2521,59 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅐ', 'ㅔ', 'ㅒ', 'ㅖ', 'ㅙ', 'ㅚ', 'ㅞ', 'ㅟ', 'ㅢ' -> when (c) {
+                'ㅐ', 'ㅔ', 'ㅒ', 'ㅖ', 'ㅙ', 'ㅚ', 'ㅞ', 'ㅟ', 'ㅢ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅑ' -> when (c) {
+                'ㅑ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2399,7 +2581,8 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2407,40 +2590,44 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅓ' -> when (c) {
+                'ㅓ' -> when (inputChar) {
                     'ㅏ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅏ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
-                    'ㅗ', 'ㅡ'  -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                    'ㅗ', 'ㅡ' -> {
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2448,7 +2635,8 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2456,32 +2644,35 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅕ' -> when (c) {
+                'ㅕ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2489,10 +2680,11 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2500,25 +2692,28 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅗ' -> when (c) {
+                'ㅗ' -> when (inputChar) {
                     'ㅏ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅘ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅗ' -> {
                         firstSubChar = nullChar
@@ -2526,19 +2721,21 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2546,7 +2743,8 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2554,32 +2752,35 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅛ' -> when (c) {
+                'ㅛ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2587,32 +2788,35 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅘ' -> when (c) {
+                'ㅘ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2620,28 +2824,31 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅜ' -> when (c) {
+                'ㅜ' -> when (inputChar) {
                     'ㅏ' -> {
                         firstSubChar = nullChar
                         middleChar = 'ㅝ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅗ' -> {
                         firstSubChar = nullChar
@@ -2649,19 +2856,21 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2669,7 +2878,8 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2677,32 +2887,35 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅠ' -> when (c) {
+                'ㅠ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2710,32 +2923,35 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅝ' -> when (c) {
+                'ㅝ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2743,32 +2959,35 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅡ' -> when (c) {
+                'ㅡ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅣ' -> {
                         firstSubChar = nullChar
@@ -2776,70 +2995,77 @@ class HanguelNARATGUL : Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
-                'ㅣ' -> when (c) {
+                'ㅣ' -> when (inputChar) {
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        currChar = middleChar
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ', 'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         state = 3
                         firstSubChar = nullChar
-                        finalChar = c
+                        finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 else -> {
                     initChar()
                     state = 0
                     composedResult = nullChar
-                    inputConnection.commitText(c.toString(), 1)
+                    currChar = nullChar
+                    return UpdatedChars(inputChar.toString(), null)
                 }
             }
             3 -> when (finalChar) {
-                'ㄱ' -> when (c) {
+                'ㄱ' -> when (inputChar) {
                     'ᆞ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅋ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄱ'
                             finalSubChar = 'ㅊ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅊ' -> {
@@ -2847,10 +3073,11 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄳ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
                     'ᆢ' -> when (finalSubChar) {
@@ -2859,16 +3086,18 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄲ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄱ'
                             finalSubChar = 'ㅉ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅆ' -> {
@@ -2876,46 +3105,50 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄳ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄱ'
                             finalSubChar = 'ㅈ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (finalSubChar) {
                         nullChar -> {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄱ'
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ㅅ' -> when (finalSubChar) {
@@ -2924,99 +3157,101 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄳ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     else -> when (finalSubChar) {
                         nullChar -> {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㄲ' -> when (c) {
+                'ㄲ' -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄱ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄲ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.finishComposingText()
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄳ' -> when (c) {
+                'ㄳ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄱ'
                         finalSubChar = 'ㅈ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ᆢ' -> {
@@ -3024,83 +3259,91 @@ class HanguelNARATGUL : Automata() {
                         finalChar = 'ㄱ'
                         finalSubChar = 'ㅆ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄱ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.finishComposingText()
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄴ' -> when (c) {
+                'ㄴ' -> when (inputChar) {
                     'ᆞ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄷ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅅ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄵ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅇ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄶ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅊ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅅ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                     }
                     'ᆢ' -> when (finalSubChar) {
                         nullChar -> {
-
+                            return UpdatedChars(null, null)
                         }
                         'ㅅ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅆ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅆ' -> {
@@ -3108,9 +3351,10 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅅ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅉ' -> {
@@ -3118,10 +3362,11 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄵ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
                     'ㅅ' -> when (finalSubChar) {
@@ -3130,24 +3375,23 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅅ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     'ㅇ' -> when (finalSubChar) {
@@ -3156,89 +3400,93 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄴ'
                             finalSubChar = 'ㅇ'
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString() + finalSubChar.toString(), 1)
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
+                            )
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (finalSubChar) {
                         nullChar -> {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄴ'
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     else -> when (finalSubChar) {
                         nullChar -> {
-                            inputConnection.finishComposingText()
+                            val temp = composedResult.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㄵ' -> when (c) {
+                'ㄵ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄴ'
                         finalSubChar = 'ㅊ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ᆢ' -> {
@@ -3246,145 +3494,161 @@ class HanguelNARATGUL : Automata() {
                         finalChar = 'ㄴ'
                         finalSubChar = 'ㅉ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄴ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄶ' -> when (c) {
+                'ㄶ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄴ'
                         finalSubChar = 'ㅇ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄴ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄷ' -> when (c) {
+                'ㄷ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅌ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = 'ㄸ'
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString() + finalSubChar.toString(), 1)
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
+                        )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄷ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄹ' -> when (c) {
+                'ㄹ' -> when (inputChar) {
                     'ᆞ' -> when (finalSubChar) {
                         nullChar -> {
-
+                            return UpdatedChars(null, null)
                         }
                         'ㅋ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄺ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅇ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅀ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅊ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅊ' -> {
@@ -3392,45 +3656,50 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄽ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
                     'ᆢ' -> when (finalSubChar) {
                         nullChar -> {
-
+                            return UpdatedChars(null, null)
                         }
                         'ㄲ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄺ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅃ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄼ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅆ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄽ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅉ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅉ' -> {
@@ -3438,13 +3707,14 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅈ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
                     'ㄱ' -> when (finalSubChar) {
@@ -3453,19 +3723,21 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄺ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(composedResult.toString() + finalSubChar.toString(), 1)
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     'ㅁ' -> when (finalSubChar) {
@@ -3474,22 +3746,21 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄻ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     'ㅅ' -> when (finalSubChar) {
@@ -3498,22 +3769,21 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄽ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     'ㅇ' -> when (finalSubChar) {
@@ -3522,92 +3792,93 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄹ'
                             finalSubChar = 'ㅇ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (finalSubChar) {
                         nullChar -> {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄹ'
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     else -> when (finalSubChar) {
                         nullChar -> {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㄺ' -> when (c) {
+                'ㄺ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅋ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ᆢ' -> {
@@ -3615,124 +3886,138 @@ class HanguelNARATGUL : Automata() {
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㄲ'
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString() + finalSubChar.toString(), 1)
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
+                        )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄻ' -> when (c) {
+                'ㄻ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄼ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄼ' -> when (c) {
+                'ㄼ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄿ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅃ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄽ' -> when (c) {
+                'ㄽ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅈ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ᆢ' -> {
@@ -3740,168 +4025,182 @@ class HanguelNARATGUL : Automata() {
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅆ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄿ' -> when (c) {
+                'ㄿ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄻ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅀ' -> when (c) {
+                'ㅀ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄹ'
                         finalSubChar = 'ㅇ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅁ' -> when (c) {
+                'ㅁ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅂ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅂ' -> when (c) {
+                'ㅂ' -> when (inputChar) {
                     'ᆞ' -> when (finalSubChar) {
                         nullChar -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅍ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅈ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅂ'
                             finalSubChar = 'ㅊ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅊ' -> {
@@ -3909,10 +4208,11 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㅄ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
                     'ᆢ' -> when (finalSubChar) {
@@ -3921,9 +4221,10 @@ class HanguelNARATGUL : Automata() {
                             finalChar = nullChar
                             finalSubChar = 'ㅃ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         'ㅆ' -> {
@@ -3931,46 +4232,50 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㅄ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅂ'
                             finalSubChar = 'ㅈ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                         else -> {
-
+                            return UpdatedChars(null, null)
                         }
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> when (finalSubChar) {
                         nullChar -> {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㅂ'
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
-                            middleChar = c
+                            middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ㅅ' -> when (finalSubChar) {
@@ -3979,60 +4284,62 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㅄ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         else -> {
-                            inputConnection.commitText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
-                            )
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                     else -> when (finalSubChar) {
                         nullChar -> {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                         else -> {
-                            inputConnection.commitText(composedResult.toString() + finalSubChar, 1)
+                            val temp = composedResult.toString() + finalSubChar.toString()
                             state = 1
-                            firstChar = c
+                            firstChar = inputChar
                             firstSubChar = nullChar
                             middleChar = nullChar
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString(), 1)
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
                         }
                     }
                 }
-                'ㅄ' -> when (c) {
+                'ㅄ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅂ'
                         finalSubChar = 'ㅈ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ᆢ' -> {
@@ -4040,384 +4347,416 @@ class HanguelNARATGUL : Automata() {
                         finalChar = 'ㅂ'
                         finalSubChar = 'ㅆ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = 'ㅂ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅅ' -> when (c) {
+                'ㅅ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅈ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅆ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅆ' -> when (c) {
+                'ㅆ' -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅅ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅆ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅇ' -> when (c) {
+                'ㅇ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅎ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅇ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅈ' -> when (c) {
+                'ㅈ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅊ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
                         firstSubChar = nullChar
                         finalChar = nullChar
                         finalSubChar = 'ㅉ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        currChar = finalSubChar
+                        return UpdatedChars(
+                            null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅊ' -> when (c) {
+                'ㅊ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅅ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅊ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅋ' -> when (c) {
+                'ㅋ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄱ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅋ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅌ' -> when (c) {
+                'ㅌ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㄴ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅌ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅍ' -> when (c) {
+                'ㅍ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅁ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㅎ' -> when (c) {
+                'ㅎ' -> when (inputChar) {
                     'ᆞ' -> {
                         firstSubChar = nullChar
                         finalChar = 'ㅇ'
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆢ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                nullChar -> when (c) {
+                nullChar -> when (inputChar) {
                     'ᆞ' -> {
-
+                        return UpdatedChars(null, null)
                     }
                     'ᆢ' -> when (finalSubChar) {
                         'ㄸ' -> {
@@ -4425,68 +4764,72 @@ class HanguelNARATGUL : Automata() {
                             finalChar = 'ㄷ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅃ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅂ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅉ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅈ'
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
                         }
                     }
                     'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = finalSubChar
                         firstSubChar = nullChar
-                        middleChar = c
+                        middleChar = inputChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(composedResult.toString() + finalSubChar.toString(), 1)
+                        val temp = composedResult.toString() + finalSubChar.toString()
                         state = 1
-                        firstChar = c
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 else -> {
                     initChar()
                     state = 0
                     composedResult = nullChar
-                    inputConnection.commitText(c.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(inputChar.toString(), null)
                 }
             }
         }
+        return UpdatedChars(null, null)
     } //한글 오토마타
 
-    fun delete(c: Char?, inputConnection: InputConnection) {
-        if (c == null) {
-            inputConnection.commitText("", 1)
-        }
+    fun delete(): UpdatedChars {
         when (state) {
             0 -> {
                 initState()
                 initChar()
                 initResult()
-                inputConnection.commitText("", 1)
-                inputConnection.deleteSurroundingText(1, 0)
+                currChar = nullChar
+                return UpdatedChars(null, null)
             }
             -1 -> when (middleChar) {
                 'ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅠ', 'ㅡ', 'ㅣ' -> {
@@ -4494,68 +4837,79 @@ class HanguelNARATGUL : Automata() {
                     middleChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText("", 1)
+                    currChar = nullChar
+                    return UpdatedChars(null, null)
                 }
                 'ㅐ' -> {
                     middleChar = 'ㅏ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅘ', 'ㅚ' -> {
                     middleChar = 'ㅗ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅜ' -> {
                     state = 0
                     middleChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText("", 1)
+                    currChar = nullChar
+                    return UpdatedChars(null, null)
                 }
                 'ㅝ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅢ' -> {
                     middleChar = 'ㅡ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    currChar = middleChar
+                    return UpdatedChars(null, middleChar.toString())
                 }
             }
             1 -> when (firstChar) {
@@ -4564,43 +4918,49 @@ class HanguelNARATGUL : Automata() {
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    currChar = firstChar
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㄵ', 'ㄶ' -> {
                     firstChar = 'ㄴ'
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    currChar = firstChar
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄿ', 'ㅀ' -> {
                     firstChar = 'ㄹ'
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    currChar = firstChar
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㅄ' -> {
                     firstChar = 'ㅂ'
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    currChar = firstChar
+                    return UpdatedChars(null, firstChar.toString())
                 }
-                else -> when ( firstSubChar ) {
+                else -> when (firstSubChar) {
                     nullChar -> {
                         state = 0
                         firstChar = nullChar
                         firstSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.commitText("", 1)
+                        currChar = nullChar
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         firstSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        currChar = firstChar
+                        return UpdatedChars(null, firstChar.toString())
                     }
                 }
             }
@@ -4613,49 +4973,56 @@ class HanguelNARATGUL : Automata() {
                     finalSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    currChar = firstChar
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㅐ' -> {
                     middleChar = 'ㅏ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅘ', 'ㅚ' -> {
                     middleChar = 'ㅗ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅜ' -> {
                     state = 1
@@ -4665,72 +5032,81 @@ class HanguelNARATGUL : Automata() {
                     finalSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    currChar = firstChar
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㅝ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅢ' -> {
                     middleChar = 'ㅡ'
                     finalChar = nullChar
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
                 }
             }
-            3 -> {
-                when (finalChar) {
-                    'ㄳ' -> {
-                        finalChar = 'ㄱ'
+            3 -> when (finalChar) {
+                'ㄳ' -> {
+                    finalChar = 'ㄱ'
+                    finalSubChar = nullChar
+                    composeResult()
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
+                }
+                'ㄵ', 'ㄶ' -> {
+                    finalChar = 'ㄴ'
+                    finalSubChar = nullChar
+                    composeResult()
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
+                }
+                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㅀ' -> {
+                    finalChar = 'ㄹ'
+                    finalSubChar = nullChar
+                    composeResult()
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
+                }
+                'ㅄ' -> {
+                    finalChar = 'ㅂ'
+                    finalSubChar = nullChar
+                    composeResult()
+                    currChar = composedResult
+                    return UpdatedChars(null, composedResult.toString())
+                }
+                else -> when (finalSubChar) {
+                    nullChar -> {
+                        state = 2
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
-                    'ㄵ', 'ㄶ' -> {
-                        finalChar = 'ㄴ'
+                    else -> {
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
-                    }
-                    'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㅀ' -> {
-                        finalChar = 'ㄹ'
-                        finalSubChar = nullChar
-                        composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
-                    }
-                    'ㅄ' -> {
-                        finalChar = 'ㅂ'
-                        finalSubChar = nullChar
-                        composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
-                    }
-                    else -> when ( finalSubChar ) {
-                        nullChar -> {
-                            state = 2
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
-                        }
-                        else -> {
-                            finalSubChar = nullChar
-                            composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
-                        }
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
             }
         }
+        return UpdatedChars(null, null)
     } //delete 발생
 }

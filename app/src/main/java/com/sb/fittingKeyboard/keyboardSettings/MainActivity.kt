@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
 

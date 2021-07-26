@@ -148,8 +148,6 @@ class ThemeRecyclerAdapter(private val themeList: ArrayList<KeyboardThemes>) : R
     var newPosition = 0
     var oldPosition = 0
 
-    private val themeFragment = SettingThemeFragment()
-
     fun setPosition(position: Int) {
         this.newPosition = position
     }

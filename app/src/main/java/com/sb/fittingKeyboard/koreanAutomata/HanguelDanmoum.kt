@@ -2,10 +2,10 @@ package com.sb.fittingKeyboard.koreanAutomata
 
 import android.view.inputmethod.InputConnection
 
-class HanguelDanmoum : Automata() {
+object HanguelDanmoum : Automata() {
     fun composeChar(c: Char, inputConnection: InputConnection, inputTime: Long) { // 한글완성 오토마타
-        val isInputCharFirstChar = firstCharArray.indexOf(c.toInt()) >= 0
-        val isInputCharMiddleChar = middleCharArray.indexOf(c.toInt()) >= 0
+        val isInputCharFirstChar = c.toInt() in firstCharArray
+        val isInputCharMiddleChar = c.toInt() in middleCharArray
 
         when (state) {
             0 -> { //아무것도 없는 상태. 자음 혹은 모음이 들어올 수 있다
