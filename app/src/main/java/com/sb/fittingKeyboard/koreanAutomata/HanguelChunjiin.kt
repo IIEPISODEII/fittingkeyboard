@@ -11,8 +11,8 @@ object HanguelChunjiin: Automata() {
 
     fun composeChar(inputChar: Char): UpdatedChars {
         when (state) {
-            0 -> when {
-                inputChar in rrr -> {
+            0 -> when (inputChar) {
+                in rrr -> {
                     firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
@@ -23,7 +23,7 @@ object HanguelChunjiin: Automata() {
                     state = 1
                     return UpdatedChars(null, firstChar.toString())
                 }
-                inputChar in ss -> {
+                in ss -> {
                     firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
@@ -34,7 +34,7 @@ object HanguelChunjiin: Automata() {
                     state = 1
                     return UpdatedChars(null, firstChar.toString())
                 }
-                inputChar in ee -> {
+                in ee -> {
                     firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
@@ -45,7 +45,7 @@ object HanguelChunjiin: Automata() {
                     state = 1
                     return UpdatedChars(null, firstChar.toString())
                 }
-                inputChar in qqq -> {
+                in qqq -> {
                     firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
@@ -56,7 +56,7 @@ object HanguelChunjiin: Automata() {
                     state = 1
                     return UpdatedChars(null, firstChar.toString())
                 }
-                inputChar in ttt -> {
+                in ttt -> {
                     firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
@@ -67,7 +67,7 @@ object HanguelChunjiin: Automata() {
                     state = 1
                     return UpdatedChars(null, firstChar.toString())
                 }
-                inputChar in www -> {
+                in www -> {
                     firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
@@ -78,7 +78,7 @@ object HanguelChunjiin: Automata() {
                     state = 1
                     return UpdatedChars(null, firstChar.toString())
                 }
-                inputChar in dd -> {
+                in dd -> {
                     firstChar = inputChar
                     firstSubChar = nullChar
                     middleChar = nullChar
@@ -89,7 +89,7 @@ object HanguelChunjiin: Automata() {
                     state = 1
                     return UpdatedChars(null, firstChar.toString())
                 }
-                inputChar == 'ㅣ' -> {
+                'ㅣ' -> {
                     firstChar = nullChar
                     firstSubChar = nullChar
                     middleChar = inputChar
@@ -100,7 +100,7 @@ object HanguelChunjiin: Automata() {
                     state = -1
                     return UpdatedChars(null, middleChar.toString())
                 }
-                inputChar == 'ᆞ' -> {
+                'ᆞ' -> {
                     firstChar = nullChar
                     firstSubChar = nullChar
                     middleChar = inputChar
@@ -111,7 +111,7 @@ object HanguelChunjiin: Automata() {
                     state = -1
                     return UpdatedChars(null, middleChar.toString())
                 }
-                inputChar == 'ㅡ' -> {
+                'ㅡ' -> {
                     firstChar = nullChar
                     firstSubChar = nullChar
                     middleChar = inputChar
@@ -217,7 +217,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅡ' -> when (inputChar) {
@@ -262,7 +262,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ᆢ' -> when (inputChar) {
@@ -980,7 +980,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -990,13 +990,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1004,7 +1003,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄳ' -> when (inputChar) {
@@ -1016,13 +1015,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄱ", 1)
+                        val temp = "ㄱ"
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
@@ -1030,10 +1028,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄱ", 1)
+                        val temp = "ㄱ"
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
@@ -1042,13 +1040,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1056,7 +1053,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄴ' -> when (inputChar) {
@@ -1068,7 +1065,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅅ' -> {
                         when (firstSubChar) {
@@ -1080,7 +1077,7 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                             'ㅆ', nullChar -> {
                                 firstChar = 'ㄴ'
@@ -1090,9 +1087,8 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(
-                                    firstChar.toString() + firstSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                         }
@@ -1104,16 +1100,15 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                             'ㅉ', nullChar -> {
                                 firstChar = 'ㄴ'
                                 firstSubChar = 'ㅈ'
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(
-                                    firstChar.toString() + firstSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                         }
@@ -1125,7 +1120,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1135,13 +1130,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1149,7 +1143,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄵ' -> when (inputChar) {
@@ -1161,13 +1155,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄴ", 1)
+                        val temp = "ㄴ"
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
@@ -1175,10 +1168,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄴ", 1)
+                        val temp = "ㄴ"
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
@@ -1187,13 +1180,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1201,7 +1193,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄶ' -> when (inputChar) {
@@ -1213,13 +1205,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄴ", 1)
+                        val temp = "ㄴ"
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
@@ -1227,23 +1218,22 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄴ", 1)
+                        val temp = "ㄴ"
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1251,7 +1241,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄷ' -> when (inputChar) {
@@ -1263,7 +1253,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -1272,7 +1262,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1282,13 +1272,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1296,7 +1285,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄸ' -> when (inputChar) {
@@ -1308,7 +1297,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -1317,7 +1306,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1327,13 +1316,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1341,7 +1329,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄹ' -> when (inputChar) {
@@ -1355,9 +1343,8 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(
-                                    firstChar.toString() + firstSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㄲ', nullChar -> {
@@ -1368,7 +1355,7 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                         }
                     }
@@ -1380,7 +1367,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅂ' -> {
                         when (firstSubChar) {
@@ -1392,9 +1379,8 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(
-                                    firstChar.toString() + firstSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㅍ', nullChar -> {
@@ -1405,7 +1391,7 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                         }
                     }
@@ -1419,7 +1405,7 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                             nullChar -> {
                                 firstChar = 'ㄽ'
@@ -1429,7 +1415,7 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                         }
                     }
@@ -1443,7 +1429,7 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                             nullChar -> {
                                 firstChar = 'ㄹ'
@@ -1453,9 +1439,8 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(
-                                    firstChar.toString() + firstSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                         }
@@ -1467,7 +1452,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1477,13 +1462,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1491,7 +1475,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄺ' -> when (inputChar) {
@@ -1503,13 +1487,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
@@ -1517,10 +1500,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
@@ -1529,13 +1512,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1543,7 +1525,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄻ' -> when (inputChar) {
@@ -1555,13 +1537,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
@@ -1569,10 +1550,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
@@ -1581,13 +1562,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1595,7 +1575,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄼ' -> when (inputChar) {
@@ -1607,13 +1587,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
@@ -1621,10 +1600,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
@@ -1633,13 +1612,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1647,7 +1625,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄽ' -> when (inputChar) {
@@ -1659,10 +1637,10 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
@@ -1670,10 +1648,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
@@ -1682,13 +1660,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1696,7 +1673,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅀ' -> when (inputChar) {
@@ -1708,13 +1685,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
@@ -1722,10 +1698,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㄹ", 1)
+                        val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
@@ -1734,13 +1710,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1748,7 +1723,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅁ' -> when (inputChar) {
@@ -1760,7 +1735,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -1769,7 +1744,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1779,13 +1754,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1793,7 +1767,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅂ' -> when (inputChar) {
@@ -1805,7 +1779,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅅ' -> {
                         when (firstSubChar) {
@@ -1817,9 +1791,8 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(
-                                    firstChar.toString() + firstSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㅆ', nullChar -> {
@@ -1830,7 +1803,7 @@ object HanguelChunjiin: Automata() {
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(null, firstChar.toString())
                             }
                         }
                     }
@@ -1841,7 +1814,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1851,13 +1824,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1865,7 +1837,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅃ' -> when (inputChar) {
@@ -1877,7 +1849,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -1886,7 +1858,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1896,13 +1868,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1910,7 +1881,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅄ' -> when (inputChar) {
@@ -1922,13 +1893,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + firstSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText("ㅂ", 1)
+                        val temp = "ㅂ"
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
@@ -1936,10 +1906,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText("ㅂ", 1)
+                        val temp = "ㅂ"
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
@@ -1948,13 +1918,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1962,7 +1931,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅅ' -> when (inputChar) {
@@ -1974,7 +1943,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -1983,7 +1952,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -1993,13 +1962,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2007,7 +1975,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅆ' -> when (inputChar) {
@@ -2019,7 +1987,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2028,7 +1996,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2038,13 +2006,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2052,7 +2019,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅇ' -> when (inputChar) {
@@ -2064,7 +2031,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2073,7 +2040,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2083,13 +2050,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2097,7 +2063,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅈ' -> when (inputChar) {
@@ -2109,7 +2075,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2118,7 +2084,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2128,13 +2094,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2142,7 +2107,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅉ' -> when (inputChar) {
@@ -2154,7 +2119,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2163,7 +2128,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2173,13 +2138,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2187,7 +2151,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅊ' -> when (inputChar) {
@@ -2199,7 +2163,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2208,7 +2172,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2218,13 +2182,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2232,7 +2195,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅋ' -> when (inputChar) {
@@ -2244,7 +2207,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2253,7 +2216,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2263,13 +2226,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2277,7 +2239,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅌ' -> when (inputChar) {
@@ -2289,7 +2251,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2298,7 +2260,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2308,13 +2270,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2322,7 +2283,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅍ' -> when (inputChar) {
@@ -2334,7 +2295,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2343,7 +2304,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2353,13 +2314,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2367,7 +2327,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅎ' -> when (inputChar) {
@@ -2379,7 +2339,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
                         state = 2
@@ -2388,7 +2348,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2398,13 +2358,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString(), 1)
+                        val temp = firstChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -2412,20 +2371,20 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 else -> {
                     initChar()
                     state = 0
                     composedResult = nullChar
-                    inputConnection.commitText(inputChar.toString(), 1)
+                    return UpdatedChars(inputChar.toString(), null)
                 }
             }
             2 -> when (middleChar) {
                 'ㅐ', 'ㅒ', 'ㅔ', 'ㅖ', 'ㅙ', 'ㅛ', 'ㅞ', 'ㅟ', 'ㅢ' -> when (inputChar) {
                     'ㅣ', 'ᆞ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstSubChar = nullChar
                         middleChar = inputChar
@@ -2433,7 +2392,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2441,7 +2400,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅏ' -> when (inputChar) {
@@ -2451,7 +2410,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2459,10 +2418,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2471,7 +2430,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2479,7 +2438,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅑ' -> when (inputChar) {
@@ -2489,7 +2448,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2497,10 +2456,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2509,7 +2468,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2517,7 +2476,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅓ' -> when (inputChar) {
@@ -2527,10 +2486,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2539,7 +2498,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2547,7 +2506,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅕ' -> when (inputChar) {
@@ -2557,10 +2516,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2569,7 +2528,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2577,7 +2536,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅗ' -> when (inputChar) {
@@ -2587,10 +2546,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2599,7 +2558,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2607,7 +2566,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅘ' -> when (inputChar) {
@@ -2617,10 +2576,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2629,7 +2588,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2637,12 +2596,12 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅚ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2651,7 +2610,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2659,7 +2618,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
                         state = 3
@@ -2667,7 +2626,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅜ' -> when (inputChar) {
@@ -2677,7 +2636,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2685,10 +2644,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2697,7 +2656,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2705,7 +2664,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅝ' -> when (inputChar) {
@@ -2715,10 +2674,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2727,10 +2686,10 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2739,7 +2698,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2747,7 +2706,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅠ' -> when (inputChar) {
@@ -2757,7 +2716,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2765,10 +2724,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2777,7 +2736,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2785,7 +2744,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅡ' -> when (inputChar) {
@@ -2795,7 +2754,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2803,10 +2762,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstSubChar = nullChar
                         middleChar = inputChar
@@ -2814,7 +2773,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2822,12 +2781,12 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅣ' -> when (inputChar) {
                     'ㅣ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2836,7 +2795,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2844,10 +2803,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅡ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = -1
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -2856,7 +2815,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(middleChar.toString(), 1)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         state = 3
@@ -2864,7 +2823,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = inputChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ᆞ' -> when (inputChar) {
@@ -2874,7 +2833,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2883,9 +2842,8 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㅡ' -> {
@@ -2894,10 +2852,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString() + middleChar.toString(), 1)
+                        val temp = firstChar.toString() + middleChar.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -2906,7 +2864,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ᆢ' -> when (inputChar) {
@@ -2916,7 +2874,7 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
                         firstSubChar = nullChar
@@ -2925,9 +2883,8 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㅡ' -> {
@@ -2936,10 +2893,10 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
-                        inputConnection.commitText(firstChar.toString() + middleChar.toString(), 1)
+                        val temp = firstChar.toString() + middleChar.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -2948,21 +2905,21 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 else -> {
                     initChar()
                     state = 0
                     composedResult = nullChar
-                    inputConnection.commitText(inputChar.toString(), 1)
+                    return UpdatedChars(inputChar.toString(), null)
                 }
             }
             3 -> when (finalChar) {
                 'ㄱ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -2970,23 +2927,23 @@ object HanguelChunjiin: Automata() {
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄱ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ᆞ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -2994,18 +2951,18 @@ object HanguelChunjiin: Automata() {
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(firstChar.toString() + middleChar.toString(), 1)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄱ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(firstChar.toString() + middleChar.toString(), 1)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         }
                     }
                     'ㄱ' -> {
@@ -3013,10 +2970,10 @@ object HanguelChunjiin: Automata() {
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3024,7 +2981,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> when (finalSubChar) {
                         nullChar, 'ㅆ' -> {
@@ -3032,16 +2989,15 @@ object HanguelChunjiin: Automata() {
                             firstSubChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(null, composedResult.toString())
                         }
                         'ㅎ' -> {
                             finalChar = 'ㄱ'
                             firstSubChar = nullChar
                             finalSubChar = 'ㅆ'
                             composeResult()
-                            inputConnection.setComposingText(
-                                composedResult.toString() + finalSubChar.toString(),
-                                1
+                            return UpdatedChars(null,
+                                composedResult.toString() + finalSubChar.toString()
                             )
                         }
                     }
@@ -3050,32 +3006,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄲ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄲ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3083,46 +3038,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㄱ' -> {
                         finalChar = 'ㄱ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㄳ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄱ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄱ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3130,23 +3084,22 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㄱ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅎ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
                 'ㄴ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -3154,23 +3107,23 @@ object HanguelChunjiin: Automata() {
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄴ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ᆞ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -3178,18 +3131,18 @@ object HanguelChunjiin: Automata() {
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(firstChar.toString() + middleChar.toString(), 1)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄴ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(firstChar.toString() + middleChar.toString(), 1)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         }
                     }
                     'ㄴ' -> {
@@ -3197,10 +3150,10 @@ object HanguelChunjiin: Automata() {
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㄱ', 'ㄷ', 'ㅂ', 'ㅇ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3208,7 +3161,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         when (finalSubChar) {
@@ -3217,16 +3170,15 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             nullChar, 'ㅆ' -> {
                                 finalChar = 'ㄴ'
                                 firstSubChar = nullChar
                                 finalSubChar = 'ㅅ'
                                 composeResult()
-                                inputConnection.setComposingText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    composedResult.toString() + finalSubChar.toString()
                                 )
                             }
                         }
@@ -3238,16 +3190,15 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             'ㅊ' -> {
                                 finalChar = 'ㄴ'
                                 firstSubChar = nullChar
                                 finalSubChar = 'ㅉ'
                                 composeResult()
-                                inputConnection.setComposingText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    composedResult.toString() + finalSubChar.toString()
                                 )
                             }
                         }
@@ -3257,32 +3208,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄴ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄴ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3290,16 +3240,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅈ' -> {
                         finalChar = 'ㄴ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅊ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -3307,32 +3256,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄴ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄴ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3340,16 +3288,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㄴ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅆ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -3357,28 +3304,27 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄷ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄷ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄷ' -> {
@@ -3386,10 +3332,10 @@ object HanguelChunjiin: Automata() {
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㄱ', 'ㄴ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3397,13 +3343,13 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄹ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -3411,23 +3357,23 @@ object HanguelChunjiin: Automata() {
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄹ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ᆞ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -3436,23 +3382,21 @@ object HanguelChunjiin: Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(
-                                firstChar.toString() + middleChar.toString(),
-                                1
+                            return UpdatedChars(temp,
+                                firstChar.toString() + middleChar.toString()
                             )
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㄹ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(
-                                firstChar.toString() + middleChar.toString(),
-                                1
+                            return UpdatedChars(temp,
+                                firstChar.toString() + middleChar.toString()
                             )
                         }
                     }
@@ -3463,16 +3407,15 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             'ㅋ' -> {
                                 finalChar = 'ㄹ'
                                 firstSubChar = nullChar
                                 finalSubChar = 'ㄲ'
                                 composeResult()
-                                inputConnection.setComposingText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    composedResult.toString() + finalSubChar.toString()
                                 )
                             }
                         }
@@ -3482,7 +3425,7 @@ object HanguelChunjiin: Automata() {
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㅂ' -> {
                         when (finalSubChar) {
@@ -3491,16 +3434,15 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             'ㅍ' -> {
                                 finalChar = 'ㄹ'
                                 firstSubChar = nullChar
                                 finalSubChar = 'ㅃ'
                                 composeResult()
-                                inputConnection.setComposingText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    composedResult.toString() + finalSubChar.toString()
                                 )
                             }
                         }
@@ -3512,7 +3454,7 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                         }
                     }
@@ -3523,22 +3465,21 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             nullChar, 'ㅁ' -> {
                                 finalChar = 'ㄹ'
                                 firstSubChar = nullChar
                                 finalSubChar = 'ㅇ'
                                 composeResult()
-                                inputConnection.setComposingText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    composedResult.toString() + finalSubChar.toString()
                                 )
                             }
                         }
                     }
                     'ㄷ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3546,39 +3487,38 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄺ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㄱ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3586,16 +3526,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㄱ' -> {
                         finalChar = 'ㄹ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅋ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -3603,32 +3542,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3636,16 +3574,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅇ' -> {
                         finalChar = 'ㄹ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅇ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -3653,32 +3590,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅂ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3686,16 +3622,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅂ' -> {
                         finalChar = 'ㄹ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅍ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -3703,32 +3638,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3736,46 +3670,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㅀ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㄿ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3783,16 +3716,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅂ' -> {
                         finalChar = 'ㄹ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅃ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -3800,32 +3732,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㄹ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3833,16 +3764,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㄹ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅆ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -3850,32 +3780,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3883,20 +3812,20 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅇ' -> {
                         finalChar = 'ㅇ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅂ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -3904,23 +3833,23 @@ object HanguelChunjiin: Automata() {
                             finalChar = nullChar
                             finalSubChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㅂ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(composedResult.toString(), 1)
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ᆞ' -> {
                         if (finalSubChar != nullChar) {
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = finalSubChar
                             firstSubChar = nullChar
@@ -3929,18 +3858,18 @@ object HanguelChunjiin: Automata() {
                             finalSubChar = nullChar
                             composeResult()
                             composedResult = nullChar
-                            inputConnection.setComposingText(firstChar.toString() + middleChar.toString(), 1)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         } else {
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.commitText(composedResult.toString(), 1)
+                            val temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㅂ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            inputConnection.setComposingText(firstChar.toString() + middleChar.toString(), 1)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         }
                     }
                     'ㅂ' -> {
@@ -3948,10 +3877,10 @@ object HanguelChunjiin: Automata() {
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -3959,7 +3888,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         when (finalSubChar) {
@@ -3968,16 +3897,15 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             'ㅎ' -> {
                                 finalChar = 'ㅂ'
                                 firstSubChar = nullChar
                                 finalSubChar = 'ㅆ'
                                 composeResult()
-                                inputConnection.setComposingText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
+                                return UpdatedChars(null,
+                                    composedResult.toString() + finalSubChar.toString()
                                 )
                             }
                         }
@@ -3987,32 +3915,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = 'ㅂ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = 'ㅂ'
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4020,16 +3947,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㅂ'
                         firstSubChar = nullChar
                         finalSubChar = 'ㅎ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -4037,32 +3963,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4070,46 +3995,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㅎ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅆ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅆ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅆ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4117,46 +4041,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㅎ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅇ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅇ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅇ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4164,46 +4087,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅇ' -> {
                         finalChar = 'ㅁ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅈ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4211,46 +4133,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅈ' -> {
                         finalChar = 'ㅊ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅊ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅊ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅊ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4258,16 +4179,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅈ' -> {
                         finalChar = nullChar
                         firstSubChar = nullChar
                         finalSubChar = 'ㅉ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -4275,32 +4195,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅋ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅋ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4308,46 +4227,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㄱ' -> {
                         finalChar = 'ㄲ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 'ㅌ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅌ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅌ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4355,16 +4273,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㄷ' -> {
                         finalChar = nullChar
                         firstSubChar = nullChar
                         finalSubChar = 'ㄸ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -4372,32 +4289,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4405,16 +4321,15 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅂ' -> {
                         finalChar = nullChar
                         firstSubChar = nullChar
                         finalSubChar = 'ㅃ'
                         composeResult()
-                        inputConnection.setComposingText(
-                            composedResult.toString() + finalSubChar.toString(),
-                            1
+                        return UpdatedChars(null,
+                            composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
@@ -4422,32 +4337,31 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(
-                            firstChar.toString() + middleChar.toString(),
-                            1
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        inputConnection.commitText(composedResult.toString(), 1)
+                        val temp = composedResult.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
@@ -4455,14 +4369,14 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         finalChar = 'ㅆ'
                         firstSubChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
                 nullChar -> when (finalSubChar) {
@@ -4473,32 +4387,29 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             'ㅣ', 'ᆞ', 'ㅡ' -> {
                                 finalChar = nullChar
                                 composeResult()
-                                inputConnection.commitText(composedResult.toString(), 1)
+                                val temp = composedResult.toString()
                                 state = 2
                                 firstChar = finalSubChar
                                 middleChar = inputChar
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                             else -> {
-                                inputConnection.commitText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
-                                )
+                                val temp = composedResult.toString() + finalSubChar.toString()
                                 state = 1
                                 firstChar = inputChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                         }
                     }
@@ -4509,32 +4420,29 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             'ㅣ', 'ᆞ', 'ㅡ' -> {
                                 finalChar = nullChar
                                 composeResult()
-                                inputConnection.commitText(composedResult.toString(), 1)
+                                val temp = composedResult.toString()
                                 state = 2
                                 firstChar = finalSubChar
                                 middleChar = inputChar
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                             else -> {
-                                inputConnection.commitText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
-                                )
+                                val temp = composedResult.toString() + finalSubChar.toString()
                                 state = 1
                                 firstChar = inputChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                         }
                     }
@@ -4545,32 +4453,29 @@ object HanguelChunjiin: Automata() {
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(null, composedResult.toString())
                             }
                             'ㅣ', 'ᆞ', 'ㅡ' -> {
                                 finalChar = nullChar
                                 composeResult()
-                                inputConnection.commitText(composedResult.toString(), 1)
+                                val temp = composedResult.toString()
                                 state = 2
                                 firstChar = finalSubChar
                                 middleChar = inputChar
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
-                                inputConnection.setComposingText(composedResult.toString(), 1)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                             else -> {
-                                inputConnection.commitText(
-                                    composedResult.toString() + finalSubChar.toString(),
-                                    1
-                                )
+                                val temp = composedResult.toString() + finalSubChar.toString()
                                 state = 1
                                 firstChar = inputChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
-                                inputConnection.setComposingText(firstChar.toString(), 1)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                         }
                     }
@@ -4579,115 +4484,112 @@ object HanguelChunjiin: Automata() {
                     initChar()
                     state = 0
                     composedResult = nullChar
-                    inputConnection.commitText(inputChar.toString(), 1)
+                    return UpdatedChars(inputChar.toString(), null)
                 }
             }
         }
+        return UpdatedChars(null, null)
     }
 
-    fun delete(c: Char?, inputConnection: InputConnection) {
-        if (c == null) {
-            inputConnection.commitText("", 1)
-        }
+    fun delete(): UpdatedChars {
         when (state) {
             0 -> {
                 initState()
                 initChar()
                 initResult()
-                inputConnection.commitText("", 1)
-                inputConnection.deleteSurroundingText(1, 0)
+                return UpdatedChars(null, null)
             }
             -1 -> when (middleChar) {
                 'ㅏ' -> {
                     middleChar = 'ㅣ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅐ', 'ㅑ' -> {
                     middleChar = 'ㅏ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅓ', 'ㅗ', 'ᆢ' -> {
                     middleChar = 'ᆞ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅕ', 'ㅛ' -> {
                     middleChar = 'ᆢ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅘ' -> {
                     middleChar = 'ㅚ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅚ' -> {
                     middleChar = 'ㅗ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅜ', 'ㅢ' -> {
                     middleChar = 'ㅡ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅠ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅝ' -> {
                     middleChar = 'ㅠ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(middleChar.toString(), 1)
+                    return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅡ', 'ㅣ', 'ᆞ' -> {
                     state = 0
                     middleChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.commitText("", 1)
+                    return UpdatedChars(null, null)
                 }
                 }
             1 -> when (firstChar) {
@@ -4696,28 +4598,28 @@ object HanguelChunjiin: Automata() {
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㄵ', 'ㄶ' -> {
                     firstChar = 'ㄴ'
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㅀ' -> {
                     firstChar = 'ㄹ'
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 'ㅄ' -> {
                     firstChar = 'ㅂ'
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    return UpdatedChars(null, firstChar.toString())
                 }
                 else -> when ( firstSubChar ) {
                     nullChar -> {
@@ -4726,13 +4628,13 @@ object HanguelChunjiin: Automata() {
                         firstSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.commitText("", 1)
+                        return UpdatedChars(null, null)
                     }
                     else -> {
                         firstSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        inputConnection.setComposingText(firstChar.toString(), 1)
+                        return UpdatedChars(null, firstChar.toString())
                     }
                 }
             }
@@ -4740,87 +4642,85 @@ object HanguelChunjiin: Automata() {
                 'ㅏ' -> {
                     middleChar = 'ㅣ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅐ', 'ㅑ' -> {
                     middleChar = 'ㅏ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅓ', 'ㅗ', 'ᆢ' -> {
                     middleChar = 'ᆞ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(
-                        firstChar.toString() + middleChar.toString(),
-                        1
+                    return UpdatedChars(null,
+                        firstChar.toString() + middleChar.toString()
                     )
                 }
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅕ', 'ㅛ' -> {
                     middleChar = 'ᆢ'
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(
-                        firstChar.toString() + middleChar.toString(),
-                        1
+                    return UpdatedChars(null,
+                        firstChar.toString() + middleChar.toString()
                     )
                 }
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅘ' -> {
                     middleChar = 'ㅚ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅚ' -> {
                     middleChar = 'ㅗ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅜ', 'ㅢ' -> {
                     middleChar = 'ㅡ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅠ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅝ' -> {
                     middleChar = 'ㅠ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅡ', 'ㅣ', 'ᆞ' -> {
                     state = 1
                     middleChar = nullChar
                     composeResult()
                     composedResult = nullChar
-                    inputConnection.setComposingText(firstChar.toString(), 1)
+                    return UpdatedChars(null, firstChar.toString())
                 }
             }
             3 -> when (finalChar) {
@@ -4828,25 +4728,25 @@ object HanguelChunjiin: Automata() {
                     finalChar = 'ㄱ'
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㄵ', 'ㄶ' -> {
                     finalChar = 'ㄴ'
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㅀ' -> {
                     finalChar = 'ㄹ'
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅄ' -> {
                     finalChar = 'ㅂ'
                     finalSubChar = nullChar
                     composeResult()
-                    inputConnection.setComposingText(composedResult.toString(), 1)
+                    return UpdatedChars(null, composedResult.toString())
                 }
                 else -> when ( finalSubChar ) {
                     nullChar -> {
@@ -4854,15 +4754,17 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
                         finalSubChar = nullChar
                         composeResult()
-                        inputConnection.setComposingText(composedResult.toString(), 1)
+                        return UpdatedChars(null, composedResult.toString())
                     }
                 }
             }
         }
+        return UpdatedChars(null, null)
     }
 }
+

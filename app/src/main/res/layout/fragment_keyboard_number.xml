@@ -1,208 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="kbviewmodel"
+            type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+
+        <variable
+            name="kbservice"
+            type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/numBtn1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/numBtn2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                <Button
+                    android:id="@+id/numBtn1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
-            <Button
-                android:id="@+id/numBtn3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                <Button
+                    android:id="@+id/numBtn2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
-            <ImageButton
-                android:id="@+id/numBtnDEL"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
+                <Button
+                    android:id="@+id/numBtn3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <ImageButton
+                    android:id="@+id/numBtnDEL"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_delete_black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:elevation="2dp"
-                android:padding="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/keyic_delete_black" />
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/numBtn4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtn5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtn6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtnSPACE"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myFunctionFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/numBtn7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtn8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="#000000"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtn9"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <ImageButton
+                    android:id="@+id/numBtnENTER"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_enter_black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/numBtnLANG"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight=".5"
+                    android:elevation="2dp"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_language_black" />
+
+                <Button
+                    android:id="@+id/numBtnSTAR"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:text="*"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtn0"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtnSHOP"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myDefaultFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtnDOT"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myFunctionFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+
+                <Button
+                    android:id="@+id/numBtnCOMMA"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbservice.myFunctionFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-
-            <Button
-                android:id="@+id/numBtn4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/numBtn5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/numBtn6"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/numBtnSPACE"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-
-            <Button
-                android:id="@+id/numBtn7"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/numBtn8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/numBtn9"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <ImageButton
-                android:id="@+id/numBtnENTER"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1"
-                android:elevation="2dp"
-                android:padding="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/keyic_enter_black" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/numBtnLANG"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight=".5"
-                android:elevation="2dp"
-                android:padding="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/keyic_language_black" />
-
-            <Button
-                android:id="@+id/numBtnSTAR"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".5"
-                android:text="*"
-                android:textColor="#000000"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/numBtn0"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-            <Button
-                android:id="@+id/numBtnSHOP"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/numBtnDOT"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".5"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/numBtnCOMMA"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".5"
-                android:textAllCaps="false"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </LinearLayout>
-</FrameLayout>
+    </FrameLayout>
+</layout>

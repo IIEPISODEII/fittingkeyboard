@@ -23,10 +23,12 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.databinding.KeyLayoutNormalBinding
 import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
 import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
 import com.sb.fittingKeyboard.koreanAutomata.HanguelQWERTY
@@ -45,9 +47,10 @@ import kotlin.properties.Delegates
 
 
 @Suppress("DEPRECATION")
-class KeyboardService : InputMethodService(), LifecycleOwner {
+class InputMethodServiceView : InputMethodService(), LifecycleOwner {
 
     //<editor-fold desc="변수 선언">
+    private lateinit var kbBinding: KeyLayoutNormalBinding
     private val inputTypeNumbers = arrayOf(2, 4098, 8194, 18, 3, 4, 14, 24, 24578, 16387)
     private lateinit var lifecycleRegistry: LifecycleRegistry
 
@@ -349,6 +352,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
 
     override fun onCreate() {
         super.onCreate()
+        kbBinding = DataBindingUtil.bind<>()
         hanguelQwerty = HanguelQWERTY()
         hanguelNaratgul = HanguelNARATGUL()
         hanguelChunjiin = HanguelChunjiin()
@@ -358,7 +362,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
 
         keyboardView = layoutInflater.inflate(R.layout.key_layout_normal, null)
         fragmentKeyboardQWERTY =
-            layoutInflater.inflate(R.layout.fragment_keyboard, null) as FrameLayout
+            layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_kr_normal, null) as FrameLayout
         fragmentKeyboardChunjiin =
             layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_basic, null) as FrameLayout
         fragmentKeyboardChunjiinA =
@@ -463,7 +467,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
         btnChunQVa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunQVa)
         btnChunTGa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunTGa)
         btnChunWCa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunWCa)
-        btnChunDGa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunDGa)
+        btnChunDGa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunDAa)
         btnChunDELa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunDELa)
         btnChunSPACEa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunSPACEa)
         btnChunSPECIALa = fragmentKeyboardChunjiinA.findViewById(R.id.btnChunSPECIALa)
@@ -1008,7 +1012,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
     override fun onCreateInputView(): View {
         val keyboardSetting =
-            applicationContext.getSharedPreferences("keyboardSetting", MODE_PRIVATE)
+            this.getSharedPreferences("keyboardSetting", MODE_PRIVATE)
         val myKeyboardRightSizeLiveData = keyboardSetting.intLiveData("KeyboardMoSize", 20)
         myKeyboardRightSizeLiveData.observe(this, {
             myKeyboardRightSize = it + 80
@@ -1416,7 +1420,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
                     keyboardViewFirstLine.visibility = View.GONE
                     keyboardViewLayout.layoutParams.height =
                         changeDPtoPX(180 * myKeyboardHeight / 100).toInt() + myKeyboardBotMargin
-                }
+                }`
             } else {
                 keyboardView.keyboardViewFrameLayout.removeAllViews()
                 buttonBoilerPlateTxt.setImageResource(R.drawable.ic_boilerplatetext_black)
@@ -3347,7 +3351,7 @@ class KeyboardService : InputMethodService(), LifecycleOwner {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun copyText() {
+    fun copyText() {
         if (currentInputConnection == null) return
         if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
             clearComposing()
