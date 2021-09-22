@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="kbservice"
             type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
+
         <variable
-            name="kbviewModel"
+            name="util"
+            type="com.sb.fittingKeyboard.service.util.KeyboardUtil" />
+
+        <variable
+            name="kbviewmodel"
             type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+
         <import type="android.view.View" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,10 +30,10 @@
             android:layout_height="30dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/keyboardRelativeLayout"
+            android:visibility="@{kbviewmodel.observeKBToolBarVisibility}"
+            app:layout_constraintBottom_toTopOf="@id/keyboardRelativeLayout"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:visibility="@{kbservice.myKeyboardToggleToolbar ? View.VISIBLE : View.GONE}">
+            app:layout_constraintRight_toRightOf="parent">
 
             <ImageButton
                 android:id="@+id/shortCutButton"
@@ -32,8 +41,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:src="@drawable/ic_settings"
-                android:onClick="@{() -> kbservice.startApp(kbservice.PACKAGE_NAME)}" />
+                android:onClick="@{() -> kbservice.startApp(util.PACKAGE_NAME)}"
+                android:src="@drawable/ic_settings" />
 
             <ImageButton
                 android:id="@+id/bpButton"
@@ -42,8 +51,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:src="@drawable/ic_boilerplatetext_black"
-                android:onClick="@{() -> kbviewModel.changeMode(7)}"/>
+                android:onClick="@{() -> kbviewmodel.changeMode(7)}"
+                android:src="@drawable/ic_boilerplatetext_black" />
 
             <ImageButton
                 android:id="@+id/selectAll"
@@ -62,8 +71,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="복"
-                android:onClick="@{() -> kbservice.copyText()}"/>
+                android:onClick="@{() -> kbservice.copyText()}"
+                android:text="복" />
 
             <Button
                 android:id="@+id/toolBarCut"
@@ -72,8 +81,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="잘"
-                android:onClick="@{() -> kbservice.cutText()}"/>
+                android:onClick="@{() -> kbservice.cutText()}"
+                android:text="잘" />
 
             <Button
                 android:id="@+id/toolBarPaste"
@@ -82,8 +91,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="붙"
-                android:onClick="@{() -> kbservice.pasteText()}"/>
+                android:onClick="@{() -> kbservice.pasteText()}"
+                android:text="붙" />
 
             <ImageButton
                 android:id="@+id/cursorButton"
@@ -92,8 +101,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:src="@drawable/ic_move"
-                android:onClick="@{() -> kbviewModel.changeMode(8)}"/>
+                android:onClick="@{() -> kbviewmodel.changeMode(8)}"
+                android:src="@drawable/ic_move" />
 
             <ImageButton
                 android:id="@+id/numberKeypadButton"
@@ -102,8 +111,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:src="@drawable/ic_number_keypad"
-                android:onClick="@{() -> kbviewModel.changeMode(9)}"/>
+                android:src="@drawable/ic_number_keypad" />
         </LinearLayout>
 
         <RelativeLayout
@@ -135,7 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/default_keyboard_Number_Height"
                     android:orientation="horizontal"
-                    android:visibility="@{kbservice.myKeyboardToggleNum}">
+                    android:visibility="@{kbviewmodel.observeNumberVisibility}">
 
                     <Button
                         android:id="@+id/keyboardNumberLeftMargin"
@@ -148,9 +156,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                         android:text="1"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize}" />
 
                     <Button
                         android:id="@+id/btn2"
@@ -158,8 +167,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="2"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize}" />
 
                     <Button
                         android:id="@+id/btn3"
@@ -167,8 +176,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="3"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize}" />
 
                     <Button
                         android:id="@+id/btn4"
@@ -176,8 +185,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="4"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize}" />
 
                     <Button
                         android:id="@+id/btn5"
@@ -185,8 +194,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="5"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize}" />
 
                     <Button
                         android:id="@+id/btn6"
@@ -194,8 +203,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="6"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize}" />
 
                     <Button
                         android:id="@+id/btn7"
@@ -203,8 +212,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="7"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize * 2 + 14}" />
 
                     <Button
                         android:id="@+id/btn8"
@@ -212,8 +221,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="8"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize * 2 + 14}" />
 
                     <Button
                         android:id="@+id/btn9"
@@ -221,8 +230,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="9"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize * 2 + 14}" />
 
                     <Button
                         android:id="@+id/btn0"
@@ -230,20 +239,21 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="0"
-                        android:textColor="@{kbservice.myFunctionFontColor}"
-                        android:textSize="18sp" />
+                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                        android:textSize="@{kbviewmodel.observeKBFontSize * 2 + 14}" />
 
                     <Button
                         android:id="@+id/keyboardNumberRightMargin"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/transparent" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/keyboardViewLinearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_keyboard_Character_Height"
+                    android:layout_height="180dp"
                     android:orientation="horizontal">
 
                     <FrameLayout

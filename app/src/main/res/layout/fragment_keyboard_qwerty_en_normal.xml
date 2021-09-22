@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <variable
             name="kbviewmodel"
             type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+
         <variable
             name="kbservice"
             type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
     </data>
-
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -30,55 +32,55 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbservice.mode==2 ? `q` : `Q`}"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
+                    android:text="@{kbservice.cnt}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnW"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `w` : `W`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}"/>
 
                 <Button
                     android:id="@+id/btnE"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `e` : `E`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnR"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `r` : `R`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnT"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `t` : `T`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/blank"
@@ -92,55 +94,55 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `y` : `Y`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnU"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `u` : `U`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"  />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnI"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `i` : `I`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnO"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `o` : `O`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnP"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `p` : `P`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,99 +156,99 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
-                    android:text="@{kbservice.mode==2 ? `a` : `A`}"
+                    android:onClick="@{() -> kbviewmodel.addString()}"
+                    android:text="@{kbviewmodel.string}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnS"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `s` : `S`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnD"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `d` : `D`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnF"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `f` : `F`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnG"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `g` : `G`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnH"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `h` : `H`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnJ"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `j` : `J`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnK"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `k` : `K`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnL"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `l` : `L`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
             </LinearLayout>
 
             <LinearLayout
@@ -271,77 +273,77 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `z` : `Z`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnX"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `x` : `X`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnC"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `c` : `C`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnV"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `v` : `V`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnB"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
                     android:text="@{kbservice.mode==2 ? `b` : `B`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnN"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `n` : `N`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnM"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbservice.mode==2 ? `m` : `M`}"
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <ImageButton
                     android:id="@+id/btnDEL"
@@ -352,8 +354,7 @@
                     android:elevation="2dp"
                     android:padding="7.5dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_delete_black"
-                    android:onClick="@{() -> kbservice.deleteChar()}" />
+                    android:src="@drawable/keyic_delete_black" />
             </LinearLayout>
 
             <LinearLayout
@@ -367,10 +368,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".9"
+                    android:onClick="@{() -> kbviewmodel.changeMode(5)}"
                     android:text="!#$"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="12sp"
-                    android:onClick="@{() -> kbviewmodel.changeMode(5)}" />
+                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textSize="12sp" />
 
                 <ImageButton
                     android:id="@+id/btnLANG"
@@ -379,40 +380,40 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".9"
                     android:elevation="2dp"
+                    android:onClick="@{() -> kbviewmodel.changeMode(3)}"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_language_black"
-                    android:onClick="@{() -> kbviewmodel.changeMode(3)}" />
+                    android:src="@drawable/keyic_language_black" />
 
                 <Button
                     android:id="@+id/btnCOMMA"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text=","
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnSPACE"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@string/english"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <Button
                     android:id="@+id/btnDOT"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="."
                     android:textAllCaps="false"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}" />
+                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textSize="@{kbservice.myKeyboardFontSize}" />
 
                 <ImageButton
                     android:id="@+id/btnENTER"

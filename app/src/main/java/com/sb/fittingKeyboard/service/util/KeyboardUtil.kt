@@ -116,9 +116,10 @@ class KeyboardUtil {
             "π",
             "「"
         )
+        const val PACKAGE_NAME = "com.sb.fittingKeyboard"
 
         const val KEYBOARD_SETTING = "keyboardSetting"
-        const val KEYBOARD_HEIGHT = "keyboardHeight"
+        const val KEYBOARD_HEIGHT = "KeyboardHeight"
         const val KEYBOARD_TOGGLE_NUMBER = "KeyboardToggleNum"
         const val KEYBOARD_BOTTOM_MARGIN = "KeyboardBottomMargin"
         const val KEYBOARD_FONT_SIZE = "KeyboardFontSize"
@@ -163,6 +164,5 @@ class KeyboardUtil {
         const val DAN = 5
 
         const val BOILERPLATE_TEXTS_FRAGMENT = 1
-        const val
     }
 }

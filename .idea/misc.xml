@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/keyic_delete_black.xml" value="0.39895833333333336" />
+        <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/admin_keyboard.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/dialog_font_type.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard.xml" value="0.15833333333333333" />
         <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard_chunjiin_ambi.xml" value="0.33106884057971014" />
         <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard_chunjiin_basic.xml" value="0.33106884057971014" />
@@ -10,7 +14,8 @@
         <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard_naratgul_basic.xml" value="0.33605072463768115" />
         <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard_number.xml" value="0.1" />
         <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard_qwerty_en_normal.xml" value="0.28351449275362317" />
-        <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard_qwerty_kr_normal.xml" value="0.28351449275362317" />
+        <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/fragment_keyboard_qwerty_kr_normal.xml" value="0.1" />
+        <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/key_layout_normal.xml" value="0.19270833333333334" />
         <entry key="..\:/Users/loepi/AndroidStudioProjects/fittingkeyboard/app/src/main/res/layout/setting_main_tab1.xml" value="0.32563405797101447" />
       </map>
     </option>

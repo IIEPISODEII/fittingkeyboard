@@ -13,10 +13,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
@@ -30,26 +31,29 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        tb_MainAct?.run {
+        findViewById<Toolbar>(R.id.tb_MainAct).run {
             title = "키보드 설정"
             setTitleTextColor(resources.getColor(R.color.white))
         }
-        setSupportActionBar(tb_MainAct)
+        setSupportActionBar(findViewById(R.id.tb_MainAct))
 
 
-
+        val mainViewPager = findViewById<ViewPager2>(R.id.setting_main_viewPager)
         isMyIMEenabled()
         if (!isMyIMEactivated) {
             AdminKeyboard().show(supportFragmentManager, "adminKeyboard")
         }
-        setting_main_viewPager.adapter = ViewPager(this)
-        setting_main_viewPager.offscreenPageLimit = 3
-        TabLayoutMediator(setting_main_tabLayout, setting_main_viewPager) { tab, position ->
+        mainViewPager.adapter = ViewPager(this)
+        mainViewPager.offscreenPageLimit = 3
+        TabLayoutMediator(
+            findViewById(R.id.setting_main_tabLayout),
+            mainViewPager
+        ) { tab, position ->
             tab.text = tabTextList[position]
         }.attach()
 
-        if ( intent.hasExtra("Index") ) {
-            setting_main_viewPager.currentItem = 2
+        if (intent.hasExtra("Index")) {
+            mainViewPager.currentItem = 2
         }
     }
 

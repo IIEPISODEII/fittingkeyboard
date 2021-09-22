@@ -1,372 +1,397 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
+<!--    <data>-->
 
-        <variable
-            name="kbservice"
-            type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
-    </data>
+<!--        <variable-->
+<!--            name="kbservice"-->
+<!--            type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />-->
+<!--    </data>-->
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="horizontal">-->
 
-                <Button
-                    android:id="@+id/btnDanQ"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅂ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanQ"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅂ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanW"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅈ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanW"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅈ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanE"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㄷ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanE"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㄷ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanR"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㄱ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanR"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㄱ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanT"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅅ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanT"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅅ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/blank"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.35"
-                    android:background="@color/transparent" />
+<!--                <Button-->
+<!--                    android:id="@+id/blank"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="0.35"-->
+<!--                    android:background="@color/transparent" />-->
 
-                <Button
-                    android:id="@+id/btnDanH"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅗ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanH"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅗ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanO"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅐ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanO"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅐ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanP"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅔ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
-            </LinearLayout>
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanP"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅔ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="horizontal">-->
 
-                <Button
-                    android:id="@+id/btnDanA"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.3"
-                    android:text="ㅁ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="18w@{kbservice.myKeyboardFontSize}sp" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanA"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1.3"-->
+<!--                    android:text="ㅁ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanS"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㄴ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanS"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㄴ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanD"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅇ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanD"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅇ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanF"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㄹ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanF"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㄹ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanG"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅎ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanG"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅎ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanJ"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅓ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanJ"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅓ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanK"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅏ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanK"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅏ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanL"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.3"
-                    android:text="ㅣ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
-            </LinearLayout>
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanL"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1.3"-->
+<!--                    android:text="ㅣ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="horizontal">-->
 
-                <Button
-                    android:id="@+id/blank2"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.3"
-                    android:background="@color/transparent" />
+<!--                <Button-->
+<!--                    android:id="@+id/blank2"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1.3"-->
+<!--                    android:background="@color/transparent" />-->
 
-                <Button
-                    android:id="@+id/btnDanZ"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅋ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanZ"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅋ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanX"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅌ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanX"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅌ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanC"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅊ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanC"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅊ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanV"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅍ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanV"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅍ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanN"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅜ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanN"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅜ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanM"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ㅡ"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myDefaultFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanM"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="ㅡ"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myDefaultFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <ImageButton
-                    android:id="@+id/btnDanDEL"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1.3"
-                    android:elevation="2dp"
-                    android:padding="7.5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_delete_black" />
-            </LinearLayout>
+<!--                <ImageButton-->
+<!--                    android:id="@+id/btnDanDEL"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:layout_weight="1.3"-->
+<!--                    android:elevation="2dp"-->
+<!--                    android:padding="7.5dp"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:src="@drawable/keyic_delete_black" />-->
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:orientation="horizontal">-->
 
-                <Button
-                    android:id="@+id/btnDanSPECIAL"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".9"
-                    android:text="!#$"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="12sp" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanSPECIAL"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight=".9"-->
+<!--                    android:text="!#$"-->
+<!--                    android:textColor="@{kbservice.myFunctionFontColor}"-->
+<!--                    android:textSize="12sp" />-->
 
-                <ImageButton
-                    android:id="@+id/btnDanLANG"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight=".9"
-                    android:elevation="2dp"
-                    android:padding="10dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_language_black" />
+<!--                <ImageButton-->
+<!--                    android:id="@+id/btnDanLANG"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:layout_weight=".9"-->
+<!--                    android:elevation="2dp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:src="@drawable/keyic_language_black" />-->
 
-                <Button
-                    android:id="@+id/btnDanCOMMA"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:text=","
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanCOMMA"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text=","-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myFunctionFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanSPACE"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:text="@string/korean"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanSPACE"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="3"-->
+<!--                    android:text="@string/korean"-->
+<!--                    android:textColor="@{kbservice.myFunctionFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <Button
-                    android:id="@+id/btnDanDOT"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:text="."
-                    android:textAllCaps="false"
-                    android:textColor="@{kbservice.myFunctionFontColor}"
-                    android:textSize="@{kbservice.myKeyboardFontSize}" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnDanDOT"-->
+<!--                    style="?android:attr/borderlessButtonStyle"-->
+<!--                    android:layout_width="45dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="."-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@{kbservice.myFunctionFontColor}"-->
+<!--                    android:textSize="@{kbservice.myKeyboardFontSize}"-->
+<!--                    android:onClick="@{(v) -> kbservice.inputChar(v, true)" />-->
 
-                <ImageButton
-                    android:id="@+id/btnDanENTER"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1.25"
-                    android:elevation="2dp"
-                    android:padding="12.5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_enter_black" />
-            </LinearLayout>
-        </LinearLayout>
+<!--                <ImageButton-->
+<!--                    android:id="@+id/btnDanENTER"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="center_horizontal"-->
+<!--                    android:layout_weight="1.25"-->
+<!--                    android:elevation="2dp"-->
+<!--                    android:padding="12.5dp"-->
+<!--                    android:scaleType="fitCenter"-->
+<!--                    android:src="@drawable/keyic_enter_black" />-->
+<!--            </LinearLayout>-->
+<!--        </LinearLayout>-->
     </FrameLayout>
 </layout>

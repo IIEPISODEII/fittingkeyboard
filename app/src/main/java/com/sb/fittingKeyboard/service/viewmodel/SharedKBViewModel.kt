@@ -3,6 +3,8 @@ package com.sb.fittingKeyboard.service.viewmodel
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -14,7 +16,6 @@ import com.sb.fittingKeyboard.service.stringLiveData
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 
 class SharedKBViewModel(application: Application) : AndroidViewModel(application) {
-
     /** mode
      * 0: English, Always UpperCase
      * 1: English, UpperCase
@@ -30,6 +31,13 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     var _mode: MutableLiveData<Int> = MutableLiveData(0)
     val mode: LiveData<Int>
         get() = _mode
+
+    var string = "0"
+
+    fun addString() {
+        string += "0"
+        println(string)
+    }
 
     var savedLangMode = 0
     fun changeMode(new: Int) {
@@ -152,11 +160,11 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             7, 8, 9 -> {
                 when (new) {
                     0, 1, 3, 5 -> {
-                        _mode.value = savedLangMode
-                        savedLangMode = _mode.value!!
+                        _mode.value = new
                     }
                     7, 8, 9 -> {
-                        _mode.value = new
+                        _mode.value = savedLangMode
+                        savedLangMode = _mode.value!!
                     }
                     else -> return
                 }
@@ -173,10 +181,10 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
 
     var observeKBHeight = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_HEIGHT, 25)
     var observeKBBottomMargin = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_BOTTOM_MARGIN, 0)
-    var observeKBFontSize = kbSettingSP.floatLiveData(KeyboardUtil.KEYBOARD_FONT_SIZE, 14F)
+    var observeKBFontSize = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_FONT_SIZE, 1)
     var observeKBFontType = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_FONT_TYPE, 0)
     var observeNumberVisibility =
-        kbSettingSP.booleanLiveData(KeyboardUtil.KEYBOARD_TOGGLE_NUMBER, true)
+        kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_TOGGLE_NUMBER, View.VISIBLE)
     var observeKBMoSize = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_MO_SIZE, 20)
     var observeKBDivision = kbSettingSP.booleanLiveData(KeyboardUtil.KEYBOARD_DIVISION, true)
     var observeKBHoldingTime = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_HOLDING_TIME, 200)
@@ -192,7 +200,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     var observeKBRightSideMargin =
         kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_RIGHTSIDE_MARGIN, 1)
     var observeKBToolBarVisibility =
-        kbSettingSP.booleanLiveData(KeyboardUtil.KEYBOARD_TOGGLE_TOOLBAR, true)
+        kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_TOGGLE_TOOLBAR, View.VISIBLE)
     var observeKBAutoCapitalization =
         kbSettingSP.booleanLiveData(KeyboardUtil.KEYBOARD_AUTO_CAPITALIZATION, true)
     var observeKBAutoModeChange =
@@ -224,16 +232,16 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
 
     init {
         observeHeight.addSource(observeKBHeight) {
-            observeHeight.value = getKBHeight() + getNumberHeight()
+            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
         }
         observeHeight.addSource(mode) {
-            observeHeight.value = getKBHeight() + getNumberHeight()
+            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
         }
         observeHeight.addSource(observeKBBottomMargin) {
-            observeHeight.value = getKBHeight() + getNumberHeight()
+            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
         }
         observeHeight.addSource(observeNumberVisibility) {
-            observeHeight.value = getKBHeight() + getNumberHeight()
+            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
         }
 
         observeRightSize.addSource(observeKBDivision) {
@@ -245,12 +253,12 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getKBHeight(): Float {
-        return ((180 * observeKBHeight.value!!) / 100).toFloat()
+        return ((180 * (75 + observeKBHeight.value!!) / 100)).toFloat()
     }
 
     fun getNumberHeight(): Float {
-        return if (mode.value in arrayOf(5, 6, 9) || observeNumberVisibility.value == true)
-            ((40 * observeKBHeight.value!!) / 100).toFloat()
+        return if (mode.value in arrayOf(5, 6, 9) || observeNumberVisibility.value == View.VISIBLE)
+            ((40 * (75 + observeKBHeight.value!!) / 100)).toFloat()
         else 0F
     }
 

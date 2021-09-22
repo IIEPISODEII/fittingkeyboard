@@ -20,11 +20,11 @@ class SettingDetailFragment : Fragment() {
     private var keyboardVibration: Int = 2
     private var keyboardVibrationIntensity: Int = 50
     private var keyboardHoldingTime: Int = 0
-    private var keyboardToggleNum: Boolean = true
+    private var keyboardToggleNum: Int = View.VISIBLE
     private var keyboardBotMargin: Int = 1
     private var keyboardLeftSideMargin: Int = 0
     private var keyboardRightSideMargin: Int = 0
-    private var keyboardToggleToolbar: Boolean = true
+    private var keyboardToggleToolbar: Int = View.VISIBLE
     private var keyboardFontSize: Int = 1
     private var keyboardAutoCapital: Boolean = true
     private var keyboardAutoModeChange: Boolean = true
@@ -38,13 +38,13 @@ class SettingDetailFragment : Fragment() {
         keyboardMoSize = myView.findViewById<SeekBar>(R.id.setting_keyboard_rightsize).progress
         keyboardDivision = myView.findViewById<Switch>(R.id.setting_keyboard_division_bool).isChecked
         keyboardHoldingTime = myView.findViewById<SeekBar>(R.id.setting_keyboard_holding).progress
-        keyboardToggleNum = myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked
+        keyboardToggleNum = if (myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked) View.VISIBLE else View.GONE
         keyboardVibration = myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration).progress
         keyboardVibrationIntensity = myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration_intensity).progress
         keyboardBotMargin = myView.findViewById<SeekBar>(R.id.setting_keyboard_bot_margin).progress
         keyboardLeftSideMargin = myView.findViewById<SeekBar>(R.id.setting_keyboard_leftside_margin).progress
         keyboardRightSideMargin = myView.findViewById<SeekBar>(R.id.setting_keyboard_rightside_margin).progress
-        keyboardToggleToolbar = myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked
+        keyboardToggleToolbar = if (myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked) View.VISIBLE else View.GONE
         keyboardFontSize = myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).progress
         keyboardAutoCapital = myView.findViewById<Switch>(R.id.setting_keyboard_autoCapital).isChecked
         keyboardAutoModeChange = myView.findViewById<Switch>(R.id.setting_keyboard_autoModeChange).isChecked
@@ -78,7 +78,7 @@ class SettingDetailFragment : Fragment() {
             saveData()
         }
         myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).setOnCheckedChangeListener { buttonView, _ ->
-            keyboardToggleToolbar = buttonView.isChecked
+            keyboardToggleToolbar = if (buttonView.isChecked) View.VISIBLE else View.GONE
             saveData()
         }
         myView.findViewById<SeekBar>(R.id.setting_keyboard_bot_margin).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -116,7 +116,7 @@ class SettingDetailFragment : Fragment() {
             }
         })
         myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).setOnCheckedChangeListener { buttonView, _ ->
-            keyboardToggleNum = buttonView.isChecked
+            keyboardToggleNum = if (buttonView.isChecked) View.VISIBLE else View.GONE
             saveData()
         }
         myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -250,13 +250,13 @@ class SettingDetailFragment : Fragment() {
         prefSetting?.edit()?.putInt("KeyboardMoSize", keyboardMoSize)?.apply()
         prefSetting?.edit()?.putBoolean("KeyboardDivision", keyboardDivision)?.apply()
         prefSetting?.edit()?.putInt("KeyboardHolding", keyboardHoldingTime)?.apply()
-        prefSetting?.edit()?.putBoolean("KeyboardToggleNum", keyboardToggleNum)?.apply()
+        prefSetting?.edit()?.putInt("KeyboardToggleNum", keyboardToggleNum)?.apply()
         prefSetting?.edit()?.putInt("KeyboardVibration", keyboardVibration)?.apply()
         prefSetting?.edit()?.putInt("KeyboardVibrationIntensity", keyboardVibrationIntensity)?.apply()
         prefSetting?.edit()?.putInt("KeyboardBottomMargin", keyboardBotMargin)?.apply()
         prefSetting?.edit()?.putInt("KeyboardLeftSideMargin", keyboardLeftSideMargin)?.apply()
         prefSetting?.edit()?.putInt("KeyboardRightSideMargin", keyboardRightSideMargin)?.apply()
-        prefSetting?.edit()?.putBoolean("KeyboardToggleToolBar", keyboardToggleToolbar)?.apply()
+        prefSetting?.edit()?.putInt("KeyboardToggleToolBar", keyboardToggleToolbar)?.apply()
         prefSetting?.edit()?.putInt("KeyboardFontSize", keyboardFontSize)?.apply()
         prefSetting?.edit()?.putBoolean("KeyboardAutoCapital", keyboardAutoCapital)?.apply()
         prefSetting?.edit()?.putBoolean("KeyboardAutoModeChange", keyboardAutoModeChange)?.apply()
@@ -274,8 +274,8 @@ class SettingDetailFragment : Fragment() {
         if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_rightside_margin).progress = prefSetting.getInt("KeyboardRightSideMargin", 0)
         if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).progress = prefSetting.getInt("KeyboardFontSize", 1)
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_division_bool).isChecked = prefSetting.getBoolean("KeyboardDivision", true)
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked = prefSetting.getBoolean("KeyboardToggleNum", true)
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked = prefSetting.getBoolean("KeyboardToggleToolBar", true)
+        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked = prefSetting.getInt("KeyboardToggleNum", View.VISIBLE) == View.VISIBLE
+        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked = prefSetting.getInt("KeyboardToggleToolBar", View.VISIBLE) == View.VISIBLE
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_autoCapital).isChecked = prefSetting.getBoolean("KeyboardAutoCapital", true)
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_autoModeChange).isChecked = prefSetting.getBoolean("KeyboardAutoModeChange", true)
     }

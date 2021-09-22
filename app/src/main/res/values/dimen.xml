@@ -5,4 +5,8 @@
     <dimen name="key_Number_Height">36dp</dimen>
     <dimen name="key_Radius">10dp</dimen>
     <dimen name="key_increase_Radius">6.5dp</dimen>
+    <dimen name="font_size_01">16sp</dimen>
+    <dimen name="font_size_02">18sp</dimen>
+    <dimen name="font_size_03">20sp</dimen>
+    <dimen name="font_size_04">22sp</dimen>
 </resources>
