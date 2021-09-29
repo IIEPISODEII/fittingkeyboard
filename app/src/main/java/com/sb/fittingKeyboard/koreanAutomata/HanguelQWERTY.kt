@@ -2,8 +2,8 @@ package com.sb.fittingKeyboard.koreanAutomata
 
 object HanguelQWERTY : Automata() {
     fun composeChar(inputChar: Char): UpdatedChars {
-        val isInputCharFirstChar = inputChar.toInt() in firstCharArray
-        val isInputCharMiddleChar = inputChar.toInt() in middleCharArray
+        val isInputCharFirstChar = inputChar.code in firstCharArray
+        val isInputCharMiddleChar = inputChar.code in middleCharArray
         when (state) {
             0 -> { // 아무것도 없는 상태. 자음 혹은 모음이 들어올 수 있다
                 when {
@@ -120,7 +120,7 @@ object HanguelQWERTY : Automata() {
                         }
                     }
                     isInputCharMiddleChar -> { // 모음이 들어온다면 ex) ㄱ+ㅏ -> 가
-                        lateinit var temp: String
+                        var temp: String? = null
                         when (firstChar) {
                             'ㄳ' -> {
                                 temp = "ㄱ"
@@ -252,7 +252,7 @@ object HanguelQWERTY : Automata() {
                         }
                     }
                     isInputCharMiddleChar -> {
-                        lateinit var temp: String
+                        var temp: String? = null
                         when (finalChar) {
                             'ㄳ' -> {
                                 finalChar = 'ㄱ'
@@ -427,17 +427,17 @@ object HanguelQWERTY : Automata() {
                     'ㅘ', 'ㅙ', 'ㅚ' -> {
                         middleChar = 'ㅗ'
                         composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅝ', 'ㅞ', 'ㅟ' -> {
                         middleChar = 'ㅜ'
                         composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅢ' -> {
                         middleChar = 'ㅡ'
                         composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     else -> {
                         state = 0

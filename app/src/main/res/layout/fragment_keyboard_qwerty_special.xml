@@ -33,7 +33,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `q` : `Q`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spQ : @string/spq}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -44,10 +44,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `w` : `W`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spW : @string/spw}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}"/>
+                    android:textSize="@{kbservice.fontSize}" />
 
                 <Button
                     android:id="@+id/btnE"
@@ -55,7 +55,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `e` : `E`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spE : @string/spe}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -66,7 +66,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `r` : `R`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spR : @string/spr}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -77,7 +77,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `t` : `T`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spT : @string/spt}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -95,7 +95,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `y` : `Y`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spY : @string/spy}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -106,7 +106,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `u` : `U`}"
+                    android:text="+"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -117,7 +117,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `i` : `I`}"
+                    android:text="-"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -128,7 +128,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `o` : `O`}"
+                    android:text="*"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -139,7 +139,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `p` : `P`}"
+                    android:text="/"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -157,7 +157,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `a` : `A`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spA : @string/spa}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -168,7 +168,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `s` : `S`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spS : @string/sps}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -179,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `d` : `D`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spD : @string/spd}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -190,7 +190,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `f` : `F`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spF : @string/spf}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -201,7 +201,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `g` : `G`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spG : @string/spg}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -212,7 +212,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `h` : `H`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spH : @string/sph}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -223,7 +223,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `j` : `J`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spJ : @string/spj}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -234,7 +234,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `k` : `K`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spK : @string/spk}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -245,7 +245,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `l` : `L`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spL : @string/spl}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -264,10 +264,9 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1.3"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbviewmodel.changeMode(1)}"
+                    android:onClick="@{() -> kbviewmodel.changeMode(6)}"
                     android:padding="10dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_shift_deactivated_black" />
+                    android:scaleType="fitCenter" />
 
                 <Button
                     android:id="@+id/btnZ"
@@ -275,7 +274,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `z` : `Z`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spZ : @string/spz}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -286,7 +285,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `x` : `X`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spX : @string/spx}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -297,7 +296,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `c` : `C`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spC : @string/spc}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -308,7 +307,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `v` : `V`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spV : @string/spv}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -319,7 +318,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, false)}"
-                    android:text="@{kbviewmodel.mode==2 ? `b` : `B`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spB : @string/spb}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -330,7 +329,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `n` : `N`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spN : @string/spn}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -341,7 +340,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
-                    android:text="@{kbviewmodel.mode==2 ? `m` : `M`}"
+                    android:text="@{kbviewmodel.mode==5 ? @string/spM : @string/spm}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
@@ -365,16 +364,6 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btnSPECIAL"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".9"
-                    android:onClick="@{() -> kbviewmodel.changeMode(5)}"
-                    android:text="!#$"
-                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="12sp" />
-
                 <ImageButton
                     android:id="@+id/btnLANG"
                     android:layout_width="0dp"
@@ -382,7 +371,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".9"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbviewmodel.changeMode(3)}"
+                    android:onClick="@{() -> kbviewmodel.changeMode(1)}"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black" />
@@ -391,7 +380,7 @@
                     android:id="@+id/btnCOMMA"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
-                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text=","
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
@@ -402,8 +391,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
-                    android:text="@string/english"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
+                    android:text="@string/korean"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
                     android:textSize="@{kbservice.fontSize}" />
 
@@ -411,7 +400,7 @@
                     android:id="@+id/btnDOT"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
-                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
+                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="."
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
@@ -423,8 +412,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1.25"
-                    android:elevation="2dp"
                     android:onClick="@{() -> kbservice.enterFunction()}"
+                    android:elevation="2dp"
                     android:padding="12.5dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_enter_black" />

@@ -2,8 +2,8 @@ package com.sb.fittingKeyboard.koreanAutomata
 
 object HanguelDanmoum : Automata() {
     fun composeChar(inputChar: Char, inputTime: Long): UpdatedChars { // 한글완성 오토마타
-        val isInputCharFirstChar = inputChar.toInt() in firstCharArray
-        val isInputCharMiddleChar = inputChar.toInt() in middleCharArray
+        val isInputCharFirstChar = inputChar.code in firstCharArray
+        val isInputCharMiddleChar = inputChar.code in middleCharArray
 
         when (state) {
             0 -> { //아무것도 없는 상태. 자음 혹은 모음이 들어올 수 있다

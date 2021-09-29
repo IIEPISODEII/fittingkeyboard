@@ -25,7 +25,7 @@ class SettingDetailFragment : Fragment() {
     private var keyboardLeftSideMargin: Int = 0
     private var keyboardRightSideMargin: Int = 0
     private var keyboardToggleToolbar: Int = View.VISIBLE
-    private var keyboardFontSize: Int = 1
+    private var keyboardFontSize: Int = 16
     private var keyboardAutoCapital: Boolean = true
     private var keyboardAutoModeChange: Boolean = true
     private lateinit var myView: View
@@ -188,17 +188,17 @@ class SettingDetailFragment : Fragment() {
         })
         myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardFontSize = seekBar?.progress!!
+                keyboardFontSize = seekBar?.progress!! * 2 + 14
                 saveData()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardFontSize = seekBar?.progress!!
+                keyboardFontSize = seekBar?.progress!! * 2 + 14
                 saveData()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardFontSize = seekBar?.progress!!
+                keyboardFontSize = seekBar?.progress!! * 2 + 14
                 saveData()
             }
         })
@@ -272,7 +272,7 @@ class SettingDetailFragment : Fragment() {
         if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_bot_margin).progress = prefSetting.getInt("KeyboardBottomMargin", 1)
         if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_leftside_margin).progress = prefSetting.getInt("KeyboardLeftSideMargin", 0)
         if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_rightside_margin).progress = prefSetting.getInt("KeyboardRightSideMargin", 0)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).progress = prefSetting.getInt("KeyboardFontSize", 1)
+        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).progress = (prefSetting.getInt("KeyboardFontSize", 16) - 14)/2
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_division_bool).isChecked = prefSetting.getBoolean("KeyboardDivision", true)
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked = prefSetting.getInt("KeyboardToggleNum", View.VISIBLE) == View.VISIBLE
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked = prefSetting.getInt("KeyboardToggleToolBar", View.VISIBLE) == View.VISIBLE

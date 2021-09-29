@@ -1,6 +1,7 @@
 package com.sb.fittingKeyboard.service.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.util.Log
@@ -9,11 +10,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.sb.fittingKeyboard.service.booleanLiveData
-import com.sb.fittingKeyboard.service.floatLiveData
-import com.sb.fittingKeyboard.service.intLiveData
-import com.sb.fittingKeyboard.service.stringLiveData
+import com.sb.fittingKeyboard.service.*
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
+import kotlin.coroutines.coroutineContext
 
 class SharedKBViewModel(application: Application) : AndroidViewModel(application) {
     /** mode
@@ -28,19 +27,14 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
      * 8: Cursor Pad
      * 9: Number Pad
      * **/
-    var _mode: MutableLiveData<Int> = MutableLiveData(0)
+    private var _mode: MutableLiveData<Int> = MutableLiveData(0)
     val mode: LiveData<Int>
         get() = _mode
 
-    var string = "0"
-
-    fun addString() {
-        string += "0"
-        println(string)
-    }
-
     var savedLangMode = 0
     fun changeMode(new: Int) {
+        println("before: ${mode.value}")
+        println("before saved: $savedLangMode")
         when (_mode.value) {
             0 -> {
                 when (new) {
@@ -100,7 +94,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                         savedLangMode = new
                     }
                     3 -> {
-                        _mode.value = new
+                        _mode.value = 4
                     }
                     5, 7, 8, 9 -> {
                         savedLangMode = _mode.value!!
@@ -112,15 +106,15 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             4 -> {
                 when (new) {
                     1 -> {
-                        _mode.value = savedLangMode
+                        _mode.value = new
                         savedLangMode = _mode.value!!
                     }
                     3 -> {
                         _mode.value = 3
                     }
-                    3, 5, 7, 8, 9 -> {
+                    5, 7, 8, 9 -> {
                         _mode.value = new
-                        savedLangMode = new
+                        savedLangMode = 3
                     }
                     else -> return
                 }
@@ -159,20 +153,23 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             }
             7, 8, 9 -> {
                 when (new) {
-                    0, 1, 3, 5 -> {
-                        _mode.value = new
-                    }
-                    7, 8, 9 -> {
+                    _mode.value -> {
                         _mode.value = savedLangMode
+                        savedLangMode = 3
+                    }
+                    0, 1, 2, 3, 4 -> {
+                        _mode.value = new
                         savedLangMode = _mode.value!!
                     }
-                    else -> return
+                    else -> {
+                        _mode.value = new
+                    }
                 }
             }
         }
+        println("after: ${mode.value}")
+        println("after saved: $savedLangMode \n")
     }
-
-    var currentKR: MutableLiveData<Int> = MutableLiveData()
 
     val kbSettingSP: SharedPreferences = application.applicationContext.getSharedPreferences(
         KeyboardUtil.KEYBOARD_SETTING,
@@ -181,7 +178,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
 
     var observeKBHeight = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_HEIGHT, 25)
     var observeKBBottomMargin = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_BOTTOM_MARGIN, 0)
-    var observeKBFontSize = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_FONT_SIZE, 1)
+    var observeKBFontSize = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_FONT_SIZE, 16)
     var observeKBFontType = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_FONT_TYPE, 0)
     var observeNumberVisibility =
         kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_TOGGLE_NUMBER, View.VISIBLE)
