@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -36,7 +37,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `q` : `Q`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnW"
@@ -47,7 +50,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `w` : `W`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}"/>
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnE"
@@ -58,7 +63,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `e` : `E`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnR"
@@ -69,7 +76,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `r` : `R`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnT"
@@ -80,7 +89,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `t` : `T`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/blank"
@@ -98,7 +109,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `y` : `Y`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnU"
@@ -109,7 +122,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `u` : `U`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnI"
@@ -120,7 +135,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `i` : `I`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnO"
@@ -131,7 +148,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `o` : `O`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnP"
@@ -142,7 +161,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `p` : `P`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
             </LinearLayout>
 
             <LinearLayout
@@ -160,7 +181,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `a` : `A`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnS"
@@ -171,7 +194,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `s` : `S`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnD"
@@ -182,7 +207,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `d` : `D`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnF"
@@ -193,7 +220,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `f` : `F`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnG"
@@ -204,7 +233,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `g` : `G`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnH"
@@ -215,7 +246,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `h` : `H`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnJ"
@@ -226,7 +259,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `j` : `J`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnK"
@@ -237,7 +272,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `k` : `K`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnL"
@@ -248,7 +285,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `l` : `L`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
             </LinearLayout>
 
             <LinearLayout
@@ -265,9 +304,9 @@
                     android:layout_weight="1.3"
                     android:elevation="2dp"
                     android:onClick="@{() -> kbviewmodel.changeMode(1)}"
-                    android:padding="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_shift_deactivated_black" />
+                    app:image="@{kbviewmodel.mode}"
+                    app:padding="@{kbviewmodel.observeHeight}" />
 
                 <Button
                     android:id="@+id/btnZ"
@@ -278,7 +317,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `z` : `Z`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnX"
@@ -289,7 +330,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `x` : `X`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnC"
@@ -300,7 +343,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `c` : `C`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnV"
@@ -311,7 +356,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `v` : `V`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnB"
@@ -322,7 +369,9 @@
                     android:text="@{kbviewmodel.mode==2 ? `b` : `B`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnN"
@@ -333,18 +382,22 @@
                     android:text="@{kbviewmodel.mode==2 ? `n` : `N`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnM"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="@{kbviewmodel.mode==2 ? `m` : `M`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontStyle="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListener}" />
 
                 <ImageButton
                     android:id="@+id/btnDEL"
@@ -354,9 +407,9 @@
                     android:layout_weight="1.3"
                     android:elevation="2dp"
                     android:onClick="@{() -> kbservice.delFunction()}"
-                    android:padding="7.5dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_delete_black" />
+                    android:src="@drawable/keyic_delete_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
             </LinearLayout>
 
             <LinearLayout
@@ -371,9 +424,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight=".9"
                     android:onClick="@{() -> kbviewmodel.changeMode(5)}"
+                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.observeKBSpecialKeyHolding)}"
                     android:text="!#$"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnLANG"
@@ -383,9 +438,10 @@
                     android:layout_weight=".9"
                     android:elevation="2dp"
                     android:onClick="@{() -> kbviewmodel.changeMode(3)}"
-                    android:padding="10dp"
+                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.observeKBSpecialKeyHolding)}"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_language_black" />
+                    android:src="@drawable/keyic_language_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
 
                 <Button
                     android:id="@+id/btnCOMMA"
@@ -395,7 +451,8 @@
                     android:text=","
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnSPACE"
@@ -405,7 +462,8 @@
                     android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
                     android:text="@string/english"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDOT"
@@ -415,7 +473,8 @@
                     android:text="."
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnENTER"
@@ -425,9 +484,10 @@
                     android:layout_weight="1.25"
                     android:elevation="2dp"
                     android:onClick="@{() -> kbservice.enterFunction()}"
-                    android:padding="12.5dp"
+                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.observeKBEnterKeyHolding)}"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_enter_black" />
+                    android:src="@drawable/keyic_enter_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

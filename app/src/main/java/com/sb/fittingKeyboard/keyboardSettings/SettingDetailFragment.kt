@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
+import com.sb.fittingKeyboard.service.util.KeyboardUtil
 
 class SettingDetailFragment : Fragment() {
 
@@ -35,19 +36,6 @@ class SettingDetailFragment : Fragment() {
 
         loadData()
 
-        keyboardMoSize = myView.findViewById<SeekBar>(R.id.setting_keyboard_rightsize).progress
-        keyboardDivision = myView.findViewById<Switch>(R.id.setting_keyboard_division_bool).isChecked
-        keyboardHoldingTime = myView.findViewById<SeekBar>(R.id.setting_keyboard_holding).progress
-        keyboardToggleNum = if (myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked) View.VISIBLE else View.GONE
-        keyboardVibration = myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration).progress
-        keyboardVibrationIntensity = myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration_intensity).progress
-        keyboardBotMargin = myView.findViewById<SeekBar>(R.id.setting_keyboard_bot_margin).progress
-        keyboardLeftSideMargin = myView.findViewById<SeekBar>(R.id.setting_keyboard_leftside_margin).progress
-        keyboardRightSideMargin = myView.findViewById<SeekBar>(R.id.setting_keyboard_rightside_margin).progress
-        keyboardToggleToolbar = if (myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked) View.VISIBLE else View.GONE
-        keyboardFontSize = myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).progress
-        keyboardAutoCapital = myView.findViewById<Switch>(R.id.setting_keyboard_autoCapital).isChecked
-        keyboardAutoModeChange = myView.findViewById<Switch>(R.id.setting_keyboard_autoModeChange).isChecked
         myView.findViewById<TextView>(R.id.tv_keyboard_rightsize_progress).text = "${keyboardMoSize + 80}%"
         myView.findViewById<TextView>(R.id.tv_keyboard_holding_progress).text = "${keyboardHoldingTime + 100}ms"
         myView.findViewById<TextView>(R.id.tv_keyboard_vibration_intensity).text = "$keyboardVibrationIntensity"
@@ -215,31 +203,31 @@ class SettingDetailFragment : Fragment() {
             UsualFunctions().showHelpText(getString(R.string.keyboard_division_help_text), this.activity!!.window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_rightsize).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_right_size_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_right_size_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_bot_margin).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_bot_margin_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_bot_margin_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_holding).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_holding_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_holding_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_leftside_margin).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_leftside_margin_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_leftside_margin_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_rightside_margin).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_rightside_margin_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_rightside_margin_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_vibration).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_vibration_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_vibration_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_toggleToolbar).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_toggleSet_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_toggleSet_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_autoCapital).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_autoCapital_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_autoCapital_help_text), this.requireActivity().window!!.context)
         }
         myView.findViewById<Button>(R.id.tv_keyboard_autoModeChange).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_autoModeChange_help_text), this.activity!!.window!!.context)
+            UsualFunctions().showHelpText(getString(R.string.keyboard_autoModeChange_help_text), this.requireActivity().window!!.context)
         }
         return myView
     }
@@ -257,8 +245,8 @@ class SettingDetailFragment : Fragment() {
         prefSetting?.edit()?.putInt("KeyboardLeftSideMargin", keyboardLeftSideMargin)?.apply()
         prefSetting?.edit()?.putInt("KeyboardRightSideMargin", keyboardRightSideMargin)?.apply()
         prefSetting?.edit()?.putInt("KeyboardToggleToolBar", keyboardToggleToolbar)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardFontSize", keyboardFontSize)?.apply()
-        prefSetting?.edit()?.putBoolean("KeyboardAutoCapital", keyboardAutoCapital)?.apply()
+        prefSetting?.edit()?.putInt(KeyboardUtil.KEYBOARD_FONT_SIZE, keyboardFontSize)?.apply()
+        prefSetting?.edit()?.putBoolean(KeyboardUtil.KEYBOARD_AUTO_CAPITALIZATION, keyboardAutoCapital)?.apply()
         prefSetting?.edit()?.putBoolean("KeyboardAutoModeChange", keyboardAutoModeChange)?.apply()
     }
 
@@ -276,7 +264,7 @@ class SettingDetailFragment : Fragment() {
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_division_bool).isChecked = prefSetting.getBoolean("KeyboardDivision", true)
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked = prefSetting.getInt("KeyboardToggleNum", View.VISIBLE) == View.VISIBLE
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked = prefSetting.getInt("KeyboardToggleToolBar", View.VISIBLE) == View.VISIBLE
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_autoCapital).isChecked = prefSetting.getBoolean("KeyboardAutoCapital", true)
+        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_autoCapital).isChecked = prefSetting.getBoolean(KeyboardUtil.KEYBOARD_AUTO_CAPITALIZATION, true)
         if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_autoModeChange).isChecked = prefSetting.getBoolean("KeyboardAutoModeChange", true)
     }
 }

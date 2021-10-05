@@ -1,205 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/frag_autotxt_linearlayot"
+    <data>
+
+        <variable
+            name="kbviewmodel"
+            type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+
+        <variable
+            name="kbservice"
+            type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ScrollView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:fadeScrollbars="false"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
-            android:scrollbarFadeDuration="0">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/frag_autoText1"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구1"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-
-
-                    <Button
-                        android:id="@+id/frag_autoText3"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구3"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/frag_autoText5"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구5"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/frag_autoText7"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구7"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/frag_autoText2"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구2"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/frag_autoText4"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구4"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/frag_autoText6"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구6"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/frag_autoText8"
-                        android:layout_width="match_parent"
-                        android:layout_height="125dp"
-                        android:background="@drawable/view_setting"
-                        android:gravity="center"
-                        android:text="상용구8"
-                        android:textAllCaps="false"
-                        android:textColor="@color/darkgrey"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/frag_autotxt_linearlayot"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".4"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/frag_next"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/view_setting"
-                android:gravity="center"
-                android:text="다음"
-                android:textAllCaps="false"
-                android:textColor="@color/darkgrey"
-                android:textSize="14sp" />
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:fadeScrollbars="false"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbarFadeDuration="0">
 
-            <ImageButton
-                android:id="@+id/frag_delete"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/view_setting"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/keyic_delete_black"
-                android:textColor="@color/darkgrey"
-                android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/frag_space"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/view_setting"
-                android:gravity="center"
-                android:text="SPACE"
-                android:textColor="@color/darkgrey"
-                android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/frag_enter"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/view_setting"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/keyic_enter_black"
-                android:textColor="@color/darkgrey"
-                android:textSize="12sp" />
+                        <Button
+                            android:id="@+id/frag_autoText1"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP0 : kbviewmodel.observeBP8}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
 
-            <ImageButton
-                android:id="@+id/frag_keyboard"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@drawable/view_setting"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_keyboard_black" />
+                        <Button
+                            android:id="@+id/frag_autoText3"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP2 : kbviewmodel.observeBP10}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+
+                        <Button
+                            android:id="@+id/frag_autoText5"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP4 : kbviewmodel.observeBP12}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+
+                        <Button
+                            android:id="@+id/frag_autoText7"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP6 : kbviewmodel.observeBP14}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/frag_autoText2"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP1 : kbviewmodel.observeBP9}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+
+                        <Button
+                            android:id="@+id/frag_autoText4"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP3 : kbviewmodel.observeBP11}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+
+                        <Button
+                            android:id="@+id/frag_autoText6"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP5 : kbviewmodel.observeBP13}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+
+                        <Button
+                            android:id="@+id/frag_autoText8"
+                            android:layout_width="match_parent"
+                            android:layout_height="125dp"
+                            android:gravity="center"
+                            android:onClick="@{(v) -> kbservice.inputBPStrings(v)}"
+                            android:text="@{kbviewmodel.bpPage==0 ? kbviewmodel.observeBP7 : kbviewmodel.observeBP15}"
+                            android:textAllCaps="false"
+                            android:textColor="@{kbviewmodel.observeKBFontColor}"
+                            android:textSize="@{kbservice.fontSize}"
+                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/frag_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{() -> kbviewmodel.getNextBpPage()}"
+                    android:text="다음"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
+                    android:textSize="12sp"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+
+                <ImageButton
+                    android:id="@+id/frag_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:onClick="@{() -> kbservice.delFunction()}"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_delete_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
+
+                <Button
+                    android:id="@+id/frag_space"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
+                    android:text="SPACE"
+                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textSize="12sp"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+
+                <ImageButton
+                    android:id="@+id/frag_enter"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:onClick="@{() -> kbservice.enterFunction()}"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_enter_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
+
+                <ImageButton
+                    android:id="@+id/frag_keyboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:onClick="@{() -> kbviewmodel.changeMode(3)}"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_keyboard_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</FrameLayout>
+    </FrameLayout>
+</layout>

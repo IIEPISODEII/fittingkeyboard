@@ -1,17 +1,16 @@
 package com.sb.fittingKeyboard.service
 
+import RepeatListener
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.inputmethodservice.InputMethodService
-import android.os.Build
+import android.os.*
 import android.os.Build.VERSION.SDK_INT
-import android.os.SystemClock
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.TextUtils
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
@@ -25,7 +24,10 @@ import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.*
 import com.sb.fittingKeyboard.keyboardSettings.SetTheme
-import com.sb.fittingKeyboard.koreanAutomata.*
+import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
+import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
+import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
+import com.sb.fittingKeyboard.koreanAutomata.HanguelQWERTY
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_FONT_SIZE
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_SETTING
@@ -41,8 +43,10 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     lateinit var chunAKBBinding: FragmentKeyboardChunjiinAmbiBinding
     lateinit var naratguelBinding: FragmentKeyboardNaratgulBasicBinding
     lateinit var danmoumBinding: FragmentKeyboardDanmoumBinding
-    lateinit var numberBinding: FragmentKeyboardNumberBinding
     lateinit var specialKBBinding: FragmentKeyboardQwertySpecialBinding
+    lateinit var numberBinding: FragmentKeyboardNumberBinding
+    lateinit var boilerPlateBinding: FragmentBpBinding
+    lateinit var cursorBinding: FragmentCursorBinding
     private lateinit var vm: SharedKBViewModel
     private lateinit var kbFrame: FrameLayout
     private lateinit var kbView: View
@@ -54,6 +58,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     private lateinit var kbNumRightSide: Button
     private val mLifecycle = LifecycleRegistry(this)
     override fun getLifecycle(): Lifecycle = mLifecycle
+
     //<editor-fold desc="변수 선언">
     private val inputTypeNumbers = arrayOf(2, 4098, 8194, 18, 3, 4, 14, 24, 24578, 16387)
 
@@ -62,44 +67,24 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     private var myKeyboardHeight: Float = 0F
     var myKeyboardRightSize: Float = 1F
     private var myKeyboardDivision: Boolean = true
-    private var myKeyboardHolding: Int = 300
+    private var mKeyboardHolding: Int = 300
     private var myKeyboardVibration: Int = 2
     private var myKeyboardVibrationIntensity: Int = 50
     private var myKeyboardTheme: Int = 0
     private var myKeyboardFontType: Int = 0
     private var myKeyboardAutoCapital: Boolean = true
     private var myKeyboardAutoModeChange: Boolean = true
-    private var myKeyboardAutoText1: String? = ""
-    private var myKeyboardAutoText2: String? = ""
-    private var myKeyboardAutoText3: String? = ""
-    private var myKeyboardAutoText4: String? = ""
-    private var myKeyboardAutoText5: String? = ""
-    private var myKeyboardAutoText6: String? = ""
-    private var myKeyboardAutoText7: String? = ""
-    private var myKeyboardAutoText8: String? = ""
-    private var myKeyboardAutoText9: String? = ""
-    private var myKeyboardAutoText10: String? = ""
-    private var myKeyboardAutoText11: String? = ""
-    private var myKeyboardAutoText12: String? = ""
-    private var myKeyboardAutoText13: String? = ""
-    private var myKeyboardAutoText14: String? = ""
-    private var myKeyboardAutoText15: String? = ""
-    private var myKeyboardAutoText16: String? = ""
     private var myKeyboardSpecialKeyAddon: Int = 0
     private var myKeyboardEnterKeyAddon: Int = 0
 
     private var normalInterval: Long = 37
-    private var bpPage = 1
-
-    private var shiftIcon_activated = R.drawable.keyic_shift_activated_black
-    private var shiftIcon_deactivated = R.drawable.keyic_shift_deactivated_black
-    private var shiftIcon_hyperactivated = R.drawable.keyic_shift_hyperactivated_black
 
     private var isSelectingActivated = false
     private var savedCursorPosition = 0
+
     //</editor-fold>
     private lateinit var prefs: SharedPreferences
-    private var _fontSize = MutableLiveData<Int>()
+    private var _fontSize = MutableLiveData<Int>(15)
     val fontSize: LiveData<Int> get() = _fontSize
     private var _layoutSize = MutableLiveData<Int>()
     val layoutSize: LiveData<Int> get() = _layoutSize
@@ -117,16 +102,21 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_START)
         prefs = applicationContext.getSharedPreferences(KEYBOARD_SETTING, MODE_PRIVATE)
 
-        val qwertyEnNormalKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_en_normal, null)
-        val qwertyKrNormalKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_kr_normal, null)
-        val qwertySpecialKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_special, null)
+        val qwertyEnNormalKBView =
+            layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_en_normal, null)
+        val qwertyKrNormalKBView =
+            layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_kr_normal, null)
+        val qwertySpecialKBView =
+            layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_special, null)
         val boilerPlateKBView = layoutInflater.inflate(R.layout.fragment_bp, null)
         val cursorKBView = layoutInflater.inflate(R.layout.fragment_cursor, null)
         val numberKBView = layoutInflater.inflate(R.layout.fragment_keyboard_number, null)
         val chunjiinKBView = layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_basic, null)
-        val chunjiinKBViewAmbi = layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_ambi, null)
+        val chunjiinKBViewAmbi =
+            layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_ambi, null)
         val danmoKBView = layoutInflater.inflate(R.layout.fragment_keyboard_danmoum, null)
-        val naratguelKBView = layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null)
+        val naratguelKBView =
+            layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null)
         qwertyEnNormalBinding = DataBindingUtil.bind(qwertyEnNormalKBView)!!
         qwertyEnNormalBinding.setVariable(BR.kbservice, this)
         qwertyEnNormalBinding.lifecycleOwner = this
@@ -147,10 +137,6 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         danmoumBinding.setVariable(BR.kbservice, this)
         danmoumBinding.lifecycleOwner = this
         danmoumBinding.kbviewmodel = vm
-        numberBinding = DataBindingUtil.bind(numberKBView)!!
-        numberBinding.setVariable(BR.kbservice, this)
-        numberBinding.lifecycleOwner = this
-        numberBinding.kbviewmodel = vm
         specialKBBinding = DataBindingUtil.bind(qwertySpecialKBView)!!
         specialKBBinding.setVariable(BR.kbservice, this)
         specialKBBinding.lifecycleOwner = this
@@ -159,6 +145,18 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         chunAKBBinding.setVariable(BR.kbservice, this)
         chunAKBBinding.lifecycleOwner = this
         chunAKBBinding.kbviewmodel = vm
+        boilerPlateBinding = DataBindingUtil.bind(boilerPlateKBView)!!
+        boilerPlateBinding.setVariable(BR.kbservice, this)
+        boilerPlateBinding.lifecycleOwner = this
+        boilerPlateBinding.kbviewmodel = vm
+        cursorBinding = DataBindingUtil.bind(cursorKBView)!!
+        cursorBinding.setVariable(BR.kbservice, this)
+        cursorBinding.lifecycleOwner = this
+        cursorBinding.kbviewmodel = vm
+        numberBinding = DataBindingUtil.bind(numberKBView)!!
+        numberBinding.setVariable(BR.kbservice, this)
+        numberBinding.lifecycleOwner = this
+        numberBinding.kbviewmodel = vm
 
         kbNumLeftSide = kbView.findViewById(R.id.keyboardNumberLeftMargin)
         kbNumRightSide = kbView.findViewById(R.id.keyboardNumberRightMargin)
@@ -169,20 +167,26 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         kbLayoutBottomMargin = kbView.findViewById(R.id.keyboardBotMargin)
 
         var currentKRView = qwertyKrNormalKBView
-        vm.observeKBIME.observeForever {
+        vm.observeKBIME.observe(this, {
             currentKRView =
                 when (it) {
-                    KeyboardUtil.QWERTY -> qwertyKrNormalKBView
-                    KeyboardUtil.CHUN -> chunjiinKBView
+                    KeyboardUtil.QWERTY -> {
+                        qwertyKrNormalKBView
+                    }
+                    KeyboardUtil.CHUN -> {
+                        chunjiinKBView
+                    }
                     KeyboardUtil.CHUN_AMBI -> chunjiinKBViewAmbi
                     KeyboardUtil.NARAT -> naratguelKBView
                     KeyboardUtil.DAN -> danmoKBView
                     else -> qwertyKrNormalKBView
                 }
-            kbFrame.removeAllViews()
-            kbFrame.addView(currentKRView)
-        }
-        vm.mode.observeForever {
+            if (vm.mode.value == 3) {
+                kbFrame.removeAllViews()
+                kbFrame.addView(currentKRView)
+            }
+        })
+        vm.mode.observe(this, {
             kbFrame.removeAllViews()
             when (it) {
                 0, 1, 2 -> kbFrame.addView(qwertyEnNormalKBView)
@@ -192,41 +196,48 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                 8 -> kbFrame.addView(cursorKBView)
                 9 -> kbFrame.addView(numberKBView)
             }
-        }
-        vm.observeNumberVisibility.observeForever {}
-        vm.observeKBBottomMargin.observeForever {
+        })
+        vm.observeNumberVisibility.observe(this, {})
+        vm.observeKBBottomMargin.observe(this, {
             val lP = kbLayoutBottomMargin.layoutParams
             lP.height = it * (resources.displayMetrics.density).toInt()
             kbLayoutBottomMargin.layoutParams = lP
-        }
-        vm.observeKBFontSize.observeForever { _fontSize.value = (prefs.intLiveData(KEYBOARD_FONT_SIZE, 16).value!! * (resources.displayMetrics.scaledDensity)).toInt() }
-        vm.observeKBFontType.observeForever { myKeyboardFontType = it }
-        vm.observeRightSize.observeForever { myKeyboardRightSize = it }
-        vm.observeKBHoldingTime.observeForever { myKeyboardHolding = it + 100 }
-        vm.observeKBVibrationType.observeForever { myKeyboardVibration = it }
-        vm.observeKBVibrationIntensity.observeForever { myKeyboardVibrationIntensity = it }
-        vm.observeKBTheme.observeForever { myKeyboardTheme = it }
-        vm.observeKBFontColor.observeForever {}
-        vm.observeKBFunctionFontColor.observeForever {}
-        vm.observeKBLeftSideMargin.observeForever {
+        })
+        vm.observeKBFontSize.observe(
+            this,
+            {
+                _fontSize.value = (prefs.intLiveData(
+                    KEYBOARD_FONT_SIZE,
+                    16
+                ).value!! * (resources.displayMetrics.scaledDensity)).toInt()
+            })
+        vm.observeKBFontType.observe(this, {})
+        vm.observeRightSize.observe(this, {})
+        vm.observeKBHoldingTime.observe(this, { mKeyboardHolding = it + 100 })
+        vm.observeKBVibrationType.observe(this, { myKeyboardVibration = it })
+        vm.observeKBVibrationIntensity.observe(this, { myKeyboardVibrationIntensity = it })
+        vm.observeKBTheme.observe(this, { myKeyboardTheme = it })
+        vm.observeKBFontColor.observe(this, {})
+        vm.observeKBFunctionFontColor.observe(this, {})
+        vm.observeKBLeftSideMargin.observe(this, {
             val lPNum = kbNumLeftSide.layoutParams
             val lPChar = kbCharLeftSide.layoutParams
             lPNum.width = it * 3 * (resources.displayMetrics.density).toInt()
             lPChar.width = it * 3 * (resources.displayMetrics.density).toInt()
             kbNumLeftSide.layoutParams = lPNum
             kbCharLeftSide.layoutParams = lPChar
-        }
-        vm.observeKBRightSideMargin.observeForever {
+        })
+        vm.observeKBRightSideMargin.observe(this, {
             val lPNum = kbNumRightSide.layoutParams
             val lPChar = kbCharRightSide.layoutParams
             lPNum.width = it * 3 * (resources.displayMetrics.density).toInt()
             lPChar.width = it * 3 * (resources.displayMetrics.density).toInt()
             kbNumRightSide.layoutParams = lPNum
             kbCharRightSide.layoutParams = lPChar
-        }
-        vm.observeKBToolBarVisibility.observeForever {}
-        vm.observeKBHeight.observeForever {}
-        vm.observeHeight.observeForever {
+        })
+        vm.observeKBToolBarVisibility.observe(this, {})
+        vm.observeKBHeight.observe(this, {})
+        vm.observeHeight.observe(this, {
             val lP = kbLayout.layoutParams
             lP.height = it.toInt() * resources.displayMetrics.density.toInt()
             kbLayout.layoutParams = lP
@@ -235,15 +246,27 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             val bgImglP = bgImg.layoutParams
             bgImglP.height = it.toInt() * resources.displayMetrics.density.toInt()
             bgImg.layoutParams = bgImglP
-        }
+        })
+        vm.observeKBEnterKeyHolding.observe(this, {})
+        vm.observeKBSpecialKeyHolding.observe(this, {})
+        vm.observeKBAutoCapitalization.observe(this, {})
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
     override fun onCreateInputView(): View {
         super.onCreateInputView()
+        val mClickListenerChar = View.OnClickListener { inputChar(it, false) }
+        val mClickListenerDel = View.OnClickListener { delFunction() }
+        val mRepeatListenerChar = RepeatListener(mKeyboardHolding.toLong(), 37, mClickListenerChar)
+        val mRepeatListenerDel = RepeatListener(mKeyboardHolding.toLong(), 37, mClickListenerDel)
+        qwertyEnNormalBinding.btnA.setOnTouchListener(mRepeatListenerChar)
+        qwertyEnNormalBinding.btnDEL.setOnTouchListener(mRepeatListenerDel)
+
         return kbView
     }
+
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onUpdateSelection(
@@ -262,18 +285,20 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             clearComposing()
         }
         /** TextField의 첫글자로 돌아갔을 때 대문자로 수정 **/
-        if (myKeyboardAutoCapital
+        if (vm.observeKBAutoCapitalization.value!!
             && currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)
-            && vm.mode.value == 2) {
+            && vm.mode.value == 2
+        ) {
             var autoCapitalCondition: Boolean = false
             for (i in 0..3) {
                 if (currentInputConnection.getTextBeforeCursor(i + 2, GET_TEXT_WITH_STYLES)
-                    .toString().replace("\\s".toRegex(), "") == ".") {
+                        .toString().replace("\\s".toRegex(), "") == "."
+                ) {
                     autoCapitalCondition = true
                 }
             }
             if ((newSelStart == 0 && newSelEnd == 0 && candidatesStart == -1 && candidatesEnd == -1) || autoCapitalCondition) {
-                vm.changeMode(0)
+                vm.changeMode(1)
             }
         }
     }
@@ -283,24 +308,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        println("onStartInputView: ${mLifecycle.currentState}")
-//        fontTypeIndex = when (myKeyboardFontType) {
-//            0 -> Typeface.DEFAULT
-//            1 -> ResourcesCompat.getFont(this.applicationContext, R.font.aritta)!!
-//            2 -> ResourcesCompat.getFont(this.applicationContext, R.font.dovemayo)!!
-//            3 -> ResourcesCompat.getFont(this.applicationContext, R.font.imcresoojin)!!
-//            4 -> ResourcesCompat.getFont(this.applicationContext, R.font.maplestorylight)!!
-//            5 -> ResourcesCompat.getFont(this.applicationContext, R.font.nanumbarungothic)!!
-//            6 -> ResourcesCompat.getFont(this.applicationContext, R.font.nanumsquarer)!!
-//            7 -> ResourcesCompat.getFont(this.applicationContext, R.font.seoulnamsan)!!
-//            8 -> ResourcesCompat.getFont(this.applicationContext, R.font.tttogether)!!
-//            9 -> ResourcesCompat.getFont(this.applicationContext, R.font.cookierun)!!
-//            10 -> ResourcesCompat.getFont(this.applicationContext, R.font.tmoney)!!
-//            11 -> ResourcesCompat.getFont(this.applicationContext, R.font.tadaktadak)!!
-//            else -> Typeface.DEFAULT
-//        }
-        //<editor-fold desc="모양 초기화">
-        bpPage = 1
+
         if (currentInputEditorInfo.inputType in inputTypeNumbers) {
             vm.changeMode(9)
         }
@@ -359,7 +367,6 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
 //            18 -> theme.setTheme18()
 //            else -> theme.setTheme00()
 //        }
-        //</editor-fold>
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
@@ -372,6 +379,41 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         mLifecycle.markState(Lifecycle.State.DESTROYED)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    val repeatListener = View.OnTouchListener { v: View, motionEvent: MotionEvent ->
+        var a = 0
+        var clickListener: View.OnClickListener? = View.OnClickListener {
+            println(a)
+            a++
+        }
+        var handler: Handler? = Handler()
+        var touchedView: View? = null
+        val handlerRunnable: Runnable = object : Runnable {
+            override fun run() {
+                clickListener?.onClick(touchedView)
+                handler?.postDelayed(this, 37)
+            }
+        }
+        when (motionEvent.action) {
+            MotionEvent.ACTION_DOWN -> {
+                handler?.removeCallbacks(handlerRunnable)
+                handler?.postDelayed(handlerRunnable, 300)
+                touchedView = v
+                println(touchedView?.resources?.getResourceName(touchedView!!.id))
+                touchedView!!.isPressed = true
+                clickListener?.onClick(touchedView)
+
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                handler?.removeCallbacks(handlerRunnable)
+                touchedView?.isPressed = false
+                touchedView = null
+                handler = null
+
+            }
+        }
+        false
+    }
 
     fun inputChar(button: View, isAlwaysVibrating: Boolean) {
         if (currentInputConnection == null) return
@@ -442,6 +484,9 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             else -> {
                 clearComposing()
                 currentInputConnection.commitText((button as Button).text.toString(), 1)
+                if (vm.mode.value == 1) {
+                    changeMode(2)
+                }
             }
         }
         if (isAlwaysVibrating) {
@@ -458,8 +503,22 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     fun inputSpecial(button: View) {
         if (currentInputConnection == null) return
         clearComposing()
-        if ((button as Button).text in arrayOf("한글", "english", "English", "SPACE")) currentInputConnection.commitText(" ", 1)
+        if ((button as Button).text in arrayOf(
+                "한글",
+                "english",
+                "English",
+                "SPACE"
+            )
+        ) currentInputConnection.commitText(" ", 1)
         else currentInputConnection.commitText((button as Button).text[0].toString(), 1)
+
+        if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton()
+    }
+
+    fun inputBPStrings(button: View) {
+        if (currentInputConnection == null) return
+        clearComposing()
+        currentInputConnection.commitText((button as Button).text, 1)
 
         if (myKeyboardVibration == 1 || myKeyboardVibration == 2) vibrateByButton()
     }
@@ -508,7 +567,6 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     fun delFunction() {
         if (currentInputConnection == null) return
         val selectedText = currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES)
-        val cursorPosition = currentInputConnection?.getSelectedText(GET_TEXT_WITH_STYLES)?.get(0)
         if (TextUtils.isEmpty(selectedText)) {
             if (vm.mode.value in arrayOf(3, 4)) {
                 when (vm.observeKBIME.value) {
@@ -565,12 +623,11 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         } else {
             clearComposing()
             currentInputConnection.finishComposingText()
-            currentInputConnection.commitText("",0)
+            currentInputConnection.commitText("", 0)
         }
-
     }
 
-    private fun foreDelFunction() {
+    fun foreDelFunction() {
         if (currentInputConnection == null) return
         val selectedText = currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES)
         if (TextUtils.isEmpty(selectedText)) {
@@ -587,16 +644,16 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         val vibrator: Vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
         if (vibrator.hasVibrator()) {
             if (SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot((myKeyboardVibrationIntensity + 25).toLong(), 25 + myKeyboardVibrationIntensity))
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        (myKeyboardVibrationIntensity + 25).toLong(),
+                        25 + myKeyboardVibrationIntensity
+                    )
+                )
             } else {
                 vibrator.vibrate((myKeyboardVibrationIntensity + 25).toLong())
             }
         }
-    }
-
-    fun changeDPtoPX(key: String): LiveData<Int> {
-        _layoutSize.value = prefs.intLiveData(key, 0).value!! * (resources.displayMetrics.density).toInt()
-        return layoutSize
     }
 
     fun startApp(uri: String) {
@@ -931,8 +988,8 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
      * When user longclicked special button or enter button,
      * current keyboard fragment changes to boilerplate texts frag or cursor frag
      *  **/
-    fun addFunction(int: Int) {
-        when (int) {
+    fun addFunction(addOn: Int): Boolean {
+        when (addOn) {
             1 -> {
                 vm.changeMode(7)
             }
@@ -942,6 +999,8 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             else -> {
             }
         }
+        vibrateByButton()
+        return true
     }
 
     fun changeMode(new: Int) {

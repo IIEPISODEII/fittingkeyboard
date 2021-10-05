@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -36,7 +37,8 @@
                     android:text="ㅂ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanW"
@@ -47,7 +49,8 @@
                     android:text="ㅈ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanE"
@@ -58,7 +61,8 @@
                     android:text="ㄷ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanR"
@@ -69,7 +73,8 @@
                     android:text="ㄱ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanT"
@@ -80,7 +85,8 @@
                     android:text="ㅅ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/blank"
@@ -98,7 +104,8 @@
                     android:text="ㅗ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanO"
@@ -109,7 +116,8 @@
                     android:text="ㅐ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanP"
@@ -120,7 +128,8 @@
                     android:text="ㅔ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,7 +147,8 @@
                     android:text="ㅁ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanS"
@@ -149,7 +159,8 @@
                     android:text="ㄴ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanD"
@@ -160,7 +171,8 @@
                     android:text="ㅇ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanF"
@@ -171,7 +183,8 @@
                     android:text="ㄹ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanG"
@@ -182,7 +195,8 @@
                     android:text="ㅎ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanJ"
@@ -193,7 +207,8 @@
                     android:text="ㅓ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanK"
@@ -204,7 +219,8 @@
                     android:text="ㅏ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanL"
@@ -215,7 +231,8 @@
                     android:text="ㅣ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
             </LinearLayout>
 
             <LinearLayout
@@ -240,7 +257,8 @@
                     android:text="ㅋ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanX"
@@ -251,7 +269,8 @@
                     android:text="ㅌ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanC"
@@ -262,7 +281,8 @@
                     android:text="ㅊ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanV"
@@ -273,7 +293,8 @@
                     android:text="ㅍ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanN"
@@ -284,7 +305,8 @@
                     android:text="ㅜ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanM"
@@ -295,7 +317,8 @@
                     android:text="ㅡ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnDanDEL"
@@ -305,9 +328,9 @@
                     android:layout_weight="1.3"
                     android:elevation="2dp"
                     android:onClick="@{() -> kbservice.delFunction()}"
-                    android:padding="7.5dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_delete_black" />
+                    android:src="@drawable/keyic_delete_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
             </LinearLayout>
 
             <LinearLayout
@@ -324,7 +347,8 @@
                     android:onClick="@{() -> kbviewmodel.changeMode(1)}"
                     android:text="!#$"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnDanLANG"
@@ -334,9 +358,9 @@
                     android:layout_weight=".9"
                     android:elevation="2dp"
                     android:onClick="@{() -> kbviewmodel.changeMode(1)}"
-                    android:padding="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_language_black" />
+                    android:src="@drawable/keyic_language_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
 
                 <Button
                     android:id="@+id/btnDanCOMMA"
@@ -346,7 +370,8 @@
                     android:text=","
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanSPACE"
@@ -356,7 +381,8 @@
                     android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
                     android:text="@string/korean"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDanDOT"
@@ -366,7 +392,8 @@
                     android:text="."
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                    android:textSize="@{kbservice.fontSize}" />
+                    android:textSize="@{kbservice.fontSize}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnDanENTER"
@@ -376,9 +403,9 @@
                     android:layout_weight="1.25"
                     android:elevation="2dp"
                     android:onClick="@{() -> kbservice.enterFunction()}"
-                    android:padding="12.5dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_enter_black" />
+                    android:src="@drawable/keyic_enter_black"
+                    app:padding="@{kbviewmodel.observeHeight}" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

@@ -27,14 +27,23 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
      * 8: Cursor Pad
      * 9: Number Pad
      * **/
-    private var _mode: MutableLiveData<Int> = MutableLiveData(0)
+    private var _mode: MutableLiveData<Int> = MutableLiveData(1)
     val mode: LiveData<Int>
         get() = _mode
 
+    private var _bpPage: MutableLiveData<Int> = MutableLiveData(0)
+    val bpPage: LiveData<Int>
+        get() = _bpPage
+
+    fun getNextBpPage() {
+        when (_bpPage.value) {
+            0 -> _bpPage.value = 1
+            1 -> _bpPage.value = 0
+        }
+    }
     var savedLangMode = 0
     fun changeMode(new: Int) {
-        println("before: ${mode.value}")
-        println("before saved: $savedLangMode")
+        _bpPage.value = 0
         when (_mode.value) {
             0 -> {
                 when (new) {
@@ -58,6 +67,10 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                     1 -> {
                         _mode.value = 0
                         savedLangMode = 0
+                    }
+                    2 -> {
+                        _mode.value = new
+                        savedLangMode = _mode.value!!
                     }
                     3 -> {
                         _mode.value = new
@@ -90,7 +103,8 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             3 -> {
                 when (new) {
                     1 -> {
-                        _mode.value = new
+                        if (observeKBAutoCapitalization.value == true) _mode.value = new
+                        else _mode.value = 2
                         savedLangMode = new
                     }
                     3 -> {
@@ -106,7 +120,8 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             4 -> {
                 when (new) {
                     1 -> {
-                        _mode.value = new
+                        if (observeKBAutoCapitalization.value == true) _mode.value = new
+                        else _mode.value = 2
                         savedLangMode = _mode.value!!
                     }
                     3 -> {
@@ -122,7 +137,11 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             5 -> {
                 when (new) {
                     1, 3 -> {
-                        _mode.value = savedLangMode
+                        if (savedLangMode == 1 || savedLangMode == 2) {
+                            if (observeKBAutoCapitalization.value == true) _mode.value = 1
+                            else _mode.value = 2
+                        }
+                        else _mode.value = savedLangMode
                         savedLangMode = _mode.value!!
                     }
                     6 -> {
@@ -138,7 +157,11 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             6 -> {
                 when (new) {
                     1, 3 -> {
-                        _mode.value = savedLangMode
+                        if (savedLangMode == 1 || savedLangMode == 2) {
+                            if (observeKBAutoCapitalization.value == true) _mode.value = 1
+                            else _mode.value = 2
+                        }
+                        else _mode.value = new
                         savedLangMode = _mode.value!!
                     }
                     6 -> {
