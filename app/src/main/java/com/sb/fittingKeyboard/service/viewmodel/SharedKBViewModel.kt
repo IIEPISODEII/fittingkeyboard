@@ -1,10 +1,8 @@
 package com.sb.fittingKeyboard.service.viewmodel
 
 import android.app.Application
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -12,7 +10,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.sb.fittingKeyboard.service.*
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
-import kotlin.coroutines.coroutineContext
 
 class SharedKBViewModel(application: Application) : AndroidViewModel(application) {
     /** mode
@@ -31,6 +28,9 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     val mode: LiveData<Int>
         get() = _mode
 
+    /**
+     * @bpPage: BoilerPlate KeyboardView has 2 pages. bpPage(=0) marks first page, bpPage(=1) does second page
+     */
     private var _bpPage: MutableLiveData<Int> = MutableLiveData(0)
     val bpPage: LiveData<Int>
         get() = _bpPage
@@ -41,6 +41,19 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             1 -> _bpPage.value = 0
         }
     }
+
+    private var _isSelecting: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isSelecting: LiveData<Boolean>
+        get() = _isSelecting
+
+    fun switchSelectingMode(bool: Boolean) {
+        _isSelecting.value = bool
+    }
+
+    /**
+     * @savedLangMode: saves mode value before change. It could be used while mode value complicatedly varies.
+     * e.g. English KB -> SpecialChar KB -> English KB
+     */
     var savedLangMode = 0
     fun changeMode(new: Int) {
         _bpPage.value = 0
@@ -190,8 +203,6 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                 }
             }
         }
-        println("after: ${mode.value}")
-        println("after saved: $savedLangMode \n")
     }
 
     val kbSettingSP: SharedPreferences = application.applicationContext.getSharedPreferences(
@@ -208,7 +219,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     var observeKBMoSize = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_MO_SIZE, 20)
     var observeKBDivision = kbSettingSP.booleanLiveData(KeyboardUtil.KEYBOARD_DIVISION, true)
     var observeKBHoldingTime = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_HOLDING_TIME, 200)
-    var observeKBVibrationType = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_VIBRATION_TYPE, 2)
+    var observeKBVibrationUse = kbSettingSP.booleanLiveData(KeyboardUtil.KEYBOARD_VIBRATION_USE, true)
     var observeKBVibrationIntensity =
         kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_VIBRATION_INTENSITY, 0)
     var observeKBTheme = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_THEME, 0)
@@ -216,9 +227,9 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
         kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_FONT_COLOR, 0xFF000000.toInt())
     var observeKBFunctionFontColor =
         kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_FUNCTION_FONT_COLOR, 0xFF000000.toInt())
-    var observeKBLeftSideMargin = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_LEFTSIDE_MARGIN, 1)
+    var observeKBLeftSideMargin = kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_LEFTSIDE_MARGIN, 0)
     var observeKBRightSideMargin =
-        kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_RIGHTSIDE_MARGIN, 1)
+        kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_RIGHTSIDE_MARGIN, 0)
     var observeKBToolBarVisibility =
         kbSettingSP.intLiveData(KeyboardUtil.KEYBOARD_TOGGLE_TOOLBAR, View.VISIBLE)
     var observeKBAutoCapitalization =
@@ -273,17 +284,16 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getKBHeight(): Float {
-        return ((180 * (75 + observeKBHeight.value!!) / 100)).toFloat()
+        return ((288 * (75 + observeKBHeight.value!!) / 100)).toFloat()
     }
 
     fun getNumberHeight(): Float {
         return if (mode.value in arrayOf(5, 6, 9) || observeNumberVisibility.value == View.VISIBLE)
-            ((40 * (75 + observeKBHeight.value!!) / 100)).toFloat()
+            ((64 * (75 + observeKBHeight.value!!) / 100)).toFloat()
         else 0F
     }
 
     fun getRightSize(): Float {
-        return if (observeKBDivision.value!!) ((observeKBMoSize.value!!.plus(80)) / 100).toFloat() else 1.toFloat()
+        return if (observeKBDivision.value!!) ((observeKBMoSize.value!! + 80) / 100.toFloat()) else 1.toFloat()
     }
 }
-

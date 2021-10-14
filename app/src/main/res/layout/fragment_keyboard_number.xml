@@ -33,36 +33,45 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="1"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[78]}" />
 
                 <Button
                     android:id="@+id/numbtn2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="2"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[79]}" />
 
                 <Button
                     android:id="@+id/numbtn3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="3"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[80]}" />
 
                 <ImageButton
                     android:id="@+id/num_btn_del"
@@ -71,10 +80,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.delFunction()}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_delete_black"
-                    app:padding="@{kbviewmodel.observeHeight}" />
+                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{3}"
+                    app:onTouch="@{kbservice.repeatListenerDels[4]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -89,47 +101,60 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="4"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[81]}" />
 
                 <Button
                     android:id="@+id/num_btn5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="5"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[82]}" />
 
                 <Button
                     android:id="@+id/num_btn6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="6"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[83]}" />
 
                 <Button
                     android:id="@+id/num_btn_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
+                    android:text="SPACE"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerSpecials[11]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,42 +163,50 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-
                 <Button
                     android:id="@+id/num_btn7"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="7"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[84]}" />
 
                 <Button
                     android:id="@+id/num_btn8"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="8"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[85]}" />
 
                 <Button
                     android:id="@+id/num_btn9"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="9"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[86]}" />
 
                 <ImageButton
                     android:id="@+id/num_btn_enter"
@@ -183,9 +216,13 @@
                     android:layout_weight="1"
                     android:elevation="2dp"
                     android:onClick="@{(v) -> kbservice.enterFunction()}"
+                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.observeKBEnterKeyHolding)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_enter_black"
-                    app:padding="@{kbviewmodel.observeHeight}" />
+                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{4}" />
             </LinearLayout>
 
             <LinearLayout
@@ -201,66 +238,87 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".5"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbviewmodel.changeMode(3)}"
+                    android:onClick="@{() -> kbservice.changeMode(3)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black"
-                    app:padding="@{kbviewmodel.observeHeight}" />
+                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{3}" />
 
                 <Button
                     android:id="@+id/num_btn_star"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
-                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
                     android:text="*"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerSpecials[11]}" />
 
                 <Button
                     android:id="@+id/num_btn0"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
                     android:text="0"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[87]}" />
 
                 <Button
                     android:id="@+id/num_btn_shop"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v, true)}"
+                    android:text="#"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerChars[88]}" />
 
                 <Button
                     android:id="@+id/num_btn_dot"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
-                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
+                    android:text="."
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerSpecials[12]}" />
 
                 <Button
                     android:id="@+id/num_btn_comma"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
-                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
+                    android:text=","
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
                     android:textSize="@{kbservice.fontSize}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
+                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:onTouch="@{kbservice.repeatListenerSpecials[13]}" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

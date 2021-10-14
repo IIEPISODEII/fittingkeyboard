@@ -1,4 +1,8 @@
-package com.sb.fittingKeyboard.service
+/**
+ * Before cleaning codes
+ */
+
+//package com.sb.fittingKeyboard.service
 //
 //import RepeatListener
 //import android.annotation.SuppressLint

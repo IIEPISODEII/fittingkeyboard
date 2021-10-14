@@ -60,6 +60,10 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         isMyIMEenabled()
+
+        if (intent.hasExtra("Index")) {
+            findViewById<ViewPager2>(R.id.setting_main_viewPager).currentItem = 2
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

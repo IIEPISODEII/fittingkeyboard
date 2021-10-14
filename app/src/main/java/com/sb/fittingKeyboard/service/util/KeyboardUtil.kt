@@ -127,7 +127,7 @@ class KeyboardUtil {
         const val KEYBOARD_MO_SIZE = "KeyboardMoSize"
         const val KEYBOARD_DIVISION = "KeyboardDivision"
         const val KEYBOARD_HOLDING_TIME = "KeyboardHolding"
-        const val KEYBOARD_VIBRATION_TYPE = "KeyboardVibration"
+        const val KEYBOARD_VIBRATION_USE = "KeyboardVibrationUse"
         const val KEYBOARD_VIBRATION_INTENSITY = "KeyboardVibrationIntensity"
         const val KEYBOARD_THEME = "KeyboardTheme"
         const val KEYBOARD_FONT_COLOR = "KeyboardDefaultFontColor"

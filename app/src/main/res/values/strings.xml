@@ -14,7 +14,7 @@
     <string name="keyboard_rightside_margin_help_text">키보드의 우측 여백 크기를 조절합니다.</string>
     <string name="keyboard_height_help_text">키보드의 세로 길이를 조절합니다.</string>
     <string name="keyboard_holding_help_text">키보드 버튼을 길게 누를 때 초기 지연시간을 조절합니다.</string>
-    <string name="keyboard_vibration_help_text">키보드 진동 사용 여부를 설정합니다. \n부분사용 설정 시 일부 키에만 진동이 발생합니다.</string>
+    <string name="keyboard_vibration_help_text">키보드 진동 사용 여부를 설정합니다.</string>
     <string name="keyboard_toggleSet_help_text">키보드 제일 윗줄에 위치한 툴바 표시 여부를 설정합니다.\n\n비활성화 시 일부 편의기능을 사용할 수 없습니다.</string>
     <string name="keyboard_enable_help_text">현재 스마트폰에서 사용 중인 키보드를 바꾸려면 어플 상단 우측의 설정 버튼을 눌러주세요.</string>
     <string name="keyboard_autoCapital_help_text">영어자판 사용 시 첫 글자를 대문자로 설정합니다.</string>
@@ -83,4 +83,6 @@
     <string name="spn">\\</string>
     <string name="spM">\?</string>
     <string name="spm">|</string>
+    <string name="selection_cancel">선택 취소</string>
+    <string name="selection_activate">선택</string>
 </resources>

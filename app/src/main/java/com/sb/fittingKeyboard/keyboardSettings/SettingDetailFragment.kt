@@ -1,270 +1,175 @@
 package com.sb.fittingKeyboard.keyboardSettings
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.SeekBar
-import android.widget.Switch
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.databinding.SettingMainTab2Binding
 import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
+import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
 
 class SettingDetailFragment : Fragment() {
 
-    private var keyboardDivision: Boolean = true
-    private var keyboardMoSize: Int = 20
-    private var keyboardVibration: Int = 2
-    private var keyboardVibrationIntensity: Int = 50
-    private var keyboardHoldingTime: Int = 0
-    private var keyboardToggleNum: Int = View.VISIBLE
-    private var keyboardBotMargin: Int = 1
-    private var keyboardLeftSideMargin: Int = 0
-    private var keyboardRightSideMargin: Int = 0
-    private var keyboardToggleToolbar: Int = View.VISIBLE
-    private var keyboardFontSize: Int = 16
-    private var keyboardAutoCapital: Boolean = true
-    private var keyboardAutoModeChange: Boolean = true
-    private lateinit var myView: View
+    lateinit var prefSetting: SharedPreferences
+    lateinit var binding: SettingMainTab2Binding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        myView = inflater.inflate(R.layout.setting_main_tab2, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.setting_main_tab2, container, false)
 
-        loadData()
+        prefSetting = requireContext().getSharedPreferences(KeyboardUtil.KEYBOARD_SETTING, Context.MODE_PRIVATE)
 
-        myView.findViewById<TextView>(R.id.tv_keyboard_rightsize_progress).text = "${keyboardMoSize + 80}%"
-        myView.findViewById<TextView>(R.id.tv_keyboard_holding_progress).text = "${keyboardHoldingTime + 100}ms"
-        myView.findViewById<TextView>(R.id.tv_keyboard_vibration_intensity).text = "$keyboardVibrationIntensity"
-        myView.findViewById<TextView>(R.id.tv_keyboard_bot_margin_progress).text = "$keyboardBotMargin"
-        myView.findViewById<TextView>(R.id.tv_keyboard_leftside_margin_progress).text = "$keyboardLeftSideMargin%"
-        myView.findViewById<TextView>(R.id.tv_keyboard_rightside_margin_progress).text = "$keyboardRightSideMargin%"
+        val vm = ViewModelProvider(this).get(SharedKBViewModel::class.java)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.kbviewmodel = vm
 
+        vm.observeKBMoSize.observe(viewLifecycleOwner, {})
+        vm.observeKBDivision.observe(viewLifecycleOwner, {})
+        vm.observeKBHoldingTime.observe(viewLifecycleOwner, {})
+        vm.observeNumberVisibility.observe(viewLifecycleOwner, {})
+        vm.observeKBVibrationUse.observe(viewLifecycleOwner, {})
+        vm.observeKBVibrationIntensity.observe(viewLifecycleOwner, {})
+        vm.observeKBBottomMargin.observe(viewLifecycleOwner, {})
+        vm.observeKBLeftSideMargin.observe(viewLifecycleOwner, {})
+        vm.observeKBRightSideMargin.observe(viewLifecycleOwner, {})
+        vm.observeKBFontSize.observe(viewLifecycleOwner, {})
+        vm.observeKBAutoCapitalization.observe(viewLifecycleOwner, {})
+        vm.observeKBAutoModeChange.observe(viewLifecycleOwner, {})
 
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_rightsize).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.settingKeyboardRightsize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardMoSize = seekBar?.progress!!
-                myView.findViewById<TextView>(R.id.tv_keyboard_rightsize_progress).text = "${keyboardMoSize + 80}%"
-                saveData()
+                prefSetting.edit().putInt(KeyboardUtil.KEYBOARD_MO_SIZE, seekBar?.progress!!).apply()
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardMoSize = seekBar?.progress!!
-                saveData()
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardMoSize = seekBar?.progress!!
-                saveData()
+                prefSetting.edit().putInt(KeyboardUtil.KEYBOARD_MO_SIZE, seekBar?.progress!!).apply()
             }
         })
-        myView.findViewById<Switch>(R.id.setting_keyboard_division_bool).setOnCheckedChangeListener { buttonView, _ ->
-            keyboardDivision = buttonView.isChecked
-            saveData()
+        binding.settingKeyboardDivisionBool.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit().putBoolean(KeyboardUtil.KEYBOARD_DIVISION, it).apply()
         }
-        myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).setOnCheckedChangeListener { buttonView, _ ->
-            keyboardToggleToolbar = if (buttonView.isChecked) View.VISIBLE else View.GONE
-            saveData()
+        binding.settingKeyboardToggleToolbar.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_TOGGLE_TOOLBAR, if (it) View.VISIBLE else View.GONE)?.apply()
         }
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_bot_margin).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.settingKeyboardBotMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardBotMargin = seekBar?.progress!! + 1
-                myView.findViewById<TextView>(R.id.tv_keyboard_bot_margin_progress).text = "$keyboardBotMargin"
-                saveData()
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_BOTTOM_MARGIN, seekBar?.progress!!)?.apply()
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardHoldingTime = seekBar?.progress!!
-                saveData()
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardHoldingTime = seekBar?.progress!!
-                saveData()
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_BOTTOM_MARGIN, seekBar?.progress!!)?.apply()
             }
         })
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_holding).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.settingKeyboardHolding.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardHoldingTime = seekBar?.progress!!
-                myView.findViewById<TextView>(R.id.tv_keyboard_holding_progress).text = "${keyboardHoldingTime + 100}ms"
-                saveData()
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_HOLDING_TIME, seekBar?.progress!!)?.apply()
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardHoldingTime = seekBar?.progress!!
-                saveData()
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardHoldingTime = seekBar?.progress!!
-                saveData()
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_HOLDING_TIME, seekBar?.progress!!)?.apply()
             }
         })
-        myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).setOnCheckedChangeListener { buttonView, _ ->
-            keyboardToggleNum = if (buttonView.isChecked) View.VISIBLE else View.GONE
-            saveData()
+        binding.settingKeyboardToggleNumber.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_TOGGLE_NUMBER, if (it) View.VISIBLE else View.GONE)?.apply()
         }
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardVibration = seekBar?.progress!!
-                saveData()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardVibration = seekBar?.progress!!
-                saveData()
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardVibration = seekBar?.progress!!
-                saveData()
-            }
-        })
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration_intensity).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardVibrationIntensity = seekBar?.progress!!
-                myView.findViewById<TextView>(R.id.tv_keyboard_vibration_intensity).text = "$keyboardVibrationIntensity"
-                saveData()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardVibrationIntensity = seekBar?.progress!!
-                saveData()
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardVibrationIntensity = seekBar?.progress!!
-                saveData()
-            }
-        })
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_leftside_margin).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardLeftSideMargin = seekBar?.progress!!
-                myView.findViewById<TextView>(R.id.tv_keyboard_leftside_margin_progress).text = "$keyboardLeftSideMargin%"
-                saveData()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardLeftSideMargin = seekBar?.progress!!
-                saveData()
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardLeftSideMargin = seekBar?.progress!!
-                saveData()
-            }
-        })
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_rightside_margin).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardRightSideMargin = seekBar?.progress!!
-                myView.findViewById<TextView>(R.id.tv_keyboard_rightside_margin_progress).text = "$keyboardRightSideMargin%"
-                saveData()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardRightSideMargin = seekBar?.progress!!
-                saveData()
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardRightSideMargin = seekBar?.progress!!
-                saveData()
-            }
-        })
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                keyboardFontSize = seekBar?.progress!! * 2 + 14
-                saveData()
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                keyboardFontSize = seekBar?.progress!! * 2 + 14
-                saveData()
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                keyboardFontSize = seekBar?.progress!! * 2 + 14
-                saveData()
-            }
-        })
-        myView.findViewById<Switch>(R.id.setting_keyboard_autoCapital).setOnCheckedChangeListener { buttonView, _ ->
-            keyboardAutoCapital = buttonView.isChecked
-            saveData()
+        binding.settingKeyboardVibration.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putBoolean(KeyboardUtil.KEYBOARD_VIBRATION_USE, it)?.apply()
         }
-        myView.findViewById<Switch>(R.id.setting_keyboard_autoModeChange).setOnCheckedChangeListener { buttonView, _ ->
-            keyboardAutoModeChange = buttonView.isChecked
-            saveData()
+        binding.settingKeyboardVibrationIntensity.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_VIBRATION_INTENSITY, seekBar?.progress!!)?.apply()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_VIBRATION_INTENSITY, seekBar?.progress!!)?.apply()
+            }
+        })
+        binding.settingKeyboardLeftsideMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_LEFTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_LEFTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+            }
+        })
+        binding.settingKeyboardRightsideMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_RIGHTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_RIGHTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+            }
+        })
+        binding.settingKeyboardFontsize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_FONT_SIZE, seekBar?.progress!!*2 + 14)?.apply()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_FONT_SIZE, seekBar?.progress!!*2 + 14)?.apply()
+            }
+        })
+        binding.settingKeyboardAutoCapital.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putBoolean(KeyboardUtil.KEYBOARD_AUTO_CAPITALIZATION, it)?.apply()
+        }
+        binding.settingKeyboardAutoModeChange.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putBoolean(KeyboardUtil.KEYBOARD_AUTO_MODE_CHANGE, it)?.apply()
         }
 
-        myView.findViewById<Button>(R.id.tv_keyboard_division_bool).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_division_help_text), this.activity!!.window!!.context)
+        binding.tvKeyboardDivisionBool.setOnClickListener {
+            UsualFunctions().showHelpText(getString(R.string.keyboard_division_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_rightsize).setOnClickListener {
+        binding.tvKeyboardRightsize.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_right_size_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_bot_margin).setOnClickListener {
+        binding.tvKeyboardBotMargin.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_bot_margin_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_holding).setOnClickListener {
+        binding.tvKeyboardHolding.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_holding_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_leftside_margin).setOnClickListener {
+        binding.tvKeyboardLeftsideMargin.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_leftside_margin_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_rightside_margin).setOnClickListener {
+        binding.tvKeyboardRightsideMargin.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_rightside_margin_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_vibration).setOnClickListener {
+        binding.tvKeyboardVibration.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_vibration_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_toggleToolbar).setOnClickListener {
+        binding.tvKeyboardToggleToolbar.setOnClickListener {
+
             UsualFunctions().showHelpText(getString(R.string.keyboard_toggleSet_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_autoCapital).setOnClickListener {
+        binding.tvKeyboardAutoCapital.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_autoCapital_help_text), this.requireActivity().window!!.context)
         }
-        myView.findViewById<Button>(R.id.tv_keyboard_autoModeChange).setOnClickListener {
+        binding.tvKeyboardAutoModeChange.setOnClickListener {
             UsualFunctions().showHelpText(getString(R.string.keyboard_autoModeChange_help_text), this.requireActivity().window!!.context)
         }
-        return myView
-    }
-
-    private fun saveData() {
-        val prefSetting = activity?.getSharedPreferences("keyboardSetting", Context.MODE_PRIVATE)
-
-        prefSetting?.edit()?.putInt("KeyboardMoSize", keyboardMoSize)?.apply()
-        prefSetting?.edit()?.putBoolean("KeyboardDivision", keyboardDivision)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardHolding", keyboardHoldingTime)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardToggleNum", keyboardToggleNum)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardVibration", keyboardVibration)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardVibrationIntensity", keyboardVibrationIntensity)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardBottomMargin", keyboardBotMargin)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardLeftSideMargin", keyboardLeftSideMargin)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardRightSideMargin", keyboardRightSideMargin)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardToggleToolBar", keyboardToggleToolbar)?.apply()
-        prefSetting?.edit()?.putInt(KeyboardUtil.KEYBOARD_FONT_SIZE, keyboardFontSize)?.apply()
-        prefSetting?.edit()?.putBoolean(KeyboardUtil.KEYBOARD_AUTO_CAPITALIZATION, keyboardAutoCapital)?.apply()
-        prefSetting?.edit()?.putBoolean("KeyboardAutoModeChange", keyboardAutoModeChange)?.apply()
-    }
-
-    fun loadData() {
-        val prefSetting = activity?.getSharedPreferences("keyboardSetting", Context.MODE_PRIVATE)
-
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_rightsize).progress = prefSetting.getInt("KeyboardMoSize", 20)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_holding).progress = prefSetting.getInt("KeyboardHolding", 200)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration).progress = prefSetting.getInt("KeyboardVibration", 2)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_vibration_intensity).progress = prefSetting.getInt("KeyboardVibrationIntensity", 0)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_bot_margin).progress = prefSetting.getInt("KeyboardBottomMargin", 1)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_leftside_margin).progress = prefSetting.getInt("KeyboardLeftSideMargin", 0)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_rightside_margin).progress = prefSetting.getInt("KeyboardRightSideMargin", 0)
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_fontsize).progress = (prefSetting.getInt("KeyboardFontSize", 16) - 14)/2
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_division_bool).isChecked = prefSetting.getBoolean("KeyboardDivision", true)
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleNumber).isChecked = prefSetting.getInt("KeyboardToggleNum", View.VISIBLE) == View.VISIBLE
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_toggleToolbar).isChecked = prefSetting.getInt("KeyboardToggleToolBar", View.VISIBLE) == View.VISIBLE
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_autoCapital).isChecked = prefSetting.getBoolean(KeyboardUtil.KEYBOARD_AUTO_CAPITALIZATION, true)
-        if (prefSetting != null) myView.findViewById<Switch>(R.id.setting_keyboard_autoModeChange).isChecked = prefSetting.getBoolean("KeyboardAutoModeChange", true)
+        return binding.root
     }
 }
