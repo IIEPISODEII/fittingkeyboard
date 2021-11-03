@@ -17,29 +17,10 @@ import com.bumptech.glide.Glide
 import com.sb.fittingKeyboard.R
 
 object CustomBindingAdapters {
-    @RequiresApi(Build.VERSION_CODES.O)
-    @JvmStatic
-    @BindingAdapter("fontType")
-    fun setFontType(view: View, fontType: Int) {
-        val typeFace = when (fontType) {
-            1 -> ResourcesCompat.getFont(view.context, R.font.aritta)
-            2 -> ResourcesCompat.getFont(view.context, R.font.dovemayo)
-            3 -> ResourcesCompat.getFont(view.context, R.font.imcresoojin)
-            4 -> ResourcesCompat.getFont(view.context, R.font.maplestorylight)
-            5 -> ResourcesCompat.getFont(view.context, R.font.nanumbarungothic)
-            6 -> ResourcesCompat.getFont(view.context, R.font.nanumsquarer)
-            7 -> ResourcesCompat.getFont(view.context, R.font.seoulnamsan)
-            8 -> ResourcesCompat.getFont(view.context, R.font.tttogether)
-            9 -> ResourcesCompat.getFont(view.context, R.font.cookierun)
-            10 -> ResourcesCompat.getFont(view.context, R.font.tmoney)
-            11 -> ResourcesCompat.getFont(view.context, R.font.tadaktadak)
-            else -> Typeface.DEFAULT
-        }
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @JvmStatic
-    @BindingAdapter("fontStyle", "fontBold")
+    @BindingAdapter("customFontStyle", "fontBold")
     fun setFontStyle(view: View, fontType: Int, mode: Int) {
         val typeFace = when (fontType) {
             1 -> ResourcesCompat.getFont(view.context, R.font.aritta)
@@ -104,7 +85,7 @@ object CustomBindingAdapters {
                     2 -> R.drawable.keydesign_14_function
                     3 -> R.drawable.keydesign_14_function
                     4 -> R.drawable.keydesign_14_function
-                    5 -> R.color.grey
+                    5 -> R.color.theme_grey
                     6 -> R.color.transparent
                     else -> return
                 }

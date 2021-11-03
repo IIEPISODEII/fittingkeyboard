@@ -41,7 +41,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunSFa"
@@ -56,7 +57,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunLa"
@@ -71,7 +73,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnChunDELa"
@@ -109,7 +112,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunQVa"
@@ -124,7 +128,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunKa"
@@ -139,7 +144,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunSPACEa"
@@ -153,7 +159,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[19]}" />
             </LinearLayout>
 
@@ -176,7 +183,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunWCa"
@@ -191,7 +199,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunMa"
@@ -206,7 +215,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnChunENTERa"
@@ -244,7 +254,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnChunLANGa"
@@ -274,7 +285,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/btnChunInita"
@@ -304,7 +316,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnChunATa"
@@ -318,7 +331,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[20]}" />
             </LinearLayout>
         </LinearLayout>

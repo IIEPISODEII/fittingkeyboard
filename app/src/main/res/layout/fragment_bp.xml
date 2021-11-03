@@ -60,7 +60,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                         <Button
                             android:id="@+id/frag_autoText3"
@@ -75,7 +76,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                         <Button
                             android:id="@+id/frag_autoText5"
@@ -90,7 +92,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                         <Button
                             android:id="@+id/frag_autoText7"
@@ -105,7 +108,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -127,7 +131,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                         <Button
                             android:id="@+id/frag_autoText4"
@@ -142,7 +147,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                         <Button
                             android:id="@+id/frag_autoText6"
@@ -157,7 +163,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                         <Button
                             android:id="@+id/frag_autoText8"
@@ -172,7 +179,8 @@
                             app:customTheme_padding="@{kbviewmodel.observeHeight}"
                             app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                             app:customTheme_view="@{0}"
-                            app:fontType="@{kbviewmodel.observeKBFontType}" />
+                            app:fontBold="@{kbviewmodel.mode}"
+                            app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
@@ -197,7 +205,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}" />
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <ImageButton
                     android:id="@+id/frag_delete"
@@ -226,7 +235,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[22]}" />
 
                 <ImageButton

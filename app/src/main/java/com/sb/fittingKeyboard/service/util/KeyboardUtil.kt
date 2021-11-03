@@ -1,5 +1,7 @@
 package com.sb.fittingKeyboard.service.util
 
+import com.sb.fittingKeyboard.R
+
 class KeyboardUtil {
     companion object {
         val enChar = arrayOf(
@@ -157,12 +159,14 @@ class KeyboardUtil {
         const val KEYBOARD_BP_14 = "AutoText14"
         const val KEYBOARD_BP_15 = "AutoText15"
 
+
+        // 한글키보드 세팅값
         const val QWERTY = 0
         const val CHUN = 1
         const val NARAT = 2
         const val CHUN_AMBI = 3
         const val DAN = 4
 
-        const val BOILERPLATE_TEXTS_FRAGMENT = 1
+
     }
 }

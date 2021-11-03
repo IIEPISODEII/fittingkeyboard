@@ -40,7 +40,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[78]}" />
 
                 <Button
@@ -55,7 +56,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[79]}" />
 
                 <Button
@@ -70,7 +72,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[80]}" />
 
                 <ImageButton
@@ -108,7 +111,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[81]}" />
 
                 <Button
@@ -123,7 +127,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[82]}" />
 
                 <Button
@@ -138,7 +143,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[83]}" />
 
                 <Button
@@ -153,7 +159,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[11]}" />
             </LinearLayout>
 
@@ -175,7 +182,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[84]}" />
 
                 <Button
@@ -190,7 +198,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[85]}" />
 
                 <Button
@@ -205,7 +214,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[86]}" />
 
                 <ImageButton
@@ -257,7 +267,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[11]}" />
 
                 <Button
@@ -272,7 +283,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[87]}" />
 
                 <Button
@@ -287,7 +299,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[88]}" />
 
                 <Button
@@ -302,7 +315,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[12]}" />
 
                 <Button
@@ -317,7 +331,8 @@
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontType="@{kbviewmodel.observeKBFontType}"
+                    app:fontBold="@{kbviewmodel.mode}"
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[13]}" />
             </LinearLayout>
         </LinearLayout>

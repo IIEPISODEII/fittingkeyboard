@@ -10,6 +10,7 @@ import android.os.SystemClock
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.TextUtils
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -294,8 +295,15 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         ) {
             var autoCapitalCondition: Boolean = false
             for (i in 0..3) {
-                if (currentInputConnection.getTextBeforeCursor(i + 2, GET_TEXT_WITH_STYLES)
-                        .toString().replace("\\s".toRegex(), "") == "."
+                if (currentInputConnection
+                        .getTextBeforeCursor(
+                            i + 2
+                            , GET_TEXT_WITH_STYLES)
+                        .toString()
+                        .replace(
+                            "\\s"
+                            .toRegex()
+                            , "") == "."
                 ) {
                     autoCapitalCondition = true
                 }
@@ -361,17 +369,20 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                         if (vm.mode.value == 4) vm.changeMode(3)
                     }
                     KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
-                        var c1: String? = null
-                        var c2: String? = null
+                        val c1: String?
+                        val c2: String?
 
-                        if (button.id in arrayOf(R.id.btnChunK, R.id.btnChunKa)) {
-                            val chars = HanguelChunjiin.composeChar('ᆞ')
-                            c1 = chars.commited
-                            c2 = chars.composing
-                        } else {
-                            val chars = HanguelChunjiin.composeChar((button as Button).text[0])
-                            c1 = chars.commited
-                            c2 = chars.composing
+                        when (button.id) {
+                            in arrayOf(R.id.btnChunK, R.id.btnChunKa) -> {
+                                val chars = HanguelChunjiin.composeChar('ᆞ')
+                                c1 = chars.commited
+                                c2 = chars.composing
+                            }
+                            else -> {
+                                val chars = HanguelChunjiin.composeChar((button as Button).text[0])
+                                c1 = chars.commited
+                                c2 = chars.composing
+                            }
                         }
 
                         if (c1 != null) {
@@ -961,11 +972,13 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         return true
     }
 
+    // 키보드 전환
     fun changeMode(new: Int) {
         vm.changeMode(new)
         if (myKeyboardVibration) vibrateByButton()
     }
 
+    // 텍스트 복사하기
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun copyText() {
         if (currentInputConnection == null) return
@@ -981,6 +994,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         }
     }
 
+    // 텍스트 잘라내기
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun cutText() {
         if (currentInputConnection == null) return
@@ -996,6 +1010,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         }
     }
 
+    // 텍스트 붙여넣기
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun pasteText() {
         if (currentInputConnection == null) return
@@ -1006,6 +1021,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         }
     }
 
+    // 한글키보드 사용 중 작성 중이던 한글 자/모음 결합체계 초기화
     fun clearComposing() {
         currentInputConnection?.finishComposingText()
 

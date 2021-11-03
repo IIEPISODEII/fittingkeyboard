@@ -284,12 +284,12 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun getKBHeight(): Float {
-        return ((288 * (75 + observeKBHeight.value!!) / 100)).toFloat()
+        return ((360 * (75 + observeKBHeight.value!!) / 100)).toFloat()
     }
 
     fun getNumberHeight(): Float {
         return if (mode.value in arrayOf(5, 6, 9) || observeNumberVisibility.value == View.VISIBLE)
-            ((64 * (75 + observeKBHeight.value!!) / 100)).toFloat()
+            ((80 * (75 + observeKBHeight.value!!) / 100)).toFloat()
         else 0F
     }
 
