@@ -3,18 +3,16 @@ package com.sb.fittingKeyboard.service
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.graphics.Rect
 import android.inputmethodservice.InputMethodService
-import android.os.Build
+import android.os.*
 import android.os.Build.VERSION.SDK_INT
-import android.os.SystemClock
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.TextUtils
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.ExtractedTextRequest
+import android.view.inputmethod.*
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
@@ -34,8 +32,6 @@ import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_FONT_
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_SETTING
 import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
 
-
-@Suppress("DEPRECATION")
 class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     lateinit var kbBinding: KeyLayoutNormalBinding
     lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
@@ -267,7 +263,6 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
     override fun onCreateInputView(): View {
         super.onCreateInputView()
-
         return kbView
     }
 
@@ -281,6 +276,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         candidatesStart: Int,
         candidatesEnd: Int
     ) {
+        Log.d("onUpdateSelection", "oldSelStart: $oldSelStart\noldSelEnd: $oldSelEnd\nnewSelStart: $newSelStart\nnewSelEnd: $newSelEnd\ncandidatesStart: $candidatesStart\ncandidatesEnd: $candidatesEnd")
         if (candidatesStart != -1) {
             if ((candidatesStart != oldSelStart && candidatesEnd != newSelStart)) {
                 clearComposing()
@@ -293,17 +289,17 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             && currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)
             && vm.mode.value == 2
         ) {
-            var autoCapitalCondition: Boolean = false
+            var autoCapitalCondition = false
             for (i in 0..3) {
                 if (currentInputConnection
                         .getTextBeforeCursor(
-                            i + 2
-                            , GET_TEXT_WITH_STYLES)
+                            i + 2, GET_TEXT_WITH_STYLES
+                        )
                         .toString()
                         .replace(
                             "\\s"
-                            .toRegex()
-                            , "") == "."
+                                .toRegex(), ""
+                        ) == "."
                 ) {
                     autoCapitalCondition = true
                 }
@@ -323,6 +319,11 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         if (currentInputEditorInfo.inputType in inputTypeNumbers) {
             vm.changeMode(9)
         }
+    }
+
+    override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
+        super.onStartInput(attribute, restarting)
+        clearComposing()
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
