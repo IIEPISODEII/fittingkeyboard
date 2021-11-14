@@ -23,7 +23,7 @@
     <string name="admin2_help_text"><b><i>STEP 2</i></b> : 키보드 변경 화면에서 "피팅키보드"를 선택해주세요.</string>
     <string name="specialkeyAddon_help_text">특수문자키를 길게 누를 때 부가기능을 설정합니다.</string>
     <string name="enterkeyAddon_help_text">엔터키를 길게 누를 때 부가기능을 설정합니다.</string>
-    <string name="applicationInfo">Version 1.24\n\n이 어플리케이션은 사용자의 입력 정보를 수집하지 않습니다.</string>
+    <string name="applicationInfo">Version 1.26\n\n이 어플리케이션은 사용자의 입력 정보를 수집하지 않습니다.</string>
     <string name="inputMethodKR_help_text">사용할 한글입력기를 선택합니다.</string>
     <string name="krQ">ㅃ</string>
     <string name="krq">ㅂ</string>

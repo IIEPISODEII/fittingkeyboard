@@ -1,5 +1,6 @@
 package com.sb.fittingKeyboard.service.util
 
+import android.content.res.Resources
 import com.sb.fittingKeyboard.R
 
 class KeyboardUtil {
@@ -166,7 +167,5 @@ class KeyboardUtil {
         const val NARAT = 2
         const val CHUN_AMBI = 3
         const val DAN = 4
-
-
     }
 }

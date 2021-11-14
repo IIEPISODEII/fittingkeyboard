@@ -1,27 +1,36 @@
 package com.sb.fittingKeyboard.service
 
 import android.annotation.SuppressLint
+import android.app.Service
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Rect
 import android.inputmethodservice.InputMethodService
 import android.os.*
 import android.os.Build.VERSION.SDK_INT
 import android.text.TextUtils
+import android.transition.ChangeTransform
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.*
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.getSystemService
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.*
+import com.sb.fittingKeyboard.keyboardSettings.MainActivity
 import com.sb.fittingKeyboard.keyboardSettings.SetTheme
 import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
 import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
@@ -153,6 +162,11 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         kbLayoutBottomMargin = kbView.findViewById(R.id.keyboardBotMargin)
 
         var currentKRView = qwertyKrNormalKBView
+        vm.observeBottomMargin.observe(this, {
+            val lP = kbLayoutBottomMargin.layoutParams
+            lP.height = it * (resources.displayMetrics.density).toInt()
+            kbLayoutBottomMargin.layoutParams = lP
+        })
         vm.observeKBIME.observe(this, {
             currentKRView =
                 when (it) {
@@ -184,11 +198,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             }
         })
         vm.observeNumberVisibility.observe(this, {})
-        vm.observeKBBottomMargin.observe(this, {
-            val lP = kbLayoutBottomMargin.layoutParams
-            lP.height = it * (resources.displayMetrics.density).toInt()
-            kbLayoutBottomMargin.layoutParams = lP
-        })
+        vm.observeKBBottomMargin.observe(this, {})
         vm.observeKBFontSize.observe(
             this,
             {
@@ -225,22 +235,8 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.observeKBTheme.observe(this, { myKeyboardTheme = it })
         vm.observeKBFontColor.observe(this, {})
         vm.observeKBFunctionFontColor.observe(this, {})
-        vm.observeKBLeftSideMargin.observe(this, {
-            val lPNum = kbNumLeftSide.layoutParams
-            val lPChar = kbCharLeftSide.layoutParams
-            lPNum.width = it * 3 * (resources.displayMetrics.density).toInt()
-            lPChar.width = it * 3 * (resources.displayMetrics.density).toInt()
-            kbNumLeftSide.layoutParams = lPNum
-            kbCharLeftSide.layoutParams = lPChar
-        })
-        vm.observeKBRightSideMargin.observe(this, {
-            val lPNum = kbNumRightSide.layoutParams
-            val lPChar = kbCharRightSide.layoutParams
-            lPNum.width = it * 3 * (resources.displayMetrics.density).toInt()
-            lPChar.width = it * 3 * (resources.displayMetrics.density).toInt()
-            kbNumRightSide.layoutParams = lPNum
-            kbCharRightSide.layoutParams = lPChar
-        })
+        vm.observeKBLeftSideMargin.observe(this, {})
+        vm.observeKBRightSideMargin.observe(this, {})
         vm.observeKBToolBarVisibility.observe(this, {})
         vm.observeKBHeight.observe(this, {})
         vm.observeHeight.observe(this, {
@@ -257,12 +253,31 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.observeKBSpecialKeyHolding.observe(this, {})
         vm.observeKBAutoCapitalization.observe(this, {})
         vm.isSelecting.observe(this, {})
+        vm.orientation.observe(this, {})
+        vm.observeHorizontalLeftSideMargin.observe(this, {
+            val lPNum = kbNumLeftSide.layoutParams
+            val lPChar = kbCharLeftSide.layoutParams
+            lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
+            lPChar.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
+            kbNumLeftSide.layoutParams = lPNum
+            kbCharLeftSide.layoutParams = lPChar
+        })
+        vm.observeHorizontalRightSideMargin.observe(this, {
+            val lPNum = kbNumRightSide.layoutParams
+            val lPChar = kbCharRightSide.layoutParams
+            lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
+            lPChar.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
+            kbNumRightSide.layoutParams = lPNum
+            kbCharRightSide.layoutParams = lPChar
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
     override fun onCreateInputView(): View {
         super.onCreateInputView()
+        Log.d("키보드 생성", if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) "세로" else "가로")
+        onConfigurationChanged(resources.configuration)
         return kbView
     }
 
@@ -276,7 +291,6 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         candidatesStart: Int,
         candidatesEnd: Int
     ) {
-        Log.d("onUpdateSelection", "oldSelStart: $oldSelStart\noldSelEnd: $oldSelEnd\nnewSelStart: $newSelStart\nnewSelEnd: $newSelEnd\ncandidatesStart: $candidatesStart\ncandidatesEnd: $candidatesEnd")
         if (candidatesStart != -1) {
             if ((candidatesStart != oldSelStart && candidatesEnd != newSelStart)) {
                 clearComposing()
@@ -310,9 +324,11 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         }
     }
 
+    var lastInfo: EditorInfo? = null
     @SuppressLint("ClickableViewAccessibility", "NewApi")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        lastInfo = info
         super.onStartInputView(info, restarting)
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
 
@@ -321,6 +337,12 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        onFinishInputView(finishingInput = true)
+
+        // Implement changeOrientation() method in SharedKBViewModel.kt
+        vm.changeOrientation(newConfig.orientation)
+    }
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
         clearComposing()
@@ -627,13 +649,10 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     }
 
     fun jumpToBp(view: View, index: Int): Boolean {
-        val intent: Intent? =
-            applicationContext.packageManager.getLaunchIntentForPackage("com.sb.fittingKeyboard")
-        if (intent != null) {
-            intent.putExtra("Index", index + vm.bpPage.value!! * 8)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra("Index", index)
+        startActivity(intent)
         return false
     }
 
@@ -645,7 +664,6 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun selectAll() {
         if (currentInputConnection == null) {
-            Toast.makeText(this, "?", Toast.LENGTH_SHORT).show()
             return
         }
         if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
@@ -654,6 +672,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             clearComposing()
             currentInputConnection.setSelection(0, wholeText)
             savedCursorPosition = -1
+            if (wholeText == 0) Toast.makeText(this, "선택할 문구가 없습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -986,12 +1005,16 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.switchSelectingMode(false)
         if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
             clearComposing()
-            if (currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES) == null) Toast.makeText(
-                applicationContext,
-                "선택된 문구가 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
-            else currentInputConnection.performContextMenuAction(android.R.id.copy)
+            if (currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES) == null) {
+                Toast.makeText(
+                    this,
+                    "문구를 복사하시려면\n문구를 먼저 선택해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else {
+                currentInputConnection.performContextMenuAction(android.R.id.copy)
+            }
         }
     }
 
@@ -1002,12 +1025,16 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.switchSelectingMode(false)
         if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
             clearComposing()
-            if (currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES) == null) Toast.makeText(
-                applicationContext,
-                "선택된 문구가 없습니다.",
-                Toast.LENGTH_SHORT
-            ).show()
-            else currentInputConnection.performContextMenuAction(android.R.id.cut)
+            if (currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES) == null) {
+                Toast.makeText(
+                    this,
+                    "문구를 잘라내시려면\n문구를 먼저 선택해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else {
+                currentInputConnection.performContextMenuAction(android.R.id.cut)
+            }
         }
     }
 
@@ -1018,6 +1045,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.switchSelectingMode(false)
         if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
             clearComposing()
+
             currentInputConnection.performContextMenuAction(android.R.id.paste)
         }
     }
@@ -1047,23 +1075,20 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         HanguelDanmoum.initResult()
     }
 
-    var repeatListenerChars = Array<RepeatListener>(200) { _ ->
+    var repeatListenerChars = Array(200) {
         RepeatListener(mKeyboardHolding, normalInterval) {
             inputChar(it)
         }
     }
-    var repeatListenerSpecials = Array<RepeatListener>(100) { _ ->
+    var repeatListenerSpecials = Array(100) {
         RepeatListener(mKeyboardHolding, normalInterval) {
             inputSpecial(it)
         }
     }
-    var repeatListenerDels = Array<RepeatListener>(100) { _ ->
+    var repeatListenerDels = Array(100) {
         RepeatListener(mKeyboardHolding, normalInterval) {
             delFunction()
         }
-    }
-    var rListenerSpecial = RepeatListener(mKeyboardHolding, normalInterval) {
-        inputSpecial(it)
     }
     var rListenerCursorLeft = RepeatListener(mKeyboardHolding, normalInterval) {
         moveCursorToLeft()

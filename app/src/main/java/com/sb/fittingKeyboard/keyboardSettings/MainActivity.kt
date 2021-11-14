@@ -1,11 +1,13 @@
 package com.sb.fittingKeyboard.keyboardSettings
 
 import android.annotation.SuppressLint
+import android.app.Service
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodInfo
@@ -22,14 +24,15 @@ import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
     private val tabTextList = arrayListOf("기본 설정", "세부 설정", "상용구", "테마 설정")
-
     private lateinit var currentIMEList: MutableList<InputMethodInfo>
     private var isMyIMEactivated by Delegates.notNull<Boolean>()
+    private lateinit var currentIMM: InputMethodManager
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        currentIMM = applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         setContentView(R.layout.activity_main)
         findViewById<Toolbar>(R.id.tb_MainAct).run {
             title = "키보드 설정"
@@ -39,10 +42,6 @@ class MainActivity : AppCompatActivity() {
 
 
         val mainViewPager = findViewById<ViewPager2>(R.id.setting_main_viewPager)
-        isMyIMEenabled()
-        if (!isMyIMEactivated) {
-            AdminKeyboard().show(supportFragmentManager, "adminKeyboard")
-        }
         mainViewPager.adapter = ViewPager(this)
         mainViewPager.offscreenPageLimit = 3
         TabLayoutMediator(
@@ -57,10 +56,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     override fun onResume() {
         super.onResume()
-        isMyIMEenabled()
 
+        // Inspect if fittingkeyboard is activated
+        isMyIMEenabled()
+        if (!isMyIMEactivated) {
+            currentIMM.showInputMethodPicker()
+            AdminKeyboard().show(supportFragmentManager, "adminKeyboard")
+        }
+
+        // When user long-clicks boiler-plate text button in keyboard, intent guides user boiler-plate setting fragment.
         if (intent.hasExtra("Index")) {
             findViewById<ViewPager2>(R.id.setting_main_viewPager).currentItem = 2
         }
@@ -79,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_showIMEpick -> {
                 isMyIMEenabled()
-                if (isMyIMEactivated) (applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showInputMethodPicker()
+                if (isMyIMEactivated) currentIMM.showInputMethodPicker()
                 else showIMESettingAlert("취소")
             }
             R.id.menu_help -> {
@@ -106,8 +113,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun isMyIMEenabled() {
-        currentIMEList =
-            (applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).enabledInputMethodList
+        currentIMEList = currentIMM.enabledInputMethodList
         isMyIMEactivated = applicationInfo.packageName in currentIMEList.toString()
     }
 

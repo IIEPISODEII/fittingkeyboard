@@ -3,6 +3,9 @@ package com.sb.fittingKeyboard.service.viewmodel
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -28,18 +31,11 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     val mode: LiveData<Int>
         get() = _mode
 
-    /**
-     * @bpPage: BoilerPlate KeyboardView has 2 pages. bpPage(=0) marks first page, bpPage(=1) does second page
-     */
-    private var _bpPage: MutableLiveData<Int> = MutableLiveData(0)
-    val bpPage: LiveData<Int>
-        get() = _bpPage
-
-    fun getNextBpPage() {
-        when (_bpPage.value) {
-            0 -> _bpPage.value = 1
-            1 -> _bpPage.value = 0
-        }
+    val orientation: MutableLiveData<Orientation> = MutableLiveData(
+        Orientation.VERTICAL
+    )
+    fun changeOrientation(config: Int) {
+        orientation.value = if (config == Configuration.ORIENTATION_PORTRAIT) Orientation.VERTICAL else Orientation.HORIZONTAL
     }
 
     private var _isSelecting: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -56,7 +52,6 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
      */
     var savedLangMode = 0
     fun changeMode(new: Int) {
-        _bpPage.value = 0
         when (_mode.value) {
             0 -> {
                 when (new) {
@@ -260,26 +255,75 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
 
     var observeHeight: MediatorLiveData<Float> = MediatorLiveData()
     var observeRightSize: MediatorLiveData<Float> = MediatorLiveData()
+    var observeHorizontalLeftSideMargin: MediatorLiveData<Float> = MediatorLiveData()
+    var observeHorizontalRightSideMargin: MediatorLiveData<Float> = MediatorLiveData()
+    var observeBottomMargin: MediatorLiveData<Int> = MediatorLiveData()
 
     init {
-        observeHeight.addSource(observeKBHeight) {
-            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
-        }
-        observeHeight.addSource(mode) {
-            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
-        }
-        observeHeight.addSource(observeKBBottomMargin) {
-            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
-        }
-        observeHeight.addSource(observeNumberVisibility) {
-            observeHeight.value = getKBHeight() + getNumberHeight() + observeKBBottomMargin.value!!
+        observeBottomMargin.run {
+            addSource(observeKBBottomMargin) {
+                observeBottomMargin.value =
+                    if (orientation.value == Orientation.HORIZONTAL) 0
+                    else observeKBBottomMargin.value
+            }
+            addSource(orientation) {
+                observeBottomMargin.value =
+                    if (orientation.value == Orientation.HORIZONTAL) 0
+                    else observeKBBottomMargin.value
+            }
         }
 
-        observeRightSize.addSource(observeKBDivision) {
-            observeRightSize.value = getRightSize()
+        observeHeight.run {
+            addSource(observeKBHeight) {
+                observeHeight.value = setTotalHeight()
+            }
+            addSource(mode) {
+                observeHeight.value = setTotalHeight()
+            }
+            addSource(observeKBBottomMargin) {
+                observeHeight.value = setTotalHeight()
+            }
+            addSource(observeNumberVisibility) {
+                observeHeight.value = setTotalHeight()
+            }
+            addSource(orientation) {
+                observeHeight.value = setTotalHeight()
+            }
         }
-        observeRightSize.addSource(observeKBMoSize) {
-            observeRightSize.value = getRightSize()
+
+        observeRightSize.run {
+            addSource(observeKBDivision) {
+                observeRightSize.value = getRightSize()
+            }
+            addSource(observeKBMoSize) {
+                observeRightSize.value = getRightSize()
+            }
+        }
+
+        observeHorizontalLeftSideMargin.run {
+            addSource(observeKBLeftSideMargin) {
+                observeHorizontalLeftSideMargin.value =
+                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
+                    else observeKBLeftSideMargin.value!!.toFloat()
+            }
+            addSource(orientation) {
+                observeHorizontalLeftSideMargin.value =
+                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
+                    else observeKBLeftSideMargin.value!!.toFloat()
+            }
+        }
+
+        observeHorizontalRightSideMargin.run {
+            addSource(observeKBRightSideMargin) {
+                observeHorizontalRightSideMargin.value =
+                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
+                    else observeKBRightSideMargin.value!!.toFloat()
+            }
+            addSource(orientation) {
+                observeHorizontalRightSideMargin.value =
+                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
+                    else observeKBRightSideMargin.value!!.toFloat()
+            }
         }
     }
 
@@ -295,5 +339,19 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
 
     fun getRightSize(): Float {
         return if (observeKBDivision.value!!) ((observeKBMoSize.value!! + 80) / 100.toFloat()) else 1.toFloat()
+    }
+
+    private fun setTotalHeight(): Float {
+        return if (orientation.value == Orientation.VERTICAL)
+                (getKBHeight()
+                        + getNumberHeight()
+                        + observeKBBottomMargin.value!!)
+        else
+                (Resources.getSystem().displayMetrics.widthPixels)/3.5F
+    }
+
+    enum class Orientation {
+        HORIZONTAL,
+        VERTICAL
     }
 }

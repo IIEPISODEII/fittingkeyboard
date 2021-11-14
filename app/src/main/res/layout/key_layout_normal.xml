@@ -18,7 +18,6 @@
 
         <import type="android.view.View" />
     </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -64,7 +63,7 @@
                 android:onClick="@{() -> kbservice.selectAll()}"
                 android:src="@drawable/ic_select" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/toolBarCopy"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
@@ -72,9 +71,9 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:onClick="@{() -> kbservice.copyText()}"
-                android:text="복" />
+                android:src="@drawable/ic_baseline_copy_all_24"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/toolBarCut"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
@@ -82,9 +81,9 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:onClick="@{() -> kbservice.cutText()}"
-                android:text="잘" />
+                android:src="@drawable/ic_baseline_content_cut_24"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/toolBarPaste"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
@@ -92,7 +91,7 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:onClick="@{() -> kbservice.pasteText()}"
-                android:text="붙" />
+                android:src="@drawable/ic_baseline_content_paste_go_24" />
 
             <ImageButton
                 android:id="@+id/cursorButton"
