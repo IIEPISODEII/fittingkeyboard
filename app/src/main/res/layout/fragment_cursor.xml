@@ -283,7 +283,7 @@
                     android:layout_weight=".5"
                     android:elevation="2dp"
                     android:gravity="center"
-                    android:onClick="@{() -> kbservice.enterFunction()}"
+                    android:onClick="@{() -> kbservice.inputEnter()}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_enter_black"
                     app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"

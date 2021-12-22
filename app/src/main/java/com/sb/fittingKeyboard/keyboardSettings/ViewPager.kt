@@ -6,17 +6,17 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class ViewPager(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 
-    val detailFragment = SettingDetailFragment()
-    val boilerPlateTextFragment = SettingBoilerPlateTextFragment()
-    val themeFragment = SettingThemeFragment()
-    val basicFragment = SettingBasicFragment()
+    private val detailFragment = SettingDetailFragment()
+    private val boilerPlateTextFragment = SettingBoilerPlateTextFragment()
+    private val themeFragment = SettingThemeFragment()
+    private val basicFragment = SettingBasicFragment()
 
     override fun getItemCount(): Int {
         return 4
     }
 
     override fun createFragment(position: Int): Fragment {
-        return when ( position ) {
+        return when (position) {
             1 -> detailFragment
             2 -> boilerPlateTextFragment
             3 -> themeFragment

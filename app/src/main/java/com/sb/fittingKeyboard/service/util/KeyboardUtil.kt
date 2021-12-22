@@ -1,124 +1,26 @@
 package com.sb.fittingKeyboard.service.util
 
 import android.content.res.Resources
+import android.widget.FrameLayout
+import androidx.core.content.res.ResourcesCompat
+import com.bumptech.glide.load.engine.Resource
 import com.sb.fittingKeyboard.R
 
 class KeyboardUtil {
     companion object {
-        val enChar = arrayOf(
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H",
-            "I",
-            "J",
-            "K",
-            "L",
-            "M",
-            "N",
-            "O",
-            "P",
-            "Q",
-            "R",
-            "S",
-            "T",
-            "U",
-            "V",
-            "W",
-            "X",
-            "Y",
-            "Z"
+        val emojiIconList = listOf(
+            R.drawable.ic_outline_access_time_24,
+            R.drawable.ic_outline_emoji_emotions_24,
+            R.drawable.ic_outline_emoji_people_24,
+            R.drawable.ic_outline_emoji_nature_24,
+            R.drawable.ic_outline_emoji_food_beverage_24,
+            R.drawable.ic_outline_emoji_transportation_24,
+            R.drawable.ic_outline_emoji_events_24,
+            R.drawable.ic_outline_emoji_objects_24,
+            R.drawable.ic_outline_emoji_symbols_24,
+            R.drawable.ic_outline_emoji_flags_24
         )
-        val krChar = arrayOf(
-            "ㅁ",
-            "ㅠ",
-            "ㅊ",
-            "ㅇ",
-            "ㄷ",
-            "ㄹ",
-            "ㅎ",
-            "ㅗ",
-            "ㅑ",
-            "ㅓ",
-            "ㅏ",
-            "ㅣ",
-            "ㅡ",
-            "ㅜ",
-            "ㅐ",
-            "ㅔ",
-            "ㅂ",
-            "ㄱ",
-            "ㄴ",
-            "ㅅ",
-            "ㅕ",
-            "ㅍ",
-            "ㅈ",
-            "ㅌ",
-            "ㅛ",
-            "ㅋ"
-        )
-        val krShiftChar =
-            arrayOf("ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅐ", "ㅔ", "ㅃ", "ㅉ", "ㄸ", "ㄲ", "ㅆ", "ㅒ", "ㅖ")
-        val specialChar1 = arrayOf(
-            "(",
-            ";",
-            "~",
-            "{",
-            "$",
-            "}",
-            "[",
-            "]",
-            "-",
-            "<",
-            ">",
-            "=",
-            "?",
-            "!",
-            "*",
-            "/",
-            "@",
-            "%",
-            ")",
-            "^",
-            "+",
-            ":",
-            "#",
-            "_",
-            "&",
-            "\""
-        )
-        val specialChar2 = arrayOf(
-            "≤",
-            "`",
-            "\"",
-            "≠",
-            "÷",
-            "∞",
-            "→",
-            "←",
-            "-",
-            "↑",
-            "↓",
-            "♡",
-            "|",
-            "\\",
-            "*",
-            "/",
-            "±",
-            "•",
-            "≥",
-            "√",
-            "+",
-            "'",
-            "×",
-            "」",
-            "π",
-            "「"
-        )
+
         const val PACKAGE_NAME = "com.sb.fittingKeyboard"
 
         const val KEYBOARD_SETTING = "keyboardSetting"
@@ -159,6 +61,7 @@ class KeyboardUtil {
         const val KEYBOARD_BP_13 = "AutoText13"
         const val KEYBOARD_BP_14 = "AutoText14"
         const val KEYBOARD_BP_15 = "AutoText15"
+        const val RECENTLY_USED_EMOTICONS = "RecentlyUsedEmotions"
 
 
         // 한글키보드 세팅값
@@ -167,5 +70,37 @@ class KeyboardUtil {
         const val NARAT = 2
         const val CHUN_AMBI = 3
         const val DAN = 4
+
+        // 이모지 세팅
+        const val emojiIconWidth = 50
+        fun getEmojiIconXPosition(view: FrameLayout, position: Int): Int {
+            val _position: Float = (view.width/changeDpToPx(emojiIconWidth)) / 2F
+            return (changeDpToPx(emojiIconWidth) * (position - _position) + changeDpToPx(emojiIconWidth)/2).toInt()
+        }
+
+        fun changeDpToPx(dp: Int): Int {
+            return (dp * Resources.getSystem().displayMetrics.density).toInt()
+        }
+
+        fun decToHex(dec: Int): String {
+            val hex = StringBuilder("")
+            var _dec = dec
+            if (_dec == 0) return hex.append("0x0").toString()
+            while (_dec > 0) {
+                val remain = _dec % 16
+                when (remain){
+                    10 -> hex.insert(0, "A")
+                    11 -> hex.insert(0, "B")
+                    12 -> hex.insert(0, "C")
+                    13 -> hex.insert(0, "D")
+                    14 -> hex.insert(0, "E")
+                    15 -> hex.insert(0, "F")
+                    else -> hex.insert(0, remain)
+                }
+                _dec = (_dec-remain)/16
+            }
+            hex.insert(0, "0x")
+            return hex.toString().padEnd(7, '0')
+        }
     }
 }

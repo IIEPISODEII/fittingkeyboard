@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             setTitleTextColor(resources.getColor(R.color.white))
         }
         setSupportActionBar(findViewById(R.id.tb_MainAct))
-
+        findViewById<EditText>(R.id.textInputEditText).imeOptions
 
         val mainViewPager = findViewById<ViewPager2>(R.id.setting_main_viewPager)
         mainViewPager.adapter = ViewPager(this)

@@ -321,6 +321,13 @@ object CustomBindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("emojiButton_theme")
+    fun setEmojiTheme(view: View, theme: Int) {
+        if (theme == 7) view.setBackgroundResource(R.color.black)
+        else view.setBackgroundResource(0)
+    }
+
+    @JvmStatic
     @BindingAdapter("colorFilter")
     fun setImageColorFilter(view: View, color: Int) {
         if (view is ImageView) view.setColorFilter(color)

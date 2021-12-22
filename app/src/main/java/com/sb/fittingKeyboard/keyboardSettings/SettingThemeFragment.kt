@@ -144,7 +144,8 @@ class SettingThemeFragment : Fragment() {
     }
 }
 
-class ThemeRecyclerAdapter(private val themeList: ArrayList<KeyboardThemes>) : RecyclerView.Adapter<ThemeRecyclerAdapter.CustomViewHolder>() {
+class ThemeRecyclerAdapter(private val themeList: ArrayList<KeyboardThemes>)
+    : RecyclerView.Adapter<ThemeRecyclerAdapter.CustomViewHolder>() {
     var newPosition = 0
     var oldPosition = 0
 

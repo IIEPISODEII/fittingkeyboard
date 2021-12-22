@@ -27,4 +27,5 @@
     <color name="semi_black">#7F000000</color>
     <color name="mint">#D4FFD5</color>
     <color name="theme_grey">#EDEDED</color>
+    <color name="deep_blue">#007FFF</color>
 </resources>

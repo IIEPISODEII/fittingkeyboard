@@ -112,6 +112,16 @@
                 android:background="@color/white"
                 android:onClick="@{() -> kbviewmodel.changeMode(9)}"
                 android:src="@{kbviewmodel.mode==9 ? @drawable/ic_keyboard_black : @drawable/ic_number_keypad}" />
+
+            <Button
+                android:id="@+id/emoticon_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="이"
+                android:background="@color/white"
+                android:onClick="@{() -> kbviewmodel.changeMode(10)}"/>
         </LinearLayout>
 
         <RelativeLayout

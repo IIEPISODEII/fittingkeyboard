@@ -5,14 +5,15 @@ import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.sb.fittingKeyboard.service.*
+import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerAdapter
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
+import org.json.JSONArray
 
 class SharedKBViewModel(application: Application) : AndroidViewModel(application) {
     /** mode
@@ -26,6 +27,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
      * 7: BoilerPlate Text
      * 8: Cursor Pad
      * 9: Number Pad
+     * 10 : Emojis
      * **/
     private var _mode: MutableLiveData<Int> = MutableLiveData(1)
     val mode: LiveData<Int>
@@ -50,7 +52,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
      * @savedLangMode: saves mode value before change. It could be used while mode value complicatedly varies.
      * e.g. English KB -> SpecialChar KB -> English KB
      */
-    var savedLangMode = 0
+    private var savedLangMode = 0
     fun changeMode(new: Int) {
         when (_mode.value) {
             0 -> {
@@ -63,7 +65,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                         _mode.value = new
                         savedLangMode = new
                     }
-                    5, 7, 8, 9 -> {
+                    5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
                         _mode.value = new
                     }
@@ -84,7 +86,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                         _mode.value = new
                         savedLangMode = new
                     }
-                    5, 7, 8, 9 -> {
+                    5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
                         _mode.value = new
                     }
@@ -101,7 +103,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                         _mode.value = new
                         savedLangMode = new
                     }
-                    5, 7, 8, 9 -> {
+                    5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
                         _mode.value = new
                     }
@@ -118,7 +120,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                     3 -> {
                         _mode.value = 4
                     }
-                    5, 7, 8, 9 -> {
+                    5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
                         _mode.value = new
                     }
@@ -135,7 +137,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                     3 -> {
                         _mode.value = 3
                     }
-                    5, 7, 8, 9 -> {
+                    5, 7, 8, 9, 10 -> {
                         _mode.value = new
                         savedLangMode = 3
                     }
@@ -155,7 +157,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                     6 -> {
                         _mode.value = new
                     }
-                    7, 8, 9 -> {
+                    7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
                         _mode.value = new
                     }
@@ -175,14 +177,14 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                     6 -> {
                         _mode.value = 5
                     }
-                    7, 8, 9 -> {
+                    7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
                         _mode.value = new
                     }
                     else -> return
                 }
             }
-            7, 8, 9 -> {
+            7, 8, 9, 10 -> {
                 when (new) {
                     _mode.value -> {
                         _mode.value = savedLangMode
@@ -252,12 +254,12 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     var observeBP13 = kbSettingSP.stringLiveData(KeyboardUtil.KEYBOARD_BP_13, "")
     var observeBP14 = kbSettingSP.stringLiveData(KeyboardUtil.KEYBOARD_BP_14, "")
     var observeBP15 = kbSettingSP.stringLiveData(KeyboardUtil.KEYBOARD_BP_15, "")
+    var observeE0RecentlyUsedEmoticons = kbSettingSP.stringLiveData(KeyboardUtil.RECENTLY_USED_EMOTICONS, JSONArray().put("").toString())
 
     var observeHeight: MediatorLiveData<Float> = MediatorLiveData()
     var observeRightSize: MediatorLiveData<Float> = MediatorLiveData()
-    var observeHorizontalLeftSideMargin: MediatorLiveData<Float> = MediatorLiveData()
-    var observeHorizontalRightSideMargin: MediatorLiveData<Float> = MediatorLiveData()
     var observeBottomMargin: MediatorLiveData<Int> = MediatorLiveData()
+    var emojiColumnsCounts: MediatorLiveData<Int> = MediatorLiveData()
 
     init {
         observeBottomMargin.run {
@@ -300,41 +302,10 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             }
         }
 
-        observeHorizontalLeftSideMargin.run {
-            addSource(observeKBLeftSideMargin) {
-                observeHorizontalLeftSideMargin.value =
-                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
-                    else observeKBLeftSideMargin.value!!.toFloat()
-            }
-            addSource(orientation) {
-                observeHorizontalLeftSideMargin.value =
-                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
-                    else observeKBLeftSideMargin.value!!.toFloat()
-            }
+        emojiColumnsCounts.addSource(orientation) {
+            val emojiPixelSize: Float = (Resources.getSystem().displayMetrics.density * 50 + 0.5).toFloat()
+            emojiColumnsCounts.value = (Resources.getSystem().displayMetrics.widthPixels.toFloat()/emojiPixelSize).toInt()
         }
-
-        observeHorizontalRightSideMargin.run {
-            addSource(observeKBRightSideMargin) {
-                observeHorizontalRightSideMargin.value =
-                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
-                    else observeKBRightSideMargin.value!!.toFloat()
-            }
-            addSource(orientation) {
-                observeHorizontalRightSideMargin.value =
-                    if (orientation.value == Orientation.HORIZONTAL) Resources.getSystem().displayMetrics.heightPixels / 15F
-                    else observeKBRightSideMargin.value!!.toFloat()
-            }
-        }
-    }
-
-    fun getKBHeight(): Float {
-        return ((360 * (75 + observeKBHeight.value!!) / 100)).toFloat()
-    }
-
-    fun getNumberHeight(): Float {
-        return if (mode.value in arrayOf(5, 6, 9) || observeNumberVisibility.value == View.VISIBLE)
-            ((80 * (75 + observeKBHeight.value!!) / 100)).toFloat()
-        else 0F
     }
 
     fun getRightSize(): Float {
@@ -342,12 +313,43 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun setTotalHeight(): Float {
-        return if (orientation.value == Orientation.VERTICAL)
-                (getKBHeight()
-                        + getNumberHeight()
-                        + observeKBBottomMargin.value!!)
-        else
-                (Resources.getSystem().displayMetrics.widthPixels)/3.5F
+        val maxHeight = 600F
+        val minHeight = 350F
+        val currentHeight = Resources.getSystem().displayMetrics.heightPixels.toFloat()/2.5F
+        return when {
+            currentHeight >= maxHeight -> maxHeight * (75 + observeKBHeight.value!!) / 100
+            currentHeight < maxHeight && currentHeight >= minHeight -> currentHeight * (75 + observeKBHeight.value!!) / 100
+            else -> minHeight * (75 + observeKBHeight.value!!) / 100
+        }
+    }
+
+    fun setRecentlyUsedEmoticon(emoji: String) {
+        val jsonArray = JSONArray(kbSettingSP.stringLiveData(KeyboardUtil.RECENTLY_USED_EMOTICONS, JSONArray().put("").toString()).value!!)
+        val newJsonArray = JSONArray()
+
+        val arr = mutableListOf<String>()
+
+        for (i in 0 until jsonArray.length()) {
+            if (jsonArray.optString(i) != "") arr.add(jsonArray.optString(i))
+        }
+
+        if (emoji in arr) {
+            arr.apply {
+                remove(emoji)
+                add(0, emoji)
+            }
+        } else {
+            arr.add(0, emoji)
+            if (arr.size > 30) {
+                while (arr.size > 30) {
+                    arr.remove(arr.last())
+                }
+            }
+        }
+        arr.forEach {
+            newJsonArray.put(it)
+        }
+        kbSettingSP.edit().putString(KeyboardUtil.RECENTLY_USED_EMOTICONS, newJsonArray.toString()).apply()
     }
 
     enum class Orientation {

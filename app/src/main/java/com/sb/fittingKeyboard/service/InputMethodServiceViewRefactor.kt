@@ -1,58 +1,58 @@
 package com.sb.fittingKeyboard.service
 
 import android.annotation.SuppressLint
-import android.app.Service
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.content.res.Resources
-import android.graphics.Rect
 import android.inputmethodservice.InputMethodService
 import android.os.*
 import android.os.Build.VERSION.SDK_INT
 import android.text.TextUtils
-import android.transition.ChangeTransform
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.*
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.content.getSystemService
-import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
+import androidx.viewpager2.widget.ViewPager2
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.KeyboardInputFuctions
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.emoji.EmojiRecyclerLiveDataAdapter
+import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
 import com.sb.fittingKeyboard.databinding.*
 import com.sb.fittingKeyboard.keyboardSettings.MainActivity
-import com.sb.fittingKeyboard.keyboardSettings.SetTheme
 import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
 import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
 import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
 import com.sb.fittingKeyboard.koreanAutomata.HanguelQWERTY
+import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerAdapter
+import com.sb.fittingKeyboard.service.emoji.EmojiViewPagerAdapter
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_FONT_SIZE
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_SETTING
+import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.emojiIconList
+import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.getEmojiIconXPosition
 import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
+import org.json.JSONArray
 
 class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
-    lateinit var kbBinding: KeyLayoutNormalBinding
-    lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
-    lateinit var qwertyKrNormalBinding: FragmentKeyboardQwertyKrNormalBinding
-    lateinit var chunjiinBinding: FragmentKeyboardChunjiinBasicBinding
-    lateinit var chunAKBBinding: FragmentKeyboardChunjiinAmbiBinding
-    lateinit var naratguelBinding: FragmentKeyboardNaratgulBasicBinding
-    lateinit var danmoumBinding: FragmentKeyboardDanmoumBinding
-    lateinit var specialKBBinding: FragmentKeyboardQwertySpecialBinding
-    lateinit var numberBinding: FragmentKeyboardNumberBinding
-    lateinit var boilerPlateBinding: FragmentBpBinding
-    lateinit var cursorBinding: FragmentCursorBinding
+    private lateinit var kbBinding: KeyLayoutNormalBinding
+    private lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
+    private lateinit var qwertyKrNormalBinding: FragmentKeyboardQwertyKrNormalBinding
+    private lateinit var chunjiinBinding: FragmentKeyboardChunjiinBasicBinding
+    private lateinit var chunAKBBinding: FragmentKeyboardChunjiinAmbiBinding
+    private lateinit var naratguelBinding: FragmentKeyboardNaratgulBasicBinding
+    private lateinit var danmoumBinding: FragmentKeyboardDanmoumBinding
+    private lateinit var specialKBBinding: FragmentKeyboardQwertySpecialBinding
+    private lateinit var numberBinding: FragmentKeyboardNumberBinding
+    private lateinit var boilerPlateBinding: FragmentBpBinding
+    private lateinit var cursorBinding: FragmentCursorBinding
+    private lateinit var emojiBinding: FragmentEmojiBinding
+
     private lateinit var vm: SharedKBViewModel
     private lateinit var kbFrame: FrameLayout
     private lateinit var kbView: View
@@ -62,13 +62,15 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     private lateinit var kbCharRightSide: FrameLayout
     private lateinit var kbNumLeftSide: Button
     private lateinit var kbNumRightSide: Button
+    private lateinit var customEmojiIndicator: CustomIndicator
+    private lateinit var emojisViewPager: ViewPager2
+    private lateinit var emojiScrollView: HorizontalScrollView
     private val mLifecycle = LifecycleRegistry(this)
+
     override fun getLifecycle(): Lifecycle = mLifecycle
 
-    //<editor-fold desc="변수 선언">
     private val inputTypeNumbers = arrayOf(2, 4098, 8194, 18, 3, 4, 14, 24, 24578, 16387)
 
-    private lateinit var theme: SetTheme
     private var mKeyboardHolding: Long = 300
     private var myKeyboardVibration: Boolean = true
     private var myKeyboardVibrationIntensity: Int = 50
@@ -77,15 +79,16 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
 
     private var savedCursorPosition = 0
 
-    //</editor-fold>
+    private var mColumnsCount = 0
     private lateinit var prefs: SharedPreferences
     private var _fontSize = MutableLiveData<Int>(15)
     val fontSize: LiveData<Int> get() = _fontSize
-    private var _layoutSize = MutableLiveData<Int>()
-    val layoutSize: LiveData<Int> get() = _layoutSize
+    private val emojiPagerAdapter: EmojiViewPagerAdapter
+        get() = EmojiViewPagerAdapter(mutableListOf(), 0, null, null)
 
     override fun onCreate() {
         super.onCreate()
+
         vm = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
             .create(SharedKBViewModel::class.java)
         kbView = layoutInflater.inflate(R.layout.key_layout_normal, null)
@@ -112,6 +115,9 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         val danmoKBView = layoutInflater.inflate(R.layout.fragment_keyboard_danmoum, null)
         val naratguelKBView =
             layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null)
+        val emojiKBView =
+            layoutInflater.inflate(R.layout.fragment_emoji, null)
+
         qwertyEnNormalBinding = DataBindingUtil.bind(qwertyEnNormalKBView)!!
         qwertyEnNormalBinding.setVariable(BR.kbservice, this)
         qwertyEnNormalBinding.lifecycleOwner = this
@@ -152,6 +158,10 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         numberBinding.setVariable(BR.kbservice, this)
         numberBinding.lifecycleOwner = this
         numberBinding.kbviewmodel = vm
+        emojiBinding = DataBindingUtil.bind(emojiKBView)!!
+        emojiBinding.setVariable(BR.kbservice, this)
+        emojiBinding.lifecycleOwner = this
+        emojiBinding.kbviewmodel = vm
 
         kbNumLeftSide = kbView.findViewById(R.id.keyboardNumberLeftMargin)
         kbNumRightSide = kbView.findViewById(R.id.keyboardNumberRightMargin)
@@ -160,6 +170,9 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         kbLayout = kbView.findViewById(R.id.keyboardLayout)
         kbFrame = kbView.findViewById(R.id.keyboardViewFrameLayout)
         kbLayoutBottomMargin = kbView.findViewById(R.id.keyboardBotMargin)
+        emojisViewPager = emojiKBView.findViewById(R.id.emoji_viewpager)
+        emojiScrollView = emojiKBView.findViewById(R.id.emoji_scrollview)
+        customEmojiIndicator = emojiKBView.findViewById(R.id.emoji_viewpager_indicator)
 
         var currentKRView = qwertyKrNormalKBView
         vm.observeBottomMargin.observe(this, {
@@ -170,12 +183,8 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.observeKBIME.observe(this, {
             currentKRView =
                 when (it) {
-                    KeyboardUtil.QWERTY -> {
-                        qwertyKrNormalKBView
-                    }
-                    KeyboardUtil.CHUN -> {
-                        chunjiinKBView
-                    }
+                    KeyboardUtil.QWERTY -> qwertyKrNormalKBView
+                    KeyboardUtil.CHUN -> chunjiinKBView
                     KeyboardUtil.CHUN_AMBI -> chunjiinKBViewAmbi
                     KeyboardUtil.NARAT -> naratguelKBView
                     KeyboardUtil.DAN -> danmoKBView
@@ -195,6 +204,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                 7 -> kbFrame.addView(boilerPlateKBView)
                 8 -> kbFrame.addView(cursorKBView)
                 9 -> kbFrame.addView(numberKBView)
+                10 -> kbFrame.addView(emojiKBView)
             }
         })
         vm.observeNumberVisibility.observe(this, {})
@@ -235,26 +245,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.observeKBTheme.observe(this, { myKeyboardTheme = it })
         vm.observeKBFontColor.observe(this, {})
         vm.observeKBFunctionFontColor.observe(this, {})
-        vm.observeKBLeftSideMargin.observe(this, {})
-        vm.observeKBRightSideMargin.observe(this, {})
-        vm.observeKBToolBarVisibility.observe(this, {})
-        vm.observeKBHeight.observe(this, {})
-        vm.observeHeight.observe(this, {
-            val lP = kbLayout.layoutParams
-            lP.height = it.toInt() * resources.displayMetrics.density.toInt()
-            kbLayout.layoutParams = lP
-
-            val bgImg = kbView.findViewById<ImageView>(R.id.keyboardBackgroundImage)
-            val bgImglP = bgImg.layoutParams
-            bgImglP.height = it.toInt() * resources.displayMetrics.density.toInt()
-            bgImg.layoutParams = bgImglP
-        })
-        vm.observeKBEnterKeyHolding.observe(this, {})
-        vm.observeKBSpecialKeyHolding.observe(this, {})
-        vm.observeKBAutoCapitalization.observe(this, {})
-        vm.isSelecting.observe(this, {})
-        vm.orientation.observe(this, {})
-        vm.observeHorizontalLeftSideMargin.observe(this, {
+        vm.observeKBLeftSideMargin.observe(this, {
             val lPNum = kbNumLeftSide.layoutParams
             val lPChar = kbCharLeftSide.layoutParams
             lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
@@ -262,7 +253,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             kbNumLeftSide.layoutParams = lPNum
             kbCharLeftSide.layoutParams = lPChar
         })
-        vm.observeHorizontalRightSideMargin.observe(this, {
+        vm.observeKBRightSideMargin.observe(this, {
             val lPNum = kbNumRightSide.layoutParams
             val lPChar = kbCharRightSide.layoutParams
             lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
@@ -270,17 +261,72 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             kbNumRightSide.layoutParams = lPNum
             kbCharRightSide.layoutParams = lPChar
         })
+        vm.observeKBToolBarVisibility.observe(this, {})
+        vm.observeKBHeight.observe(this, {})
+        vm.observeHeight.observe(this, {
+            kbLayout.layoutParams.height = it.toInt()
+            val bgImg = kbView.findViewById<ImageView>(R.id.keyboardBackgroundImage)
+            bgImg.layoutParams.height = it.toInt()
+        })
+        vm.observeKBEnterKeyHolding.observe(this, {})
+        vm.observeKBSpecialKeyHolding.observe(this, {})
+        vm.observeKBAutoCapitalization.observe(this, {})
+        vm.isSelecting.observe(this, {})
+        vm.orientation.observe(this, {})
+
+        emojisViewPager.adapter = emojiPagerAdapter
+        vm.emojiColumnsCounts.observe(this, { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) })
+        vm.observeE0RecentlyUsedEmoticons.observe(this, {
+            val jsonArray = JSONArray(it)
+            val arr = mutableListOf<String>()
+
+            for (i in 0 until jsonArray.length()) {
+                if (jsonArray.optString(i) != "") arr.add(jsonArray.optString(i))
+            }
+            (emojisViewPager.adapter as EmojiViewPagerAdapter).changeAdapter(arr)
+        })
+
+        val emojiIconClickListeners = MutableList(emojiIconList.size) { View.OnClickListener {  } }
+        for (i in emojiIconClickListeners.indices) {
+            emojiIconClickListeners[i] = View.OnClickListener {
+                emojisViewPager.currentItem = i
+            }
+        }
+
+        customEmojiIndicator.createIconPanel(iconsList = emojiIconList, position = 1, clickListeners = emojiIconClickListeners)
+        (emojisViewPager.adapter as EmojiViewPagerAdapter).changeListener(object: EmojiRecyclerAdapter.OnItemClickListener {
+            override fun onItemClick(v: View, pos: Int) {
+                clearComposing()
+                currentInputConnection.commitText((v as Button).text.toString(), 1)
+                vm.setRecentlyUsedEmoticon(v.text.toString())
+            }
+        },
+        object: EmojiRecyclerLiveDataAdapter.OnItemClickListener {
+            override fun onItemClick(v: View, pos: Int) {
+                clearComposing()
+                currentInputConnection.commitText((v as Button).text.toString(), 1)
+            }
+        })
+        emojisViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        emojisViewPager.offscreenPageLimit = 1
+
+        // 무한스크롤 뷰페이저
+        emojisViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                val mPosition = emojisViewPager.currentItem
+                customEmojiIndicator.selectPosition(position = mPosition)
+                emojiScrollView.smoothScrollTo(getEmojiIconXPosition(emojiScrollView, mPosition),0)
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
     override fun onCreateInputView(): View {
         super.onCreateInputView()
-        Log.d("키보드 생성", if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) "세로" else "가로")
         onConfigurationChanged(resources.configuration)
         return kbView
     }
-
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onUpdateSelection(
@@ -306,14 +352,9 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             var autoCapitalCondition = false
             for (i in 0..3) {
                 if (currentInputConnection
-                        .getTextBeforeCursor(
-                            i + 2, GET_TEXT_WITH_STYLES
-                        )
+                        .getTextBeforeCursor(i+2, GET_TEXT_WITH_STYLES)
                         .toString()
-                        .replace(
-                            "\\s"
-                                .toRegex(), ""
-                        ) == "."
+                        .replace("\\s".toRegex(), "") == "."
                 ) {
                     autoCapitalCondition = true
                 }
@@ -324,25 +365,26 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         }
     }
 
-    var lastInfo: EditorInfo? = null
     @SuppressLint("ClickableViewAccessibility", "NewApi")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        lastInfo = info
         super.onStartInputView(info, restarting)
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-
         if (currentInputEditorInfo.inputType in inputTypeNumbers) {
             vm.changeMode(9)
+        } else if (vm.mode.value in listOf(5, 6, 7, 8, 9, 10)) {
+            vm.changeMode(1)
         }
+        emojisViewPager.setCurrentItem(1, false)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         onFinishInputView(finishingInput = true)
 
-        // Implement changeOrientation() method in SharedKBViewModel.kt
+        // vm(SharedKBViewModel.kt)에 있는 방향 전환 메소드 실행
         vm.changeOrientation(newConfig.orientation)
     }
+
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)
         clearComposing()
@@ -476,11 +518,13 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                 "한글",
                 "english",
                 "English",
-                "SPACE",
-                "특수 1",
-                "특수 2"
+                "SPACE"
             )
         ) currentInputConnection.commitText(" ", 1)
+        else if ((button as Button).text in arrayOf("특수 1", "특수 2")) {
+            vm.changeMode(3)
+            currentInputConnection.commitText(" ", 1)
+        }
         else currentInputConnection.commitText((button as Button).text[0].toString(), 1)
 
         if (myKeyboardVibration) vibrateByButton()
@@ -501,103 +545,73 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         if (myKeyboardVibration) vibrateByButton()
     }
 
-    fun enterFunction() {
-        if (currentInputConnection == null) return
-        clearComposing()
-        currentInputConnection.finishComposingText()
-        val eventTime = SystemClock.uptimeMillis()
-        when (currentInputEditorInfo.imeOptions) {
-            EditorInfo.IME_ACTION_SEARCH + EditorInfo.IME_FLAG_NAVIGATE_NEXT -> {
-                currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_SEARCH)
-            }
-            else -> {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        eventTime,
-                        eventTime,
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_ENTER,
-                        0,
-                        0,
-                        0,
-                        0,
-                        KeyEvent.FLAG_SOFT_KEYBOARD
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        SystemClock.uptimeMillis(),
-                        eventTime,
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_ENTER,
-                        0,
-                        0,
-                        0,
-                        0,
-                        KeyEvent.FLAG_SOFT_KEYBOARD
-                    )
-                )
-            }
-        }
-        if (myKeyboardVibration) vibrateByButton()
+    fun inputEnter() {
+        KeyboardInputFuctions.inputEnter(mIMEService = this, clearComposing = { clearComposing() }, myKeyboardVibration, vibrateByButton = { vibrateByButton() })
     }
 
     fun delFunction() {
         if (currentInputConnection == null) return
         val selectedText = currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES)
         if (TextUtils.isEmpty(selectedText)) {
-            if (vm.mode.value in arrayOf(3, 4)) {
-                when (vm.observeKBIME.value) {
-                    KeyboardUtil.QWERTY -> {
-                        val (c1, c2) = HanguelQWERTY.delete()
-                        if (c1 == null) {
-                            if (c2 == null) {
-                                clearComposing()
-                                currentInputConnection.deleteSurroundingText(1, 0)
-                            } else {
-                                currentInputConnection.setComposingText(c2, 1)
-                            }
-                        }
-                        if (vm.mode.value == 4) vm.changeMode(3)
-                    }
-                    KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
-                        val (c1, c2) = HanguelChunjiin.delete()
-                        if (c1 == null) {
-                            if (c2 == null) {
-                                clearComposing()
-                                currentInputConnection.deleteSurroundingText(1, 0)
-                            } else {
-                                currentInputConnection.setComposingText(c2, 1)
-                            }
-                        }
-                    }
-                    KeyboardUtil.NARAT -> {
-                        val (c1, c2) = HanguelNARATGUL.delete()
-                        if (c1 == null) {
-                            if (c2 == null) {
-                                clearComposing()
-                                currentInputConnection.deleteSurroundingText(1, 0)
-                            } else {
-                                currentInputConnection.setComposingText(c2, 1)
-                            }
-                        }
-                    }
-                    KeyboardUtil.DAN -> {
-                        val (c1, c2) = HanguelDanmoum.delete(inputTime = System.currentTimeMillis())
-                        if (c1 == null) {
-                            if (c2 == null) {
-                                clearComposing()
-                                currentInputConnection.deleteSurroundingText(1, 0)
-                            } else {
-                                currentInputConnection.setComposingText(c2, 1)
-                            }
-                        }
-                    }
-                    else -> HanguelQWERTY.delete()
-                }
+            val c = currentInputConnection.getTextBeforeCursor(1, GET_TEXT_WITH_STYLES)
+            // 이모지 삭제 / 일반 삭제 나눔
+            if (SDK_INT >= Build.VERSION_CODES.KITKAT && c!!.length!! > 0 && Character.isSurrogate(c[0])) {
+                val deleteKeyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL)
+                currentInputConnection.sendKeyEvent(deleteKeyEvent)
             } else {
-                clearComposing()
-                currentInputConnection.deleteSurroundingText(1, 0)
+                if (vm.mode.value in arrayOf(3, 4)) {
+                    when (vm.observeKBIME.value) {
+                        KeyboardUtil.QWERTY -> {
+                            val (c1, c2) = HanguelQWERTY.delete()
+                            if (c1 == null) {
+                                if (c2 == null) {
+                                    clearComposing()
+                                    currentInputConnection.deleteSurroundingText(1, 0)
+                                } else {
+                                    currentInputConnection.setComposingText(c2, 1)
+                                }
+                            }
+                            if (vm.mode.value == 4) vm.changeMode(3)
+                        }
+                        KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
+                            val (c1, c2) = HanguelChunjiin.delete()
+                            if (c1 == null) {
+                                if (c2 == null) {
+                                    clearComposing()
+                                    currentInputConnection.deleteSurroundingText(1, 0)
+                                } else {
+                                    currentInputConnection.setComposingText(c2, 1)
+                                }
+                            }
+                        }
+                        KeyboardUtil.NARAT -> {
+                            val (c1, c2) = HanguelNARATGUL.delete()
+                            if (c1 == null) {
+                                if (c2 == null) {
+                                    clearComposing()
+                                    currentInputConnection.deleteSurroundingText(1, 0)
+                                } else {
+                                    currentInputConnection.setComposingText(c2, 1)
+                                }
+                            }
+                        }
+                        KeyboardUtil.DAN -> {
+                            val (c1, c2) = HanguelDanmoum.delete(inputTime = System.currentTimeMillis())
+                            if (c1 == null) {
+                                if (c2 == null) {
+                                    clearComposing()
+                                    currentInputConnection.deleteSurroundingText(1, 0)
+                                } else {
+                                    currentInputConnection.setComposingText(c2, 1)
+                                }
+                            }
+                        }
+                        else -> HanguelQWERTY.delete()
+                    }
+                } else {
+                    clearComposing()
+                    currentInputConnection.deleteSurroundingText(1, 0)
+                }
             }
         } else {
             clearComposing()

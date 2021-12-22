@@ -8,6 +8,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".FittingKeyboard"
         android:supportsRtl="true"
         android:debuggable="false"
         android:theme="@style/AppTheme"
@@ -27,7 +28,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name="com.sb.fittingKeyboard.keyboardSettings.MainActivity">
+        <activity android:name="com.sb.fittingKeyboard.keyboardSettings.MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
