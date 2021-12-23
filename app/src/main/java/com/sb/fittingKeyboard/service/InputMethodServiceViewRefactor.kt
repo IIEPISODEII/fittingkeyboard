@@ -79,7 +79,6 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
 
     private var savedCursorPosition = 0
 
-    private var mColumnsCount = 0
     private lateinit var prefs: SharedPreferences
     private var _fontSize = MutableLiveData<Int>(15)
     val fontSize: LiveData<Int> get() = _fontSize
@@ -294,7 +293,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         }
 
         customEmojiIndicator.createIconPanel(iconsList = emojiIconList, position = 1, clickListeners = emojiIconClickListeners)
-        (emojisViewPager.adapter as EmojiViewPagerAdapter).changeListener(object: EmojiRecyclerAdapter.OnItemClickListener {
+        (emojisViewPager.adapter as EmojiViewPagerAdapter).initListener(object: EmojiRecyclerAdapter.OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 clearComposing()
                 currentInputConnection.commitText((v as Button).text.toString(), 1)
@@ -316,6 +315,11 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                 val mPosition = emojisViewPager.currentItem
                 customEmojiIndicator.selectPosition(position = mPosition)
                 emojiScrollView.smoothScrollTo(getEmojiIconXPosition(emojiScrollView, mPosition),0)
+
+                /** emojisViewPager.changeAdapter()로 데이터셋 변경 알림시킬 경우, 뷰페이저 1페이지에서 스크롤이 자꾸 고정되는 현상을 방지하고자
+                 *  데이터셋 변경 알림은 notifyE0DataSetChanged으로 뷰페이저 페이지 변경 시 실행하도록 함
+                 **/
+                if (mPosition == 0) (emojisViewPager.adapter as EmojiViewPagerAdapter).notifyE0DataSetChanged()
             }
         })
     }
