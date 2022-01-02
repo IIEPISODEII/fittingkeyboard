@@ -1,16 +1,22 @@
 package com.sb.fittingKeyboard.service
 
 import android.annotation.SuppressLint
+import android.app.Service
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
-import android.os.*
+import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.text.TextUtils
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.*
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
@@ -20,9 +26,6 @@ import androidx.lifecycle.*
 import androidx.viewpager2.widget.ViewPager2
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.KeyboardInputFuctions
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.emoji.EmojiRecyclerLiveDataAdapter
-import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
 import com.sb.fittingKeyboard.databinding.*
 import com.sb.fittingKeyboard.keyboardSettings.MainActivity
 import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
@@ -30,16 +33,21 @@ import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
 import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
 import com.sb.fittingKeyboard.koreanAutomata.HanguelQWERTY
 import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerAdapter
+import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerLiveDataAdapter
 import com.sb.fittingKeyboard.service.emoji.EmojiViewPagerAdapter
+import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_FONT_SIZE
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_SETTING
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.emojiIconList
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.getEmojiIconXPosition
+import com.sb.fittingKeyboard.service.util.RepeatListener
 import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
 import org.json.JSONArray
 
+@SuppressLint("ClickableViewAccessibility")
 class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
+
     private lateinit var kbBinding: KeyLayoutNormalBinding
     private lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
     private lateinit var qwertyKrNormalBinding: FragmentKeyboardQwertyKrNormalBinding
@@ -76,9 +84,8 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     private var myKeyboardVibrationIntensity: Int = 50
     private var myKeyboardTheme: Int = 0
     private val normalInterval: Long = 37
-
+    private var latestMode = 3
     private var savedCursorPosition = 0
-
     private lateinit var prefs: SharedPreferences
     private var _fontSize = MutableLiveData<Int>(15)
     val fontSize: LiveData<Int> get() = _fontSize
@@ -195,16 +202,43 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             }
         })
         vm.mode.observe(this, {
-            kbFrame.removeAllViews()
             when (it) {
-                0, 1, 2 -> kbFrame.addView(qwertyEnNormalKBView)
-                3, 4 -> kbFrame.addView(currentKRView)
-                5, 6 -> kbFrame.addView(qwertySpecialKBView)
-                7 -> kbFrame.addView(boilerPlateKBView)
-                8 -> kbFrame.addView(cursorKBView)
-                9 -> kbFrame.addView(numberKBView)
-                10 -> kbFrame.addView(emojiKBView)
+                0, 1, 2 -> {
+                    if (latestMode !in arrayOf(0, 1, 2)) {
+                        kbFrame.removeAllViews()
+                        kbFrame.addView(qwertyEnNormalKBView)
+                    }
+                }
+                3, 4 -> {
+                    if (latestMode !in arrayOf(3, 4)) {
+                        kbFrame.removeAllViews()
+                        kbFrame.addView(currentKRView)
+                    }
+                }
+                5, 6 -> {
+                    if (latestMode !in arrayOf(5, 6)) {
+                        kbFrame.removeAllViews()
+                        kbFrame.addView(qwertySpecialKBView)
+                    }
+                }
+                7 -> {
+                    kbFrame.removeAllViews()
+                    kbFrame.addView(boilerPlateKBView)
+                }
+                8 -> {
+                    kbFrame.removeAllViews()
+                    kbFrame.addView(cursorKBView)
+                }
+                9 -> {
+                    kbFrame.removeAllViews()
+                    kbFrame.addView(numberKBView)
+                }
+                10 -> {
+                    kbFrame.removeAllViews()
+                    kbFrame.addView(emojiKBView)
+                }
             }
+            latestMode = it
         })
         vm.observeNumberVisibility.observe(this, {})
         vm.observeKBBottomMargin.observe(this, {})
@@ -270,11 +304,14 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.observeKBEnterKeyHolding.observe(this, {})
         vm.observeKBSpecialKeyHolding.observe(this, {})
         vm.observeKBAutoCapitalization.observe(this, {})
+        vm.observeKBAutoModeChange.observe(this, {})
         vm.isSelecting.observe(this, {})
         vm.orientation.observe(this, {})
 
         emojisViewPager.adapter = emojiPagerAdapter
-        vm.emojiColumnsCounts.observe(this, { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) })
+        vm.emojiColumnsCounts.observe(
+            this,
+            { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) })
         vm.observeE0RecentlyUsedEmoticons.observe(this, {
             val jsonArray = JSONArray(it)
             val arr = mutableListOf<String>()
@@ -285,36 +322,41 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             (emojisViewPager.adapter as EmojiViewPagerAdapter).changeAdapter(arr)
         })
 
-        val emojiIconClickListeners = MutableList(emojiIconList.size) { View.OnClickListener {  } }
+        val emojiIconClickListeners = MutableList(emojiIconList.size) { View.OnClickListener { } }
         for (i in emojiIconClickListeners.indices) {
             emojiIconClickListeners[i] = View.OnClickListener {
                 emojisViewPager.currentItem = i
             }
         }
 
-        customEmojiIndicator.createIconPanel(iconsList = emojiIconList, position = 1, clickListeners = emojiIconClickListeners)
-        (emojisViewPager.adapter as EmojiViewPagerAdapter).initListener(object: EmojiRecyclerAdapter.OnItemClickListener {
+        customEmojiIndicator.createIconPanel(
+            iconsList = emojiIconList,
+            position = 1,
+            clickListeners = emojiIconClickListeners
+        )
+        (emojisViewPager.adapter as EmojiViewPagerAdapter).initListener(object :
+            EmojiRecyclerAdapter.OnItemClickListener {
             override fun onItemClick(v: View, pos: Int) {
                 clearComposing()
                 currentInputConnection.commitText((v as Button).text.toString(), 1)
                 vm.setRecentlyUsedEmoticon(v.text.toString())
             }
         },
-        object: EmojiRecyclerLiveDataAdapter.OnItemClickListener {
-            override fun onItemClick(v: View, pos: Int) {
-                clearComposing()
-                currentInputConnection.commitText((v as Button).text.toString(), 1)
-            }
-        })
+            object : EmojiRecyclerLiveDataAdapter.OnItemClickListener {
+                override fun onItemClick(v: View, pos: Int) {
+                    clearComposing()
+                    currentInputConnection.commitText((v as Button).text.toString(), 1)
+                }
+            })
         emojisViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         emojisViewPager.offscreenPageLimit = 1
 
         // 무한스크롤 뷰페이저
-        emojisViewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        emojisViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 val mPosition = emojisViewPager.currentItem
                 customEmojiIndicator.selectPosition(position = mPosition)
-                emojiScrollView.smoothScrollTo(getEmojiIconXPosition(emojiScrollView, mPosition),0)
+                emojiScrollView.smoothScrollTo(getEmojiIconXPosition(emojiScrollView, mPosition), 0)
 
                 /** emojisViewPager.changeAdapter()로 데이터셋 변경 알림시킬 경우, 뷰페이저 1페이지에서 스크롤이 자꾸 고정되는 현상을 방지하고자
                  *  데이터셋 변경 알림은 notifyE0DataSetChanged으로 뷰페이저 페이지 변경 시 실행하도록 함
@@ -356,7 +398,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
             var autoCapitalCondition = false
             for (i in 0..3) {
                 if (currentInputConnection
-                        .getTextBeforeCursor(i+2, GET_TEXT_WITH_STYLES)
+                        .getTextBeforeCursor(i + 2, GET_TEXT_WITH_STYLES)
                         .toString()
                         .replace("\\s".toRegex(), "") == "."
                 ) {
@@ -400,6 +442,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.switchSelectingMode(false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onDestroy() {
         super.onDestroy()
         mLifecycle.markState(Lifecycle.State.DESTROYED)
@@ -524,13 +567,14 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                 "English",
                 "SPACE"
             )
-        ) currentInputConnection.commitText(" ", 1)
-        else if ((button as Button).text in arrayOf("특수 1", "특수 2")) {
-            vm.changeMode(3)
+        ) {
             currentInputConnection.commitText(" ", 1)
+        } else if (button.text in arrayOf("특수 1", "특수 2")) {
+            if (vm.observeKBAutoModeChange.value == true) vm.changeMode(3)
+            currentInputConnection.commitText(" ", 1)
+        } else {
+            currentInputConnection.commitText(button.text[0].toString(), 1)
         }
-        else currentInputConnection.commitText((button as Button).text[0].toString(), 1)
-
         if (myKeyboardVibration) vibrateByButton()
     }
 
@@ -550,7 +594,11 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     }
 
     fun inputEnter() {
-        KeyboardInputFuctions.inputEnter(mIMEService = this, clearComposing = { clearComposing() }, myKeyboardVibration, vibrateByButton = { vibrateByButton() })
+        KeyboardInputFuctions.inputEnter(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            myKeyboardVibration,
+            vibrateByButton = { vibrateByButton() })
     }
 
     fun delFunction() {
@@ -1029,8 +1077,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                     "문구를 복사하시려면\n문구를 먼저 선택해주세요.",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else {
+            } else {
                 currentInputConnection.performContextMenuAction(android.R.id.copy)
             }
         }
@@ -1049,8 +1096,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                     "문구를 잘라내시려면\n문구를 먼저 선택해주세요.",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else {
+            } else {
                 currentInputConnection.performContextMenuAction(android.R.id.cut)
             }
         }
@@ -1119,5 +1165,8 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     }
     var rListenerCursorDown = RepeatListener(mKeyboardHolding, normalInterval) {
         moveCursorToDown()
+    }
+    var singleListenerSpecialSpace = View.OnClickListener {
+        inputSpecial(it)
     }
 }

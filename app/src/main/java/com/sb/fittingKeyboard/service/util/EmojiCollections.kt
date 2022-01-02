@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.util
+package com.sb.fittingKeyboard.service.util
 
 // All emojis are from @{https://unicode.org/emoji/charts/full-emoji-list.html}
 class EmojiCollections {

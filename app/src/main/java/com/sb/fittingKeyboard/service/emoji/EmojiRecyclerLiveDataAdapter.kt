@@ -1,16 +1,16 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.emoji
+package com.sb.fittingKeyboard.service.emoji
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.emoji.widget.EmojiButton
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
 
-class EmojiRecyclerLiveDataAdapter(private var emojis: MutableList<String>): RecyclerView.Adapter<EmojiRecyclerLiveDataAdapter.ViewHolder>() {
+class EmojiRecyclerLiveDataAdapter(private var emojis: MutableList<String>) :
+    RecyclerView.Adapter<EmojiRecyclerLiveDataAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val emoji = view.findViewById<EmojiButton>(R.id.emoji)
 
         fun bindEmoji(emojis: MutableList<String>, listener: OnItemClickListener?, position: Int) {
@@ -22,7 +22,7 @@ class EmojiRecyclerLiveDataAdapter(private var emojis: MutableList<String>): Rec
         }
     }
 
-    var mListener : OnItemClickListener? = null
+    var mListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener?) {
         this.mListener = listener
@@ -30,7 +30,8 @@ class EmojiRecyclerLiveDataAdapter(private var emojis: MutableList<String>): Rec
 
     //Create ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val emojiButton = LayoutInflater.from(parent.context).inflate(R.layout.emoji_button, parent, false)
+        val emojiButton =
+            LayoutInflater.from(parent.context).inflate(R.layout.emoji_button, parent, false)
         return ViewHolder(emojiButton)
     }
 

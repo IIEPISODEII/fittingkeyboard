@@ -25,8 +25,17 @@
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_boilerplatetext_black.xml" value="0.3885416666666667" />
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_copy.xml" value="0.20677083333333332" />
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_keyboard_black.xml" value="0.3885416666666667" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_number_keypad.xml" value="0.378125" />
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_access_time_24.xml" value="0.378125" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_emotions_24.xml" value="0.20416666666666666" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_events_24.xml" value="0.378125" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_flags_24.xml" value="0.378125" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_food_beverage_24.xml" value="0.378125" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_nature_24.xml" value="0.378125" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_objects_24.xml" value="0.378125" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_people_24.xml" value="0.378125" />
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_symbols_24.xml" value="0.378125" />
+        <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/ic_outline_emoji_transportation_24.xml" value="0.378125" />
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/keydesign_00_char.xml" value="0.3885416666666667" />
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/keydesign_00_char_pressed.xml" value="0.3885416666666667" />
         <entry key="..\:/myAndroidProject/AndroidStudioProjects/fittingkeyboard/app/src/main/res/drawable/keydesign_00_char_released.xml" value="0.3885416666666667" />

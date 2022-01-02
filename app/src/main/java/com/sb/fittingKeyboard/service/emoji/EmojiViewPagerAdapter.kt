@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.emoji.EmojiRecyclerLiveDataAdapter
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.util.EmojiCollections
+import com.sb.fittingKeyboard.service.util.EmojiCollections
 
 class EmojiViewPagerAdapter(
     e0List: MutableList<String>,
@@ -108,7 +107,10 @@ class EmojiViewPagerAdapter(
         notifyDataSetChanged()
     }
 
-    fun initListener(newListener: EmojiRecyclerAdapter.OnItemClickListener, newListener2: EmojiRecyclerLiveDataAdapter.OnItemClickListener) {
+    fun initListener(
+        newListener: EmojiRecyclerAdapter.OnItemClickListener,
+        newListener2: EmojiRecyclerLiveDataAdapter.OnItemClickListener
+    ) {
         this.listener = newListener
         this.listener2 = newListener2
     }

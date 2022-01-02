@@ -199,6 +199,7 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
                     }
                 }
             }
+            else -> return
         }
     }
 

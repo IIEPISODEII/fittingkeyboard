@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.service
+package com.sb.fittingKeyboard.service.util
 
 import android.os.Handler
 import android.view.MotionEvent
@@ -37,15 +37,16 @@ class RepeatListener(
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> {
                 handler.removeCallbacks(handlerRunnable)
-                handler.postDelayed(handlerRunnable, initialInterval)
                 touchedView = view
                 touchedView!!.isPressed = true
+                if (view.id != com.sb.fittingKeyboard.R.id.btnSpecialSPACE) handler.postDelayed(handlerRunnable, initialInterval)
                 clickListener.onClick(view)
                 return false
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 handler.removeCallbacks(handlerRunnable)
-                touchedView!!.isPressed = false
+                if (touchedView == null) return false
+                else touchedView!!.isPressed = false
                 touchedView = null
                 return true
             }

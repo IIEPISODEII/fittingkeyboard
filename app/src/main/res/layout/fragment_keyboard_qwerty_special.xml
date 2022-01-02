@@ -535,19 +535,19 @@
                     app:onTouch="@{kbservice.repeatListenerSpecials[6]}" />
 
                 <Button
-                    android:id="@+id/btnSPACE"
+                    android:id="@+id/btnSpecialSPACE"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:text="@{kbviewmodel.mode==5 ? @string/special1 : @string/special2}"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
                     android:textSize="@{kbservice.fontSize}"
+                    android:onClick="@{kbservice.singleListenerSpecialSpace}"
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"
                     app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[7]}" />
+                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
 
                 <Button
                     android:id="@+id/btnDOT"
