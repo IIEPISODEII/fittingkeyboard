@@ -296,6 +296,7 @@
                     android:layout_weight="1"
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
+                    android:onClick="@{() -> kbservice.initChunJiIn()}"
                     android:src="@drawable/keyic_arrowright_black"
                     app:colorFilter="@{kbviewmodel.observeKBFontColor}"
                     app:customTheme_padding="@{kbviewmodel.observeHeight}"

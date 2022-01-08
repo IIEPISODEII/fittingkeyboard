@@ -9,7 +9,7 @@ object HanguelChunjiin: Automata() {
     private val www: Array<Char> = arrayOf('ㅈ', 'ㅊ', 'ㅉ')
     private val dd: Array<Char> = arrayOf('ㅇ', 'ㅁ')
 
-    fun composeChar(inputChar: Char): UpdatedChars {
+    fun composeChar(inputChar: Char, inputTime: Long): UpdatedChars {
         when (state) {
             0 -> when (inputChar) {
                 in rrr -> {
@@ -21,6 +21,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 in ss -> {
@@ -32,6 +33,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 in ee -> {
@@ -43,6 +45,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 in qqq -> {
@@ -54,6 +57,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 in ttt -> {
@@ -65,6 +69,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 in www -> {
@@ -76,6 +81,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 in dd -> {
@@ -87,6 +93,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = 1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 'ㅣ' -> {
@@ -98,6 +105,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = -1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ᆞ' -> {
@@ -109,6 +117,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = -1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅡ' -> {
@@ -120,6 +129,7 @@ object HanguelChunjiin: Automata() {
                     composeResult()
                     composedResult = nullChar
                     state = -1
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 else -> {
@@ -140,17 +150,26 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅏ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else {
+                            'ㅏ'
+                        }
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
                         val temp = middleChar.toString()
@@ -161,6 +180,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -173,39 +193,58 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ᆞ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅓ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅓ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ᆢ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else 'ᆢ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅗ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅡ'
+                        } else 'ㅗ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         val temp = middleChar.toString()
@@ -217,29 +256,42 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅡ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅢ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅢ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅜ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else 'ㅜ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
                         val temp = middleChar.toString()
@@ -250,6 +302,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -262,39 +315,58 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ᆢ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅕ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅕ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ᆞ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else 'ᆞ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅛ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅡ'
+                        } else 'ㅛ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
                         val temp = middleChar.toString()
@@ -306,29 +378,42 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅏ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅐ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅐ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅑ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else 'ㅑ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
                         val temp = middleChar.toString()
@@ -339,6 +424,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -351,11 +437,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅐ' -> when (inputChar) {
-                    'ㅣ' -> {
+                    'ㅣ', 'ᆞ', 'ㅡ' -> {
                         val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -364,28 +451,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(temp, middleChar.toString())
-                    }
-                    'ᆞ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, middleChar.toString())
-                    }
-                    'ㅡ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -398,19 +464,26 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅑ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅒ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅒ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         firstChar = nullChar
@@ -420,6 +493,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅡ' -> {
@@ -431,6 +505,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -443,6 +518,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
@@ -456,6 +532,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -468,32 +545,28 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅓ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅔ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅔ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
-                    }
-                    'ᆞ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
-                    'ㅡ' -> {
+                    'ᆞ', 'ㅡ' -> {
                         val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -502,6 +575,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -514,11 +588,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅔ' -> when (inputChar) {
-                    'ㅣ' -> {
+                    'ㅣ', 'ᆞ', 'ㅡ' -> {
                         val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -527,28 +602,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(temp, middleChar.toString())
-                    }
-                    'ᆞ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, middleChar.toString())
-                    }
-                    'ㅡ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -561,32 +615,28 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅕ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅖ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅖ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
-                    }
-                    'ᆞ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
-                    'ㅡ' -> {
+                    'ᆞ', 'ㅡ' -> {
                         val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -595,6 +645,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -607,19 +658,26 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅗ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅚ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅚ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
                         val temp = middleChar.toString()
@@ -630,17 +688,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(temp, middleChar.toString())
-                    }
-                    'ㅡ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -653,32 +701,28 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅘ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅙ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅙ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
-                    }
-                    'ᆞ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
-                    'ㅡ' -> {
+                    'ᆞ', 'ㅡ'  -> {
                         val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -687,6 +731,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -699,11 +744,12 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅚ' -> when (inputChar) {
-                    'ㅣ' -> {
+                    'ㅣ', 'ㅡ' -> {
                         val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -712,27 +758,23 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅘ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else 'ㅘ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
-                    }
-                    'ㅡ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -745,29 +787,42 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅜ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅟ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅟ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅠ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else 'ㅠ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
                         val temp = middleChar.toString()
@@ -778,6 +833,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -790,32 +846,28 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅝ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅞ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅞ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
-                    }
-                    'ᆞ' -> {
-                        val temp = middleChar.toString()
-                        firstChar = nullChar
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
-                    'ㅡ' -> {
+                    'ᆞ', 'ㅡ' -> {
                         val temp = middleChar.toString()
                         firstChar = nullChar
                         firstSubChar = nullChar
@@ -824,6 +876,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -836,29 +889,42 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅠ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅝ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ㅣ'
+                        } else 'ㅝ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstChar = nullChar
                         firstSubChar = nullChar
-                        middleChar = 'ㅜ'
+                        middleChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                            temp = middleChar.toString()
+                            'ᆞ'
+                        } else 'ㅜ'
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, middleChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
                         val temp = middleChar.toString()
@@ -869,6 +935,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
@@ -881,6 +948,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
@@ -888,67 +956,166 @@ object HanguelChunjiin: Automata() {
                     initChar()
                     state = 0
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(inputChar.toString(), null)
                 }
             }
             1 -> when (firstChar) {
                 'ㄱ' -> when (inputChar) {
                     'ㄱ' -> {
-                        firstChar = 'ㅋ'
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        if (firstSubChar != nullChar) {
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                'ㄱ'
+                            } else 'ㅋ'
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString())
+                        }
                     }
                     'ㅅ' -> {
                         when (firstSubChar) {
                             'ㅎ' -> {
-                                firstChar = 'ㄱ'
-                                firstSubChar = 'ㅆ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄱ'
+                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) nullChar else 'ㅆ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null,
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㅆ', nullChar -> {
-                                firstChar = 'ㄳ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    'ㅅ'
+                                } else 'ㄳ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                         }
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (firstSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString() + firstSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                temp = firstChar.toString()
+                                state = 2
+                                firstChar = firstSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime - firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + middleChar.toString()
-                        )
+                        if (firstSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString() + firstSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                temp = firstChar.toString()
+                                state = 2
+                                firstChar = firstSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                middleChar = inputChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(
+                                temp,
+                                firstChar.toString() + middleChar.toString()
+                            )
+                        }
                     }
                     else -> {
                         val temp = firstChar.toString()
@@ -959,87 +1126,67 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄲ' -> when (inputChar) {
                     'ㄱ' -> {
-                        firstChar = 'ㄱ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            'ㄱ'
+                        } else 'ㄲ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
-                    }
-                    'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    else -> {
-                        val temp = firstChar.toString()
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
-                }
-                'ㄳ' -> when (inputChar) {
-                    'ㅅ' -> {
-                        firstChar = 'ㄱ'
-                        firstSubChar = 'ㅎ'
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + firstSubChar.toString()
-                        )
-                    }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄱ"
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄱ"
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -1053,41 +1200,150 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
-                'ㄴ' -> when (inputChar) {
-                    'ㄴ' -> {
-                        firstChar = 'ㄹ'
+                'ㄳ' -> when (inputChar) {
+                    'ㅅ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = 'ㄱ'
+                        firstSubChar = 'ㅎ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = "ㅅ"
+                            'ㅅ'
+                        } else 'ㅎ'
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + firstSubChar.toString()
+                        )
+                    }
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄱ"
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄱ"
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    else -> {
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                }
+                'ㄴ' -> when (inputChar) {
+                    'ㄴ' -> {
+                        if (firstSubChar != nullChar) {
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                firstChar = 'ㄹ'
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString())
+                        }
                     }
                     'ㅅ' -> {
                         when (firstSubChar) {
                             'ㅅ' -> {
-                                firstChar = 'ㄶ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime > separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄶ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                             'ㅆ', nullChar -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
                                 firstChar = 'ㄴ'
-                                firstSubChar = 'ㅅ'
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄴ'
+                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) nullChar else 'ㅅ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null,
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     firstChar.toString() + firstSubChar.toString()
                                 )
                             }
@@ -1096,43 +1352,129 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         when (firstSubChar) {
                             'ㅈ' -> {
-                                firstChar = 'ㄵ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄵ'
                                 firstSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                             'ㅉ', nullChar -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
                                 firstChar = 'ㄴ'
-                                firstSubChar = 'ㅈ'
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄴ'
+                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    nullChar
+                                } else 'ㅈ'
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null,
+                                return UpdatedChars(temp,
                                     firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                         }
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (firstSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString() + firstSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                temp = firstChar.toString()
+                                state = 2
+                                firstChar = firstSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + middleChar.toString()
-                        )
+                        if (firstSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString() + firstSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                temp = firstChar.toString()
+                                state = 2
+                                firstChar = firstSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(
+                                temp,
+                                firstChar.toString() + middleChar.toString()
+                            )
+                        }
                     }
                     else -> {
                         val temp = firstChar.toString()
@@ -1143,43 +1485,74 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄵ' -> when (inputChar) {
                     'ㅈ' -> {
-                        firstChar = 'ㄴ'
-                        firstSubChar = 'ㅊ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄴ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            nullChar
+                        } else 'ㅊ'
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null,
+                        return UpdatedChars(temp,
                             firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄴ"
-                        state = 2
-                        firstChar = 'ㅈ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄴ"
+                            state = 2
+                            firstChar = 'ㅈ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄴ"
-                        state = 2
-                        firstChar = 'ㅈ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄴ"
+                            state = 2
+                            firstChar = 'ㅈ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -1193,41 +1566,75 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄶ' -> when (inputChar) {
                     'ㅅ' -> {
-                        firstChar = 'ㄴ'
-                        firstSubChar = 'ㅆ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄴ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            nullChar
+                        } else 'ㅆ'
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null,
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄴ"
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄴ"
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄴ"
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄴ"
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -1241,38 +1648,68 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄷ' -> when (inputChar) {
                     'ㄷ' -> {
-                        firstChar = 'ㅌ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅌ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -1285,38 +1722,68 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄸ' -> when (inputChar) {
                     'ㄷ' -> {
-                        firstChar = 'ㄷ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄷ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -1329,6 +1796,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
@@ -1336,188 +1804,408 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         when (firstSubChar) {
                             'ㅋ' -> {
-                                firstChar = 'ㄹ'
-                                firstSubChar = 'ㄲ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄹ'
+                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    nullChar
+                                } else 'ㄲ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null,
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㄲ', nullChar -> {
-                                firstChar = 'ㄺ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄺ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
+                            }
+                            else -> {
+                                val temp = firstChar.toString() + firstSubChar.toString()
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                         }
                     }
                     'ㄴ' -> {
-                        firstChar = 'ㄴ'
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        if (firstSubChar != nullChar) {
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            composedResult = inputChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                inputChar
+                            } else 'ㄴ'
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString())
+                        }
+                    }
+                    'ㄷ' -> {
+                        if (firstSubChar == 'ㄷ') {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString() + firstSubChar.toString()
+                                firstChar = 'ㄷ'
+                                firstSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                firstChar = 'ㄾ'
+                                firstSubChar = nullChar
+                                composeResult()
+                                composedResult = firstChar
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            composedResult = inputChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
                     }
                     'ㅂ' -> {
                         when (firstSubChar) {
                             'ㅃ' -> {
-                                firstChar = 'ㄹ'
-                                firstSubChar = 'ㅍ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄹ'
+                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    nullChar
+                                } else 'ㅍ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null,
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㅍ', nullChar -> {
-                                firstChar = 'ㄼ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄼ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
+                            }
+                            else -> {
+                                val temp = firstChar.toString() + firstSubChar.toString()
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㅅ' -> {
                         when (firstSubChar) {
                             'ㅆ' -> {
-                                firstChar = 'ㅀ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㅀ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                             nullChar -> {
-                                firstChar = 'ㄽ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString()
+                                    inputChar
+                                } else 'ㄽ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
+                            }
+                            else -> {
+                                val temp = firstChar.toString() + firstSubChar.toString()
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㅇ' -> {
                         when (firstSubChar) {
                             'ㅇ' -> {
-                                firstChar = 'ㄻ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㄻ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
                             }
                             nullChar -> {
-                                firstChar = 'ㄹ'
-                                firstSubChar = 'ㅇ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString()
+                                    inputChar
+                                } else 'ㄹ'
+                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    nullChar
+                                } else 'ㅇ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null,
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     firstChar.toString() + firstSubChar.toString()
                                 )
+                            }
+                            else -> {
+                                val temp = firstChar.toString() + firstSubChar.toString()
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (firstSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString() + firstSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                temp = firstChar.toString()
+                                state = 2
+                                firstChar = firstSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + middleChar.toString()
-                        )
+                        if (firstSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
+                        }
                     }
                     else -> {
-                        val temp = firstChar.toString()
+                        val temp = firstChar.toString() + firstSubChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
+                        composedResult = inputChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㄺ' -> when (inputChar) {
                     'ㄱ' -> {
-                        firstChar = 'ㄹ'
-                        firstSubChar = 'ㅋ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄹ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            nullChar
+                        } else 'ㅋ'
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null,
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㄱ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㄱ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㄱ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㄱ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        val temp = firstChar.toString()
+                        val temp = firstChar.toString() + firstSubChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1525,49 +2213,77 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄻ' -> when (inputChar) {
                     'ㅇ' -> {
-                        firstChar = 'ㄹ'
-                        firstSubChar = 'ㅇ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄹ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            nullChar
+                        } else 'ㅇ'
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null,
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅁ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅁ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅁ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅁ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        val temp = firstChar.toString()
+                        val temp = firstChar.toString() + firstSubChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1575,49 +2291,77 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄼ' -> when (inputChar) {
                     'ㅂ' -> {
-                        firstChar = 'ㄹ'
-                        firstSubChar = 'ㅃ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄹ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            nullChar
+                        } else 'ㅃ'
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null,
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅂ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅂ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅂ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅂ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        val temp = firstChar.toString()
+                        val temp = firstChar.toString() + firstSubChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1625,47 +2369,73 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄽ' -> when (inputChar) {
                     'ㅅ' -> {
-                        firstChar = 'ㅀ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅀ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        val temp = firstChar.toString()
+                        val temp = firstChar.toString() + firstSubChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
@@ -1673,43 +2443,289 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                }
+                'ㄾ' -> when (inputChar) {
+                    'ㄷ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstChar = 'ㄹ'
+                            firstSubChar = 'ㄸ'
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString() + firstSubChar.toString())
+                    }
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅌ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅌ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    else -> {
+                        val temp = firstChar.toString() + firstSubChar.toString()
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                }
+                'ㄿ' -> when (inputChar) {
+                    'ㅂ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            firstChar = 'ㄹ'
+                            firstSubChar = 'ㅃ'
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString() + firstSubChar.toString())
+                    }
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅍ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅍ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    else -> {
+                        val temp = firstChar.toString() + firstSubChar.toString()
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅀ' -> when (inputChar) {
                     'ㅅ' -> {
-                        firstChar = 'ㄹ'
-                        firstSubChar = 'ㅆ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄹ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            nullChar
+                        } else 'ㅆ'
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null,
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + firstSubChar.toString()
                         )
                     }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㄹ"
-                        state = 2
-                        firstChar = 'ㅎ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㄹ"
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    else -> {
+                        val temp = firstChar.toString() + firstSubChar.toString()
+                        firstChar = inputChar
                         firstSubChar = nullChar
-                        middleChar = inputChar
+                        middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                }
+                'ㅁ' -> when (inputChar) {
+                    'ㅇ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅇ'
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -1723,201 +2739,200 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                }
-                'ㅁ' -> when (inputChar) {
-                    'ㅇ' -> {
-                        firstChar = 'ㅇ'
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
-                    }
-                    'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    else -> {
-                        val temp = firstChar.toString()
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅂ' -> when (inputChar) {
                     'ㅂ' -> {
-                        firstChar = 'ㅍ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString() + firstSubChar.toString()
+                            inputChar
+                        } else 'ㅍ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         when (firstSubChar) {
                             'ㅎ' -> {
-                                firstChar = 'ㅂ'
-                                firstSubChar = 'ㅆ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㅂ'
+                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    nullChar
+                                } else 'ㅆ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null,
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     firstChar.toString() + firstSubChar.toString()
                                 )
                             }
                             'ㅆ', nullChar -> {
-                                firstChar = 'ㅄ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                    temp = firstChar.toString() + firstSubChar.toString()
+                                    inputChar
+                                } else 'ㅄ'
                                 firstSubChar = nullChar
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
                                 composeResult()
                                 composedResult = nullChar
-                                return UpdatedChars(null, firstChar.toString())
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString())
+                            }
+                            else -> {
+                                val temp = firstChar.toString() + firstSubChar.toString()
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (firstSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime1) {
+                                temp = firstChar.toString() + firstSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                temp = "ㅂ"
+                                state = 2
+                                firstChar = firstSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime - firstInputTime >= separationTime1) {
+                                temp = firstChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composedResult = inputChar
+                            } else {
+                                state = 2
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     else -> {
-                        val temp = firstChar.toString()
+                        val temp = firstChar.toString() + firstSubChar.toString()
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
+                        composedResult = inputChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅃ' -> when (inputChar) {
                     'ㅂ' -> {
-                        firstChar = 'ㅂ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅂ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
-                    }
-                    'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    else -> {
-                        val temp = firstChar.toString()
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
-                }
-                'ㅄ' -> when (inputChar) {
-                    'ㅅ' -> {
-                        firstChar = 'ㅂ'
-                        firstSubChar = 'ㅎ'
-                        middleChar = nullChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
-                            firstChar.toString() + firstSubChar.toString()
-                        )
-                    }
                     'ㅣ', 'ㅡ' -> {
-                        val temp = "ㅂ"
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        val temp = "ㅂ"
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -1931,38 +2946,142 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                }
+                'ㅄ' -> when (inputChar) {
+                    'ㅅ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅂ'
+                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            nullChar
+                        } else 'ㅎ'
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + firstSubChar.toString()
+                        )
+                    }
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㅂ"
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            temp = "ㅂ"
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    else -> {
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅅ' -> when (inputChar) {
                     'ㅅ' -> {
-                        firstChar = 'ㅎ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅎ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -1975,28 +3094,45 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅆ' -> when (inputChar) {
                     'ㅅ' -> {
-                        firstChar = 'ㅅ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅅ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         state = 2
@@ -2006,6 +3142,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -2019,38 +3156,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅇ' -> when (inputChar) {
                     'ㅇ' -> {
-                        firstChar = 'ㅁ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅁ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2063,38 +3226,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅈ' -> when (inputChar) {
                     'ㅈ' -> {
-                        firstChar = 'ㅊ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅊ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2107,38 +3296,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅉ' -> when (inputChar) {
                     'ㅈ' -> {
-                        firstChar = 'ㅈ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅈ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2151,38 +3366,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅊ' -> when (inputChar) {
                     'ㅈ' -> {
-                        firstChar = 'ㅉ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅉ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2195,38 +3436,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅋ' -> when (inputChar) {
                     'ㄱ' -> {
-                        firstChar = 'ㄲ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄲ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2239,38 +3506,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅌ' -> when (inputChar) {
                     'ㄷ' -> {
-                        firstChar = 'ㄸ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㄸ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2283,38 +3576,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅍ' -> when (inputChar) {
                     'ㅂ' -> {
-                        firstChar = 'ㅃ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅃ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2327,38 +3646,64 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㅎ' -> when (inputChar) {
                     'ㅅ' -> {
-                        firstChar = 'ㅆ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            inputChar
+                        } else 'ㅆ'
                         firstSubChar = nullChar
                         middleChar = nullChar
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
-                        return UpdatedChars(null, firstChar.toString())
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅣ', 'ㅡ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        state = 2
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composedResult = inputChar
+                        } else {
+                            state = 2
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
@@ -2371,6 +3716,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
@@ -2378,6 +3724,7 @@ object HanguelChunjiin: Automata() {
                     initChar()
                     state = 0
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(inputChar.toString(), null)
                 }
             }
@@ -2392,33 +3739,74 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅏ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅐ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅐ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅑ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅑ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2430,33 +3818,74 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅑ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅒ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅒ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅏ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅏ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2468,25 +3897,52 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅓ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅔ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅔ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2498,25 +3954,52 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅕ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅖ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅖ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2528,25 +4011,52 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅗ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅚ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅚ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2558,25 +4068,52 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅘ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅙ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅙ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ', 'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2588,15 +4125,28 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅚ' -> when (inputChar) {
@@ -2610,41 +4160,96 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅘ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅘ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅜ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅟ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅟ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅠ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅠ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2656,25 +4261,52 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅝ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅞ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅞ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
                         val temp = composedResult.toString()
@@ -2686,6 +4318,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     'ㅡ' -> {
@@ -2698,33 +4331,74 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅠ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅝ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅝ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅜ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅜ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2736,33 +4410,74 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅡ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅢ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅢ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅜ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅜ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2773,15 +4488,28 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㅣ' -> when (inputChar) {
@@ -2795,15 +4523,30 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅏ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅏ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ㅡ' -> {
                         val temp = composedResult.toString()
@@ -2815,44 +4558,98 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, middleChar.toString())
                     }
                     else -> {
-                        state = 3
-                        firstSubChar = nullChar
-                        finalChar = inputChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            state = 3
+                            firstSubChar = nullChar
+                            finalChar = inputChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ᆞ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅓ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString() + middleChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅓ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ᆢ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString() + middleChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ᆢ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅗ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString() + middleChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅗ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
                         val temp = firstChar.toString() + middleChar.toString()
@@ -2864,36 +4661,78 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ᆢ' -> when (inputChar) {
                     'ㅣ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅕ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString() + middleChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅕ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ᆞ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(null,
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString() + middleChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ᆞ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        middleChar = 'ㅛ'
-                        finalChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (secondInputTime-firstInputTime >= separationTime1) {
+                            temp = firstChar.toString() + middleChar.toString()
+                            state = -1
+                            firstChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = inputChar
+                        } else {
+                            middleChar = 'ㅛ'
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     else -> {
                         val temp = firstChar.toString() + middleChar.toString()
@@ -2905,6 +4744,7 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
@@ -2912,6 +4752,7 @@ object HanguelChunjiin: Automata() {
                     initChar()
                     state = 0
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(inputChar.toString(), null)
                 }
             }
@@ -2919,84 +4760,194 @@ object HanguelChunjiin: Automata() {
                 'ㄱ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, composedResult.toString())
                         } else {
-                            finalChar = nullChar
-                            composeResult()
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = 'ㄱ'
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㄱ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ᆞ' -> {
                         if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         } else {
-                            finalChar = nullChar
-                            composeResult()
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = 'ㄱ'
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㄱ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         }
                     }
                     'ㄱ' -> {
-                        finalChar = 'ㅋ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (finalSubChar != nullChar) {
+                            val temp = composedResult.toString() + finalSubChar.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime - firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = 'ㅋ'
+                                firstSubChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
                     }
                     'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
+                        val temp = composedResult.toString() + finalSubChar.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> when (finalSubChar) {
                         nullChar, 'ㅆ' -> {
-                            finalChar = 'ㄳ'
-                            firstSubChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            return UpdatedChars(null, composedResult.toString())
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = 'ㄳ'
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
                         }
                         'ㅎ' -> {
-                            finalChar = 'ㄱ'
-                            firstSubChar = nullChar
-                            finalSubChar = 'ㅆ'
-                            composeResult()
-                            return UpdatedChars(null,
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                firstSubChar = nullChar
+                                finalChar = 'ㄱ'
+                                finalSubChar = 'ㅆ'
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp,
                                 composedResult.toString() + finalSubChar.toString()
                             )
                         }
@@ -3004,27 +4955,53 @@ object HanguelChunjiin: Automata() {
                 }
                 'ㄲ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㄲ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㄲ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㄲ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㄲ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -3035,42 +5012,82 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㄱ' -> {
-                        finalChar = 'ㄱ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄱ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 'ㄳ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄱ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄱ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = 'ㄱ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄱ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -3081,17 +5098,33 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
-                        finalChar = 'ㄱ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅎ'
-                        composeResult()
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄱ'
+                            firstSubChar = nullChar
+                            finalSubChar = 'ㅎ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             composedResult.toString() + finalSubChar.toString()
                         )
                     }
@@ -3099,134 +5132,332 @@ object HanguelChunjiin: Automata() {
                 'ㄴ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, composedResult.toString())
                         } else {
-                            finalChar = nullChar
-                            composeResult()
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = 'ㄴ'
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㄴ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ᆞ' -> {
                         if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         } else {
-                            finalChar = nullChar
-                            composeResult()
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = 'ㄴ'
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㄴ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         }
                     }
                     'ㄴ' -> {
-                        finalChar = 'ㄹ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (finalSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime - firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                firstSubChar = nullChar
+                                finalChar = 'ㄹ'
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
                     }
                     'ㄱ', 'ㄷ', 'ㅂ', 'ㅇ' -> {
-                        val temp = composedResult.toString()
+                        val temp = composedResult.toString() + finalSubChar.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
                         when (finalSubChar) {
                             'ㅅ' -> {
-                                finalChar = 'ㄶ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    finalChar = 'ㄶ'
+                                    firstSubChar = nullChar
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
                                 return UpdatedChars(null, composedResult.toString())
                             }
                             nullChar, 'ㅆ' -> {
-                                finalChar = 'ㄴ'
-                                firstSubChar = nullChar
-                                finalSubChar = 'ㅅ'
-                                composeResult()
-                                return UpdatedChars(null,
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    finalChar = 'ㄴ'
+                                    firstSubChar = nullChar
+                                    finalSubChar = 'ㅅ'
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     composedResult.toString() + finalSubChar.toString()
                                 )
+                            }
+                            else -> {
+                                val temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㅈ' -> {
                         when (finalSubChar) {
                             nullChar, 'ㅉ' -> {
-                                finalChar = 'ㄵ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    finalChar = 'ㄵ'
+                                    firstSubChar = nullChar
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                             'ㅊ' -> {
-                                finalChar = 'ㄴ'
-                                firstSubChar = nullChar
-                                finalSubChar = 'ㅉ'
-                                composeResult()
-                                return UpdatedChars(null,
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalSubChar = 'ㅉ'
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     composedResult.toString() + finalSubChar.toString()
                                 )
+                            }
+                            else -> {
+                                val temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                 }
                 'ㄵ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄴ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅈ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄴ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅈ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = 'ㄴ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅈ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄴ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅈ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -3237,44 +5468,85 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅈ' -> {
-                        finalChar = 'ㄴ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅊ'
-                        composeResult()
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄴ'
+                            finalSubChar = 'ㅊ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
                 'ㄶ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄴ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄴ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = 'ㄴ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄴ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -3285,53 +5557,107 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
-                        finalChar = 'ㄴ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅆ'
-                        composeResult()
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄴ'
+                            firstSubChar = nullChar
+                            finalChar = 'ㅆ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
                 'ㄷ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㄷ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㄷ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㄷ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㄷ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
                     }
                     'ㄷ' -> {
-                        finalChar = 'ㅌ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅌ'
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null, composedResult.toString())
                     }
                     'ㄱ', 'ㄴ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
@@ -3343,58 +5669,111 @@ object HanguelChunjiin: Automata() {
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄹ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
                         if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, composedResult.toString())
                         } else {
-                            finalChar = nullChar
-                            composeResult()
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = 'ㄹ'
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㄹ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp, composedResult.toString())
                         }
                     }
                     'ᆞ' -> {
                         if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp,
                                 firstChar.toString() + middleChar.toString()
                             )
                         } else {
-                            finalChar = nullChar
-                            composeResult()
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = 'ㄹ'
-                            firstSubChar = nullChar
-                            middleChar = inputChar
-                            finalChar = nullChar
-                            composeResult()
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㄹ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
                             return UpdatedChars(temp,
                                 firstChar.toString() + middleChar.toString()
                             )
@@ -3403,116 +5782,349 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         when (finalSubChar) {
                             nullChar, 'ㄲ' -> {
-                                finalChar = 'ㄺ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    finalChar = 'ㄺ'
+                                    firstSubChar = nullChar
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                             'ㅋ' -> {
-                                finalChar = 'ㄹ'
-                                firstSubChar = nullChar
-                                finalSubChar = 'ㄲ'
-                                composeResult()
-                                return UpdatedChars(null,
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    finalChar = 'ㄹ'
+                                    firstSubChar = nullChar
+                                    finalSubChar = 'ㄲ'
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     composedResult.toString() + finalSubChar.toString()
                                 )
+                            }
+                            else -> {
+                                val temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㄴ' -> {
-                        finalChar = 'ㄴ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        if (finalSubChar != nullChar) {
+                            val temp = composedResult.toString() + finalSubChar.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                firstSubChar = nullChar
+                                finalChar = 'ㄴ'
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
+                    }
+                    'ㄷ' -> {
+                        when (finalSubChar) {
+                            'ㄷ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㄾ'
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                            nullChar, 'ㄸ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㄹ'
+                                    finalSubChar = 'ㄷ'
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                            else -> {
+                                val temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                        }
                     }
                     'ㅂ' -> {
                         when (finalSubChar) {
                             nullChar, 'ㅃ' -> {
-                                finalChar = 'ㄼ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㄼ'
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
-                            'ㅍ' -> {
-                                finalChar = 'ㄹ'
+                            else -> {
+                                val temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
                                 firstSubChar = nullChar
-                                finalSubChar = 'ㅃ'
-                                composeResult()
-                                return UpdatedChars(null,
-                                    composedResult.toString() + finalSubChar.toString()
-                                )
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㅅ' -> {
                         when (finalSubChar) {
                             nullChar, 'ㅆ' -> {
-                                finalChar = 'ㄽ'
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㄽ'
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                            else -> {
+                                val temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
                                 firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
                                 finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㅇ' -> {
                         when (finalSubChar) {
                             'ㅇ' -> {
-                                finalChar = 'ㄻ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㄻ'
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                             nullChar, 'ㅁ' -> {
-                                finalChar = 'ㄹ'
-                                firstSubChar = nullChar
-                                finalSubChar = 'ㅇ'
-                                composeResult()
-                                return UpdatedChars(null,
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㄹ'
+                                    finalSubChar = 'ㅇ'
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
                                     composedResult.toString() + finalSubChar.toString()
                                 )
+                            }
+                            else -> {
+                                val temp = composedResult.toString() + finalSubChar.toString()
+                                state = 1
+                                firstChar = inputChar
+                                firstSubChar = nullChar
+                                middleChar = nullChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
                             }
                         }
                     }
                     'ㄷ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
+                        val temp = composedResult.toString() + finalSubChar.toString()
                         state = 1
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                 }
                 'ㄺ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㄱ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㄱ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㄱ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㄱ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -3523,44 +6135,88 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㄱ' -> {
-                        finalChar = 'ㄹ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅋ'
-                        composeResult()
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㅋ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
                 'ㄻ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅁ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            val temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅁ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅁ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅁ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -3571,44 +6227,89 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅇ' -> {
-                        finalChar = 'ㄹ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅇ'
-                        composeResult()
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㅇ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
                 'ㄼ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅂ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅂ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅂ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅂ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -3619,647 +6320,175 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅂ' -> {
-                        finalChar = 'ㄹ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅍ'
-                        composeResult()
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄿ'
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
                 'ㄽ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅅ' -> {
-                        finalChar = 'ㅀ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                }
-                'ㄿ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅍ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅍ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅂ' -> {
-                        finalChar = 'ㄹ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅃ'
-                        composeResult()
-                        return UpdatedChars(null,
-                            composedResult.toString() + finalSubChar.toString()
-                        )
-                    }
-                }
-                'ㅀ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = 'ㄹ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅅ' -> {
-                        finalChar = 'ㄹ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅆ'
-                        composeResult()
-                        return UpdatedChars(null,
-                            composedResult.toString() + finalSubChar.toString()
-                        )
-                    }
-                }
-                'ㅁ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅁ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅁ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅇ' -> {
-                        finalChar = 'ㅇ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                }
-                'ㅂ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
-                            composeResult()
-                            return UpdatedChars(temp, composedResult.toString())
+                            composedResult = inputChar
                         } else {
-                            finalChar = nullChar
+                            finalChar = 'ㄹ'
                             composeResult()
-                            val temp = composedResult.toString()
+                            temp = composedResult.toString()
                             state = 2
-                            firstChar = 'ㅂ'
+                            firstChar = 'ㅅ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            return UpdatedChars(temp, composedResult.toString())
                         }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        if (finalSubChar != nullChar) {
-                            val temp = composedResult.toString()
-                            state = 2
-                            firstChar = finalSubChar
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             finalSubChar = nullChar
-                            composeResult()
-                            composedResult = nullChar
-                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
+                            composedResult = inputChar
                         } else {
-                            finalChar = nullChar
+                            finalChar = 'ㄹ'
                             composeResult()
-                            val temp = composedResult.toString()
+                            temp = composedResult.toString()
                             state = 2
-                            firstChar = 'ㅂ'
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅅ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㅀ'
+                            firstSubChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                }
+                'ㄾ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅌ'
                             firstSubChar = nullChar
                             middleChar = inputChar
                             finalChar = nullChar
                             composeResult()
-                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                         }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
-                    'ㅂ' -> {
-                        finalChar = 'ㅍ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅅ' -> {
-                        when (finalSubChar) {
-                            nullChar, 'ㅆ' -> {
-                                finalChar = 'ㅄ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
-                            }
-                            'ㅎ' -> {
-                                finalChar = 'ㅂ'
-                                firstSubChar = nullChar
-                                finalSubChar = 'ㅆ'
-                                composeResult()
-                                return UpdatedChars(null,
-                                    composedResult.toString() + finalSubChar.toString()
-                                )
-                            }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅌ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
                         }
-                    }
-                }
-                'ㅄ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = 'ㅂ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = 'ㅂ'
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅅ' -> {
-                        finalChar = 'ㅂ'
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅎ'
-                        composeResult()
-                        return UpdatedChars(null,
-                            composedResult.toString() + finalSubChar.toString()
-                        )
-                    }
-                }
-                'ㅅ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅅ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅅ' -> {
-                        finalChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                }
-                'ㅆ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅆ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅆ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅅ' -> {
-                        finalChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                }
-                'ㅇ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅇ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅇ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅇ' -> {
-                        finalChar = 'ㅁ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                }
-                'ㅈ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅈ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅈ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅈ' -> {
-                        finalChar = 'ㅊ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                }
-                'ㅊ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅊ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅊ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㅈ' -> {
-                        finalChar = nullChar
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅉ'
-                        composeResult()
-                        return UpdatedChars(null,
-                            composedResult.toString() + finalSubChar.toString()
-                        )
-                    }
-                }
-                'ㅋ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅋ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅋ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp,
-                            firstChar.toString() + middleChar.toString()
-                        )
-                    }
-                    'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
-                        val temp = composedResult.toString()
-                        state = 1
-                        firstChar = inputChar
-                        firstSubChar = nullChar
-                        middleChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        composedResult = nullChar
-                        return UpdatedChars(temp, firstChar.toString())
-                    }
-                    'ㄱ' -> {
-                        finalChar = 'ㄲ'
-                        firstSubChar = nullChar
-                        finalSubChar = nullChar
-                        composeResult()
-                        return UpdatedChars(null, composedResult.toString())
-                    }
-                }
-                'ㅌ' -> when (inputChar) {
-                    'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅌ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
-                        return UpdatedChars(temp, composedResult.toString())
-                    }
-                    'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅌ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -4270,44 +6499,87 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㄷ' -> {
-                        finalChar = nullChar
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㄸ'
-                        composeResult()
-                        return UpdatedChars(null,
-                            composedResult.toString() + finalSubChar.toString()
-                        )
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㄸ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString() + finalSubChar.toString())
                     }
                 }
-                'ㅍ' -> when (inputChar) {
+                'ㄿ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅍ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅍ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅍ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅍ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -4318,44 +6590,86 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅂ' -> {
-                        finalChar = nullChar
-                        firstSubChar = nullChar
-                        finalSubChar = 'ㅃ'
-                        composeResult()
-                        return UpdatedChars(null,
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
                             composedResult.toString() + finalSubChar.toString()
                         )
                     }
                 }
-                'ㅎ' -> when (inputChar) {
+                'ㅀ' -> when (inputChar) {
                     'ㅣ', 'ㅡ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, composedResult.toString())
                     }
                     'ᆞ' -> {
-                        finalChar = nullChar
-                        composeResult()
-                        val temp = composedResult.toString()
-                        state = 2
-                        firstChar = 'ㅎ'
-                        firstSubChar = nullChar
-                        middleChar = inputChar
-                        finalChar = nullChar
-                        composeResult()
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㄹ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp,
                             firstChar.toString() + middleChar.toString()
                         )
@@ -4366,40 +6680,1317 @@ object HanguelChunjiin: Automata() {
                         firstChar = inputChar
                         firstSubChar = nullChar
                         middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(temp, firstChar.toString())
                     }
                     'ㅅ' -> {
-                        finalChar = 'ㅆ'
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㅆ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            composedResult.toString() + finalSubChar.toString()
+                        )
+                    }
+                }
+                'ㅁ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅁ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅁ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
                         firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
-                        return UpdatedChars(null, composedResult.toString())
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅇ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅇ'
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                }
+                'ㅂ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        if (finalSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar=  nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㅂ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar=  nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, composedResult.toString())
+                        }
+                    }
+                    'ᆞ' -> {
+                        if (finalSubChar != nullChar) {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString() + finalSubChar.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = finalSubChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar=  nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
+                        } else {
+                            var temp: String? = null
+                            setSecondInputTimer(inputTime = inputTime)
+                            if (secondInputTime-firstInputTime >= separationTime2) {
+                                temp = composedResult.toString()
+                                state = -1
+                                firstChar = nullChar
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                finalSubChar = nullChar
+                                composedResult = inputChar
+                            } else {
+                                finalChar = nullChar
+                                composeResult()
+                                temp = composedResult.toString()
+                                state = 2
+                                firstChar = 'ㅂ'
+                                firstSubChar = nullChar
+                                middleChar = inputChar
+                                finalChar = nullChar
+                                composeResult()
+                            }
+                            setFirstInputTimer(inputTime = inputTime)
+                            return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
+                        }
+                    }
+                    'ㅂ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅍ'
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅅ' -> {
+                        when (finalSubChar) {
+                            nullChar, 'ㅆ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㅄ'
+                                    finalSubChar = nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                            'ㅎ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalSubChar=  'ㅆ'
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp,
+                                    composedResult.toString() + finalSubChar.toString()
+                                )
+                            }
+                        }
+                    }
+                }
+                'ㅄ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㅂ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = 'ㅂ'
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅅ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅂ'
+                            finalSubChar=  'ㅎ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            composedResult.toString() + finalSubChar.toString()
+                        )
+                    }
+                }
+                'ㅅ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅅ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅅ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅎ'
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                }
+                'ㅆ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅆ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅆ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅅ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅅ'
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                }
+                'ㅇ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅇ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅇ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅇ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅁ'
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                }
+                'ㅈ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅈ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅈ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅈ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅊ'
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                }
+                'ㅊ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅊ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅊ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅈ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar=  'ㅉ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            composedResult.toString() + finalSubChar.toString()
+                        )
+                    }
+                }
+                'ㅋ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅋ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅋ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄴ', 'ㄷ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㄱ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄲ'
+                            finalSubChar = nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                }
+                'ㅌ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅌ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅌ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㄷ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = 'ㄸ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            composedResult.toString() + finalSubChar.toString()
+                        )
+                    }
+                }
+                'ㅍ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅍ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅍ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅅ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅂ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar=  'ㅃ'
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            composedResult.toString() + finalSubChar.toString()
+                        )
+                    }
+                }
+                'ㅎ' -> when (inputChar) {
+                    'ㅣ', 'ㅡ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    'ᆞ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = -1
+                            firstChar = nullChar
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            finalChar = nullChar
+                            composeResult()
+                            temp = composedResult.toString()
+                            state = 2
+                            firstChar = 'ㅎ'
+                            firstSubChar = nullChar
+                            middleChar = inputChar
+                            finalChar = nullChar
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp,
+                            firstChar.toString() + middleChar.toString()
+                        )
+                    }
+                    'ㄱ', 'ㄴ', 'ㄷ', 'ㅂ', 'ㅇ', 'ㅈ' -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                    'ㅅ' -> {
+                        var temp: String? = null
+                        setSecondInputTimer(inputTime = inputTime)
+                        if (secondInputTime-firstInputTime >= separationTime2) {
+                            temp = composedResult.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composedResult = inputChar
+                        } else {
+                            firstSubChar = nullChar
+                            finalChar = 'ㅆ'
+                            finalSubChar=  nullChar
+                            composeResult()
+                        }
+                        setFirstInputTimer(inputTime = inputTime)
+                        return UpdatedChars(temp, composedResult.toString())
                     }
                 }
                 nullChar -> when (finalSubChar) {
                     'ㄸ' -> {
                         when (inputChar) {
                             'ㄷ' -> {
-                                finalChar = 'ㄷ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
-                            }
-                            'ㅣ', 'ᆞ', 'ㅡ' -> {
-                                finalChar = nullChar
-                                composeResult()
-                                val temp = composedResult.toString()
-                                state = 2
-                                firstChar = finalSubChar
-                                middleChar = inputChar
-                                finalChar = nullChar
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㄷ'
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
                                 return UpdatedChars(temp, composedResult.toString())
+                            }
+                            'ㅣ', 'ㅡ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = -1
+                                    firstChar = nullChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    composeResult()
+                                    temp = composedResult.toString()
+                                    state = 2
+                                    firstChar = finalSubChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                            'ᆞ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = -1
+                                    firstChar = nullChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    composeResult()
+                                    temp = composedResult.toString()
+                                    state = 2
+                                    firstChar = finalSubChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                             }
                             else -> {
                                 val temp = composedResult.toString() + finalSubChar.toString()
@@ -4409,6 +8000,7 @@ object HanguelChunjiin: Automata() {
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
+                                setFirstInputTimer(inputTime = inputTime)
                                 return UpdatedChars(temp, firstChar.toString())
                             }
                         }
@@ -4416,23 +8008,76 @@ object HanguelChunjiin: Automata() {
                     'ㅃ' -> {
                         when (inputChar) {
                             'ㅂ' -> {
-                                finalChar = 'ㅂ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
-                            }
-                            'ㅣ', 'ᆞ', 'ㅡ' -> {
-                                finalChar = nullChar
-                                composeResult()
-                                val temp = composedResult.toString()
-                                state = 2
-                                firstChar = finalSubChar
-                                middleChar = inputChar
-                                finalChar = nullChar
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㅂ'
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
                                 return UpdatedChars(temp, composedResult.toString())
+                            }
+                            'ㅣ', 'ㅡ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = -1
+                                    firstChar = nullChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    composeResult()
+                                    temp = composedResult.toString()
+                                    state = 2
+                                    firstChar = finalSubChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                            'ᆞ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = -1
+                                    firstChar = nullChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    composeResult()
+                                    temp = composedResult.toString()
+                                    state = 2
+                                    firstChar = finalSubChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar=  nullChar
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                             }
                             else -> {
                                 val temp = composedResult.toString() + finalSubChar.toString()
@@ -4442,6 +8087,7 @@ object HanguelChunjiin: Automata() {
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
+                                setFirstInputTimer(inputTime = inputTime)
                                 return UpdatedChars(temp, firstChar.toString())
                             }
                         }
@@ -4449,23 +8095,77 @@ object HanguelChunjiin: Automata() {
                     'ㅉ' -> {
                         when (inputChar) {
                             'ㅈ' -> {
-                                finalChar = 'ㅈ'
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
-                                composeResult()
-                                return UpdatedChars(null, composedResult.toString())
-                            }
-                            'ㅣ', 'ᆞ', 'ㅡ' -> {
-                                finalChar = nullChar
-                                composeResult()
-                                val temp = composedResult.toString()
-                                state = 2
-                                firstChar = finalSubChar
-                                middleChar = inputChar
-                                finalChar = nullChar
-                                firstSubChar = nullChar
-                                finalSubChar = nullChar
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = 1
+                                    firstChar = inputChar
+                                    firstSubChar = nullChar
+                                    middleChar = nullChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    firstSubChar = nullChar
+                                    finalChar = 'ㅈ'
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
                                 return UpdatedChars(temp, composedResult.toString())
+                            }
+                            'ㅣ', 'ㅡ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = -1
+                                    firstChar = nullChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    composeResult()
+                                    temp = composedResult.toString()
+                                    state = 2
+                                    firstChar = finalSubChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, composedResult.toString())
+                            }
+                            'ᆞ' -> {
+                                var temp: String? = null
+                                setSecondInputTimer(inputTime = inputTime)
+                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                    temp = composedResult.toString() + finalSubChar.toString()
+                                    state = -1
+                                    firstChar = nullChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar = nullChar
+                                    composedResult = inputChar
+                                } else {
+                                    composeResult()
+                                    temp = composedResult.toString()
+                                    state = 2
+                                    firstChar = finalSubChar
+                                    firstSubChar = nullChar
+                                    middleChar = inputChar
+                                    finalChar = nullChar
+                                    finalSubChar=  nullChar
+                                    composeResult()
+                                }
+                                setFirstInputTimer(inputTime = inputTime)
+                                return UpdatedChars(temp, firstChar.toString() + middleChar.toString())
                             }
                             else -> {
                                 val temp = composedResult.toString() + finalSubChar.toString()
@@ -4475,6 +8175,7 @@ object HanguelChunjiin: Automata() {
                                 finalChar = nullChar
                                 firstSubChar = nullChar
                                 finalSubChar = nullChar
+                                setFirstInputTimer(inputTime = inputTime)
                                 return UpdatedChars(temp, firstChar.toString())
                             }
                         }
@@ -4484,6 +8185,7 @@ object HanguelChunjiin: Automata() {
                     initChar()
                     state = 0
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(inputChar.toString(), null)
                 }
             }
@@ -4491,12 +8193,13 @@ object HanguelChunjiin: Automata() {
         return UpdatedChars(null, null)
     }
 
-    fun delete(): UpdatedChars {
+    fun delete(inputTime: Long): UpdatedChars {
         when (state) {
             0 -> {
                 initState()
                 initChar()
                 initResult()
+                setFirstInputTimer(inputTime = inputTime)
                 return UpdatedChars(null, null)
             }
             -1 -> when (middleChar) {
@@ -4504,84 +8207,98 @@ object HanguelChunjiin: Automata() {
                     middleChar = 'ㅣ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅐ', 'ㅑ' -> {
                     middleChar = 'ㅏ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅓ', 'ㅗ', 'ᆢ' -> {
                     middleChar = 'ᆞ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅕ', 'ㅛ' -> {
                     middleChar = 'ᆢ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅘ' -> {
                     middleChar = 'ㅚ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅚ' -> {
                     middleChar = 'ㅗ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅜ', 'ㅢ' -> {
                     middleChar = 'ㅡ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅠ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅝ' -> {
                     middleChar = 'ㅠ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, middleChar.toString())
                 }
                 'ㅡ', 'ㅣ', 'ᆞ' -> {
@@ -4589,6 +8306,7 @@ object HanguelChunjiin: Automata() {
                     middleChar = nullChar
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, null)
                 }
                 }
@@ -4598,6 +8316,7 @@ object HanguelChunjiin: Automata() {
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 'ㄵ', 'ㄶ' -> {
@@ -4605,13 +8324,15 @@ object HanguelChunjiin: Automata() {
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
-                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㅀ' -> {
+                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ' -> {
                     firstChar = 'ㄹ'
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 'ㅄ' -> {
@@ -4619,6 +8340,7 @@ object HanguelChunjiin: Automata() {
                     firstSubChar = nullChar
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
                 else -> when ( firstSubChar ) {
@@ -4628,12 +8350,14 @@ object HanguelChunjiin: Automata() {
                         firstSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null, null)
                     }
                     else -> {
                         firstSubChar = nullChar
                         composeResult()
                         composedResult = nullChar
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null, firstChar.toString())
                     }
                 }
@@ -4642,22 +8366,26 @@ object HanguelChunjiin: Automata() {
                 'ㅏ' -> {
                     middleChar = 'ㅣ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅐ', 'ㅑ' -> {
                     middleChar = 'ㅏ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅒ' -> {
                     middleChar = 'ㅑ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅓ', 'ㅗ', 'ᆢ' -> {
                     middleChar = 'ᆞ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null,
                         firstChar.toString() + middleChar.toString()
                     )
@@ -4665,12 +8393,14 @@ object HanguelChunjiin: Automata() {
                 'ㅔ' -> {
                     middleChar = 'ㅓ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅕ', 'ㅛ' -> {
                     middleChar = 'ᆢ'
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null,
                         firstChar.toString() + middleChar.toString()
                     )
@@ -4678,41 +8408,49 @@ object HanguelChunjiin: Automata() {
                 'ㅖ' -> {
                     middleChar = 'ㅕ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅘ' -> {
                     middleChar = 'ㅚ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅙ' -> {
                     middleChar = 'ㅘ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅚ' -> {
                     middleChar = 'ㅗ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅜ', 'ㅢ' -> {
                     middleChar = 'ㅡ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅠ', 'ㅟ' -> {
                     middleChar = 'ㅜ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅝ' -> {
                     middleChar = 'ㅠ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅞ' -> {
                     middleChar = 'ㅝ'
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅡ', 'ㅣ', 'ᆞ' -> {
@@ -4720,6 +8458,7 @@ object HanguelChunjiin: Automata() {
                     middleChar = nullChar
                     composeResult()
                     composedResult = nullChar
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, firstChar.toString())
                 }
             }
@@ -4728,24 +8467,28 @@ object HanguelChunjiin: Automata() {
                     finalChar = 'ㄱ'
                     finalSubChar = nullChar
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㄵ', 'ㄶ' -> {
                     finalChar = 'ㄴ'
                     finalSubChar = nullChar
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
-                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㅀ' -> {
+                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ' -> {
                     finalChar = 'ㄹ'
                     finalSubChar = nullChar
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 'ㅄ' -> {
                     finalChar = 'ㅂ'
                     finalSubChar = nullChar
                     composeResult()
+                    setFirstInputTimer(inputTime = inputTime)
                     return UpdatedChars(null, composedResult.toString())
                 }
                 else -> when ( finalSubChar ) {
@@ -4754,11 +8497,13 @@ object HanguelChunjiin: Automata() {
                         finalChar = nullChar
                         finalSubChar = nullChar
                         composeResult()
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null, composedResult.toString())
                     }
                     else -> {
                         finalSubChar = nullChar
                         composeResult()
+                        setFirstInputTimer(inputTime = inputTime)
                         return UpdatedChars(null, composedResult.toString())
                     }
                 }
@@ -4766,5 +8511,18 @@ object HanguelChunjiin: Automata() {
         }
         return UpdatedChars(null, null)
     }
+
+    private var firstInputTime = 0.toLong()
+    private var secondInputTime = 0.toLong()
+
+    fun setFirstInputTimer(inputTime: Long) {
+        firstInputTime = inputTime
+    }
+    private fun setSecondInputTimer(inputTime: Long) {
+        secondInputTime = inputTime
+    }
+
+    private const val separationTime1 = 750
+    private const val separationTime2 = 1000
 }
 

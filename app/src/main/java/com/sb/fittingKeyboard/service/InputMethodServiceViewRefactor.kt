@@ -12,6 +12,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.text.TextUtils
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -481,27 +482,34 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                         if (vm.mode.value == 4) vm.changeMode(3)
                     }
                     KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
-                        val c1: String?
-                        val c2: String?
-
+                        var c1: String?
+                        var c2: String?
                         when (button.id) {
                             in arrayOf(R.id.btnChunK, R.id.btnChunKa) -> {
-                                val chars = HanguelChunjiin.composeChar('ᆞ')
+                                val chars = HanguelChunjiin.composeChar('ᆞ', System.currentTimeMillis())
                                 c1 = chars.commited
                                 c2 = chars.composing
                             }
                             else -> {
-                                val chars = HanguelChunjiin.composeChar((button as Button).text[0])
+                                val chars = HanguelChunjiin.composeChar((button as Button).text[0], System.currentTimeMillis())
                                 c1 = chars.commited
                                 c2 = chars.composing
                             }
                         }
 
                         if (c1 != null) {
+                            println("nullChar: ${"\u0000" in c1}")
+                            if ("\u0000" in c1) c1 = c1.filterNot { it == '\u0000'}
                             currentInputConnection.commitText(c1, 1)
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
+                            if (c2 != null) {
+                                if ("\u0000" in c2) c2 = c2.filterNot { it == '\u0000'}
+                                currentInputConnection.setComposingText(c2, 1)
+                            }
                         } else {
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
+                            if (c2 != null) {
+                                if ("\u0000" in c2) c2 = c2.filterNot { it == '\u0000'}
+                                currentInputConnection.setComposingText(c2, 1)
+                            }
                         }
                     }
                     KeyboardUtil.NARAT -> {
@@ -626,7 +634,7 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
                             if (vm.mode.value == 4) vm.changeMode(3)
                         }
                         KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
-                            val (c1, c2) = HanguelChunjiin.delete()
+                            val (c1, c2) = HanguelChunjiin.delete(System.currentTimeMillis())
                             if (c1 == null) {
                                 if (c2 == null) {
                                     clearComposing()

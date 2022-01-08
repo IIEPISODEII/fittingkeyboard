@@ -88,9 +88,9 @@ abstract class Automata {
     var finalSubChar: Char = nullChar
     var composedResult = nullChar
 
-    var firstCharIndex = firstCharArray.indexOf(firstChar.toInt())
-    var middleCharIndex = middleCharArray.indexOf(middleChar.toInt())
-    var finalCharIndex = finalCharArray.indexOf(finalChar.toInt())
+    private var firstCharIndex = firstCharArray.indexOf(firstChar.toInt())
+    private var middleCharIndex = middleCharArray.indexOf(middleChar.toInt())
+    private var finalCharIndex = finalCharArray.indexOf(finalChar.toInt())
 
     fun composeResult() {
         firstCharIndex = firstCharArray.indexOf(firstChar.toInt())
