@@ -6,7 +6,7 @@
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
+            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
 
         <variable
             name="util"
@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbservice.selectAll()}"
+                android:onClick="@{() -> kbservice.selectAllTexts()}"
                 android:src="@drawable/ic_select" />
 
             <ImageButton

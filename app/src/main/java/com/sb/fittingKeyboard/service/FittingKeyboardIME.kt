@@ -1,7 +1,6 @@
 package com.sb.fittingKeyboard.service
 
 import android.annotation.SuppressLint
-import android.app.Service
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -10,11 +9,7 @@ import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.os.VibratorManager
-import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
@@ -45,9 +40,10 @@ import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.getEmojiIconXP
 import com.sb.fittingKeyboard.service.util.RepeatListener
 import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
 import org.json.JSONArray
+import java.security.Key
 
 @SuppressLint("ClickableViewAccessibility")
-class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
+class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
 
     private lateinit var kbBinding: KeyLayoutNormalBinding
     private lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
@@ -451,115 +447,29 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     var rListenerCursorFirst = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorToFirst()
+        moveCursorFirst()
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     var rListenerCursorLast = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorToLast()
+        moveCursorLast()
     }
     var rListenerCursorForeDel = RepeatListener(mKeyboardHolding, normalInterval) {
-        foreDelFunction()
+        inputForwardDelete()
     }
 
     fun inputChar(button: View) {
-        if (currentInputConnection == null) return
-        val cursorCS = currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES)
-        if (cursorCS != null && cursorCS.isNotEmpty()) {
-            clearComposing() // 선택 중인 글자가 있으면 초기화
-        }
-        when (vm.mode.value) {
-            3, 4 -> {
-                when (vm.observeKBIME.value) {
-                    KeyboardUtil.QWERTY -> {
-                        val (c1, c2) = HanguelQWERTY.composeChar((button as Button).text!!.single())
-                        if (c1 != null) {
-                            currentInputConnection.commitText(c1, 1)
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
-                        } else {
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
-                        }
-                        if (vm.mode.value == 4) vm.changeMode(3)
-                    }
-                    KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
-                        var c1: String?
-                        var c2: String?
-                        when (button.id) {
-                            in arrayOf(R.id.btnChunK, R.id.btnChunKa) -> {
-                                val chars = HanguelChunjiin.composeChar('ᆞ', System.currentTimeMillis())
-                                c1 = chars.commited
-                                c2 = chars.composing
-                            }
-                            else -> {
-                                val chars = HanguelChunjiin.composeChar((button as Button).text[0], System.currentTimeMillis())
-                                c1 = chars.commited
-                                c2 = chars.composing
-                            }
-                        }
-
-                        if (c1 != null) {
-                            println("nullChar: ${"\u0000" in c1}")
-                            if ("\u0000" in c1) c1 = c1.filterNot { it == '\u0000'}
-                            currentInputConnection.commitText(c1, 1)
-                            if (c2 != null) {
-                                if ("\u0000" in c2) c2 = c2.filterNot { it == '\u0000'}
-                                currentInputConnection.setComposingText(c2, 1)
-                            }
-                        } else {
-                            if (c2 != null) {
-                                if ("\u0000" in c2) c2 = c2.filterNot { it == '\u0000'}
-                                currentInputConnection.setComposingText(c2, 1)
-                            }
-                        }
-                    }
-                    KeyboardUtil.NARAT -> {
-                        var c1: String? = null
-                        var c2: String? = null
-
-                        if (button.id == R.id.btnNaADD) {
-                            val chars = HanguelNARATGUL.composeChar('ᆞ')
-                            c1 = chars.commited
-                            c2 = chars.composing
-                        } else if (button.id == R.id.btnNaSHIFT) {
-                            val chars = HanguelNARATGUL.composeChar('ᆢ')
-                            c1 = chars.commited
-                            c2 = chars.composing
-                        } else {
-                            val chars = HanguelNARATGUL.composeChar((button as Button).text[0])
-                            c1 = chars.commited
-                            c2 = chars.composing
-                        }
-
-                        if (c1 != null) {
-                            currentInputConnection.commitText(c1, 1)
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
-                        } else {
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
-                        }
-                    }
-                    KeyboardUtil.DAN -> {
-                        val (c1, c2) = HanguelDanmoum.composeChar(
-                            (button as Button).text!!.single(),
-                            System.currentTimeMillis()
-                        )
-                        if (c1 != null) {
-                            currentInputConnection.commitText(c1, 1)
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
-                        } else {
-                            if (c2 != null) currentInputConnection.setComposingText(c2, 1)
-                        }
-                    }
-                }
-            }
-            else -> {
-                clearComposing()
-                currentInputConnection.commitText((button as Button).text.toString(), 1)
-                if (vm.mode.value == 1) {
-                    changeMode(2)
-                }
-            }
-        }
-        if (myKeyboardVibration) vibrateByButton()
+        KeyboardInputFuctions.inputChar(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            button = button,
+            mode = vm.mode.value!!,
+            krIME = vm.observeKBIME.value!!,
+            myKeyboardVibration = myKeyboardVibration,
+            vibrateByButton = { vibrateByButton() },
+            changeMode3 = { changeMode(3) },
+            changeMode2 = { changeMode(2) }
+        )
     }
 
     fun initChunJiIn() {
@@ -567,132 +477,62 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     }
 
     fun inputSpecial(button: View) {
-        if (currentInputConnection == null) return
-        clearComposing()
-        if ((button as Button).text in arrayOf(
-                "한글",
-                "english",
-                "English",
-                "SPACE"
-            )
-        ) {
-            currentInputConnection.commitText(" ", 1)
-        } else if (button.text in arrayOf("특수 1", "특수 2")) {
-            if (vm.observeKBAutoModeChange.value == true) vm.changeMode(3)
-            currentInputConnection.commitText(" ", 1)
-        } else {
-            currentInputConnection.commitText(button.text[0].toString(), 1)
-        }
-        if (myKeyboardVibration) vibrateByButton()
+        KeyboardInputFuctions.inputSpecialButton(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            button = button,
+            autoModeChange = vm.observeKBAutoModeChange.value!!,
+            changeMode3 = { vm.changeMode(3) },
+            myKeyboardVibration = myKeyboardVibration,
+            vibrateByButton = { vibrateByButton() }
+        )
     }
 
     fun longClickInputSpecial(button: View): Boolean {
-        if (currentInputConnection == null) return false
-        clearComposing()
-        currentInputConnection.commitText((button as Button).text[1].toString(), 1)
-        return true
+        return KeyboardInputFuctions.inputSpecialLongClicked(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            button = button
+        )
     }
 
     fun inputBPStrings(button: View) {
-        if (currentInputConnection == null) return
-        clearComposing()
-        currentInputConnection.commitText((button as Button).text, 1)
-
-        if (myKeyboardVibration) vibrateByButton()
+        KeyboardInputFuctions.inputBPStrings(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            button = button,
+            myKeyboardVibration = myKeyboardVibration,
+            vibrateByButton = { vibrateByButton() }
+        )
     }
 
     fun inputEnter() {
         KeyboardInputFuctions.inputEnter(
             mIMEService = this,
             clearComposing = { clearComposing() },
-            myKeyboardVibration,
+            myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() })
     }
 
-    fun delFunction() {
-        if (currentInputConnection == null) return
-        val selectedText = currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES)
-        if (TextUtils.isEmpty(selectedText)) {
-            val c = currentInputConnection.getTextBeforeCursor(1, GET_TEXT_WITH_STYLES)
-            // 이모지 삭제 / 일반 삭제 나눔
-            if (SDK_INT >= Build.VERSION_CODES.KITKAT && c!!.length!! > 0 && Character.isSurrogate(c[0])) {
-                val deleteKeyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL)
-                currentInputConnection.sendKeyEvent(deleteKeyEvent)
-            } else {
-                if (vm.mode.value in arrayOf(3, 4)) {
-                    when (vm.observeKBIME.value) {
-                        KeyboardUtil.QWERTY -> {
-                            val (c1, c2) = HanguelQWERTY.delete()
-                            if (c1 == null) {
-                                if (c2 == null) {
-                                    clearComposing()
-                                    currentInputConnection.deleteSurroundingText(1, 0)
-                                } else {
-                                    currentInputConnection.setComposingText(c2, 1)
-                                }
-                            }
-                            if (vm.mode.value == 4) vm.changeMode(3)
-                        }
-                        KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
-                            val (c1, c2) = HanguelChunjiin.delete(System.currentTimeMillis())
-                            if (c1 == null) {
-                                if (c2 == null) {
-                                    clearComposing()
-                                    currentInputConnection.deleteSurroundingText(1, 0)
-                                } else {
-                                    currentInputConnection.setComposingText(c2, 1)
-                                }
-                            }
-                        }
-                        KeyboardUtil.NARAT -> {
-                            val (c1, c2) = HanguelNARATGUL.delete()
-                            if (c1 == null) {
-                                if (c2 == null) {
-                                    clearComposing()
-                                    currentInputConnection.deleteSurroundingText(1, 0)
-                                } else {
-                                    currentInputConnection.setComposingText(c2, 1)
-                                }
-                            }
-                        }
-                        KeyboardUtil.DAN -> {
-                            val (c1, c2) = HanguelDanmoum.delete(inputTime = System.currentTimeMillis())
-                            if (c1 == null) {
-                                if (c2 == null) {
-                                    clearComposing()
-                                    currentInputConnection.deleteSurroundingText(1, 0)
-                                } else {
-                                    currentInputConnection.setComposingText(c2, 1)
-                                }
-                            }
-                        }
-                        else -> HanguelQWERTY.delete()
-                    }
-                } else {
-                    clearComposing()
-                    currentInputConnection.deleteSurroundingText(1, 0)
-                }
-            }
-        } else {
-            clearComposing()
-            currentInputConnection.finishComposingText()
-            currentInputConnection.commitText("", 0)
-        }
-        if (myKeyboardVibration) vibrateByButton()
+    private fun inputDelete() {
+        KeyboardInputFuctions.inputDelete(
+            mIMEService = this,
+            mode = vm.mode.value!!,
+            krIME = vm.observeKBIME.value!!,
+            clearComposing = { clearComposing() },
+            changeMode3 = { vm.changeMode(3) },
+            myKeyboardVibration = myKeyboardVibration,
+            vibrateByButton = { vibrateByButton() }
+        )
     }
 
-    private fun foreDelFunction() {
-        if (currentInputConnection == null) return
-        val selectedText = currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES)
-        if (TextUtils.isEmpty(selectedText)) {
-            clearComposing()
-            currentInputConnection.deleteSurroundingText(0, 1)
-        } else {
-            clearComposing()
-            currentInputConnection.finishComposingText()
-            currentInputConnection.commitText("", 1)
-        }
-        if (myKeyboardVibration) vibrateByButton()
+    private fun inputForwardDelete() {
+        KeyboardInputFuctions.inputForwardDelete(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            myKeyboardVibration = myKeyboardVibration,
+            vibrateByButton = { vibrateByButton() }
+        )
     }
 
     private fun vibrateByButton() {
@@ -735,322 +575,70 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
         vm.switchSelectingMode(!vm.isSelecting.value!!)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun selectAll() {
-        if (currentInputConnection == null) {
-            return
-        }
-        if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
-            val wholeText =
-                currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
-            clearComposing()
-            currentInputConnection.setSelection(0, wholeText)
-            savedCursorPosition = -1
-            if (wholeText == 0) Toast.makeText(this, "선택할 문구가 없습니다.", Toast.LENGTH_SHORT).show()
-        }
+    fun selectAllTexts() {
+        KeyboardInputFuctions.selectAllTexts(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            setSavedCursorPositionDefault = { setSavedCursorPositionDefault() },
+            context = this
+        )
     }
 
-    fun moveCursorToUp() {
-        if (currentInputConnection == null) return
-        val currentCursorPositionStart =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionStart
-        val currentCursorPositionEnd =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionEnd
-        clearComposing()
-        if (vm.isSelecting.value!!) {
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-            if (currentCursorPositionStart != 0 || currentCursorPositionStart >= savedCursorPosition) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_UP
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_UP
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(
-                    currentCursorPositionStart,
-                    currentCursorPositionEnd
-                )
-            }
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_UP,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-        } else {
-            if (currentCursorPositionStart != 0) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_UP
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_UP
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(0, 0)
-            }
-        }
+    private fun moveCursorUp() {
+        KeyboardInputFuctions.moveCursorUp(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            isSelectingMode = vm.isSelecting.value!!,
+            savedCursorPosition = savedCursorPosition
+        )
     }
 
-    fun moveCursorToDown() {
-        if (currentInputConnection == null) return
-        val currentCursorPositionStart =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionStart
-        val currentCursorPositionEnd =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionEnd
-        val wholeText =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
-        clearComposing()
-        if (vm.isSelecting.value!!) {
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-            if (currentCursorPositionStart != 0 || currentCursorPositionStart >= savedCursorPosition) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_DOWN
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_DOWN
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(
-                    currentCursorPositionStart,
-                    currentCursorPositionEnd
-                )
-            }
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_UP,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-        } else {
-            if (currentCursorPositionStart != wholeText && savedCursorPosition != -1) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_DOWN
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_DOWN
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(wholeText, wholeText)
-            }
-        }
+    private fun moveCursorDown() {
+        KeyboardInputFuctions.moveCursorDown(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            isSelectingMode = vm.isSelecting.value!!,
+            savedCursorPosition = savedCursorPosition
+        )
     }
 
-    fun moveCursorToLeft() {
-        if (currentInputConnection == null) return
-        val currentCursorPositionStart =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionStart
-        val currentCursorPositionEnd =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionEnd
-        clearComposing()
-        if (vm.isSelecting.value!!) {
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-            if (currentCursorPositionStart != 0 || currentCursorPositionStart >= savedCursorPosition) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_LEFT
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_LEFT
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(
-                    currentCursorPositionStart,
-                    currentCursorPositionEnd
-                )
-            }
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_UP,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-        } else {
-            if (currentCursorPositionStart != 0) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_LEFT
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_LEFT
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(0, 0)
-            }
-        }
+    private fun moveCursorLeft() {
+        KeyboardInputFuctions.moveCursorLeft(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            isSelectingMode = vm.isSelecting.value!!,
+            savedCursorPosition = savedCursorPosition
+        )
     }
 
-    fun moveCursorToRight() {
-        if (currentInputConnection == null) return
-        val currentCursorPositionStart =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionStart
-        val currentCursorPositionEnd =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionEnd
-        val wholeText =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
-        clearComposing()
-        if (vm.isSelecting.value!!) {
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-            if (currentCursorPositionEnd != wholeText && savedCursorPosition <= currentCursorPositionStart) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_RIGHT
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_RIGHT
-                    )
-                )
-            } else if (savedCursorPosition > currentCursorPositionStart) {
-                currentInputConnection.setSelection(
-                    currentCursorPositionStart + 1,
-                    savedCursorPosition
-                )
-            } else {
-                currentInputConnection.setSelection(
-                    currentCursorPositionStart,
-                    currentCursorPositionEnd
-                )
-            }
-            currentInputConnection.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_UP,
-                    KeyEvent.KEYCODE_SHIFT_LEFT
-                )
-            )
-        } else {
-            if (currentCursorPositionStart != wholeText) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_DPAD_RIGHT
-                    )
-                )
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_DPAD_RIGHT
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(wholeText, wholeText)
-            }
-        }
+    private fun moveCursorRight() {
+        KeyboardInputFuctions.moveCursorRight(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            isSelectingMode = vm.isSelecting.value!!,
+            savedCursorPosition = savedCursorPosition
+        )
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun moveCursorToFirst() {
-        if (currentInputConnection == null) return
-        if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
-            clearComposing()
-            if (vm.isSelecting.value!!) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_SHIFT_LEFT
-                    )
-                )
-                currentInputConnection.setSelection(0, savedCursorPosition)
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_SHIFT_LEFT
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(0, 0)
-            }
-        }
+    private fun moveCursorFirst() {
+        KeyboardInputFuctions.moveCursorFirst(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            isSelectingMode = vm.isSelecting.value!!,
+            savedCursorPosition = savedCursorPosition
+        )
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun moveCursorToLast() {
-        val wholeText =
-            currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
-        if (currentInputConnection == null) return
-        if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
-            clearComposing()
-            if (vm.isSelecting.value!!) {
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_DOWN,
-                        KeyEvent.KEYCODE_SHIFT_LEFT
-                    )
-                )
-                currentInputConnection.setSelection(savedCursorPosition, wholeText)
-                currentInputConnection.sendKeyEvent(
-                    KeyEvent(
-                        KeyEvent.ACTION_UP,
-                        KeyEvent.KEYCODE_SHIFT_LEFT
-                    )
-                )
-            } else {
-                currentInputConnection.setSelection(wholeText, wholeText)
-            }
-        }
+    private fun moveCursorLast() {
+        KeyboardInputFuctions.moveCursorLast(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            isSelectingMode = vm.isSelecting.value!!,
+            savedCursorPosition = savedCursorPosition
+        )
     }
 
-    /**
-     * When user longclicked special button or enter button,
-     * current keyboard fragment changes to boilerplate texts frag or cursor frag
-     *  **/
+    // 엔터키, 특수문자 전환 키를 LongClick할 경우 작동
     fun addFunction(addOn: Int): Boolean {
         when (addOn) {
             1 -> {
@@ -1073,53 +661,36 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     }
 
     // 텍스트 복사하기
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun copyText() {
-        if (currentInputConnection == null) return
-        vm.switchSelectingMode(false)
-        if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
-            clearComposing()
-            if (currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES) == null) {
-                Toast.makeText(
-                    this,
-                    "문구를 복사하시려면\n문구를 먼저 선택해주세요.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                currentInputConnection.performContextMenuAction(android.R.id.copy)
-            }
-        }
+        KeyboardInputFuctions.copyText(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            switchSelectingMode = { vm.switchSelectingMode(false) },
+            context = this
+        )
     }
 
     // 텍스트 잘라내기
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun cutText() {
-        if (currentInputConnection == null) return
-        vm.switchSelectingMode(false)
-        if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
-            clearComposing()
-            if (currentInputConnection.getSelectedText(GET_TEXT_WITH_STYLES) == null) {
-                Toast.makeText(
-                    this,
-                    "문구를 잘라내시려면\n문구를 먼저 선택해주세요.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                currentInputConnection.performContextMenuAction(android.R.id.cut)
-            }
-        }
+        KeyboardInputFuctions.cutText(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            switchSelectingMode = { vm.switchSelectingMode(false) },
+            context = this
+        )
     }
 
     // 텍스트 붙여넣기
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun pasteText() {
-        if (currentInputConnection == null) return
-        vm.switchSelectingMode(false)
-        if (currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)) {
-            clearComposing()
+        KeyboardInputFuctions.pasteText(
+            mIMEService = this,
+            clearComposing = { clearComposing() },
+            switchSelectingMode = { vm.switchSelectingMode(false) }
+        )
+    }
 
-            currentInputConnection.performContextMenuAction(android.R.id.paste)
-        }
+    private fun setSavedCursorPositionDefault() {
+        savedCursorPosition = -1
     }
 
     // 한글키보드 사용 중 작성 중이던 한글 자/모음 결합체계 초기화
@@ -1159,20 +730,20 @@ class InputMethodServiceViewRefactor : InputMethodService(), LifecycleOwner {
     }
     var repeatListenerDels = Array(100) {
         RepeatListener(mKeyboardHolding, normalInterval) {
-            delFunction()
+            inputDelete()
         }
     }
     var rListenerCursorLeft = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorToLeft()
+        moveCursorLeft()
     }
     var rListenerCursorRight = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorToRight()
+        moveCursorRight()
     }
     var rListenerCursorUp = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorToUp()
+        moveCursorUp()
     }
     var rListenerCursorDown = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorToDown()
+        moveCursorDown()
     }
     var singleListenerSpecialSpace = View.OnClickListener {
         inputSpecial(it)

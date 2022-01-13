@@ -11,7 +11,7 @@
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
+            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
     </data>
 
     <FrameLayout
@@ -86,7 +86,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{() -> kbservice.selectAll()}"
+                    android:onClick="@{() -> kbservice.selectAllTexts()}"
                     android:text="전체 선택"
                     android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
                     android:textSize="12dp"

@@ -10,7 +10,7 @@
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.InputMethodServiceViewRefactor" />
+            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
     </data>
 
     <FrameLayout

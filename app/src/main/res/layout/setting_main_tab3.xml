@@ -64,6 +64,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -90,6 +91,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:gravity="top"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
@@ -118,6 +120,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -145,6 +148,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -171,6 +175,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -197,6 +202,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -223,6 +229,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -249,6 +256,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -283,6 +291,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -309,6 +318,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -335,6 +345,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -361,6 +372,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -388,6 +400,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -415,6 +428,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -442,6 +456,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
@@ -469,6 +484,7 @@
                             android:layout_weight="1"
                             android:gravity="top"
                             android:background="@drawable/view_edittext"
+                            android:imeOptions="actionDone"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp" />
                     </LinearLayout>
