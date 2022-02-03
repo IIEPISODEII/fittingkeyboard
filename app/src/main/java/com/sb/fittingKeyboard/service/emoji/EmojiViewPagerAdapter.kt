@@ -10,6 +10,7 @@ import com.sb.fittingKeyboard.service.util.EmojiCollections
 
 class EmojiViewPagerAdapter(
     e0List: MutableList<String>,
+    private val eAdapterList: List<EmojiRecyclerAdapter>,
     private var columns: Int,
     private var listener: EmojiRecyclerAdapter.OnItemClickListener?,
     private var listener2: EmojiRecyclerLiveDataAdapter.OnItemClickListener?
@@ -17,15 +18,6 @@ class EmojiViewPagerAdapter(
     RecyclerView.Adapter<EmojiViewPagerAdapter.ViewHolder>() {
 
     val e0Adapter = EmojiRecyclerLiveDataAdapter(e0List)
-    val e1Adapter = EmojiRecyclerAdapter(EmojiCollections.e1SmileysAndEmoticons)
-    val e2Adapter = EmojiRecyclerAdapter(EmojiCollections.e2PeopleAndBody)
-    val e3Adapter = EmojiRecyclerAdapter(EmojiCollections.e3AnimalsAndNature)
-    val e4Adapter = EmojiRecyclerAdapter(EmojiCollections.e4FoodAndDrink)
-    val e5Adapter = EmojiRecyclerAdapter(EmojiCollections.e5TravelAndPlaces)
-    val e6Adapter = EmojiRecyclerAdapter(EmojiCollections.e6Activities)
-    val e7Adapter = EmojiRecyclerAdapter(EmojiCollections.e7Objects)
-    val e8Adapter = EmojiRecyclerAdapter(EmojiCollections.e8Symbols)
-    val e9Adapter = EmojiRecyclerAdapter(EmojiCollections.e9Flags)
 
     // ViewHolder 선언
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -34,41 +26,9 @@ class EmojiViewPagerAdapter(
         fun bind(_position: Int) {
             val gridLayoutManager = GridLayoutManager(itemView.context, columns)
             rv.adapter = when (_position) {
-                1 -> {
-                    e1Adapter.setOnItemClickListener(listener = listener)
-                    e1Adapter
-                }
-                2 -> {
-                    e2Adapter.setOnItemClickListener(listener = listener)
-                    e2Adapter
-                }
-                3 -> {
-                    e3Adapter.setOnItemClickListener(listener = listener)
-                    e3Adapter
-                }
-                4 -> {
-                    e4Adapter.setOnItemClickListener(listener = listener)
-                    e4Adapter
-                }
-                5 -> {
-                    e5Adapter.setOnItemClickListener(listener = listener)
-                    e5Adapter
-                }
-                6 -> {
-                    e6Adapter.setOnItemClickListener(listener = listener)
-                    e6Adapter
-                }
-                7 -> {
-                    e7Adapter.setOnItemClickListener(listener = listener)
-                    e7Adapter
-                }
-                8 -> {
-                    e8Adapter.setOnItemClickListener(listener = listener)
-                    e8Adapter
-                }
-                9 -> {
-                    e9Adapter.setOnItemClickListener(listener = listener)
-                    e9Adapter
+                in 1..9 -> {
+                    eAdapterList[_position-1].setOnItemClickListener(listener = listener)
+                    eAdapterList[_position-1]
                 }
                 else -> {
                     e0Adapter.setOnItemClickListener(listener = listener2)
@@ -80,7 +40,7 @@ class EmojiViewPagerAdapter(
     }
 
     // 아이템 개수 카운트
-    override fun getItemCount(): Int = 10
+    override fun getItemCount(): Int = eAdapterList.size + 1
 
     // ViewHolder 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

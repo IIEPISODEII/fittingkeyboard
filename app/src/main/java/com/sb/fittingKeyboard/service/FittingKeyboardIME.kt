@@ -32,6 +32,7 @@ import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerAdapter
 import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerLiveDataAdapter
 import com.sb.fittingKeyboard.service.emoji.EmojiViewPagerAdapter
 import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
+import com.sb.fittingKeyboard.service.util.EmojiCollections
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_FONT_SIZE
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_SETTING
@@ -86,8 +87,19 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     private lateinit var prefs: SharedPreferences
     private var _fontSize = MutableLiveData<Int>(15)
     val fontSize: LiveData<Int> get() = _fontSize
+    private val emojiAdapterList = listOf(
+        EmojiRecyclerAdapter(EmojiCollections.e1SmileysAndEmoticons),
+        EmojiRecyclerAdapter(EmojiCollections.e2PeopleAndBody),
+        EmojiRecyclerAdapter(EmojiCollections.e3AnimalsAndNature),
+        EmojiRecyclerAdapter(EmojiCollections.e4FoodAndDrink),
+        EmojiRecyclerAdapter(EmojiCollections.e5TravelAndPlaces),
+        EmojiRecyclerAdapter(EmojiCollections.e6Activities),
+        EmojiRecyclerAdapter(EmojiCollections.e7Objects),
+        EmojiRecyclerAdapter(EmojiCollections.e8Symbols),
+        EmojiRecyclerAdapter(EmojiCollections.e9Flags)
+    )
     private val emojiPagerAdapter: EmojiViewPagerAdapter
-        get() = EmojiViewPagerAdapter(mutableListOf(), 0, null, null)
+        get() = EmojiViewPagerAdapter(mutableListOf(), emojiAdapterList, 0, null, null)
 
     override fun onCreate() {
         super.onCreate()
