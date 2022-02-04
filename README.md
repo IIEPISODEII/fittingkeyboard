@@ -8,3 +8,5 @@ Codes consist of
 4. Korean Automata (Algorithms for composing Korean characters)
 
 KeyboardView implements livedata and databinding
+
+![레코딩_Trim_Trim (1)](https://user-images.githubusercontent.com/60639734/152549013-cdad992c-f5bc-4acd-acaa-89494c4ad4f4.gif)
