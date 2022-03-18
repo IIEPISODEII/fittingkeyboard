@@ -104,6 +104,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     override fun onCreate() {
         super.onCreate()
 
+
         vm = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
             .create(SharedKBViewModel::class.java)
         kbView = layoutInflater.inflate(R.layout.key_layout_normal, null)

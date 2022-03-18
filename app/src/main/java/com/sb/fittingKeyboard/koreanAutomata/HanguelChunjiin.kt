@@ -6182,7 +6182,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             finalChar = 'ㄹ'
                             composeResult()
-                            val temp = composedResult.toString()
+                            temp = composedResult.toString()
                             state = 2
                             firstChar = 'ㅁ'
                             firstSubChar = nullChar
