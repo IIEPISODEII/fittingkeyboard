@@ -191,12 +191,12 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         customEmojiIndicator = emojiKBView.findViewById(R.id.emoji_viewpager_indicator)
 
         var currentKRView = qwertyKrNormalKBView
-        vm.observeBottomMargin.observe(this, {
+        vm.observeBottomMargin.observe(this) {
             val lP = kbLayoutBottomMargin.layoutParams
             lP.height = it * (resources.displayMetrics.density).toInt()
             kbLayoutBottomMargin.layoutParams = lP
-        })
-        vm.observeKBIME.observe(this, {
+        }
+        vm.observeKBIME.observe(this) {
             currentKRView =
                 when (it) {
                     KeyboardUtil.QWERTY -> qwertyKrNormalKBView
@@ -210,8 +210,8 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
                 kbFrame.removeAllViews()
                 kbFrame.addView(currentKRView)
             }
-        })
-        vm.mode.observe(this, {
+        }
+        vm.mode.observe(this) {
             when (it) {
                 0, 1, 2 -> {
                     if (latestMode !in arrayOf(0, 1, 2)) {
@@ -249,7 +249,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
                 }
             }
             latestMode = it
-        })
+        }
         vm.observeNumberVisibility.observe(this, {})
         vm.observeKBBottomMargin.observe(this, {})
         vm.observeKBFontSize.observe(

@@ -44,6 +44,15 @@ class KeyboardUtil {
         const val KEYBOARD_AUTO_MODE_CHANGE = "KeyboardAutoModeChange"
         const val KEYBOARD_SPECIALKEY_LONGCLICK = "KeyboardSpecialkeyAddon"
         const val KEYBOARD_ENTERKEY_LONGCLICK = "KeyboardEnterkeyAddon"
+        const val KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING = "KeyboardToolbarGoSetting"
+        const val KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE = "KeyboardToolbarShowBoilerPlate"
+        const val KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL = "KeyboardToolbarSelectAll"
+        const val KEYBOARD_TOOLBAR_ACTIVE_COPY = "KeyboardToolbarCopy"
+        const val KEYBOARD_TOOLBAR_ACTIVE_CUT = "KeyboardToolbarCut"
+        const val KEYBOARD_TOOLBAR_ACTIVE_PASTE = "KeyboardToolbarPaste"
+        const val KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR = "KeyboardToolbarShowCursor"
+        const val KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER = "KeyboardToolbarShowNumber"
+        const val KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI = "KeyboardToolbarShowEmoji"
         const val KEYBOARD_IME_KR = "KeyboardInputMethodKR"
         const val KEYBOARD_BP_0 = "AutoText0"
         const val KEYBOARD_BP_1 = "AutoText1"
@@ -99,8 +108,7 @@ class KeyboardUtil {
                 }
                 _dec = (_dec-remain)/16
             }
-            hex.insert(0, "0x")
-            return hex.toString().padEnd(7, '0')
+            return "0x" + hex.toString().padStart(7, '0')
         }
     }
 }

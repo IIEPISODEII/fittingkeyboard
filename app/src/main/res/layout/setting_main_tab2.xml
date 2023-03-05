@@ -45,19 +45,11 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_fontsize"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:text="폰트 크기"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
-                        tools:ignore="HardcodedText" />
+                        android:text="폰트 크기" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -112,30 +104,22 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_division_bool"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="왼/오른 자판 분리"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
                         android:id="@+id/setting_keyboard_division_bool"
+                        style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
                         android:checked="@{kbviewmodel.observeKBDivision}"
                         android:paddingRight="20dp"
-                        android:thumb="@drawable/view_switch_thumb"
-                        android:track="@drawable/view_switch_track"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
@@ -147,18 +131,11 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_rightsize"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="오른편 자판 상대크기"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -201,18 +178,11 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_holding"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="긴 입력 지연 시간"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -255,31 +225,22 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_vibration"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="진동 사용"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
-                        app:drawableRightCompat="@drawable/ic_baseline_help"
-                        tools:ignore="HardcodedText" />
+                        app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
                         android:id="@+id/setting_keyboard_vibration"
+                        style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
                         android:checked="@{kbviewmodel.observeKBVibrationUse}"
                         android:paddingRight="20dp"
-                        android:thumb="@drawable/view_switch_thumb"
-                        android:track="@drawable/view_switch_track"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
@@ -290,18 +251,11 @@
                     android:orientation="horizontal">
 
                     <Button
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:text="진동 세기"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp" />
+                        android:text="진동 세기" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -342,30 +296,22 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_autoCapital"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="자동대문자 설정"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
                         android:id="@+id/setting_keyboard_autoCapital"
+                        style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
                         android:checked="@{kbviewmodel.observeKBAutoCapitalization}"
                         android:paddingRight="20dp"
-                        android:thumb="@drawable/view_switch_thumb"
-                        android:track="@drawable/view_switch_track"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
@@ -377,30 +323,22 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_autoModeChange"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="특수문자 자동전환"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
                         android:id="@+id/setting_keyboard_autoModeChange"
+                        style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
                         android:checked="@{kbviewmodel.observeKBAutoModeChange}"
                         android:paddingRight="20dp"
-                        android:thumb="@drawable/view_switch_thumb"
-                        android:track="@drawable/view_switch_track"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
@@ -412,30 +350,22 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_toggleToolbar"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="툴바 표시"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
                         android:id="@+id/setting_keyboard_toggleToolbar"
+                        style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
                         android:checked="@{kbviewmodel.observeKBToolBarVisibility==View.VISIBLE ? true : false}"
                         android:paddingRight="20dp"
-                        android:thumb="@drawable/view_switch_thumb"
-                        android:track="@drawable/view_switch_track"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
@@ -447,28 +377,20 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_toggleNumber"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:text="숫자행 표시"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp" />
+                        android:text="숫자행 표시" />
 
                     <Switch
                         android:id="@+id/setting_keyboard_toggleNumber"
+                        style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
                         android:checked="@{kbviewmodel.observeNumberVisibility==View.VISIBLE ? true : false}"
                         android:paddingRight="20dp"
-                        android:thumb="@drawable/view_switch_thumb"
-                        android:track="@drawable/view_switch_track"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
@@ -480,18 +402,11 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_bot_margin"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="하단 여백"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -534,18 +449,11 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_leftside_margin"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="좌측 여백"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -588,18 +496,11 @@
 
                     <Button
                         android:id="@+id/tv_keyboard_rightside_margin"
+                        style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/button2"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
                         android:text="우측 여백"
-                        android:textAllCaps="false"
-                        android:textColor="#000000"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -633,6 +534,19 @@
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <TextView
+                    style="@style/FKButtonLightGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="툴바 설정"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview_keyboard_toolbar_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </ScrollView>

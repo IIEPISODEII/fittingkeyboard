@@ -198,6 +198,7 @@ class KeyboardInputFuctions {
             clearComposing()
             mIMEService.currentInputConnection.finishComposingText()
             val eventTime = SystemClock.uptimeMillis()
+            println("엔터키 누름 : 작동옵션 = ${mIMEService.currentInputEditorInfo.imeOptions}  ${decToHex(mIMEService.currentInputEditorInfo.imeOptions)}")
             when (decToHex(mIMEService.currentInputEditorInfo.imeOptions).last()) {
                 '2' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
                 '3' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_SEARCH)
