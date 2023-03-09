@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ItemTouchHelperListener
@@ -32,6 +33,7 @@ class SettingDetailFragment : Fragment() {
 
     private val onItemChanged = object: ToolbarSettingAdapter.OnToolbarChanged {
         override fun onToolbarChange(id: String, value: Int) {
+            println("id: $id, value: $value")
             prefSetting.edit().putInt(id, value).apply()
         }
     }
@@ -192,13 +194,13 @@ class SettingDetailFragment : Fragment() {
             ToolbarSettingDataHolder(
                 KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
                 R.drawable.ic_settings,
-                "설정",
+                "설정 바로가기",
                 prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING, 1) >= 0
             ),
             ToolbarSettingDataHolder(
                 KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE,
                 R.drawable.ic_boilerplatetext_black,
-                "상용구",
+                "상용구창 바로가기",
                 prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE, 2) >= 0
             ),
             ToolbarSettingDataHolder(
@@ -228,39 +230,47 @@ class SettingDetailFragment : Fragment() {
             ToolbarSettingDataHolder(
                 KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR,
                 R.drawable.ic_move,
-                "커서창 표시",
+                "커서창 바로가기",
                 prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR, 7) >= 0
             ),
             ToolbarSettingDataHolder(
                 KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER,
                 R.drawable.ic_number_keypad,
-                "숫자창 표시",
+                "숫자창 바로가기",
                 prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER, 8) >= 0
             ),
             ToolbarSettingDataHolder(
                 KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI,
-                R.drawable.ic_number_keypad,
-                "이모티콘창 표시",
+                R.drawable.ic_outline_emoji_emotions_24,
+                "이모티콘창 바로가기",
                 prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI, 9) >= 0
-            ),
+            )
         )
             .sortedWith(
                 Comparator { mine, other ->
-                    return@Comparator if (prefSetting.getInt(
+                    return@Comparator if (kotlin.math.abs(prefSetting.getInt(
                             mine.settingId,
-                            toolbarSettingKeys.indexOf(mine.settingId)
-                        ) > prefSetting.getInt(
+                            toolbarSettingKeys.indexOf(mine.settingId))
+                        ) > kotlin.math.abs(prefSetting.getInt(
                             other.settingId,
-                            toolbarSettingKeys.indexOf(other.settingId)
+                            toolbarSettingKeys.indexOf(other.settingId))
                         )
                     ) 1 else -1
                 }
             ).toMutableList()
 
+        toolbarSettingDataHolderList.forEachIndexed { idx, it ->
+            println("$idx : $it")
+        }
+
         val toolbarSettingRecyclerViewAdapter = ToolbarSettingAdapter(toolbarSettingDataHolderList)
         toolbarSettingRecyclerViewAdapter.setOnToolbarChangeListener(onItemChanged)
         toolbarSettingRecyclerView = binding.recyclerviewKeyboardToolbarSetting
-        toolbarSettingRecyclerView.adapter = toolbarSettingRecyclerViewAdapter
+        toolbarSettingRecyclerView.apply {
+            adapter = toolbarSettingRecyclerViewAdapter
+            layoutManager = LinearLayoutManager(this@SettingDetailFragment.requireContext())
+            isNestedScrollingEnabled = false
+        }
         val itemTouchHelperCallback = ItemTouchHelperCallback(toolbarSettingRecyclerViewAdapter)
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(toolbarSettingRecyclerView)

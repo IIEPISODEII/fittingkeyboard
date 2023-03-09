@@ -13,7 +13,7 @@ import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
 
 class ToolbarSettingAdapter(
-    var toolbarSettingList: MutableList<ToolbarSettingDataHolder>
+    var toolbarSettingDataHolderList: MutableList<ToolbarSettingDataHolder>
 ) :
     RecyclerView.Adapter<ToolbarSettingAdapter.ToolbarSettingViewHolder>(),
     ItemTouchHelperListener {
@@ -25,7 +25,7 @@ class ToolbarSettingAdapter(
     }
 
     override fun getItemCount(): Int {
-        return toolbarSettingList.size
+        return toolbarSettingDataHolderList.size
     }
 
     override fun onBindViewHolder(holder: ToolbarSettingViewHolder, position: Int) {
@@ -41,28 +41,44 @@ class ToolbarSettingAdapter(
             itemView.findViewById<SwitchCompat>(R.id.switch_toolbar_setting_viewholder_activator)
         private val divider = itemView.findViewById<View>(R.id.v_toolbar_setting_viewholder_divider)
 
-        fun bind(position: Int) {
-            Glide.with(itemView)
-                .load(toolbarSettingList[position].iconDrawable)
-                .into(iconImageView)
+        init {
+            isActiveSwitch.setOnCheckedChangeListener { _, value ->
+                mOnToolbarChanged?.onToolbarChange(
+                    toolbarSettingDataHolderList[adapterPosition].settingId,
+                    if (value) adapterPosition + 1 else -(adapterPosition + 1)
+                )
+                toolbarSettingDataHolderList[adapterPosition].isActivated = value
+            }
+        }
 
-            descriptionTextView.text = toolbarSettingList[position].descriptionText
-            isActiveSwitch.isChecked = toolbarSettingList[position].isActivated
+        fun bind(position: Int) {
+            iconImageView.setImageResource(toolbarSettingDataHolderList[position].iconDrawable)
+
+            descriptionTextView.text = toolbarSettingDataHolderList[position].descriptionText
+            isActiveSwitch.isChecked = toolbarSettingDataHolderList[position].isActivated
 
             divider.visibility =
-                if (position == toolbarSettingList.lastIndex) View.GONE else View.VISIBLE
+                if (position == toolbarSettingDataHolderList.lastIndex) View.GONE else View.VISIBLE
         }
     }
 
     override fun onItemMove(from: Int, to: Int): Boolean {
-        val temp = toolbarSettingList[from]
-        toolbarSettingList.removeAt(from)
-        toolbarSettingList.add(to, temp)
-        for (i in from..to) {
-            mOnToolbarChanged?.onToolbarChange(toolbarSettingList[i].settingId, i)
+        val temp = toolbarSettingDataHolderList[from]
+        toolbarSettingDataHolderList.removeAt(from)
+        toolbarSettingDataHolderList.add(to, temp)
+        if (from <= to) {
+            for (i in from..to) {
+                mOnToolbarChanged?.onToolbarChange(toolbarSettingDataHolderList[i].settingId, if (toolbarSettingDataHolderList[i].isActivated) i + 1 else -(i+1))
+            }
+        } else {
+            for (i in to..from) {
+                mOnToolbarChanged?.onToolbarChange(toolbarSettingDataHolderList[i].settingId, if (toolbarSettingDataHolderList[i].isActivated) i + 1 else -(i+1))
+            }
         }
 
         notifyItemMoved(from, to)
+        notifyItemChanged(from)
+        notifyItemChanged(to)
         return true
     }
 

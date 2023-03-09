@@ -11,5 +11,5 @@ data class ToolbarSettingDataHolder(
     val settingId: String,
     val iconDrawable: Int,
     val descriptionText: String,
-    val isActivated: Boolean
+    var isActivated: Boolean
 )

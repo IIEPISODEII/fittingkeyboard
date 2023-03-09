@@ -3,6 +3,7 @@ package com.sb.fittingKeyboard.service.viewmodel
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.view.View
@@ -14,6 +15,7 @@ import com.sb.fittingKeyboard.service.*
 import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerAdapter
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 import org.json.JSONArray
+import java.util.PriorityQueue
 
 class SharedKBViewModel(application: Application) : AndroidViewModel(application) {
     /** mode
@@ -257,6 +259,36 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
     var observeBP15 = kbSettingSP.stringLiveData(KeyboardUtil.KEYBOARD_BP_15, "")
     var observeE0RecentlyUsedEmoticons = kbSettingSP.stringLiveData(KeyboardUtil.RECENTLY_USED_EMOTICONS, JSONArray().put("").toString())
 
+    private val toolbarSettingMap = hashMapOf(
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING, 1),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE, 2),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL, 3),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY, 4),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT, 5),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE, 6),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR, 7),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER, 8),
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI to kbSettingSP.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI, 9),
+    )
+    private val _prefSettingToolbarSetting = MutableLiveData(toolbarSettingMap)
+    val prefSettingToolbarSetting: LiveData<HashMap<String, Int>>
+        get() = _prefSettingToolbarSetting
+
+    private val onPrefSettingChangeListener = OnSharedPreferenceChangeListener { pref, key ->
+            when (key) {
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarSettingMap[key] = pref.getInt(key, 1)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarSettingMap[key] = pref.getInt(key, 2)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL -> toolbarSettingMap[key] = pref.getInt(key, 3)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY -> toolbarSettingMap[key] = pref.getInt(key, 4)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT -> toolbarSettingMap[key] = pref.getInt(key, 5)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE -> toolbarSettingMap[key] = pref.getInt(key, 6)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR -> toolbarSettingMap[key] = pref.getInt(key, 7)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER -> toolbarSettingMap[key] = pref.getInt(key, 8)
+                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI -> toolbarSettingMap[key] = pref.getInt(key, 9)
+            }
+            _prefSettingToolbarSetting.postValue(toolbarSettingMap)
+        }
+
     var observeHeight: MediatorLiveData<Float> = MediatorLiveData()
     var observeRightSize: MediatorLiveData<Float> = MediatorLiveData()
     var observeBottomMargin: MediatorLiveData<Int> = MediatorLiveData()
@@ -307,6 +339,8 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             val emojiPixelSize: Float = (Resources.getSystem().displayMetrics.density * 50 + 0.5).toFloat()
             emojiColumnsCounts.value = (Resources.getSystem().displayMetrics.widthPixels.toFloat()/emojiPixelSize).toInt()
         }
+
+        kbSettingSP.registerOnSharedPreferenceChangeListener(onPrefSettingChangeListener)
     }
 
     fun getRightSize(): Float {
@@ -351,6 +385,11 @@ class SharedKBViewModel(application: Application) : AndroidViewModel(application
             newJsonArray.put(it)
         }
         kbSettingSP.edit().putString(KeyboardUtil.RECENTLY_USED_EMOTICONS, newJsonArray.toString()).apply()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        kbSettingSP.unregisterOnSharedPreferenceChangeListener(onPrefSettingChangeListener)
     }
 
     enum class Orientation {

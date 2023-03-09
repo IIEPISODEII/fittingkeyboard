@@ -535,18 +535,50 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    style="@style/FKButtonLightGrey"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="툴바 설정"
-                    app:drawableEndCompat="@drawable/ic_baseline_help"
-                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button2"
+                    android:padding="10dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_keyboard_toolbar_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <Button
+                        android:id="@+id/textview_keyboard_toolbar_setting_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="툴바 설정"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textIsSelectable="false"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="10dp"
+                        android:background="#00FFFFFF"
+                        app:drawableEndCompat="@drawable/ic_baseline_help"
+                        app:drawableRightCompat="@drawable/ic_baseline_help"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view_keyboard_toolbar_setting_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lightgrey"
+                        app:layout_constraintTop_toBottomOf="@id/textview_keyboard_toolbar_setting_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_keyboard_toolbar_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_keyboard_toolbar_setting_divider" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
         </ScrollView>
