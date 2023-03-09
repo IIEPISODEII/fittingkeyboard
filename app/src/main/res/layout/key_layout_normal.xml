@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.ui.ToolbarLayout
             android:id="@+id/keyboardToolBarLine"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -122,7 +122,7 @@
                 android:src="@{kbviewmodel.mode == 10 ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}"
                 android:background="@color/white"
                 android:onClick="@{() -> kbviewmodel.changeMode(10)}"/>
-        </LinearLayout>
+        </com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.ui.ToolbarLayout>
 
         <RelativeLayout
             android:id="@+id/keyboardRelativeLayout"

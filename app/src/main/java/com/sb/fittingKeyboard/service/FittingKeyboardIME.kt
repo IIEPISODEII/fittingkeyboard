@@ -9,14 +9,13 @@ import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import androidx.viewpager2.widget.ViewPager2
@@ -41,7 +40,6 @@ import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.getEmojiIconXP
 import com.sb.fittingKeyboard.service.util.RepeatListener
 import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
 import org.json.JSONArray
-import java.security.Key
 
 @SuppressLint("ClickableViewAccessibility")
 class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
@@ -72,6 +70,197 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     private lateinit var emojisViewPager: ViewPager2
     private lateinit var emojiScrollView: HorizontalScrollView
     private val mLifecycle = LifecycleRegistry(this)
+
+
+    private val goSettingImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_settings,
+                    null
+                )
+            )
+            setOnClickListener {
+                startApp()
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val showBoilerPlateImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_boilerplatetext_black,
+                    null
+                )
+            )
+            setOnClickListener {
+                vm.changeMode(7)
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val selectAllImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_select,
+                    null
+                )
+            )
+            setOnClickListener {
+                selectAllTexts()
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val copyImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_copy,
+                    null
+                )
+            )
+            setOnClickListener {
+                copyText()
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val cutImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_cut,
+                    null
+                )
+            )
+            setOnClickListener {
+                cutText()
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val pasteImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_paste,
+                    null
+                )
+            )
+            setOnClickListener {
+                pasteText()
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val showCursorImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_move,
+                    null
+                )
+            )
+            setOnClickListener {
+                vm.changeMode(8)
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val showNumberImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_number_keypad,
+                    null
+                )
+            )
+            setOnClickListener {
+                vm.changeMode(9)
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
+    private val showEmojiImageButton by lazy {
+        ImageButton(kbView.context).apply {
+            setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    R.drawable.ic_outline_emoji_emotions_24,
+                    null
+                )
+            )
+            setOnClickListener {
+                vm.changeMode(1)
+            }
+            setBackgroundColor(
+                ResourcesCompat.getColor(
+                    this.resources,
+                    R.color.white,
+                    null
+                )
+            )
+        }
+    }
 
     override fun getLifecycle(): Lifecycle = mLifecycle
 
@@ -214,22 +403,19 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         vm.mode.observe(this) {
             when (it) {
                 0, 1, 2 -> {
-                    if (latestMode !in arrayOf(0, 1, 2)) {
-                        kbFrame.removeAllViews()
-                        kbFrame.addView(qwertyEnNormalKBView)
-                    }
+                    if (latestMode == it) return@observe
+                    kbFrame.removeAllViews()
+                    kbFrame.addView(qwertyEnNormalKBView)
                 }
                 3, 4 -> {
-                    if (latestMode !in arrayOf(3, 4)) {
-                        kbFrame.removeAllViews()
-                        kbFrame.addView(currentKRView)
-                    }
+                    if (latestMode == it) return@observe
+                    kbFrame.removeAllViews()
+                    kbFrame.addView(currentKRView)
                 }
                 5, 6 -> {
-                    if (latestMode !in arrayOf(5, 6)) {
-                        kbFrame.removeAllViews()
-                        kbFrame.addView(qwertySpecialKBView)
-                    }
+                    if (latestMode == it) return@observe
+                    kbFrame.removeAllViews()
+                    kbFrame.addView(qwertySpecialKBView)
                 }
                 7 -> {
                     kbFrame.removeAllViews()
@@ -250,21 +436,15 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             }
             latestMode = it
         }
-        vm.observeNumberVisibility.observe(this, {})
-        vm.observeKBBottomMargin.observe(this, {})
         vm.observeKBFontSize.observe(
-            this,
-            {
-                _fontSize.value = (prefs.intLiveData(
-                    KEYBOARD_FONT_SIZE,
-                    16
-                ).value!! * (resources.displayMetrics.scaledDensity)).toInt()
-            })
-        vm.observeKBFontType.observe(this, {})
-        vm.observeKBDivision.observe(this, {})
-        vm.observeKBMoSize.observe(this, {})
-        vm.observeRightSize.observe(this, {})
-        vm.observeKBHoldingTime.observe(this, {
+            this
+        ) {
+            _fontSize.value = (vm.kbSettingSP.intLiveData(
+                KEYBOARD_FONT_SIZE,
+                16
+            ).value!! * (resources.displayMetrics.scaledDensity)).toInt()
+        }
+        vm.observeKBHoldingTime.observe(this) {
             mKeyboardHolding = it.toLong() + 100
             for (rListener in repeatListenerChars) {
                 rListener.changeInitialInterval(mKeyboardHolding)
@@ -279,50 +459,62 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             rListenerCursorRight.changeInitialInterval(mKeyboardHolding)
             rListenerCursorUp.changeInitialInterval(mKeyboardHolding)
             rListenerCursorDown.changeInitialInterval(mKeyboardHolding)
-            rListenerCursorFirst.changeInitialInterval(mKeyboardHolding)
-            rListenerCursorLast.changeInitialInterval(mKeyboardHolding)
+            if (SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                rListenerCursorFirst.changeInitialInterval(mKeyboardHolding)
+                rListenerCursorLast.changeInitialInterval(mKeyboardHolding)
+            }
             rListenerCursorForeDel.changeInitialInterval(mKeyboardHolding)
-        })
-        vm.observeKBVibrationUse.observe(this, { myKeyboardVibration = it })
-        vm.observeKBVibrationIntensity.observe(this, { myKeyboardVibrationIntensity = it })
-        vm.observeKBTheme.observe(this, { myKeyboardTheme = it })
-        vm.observeKBFontColor.observe(this, {})
-        vm.observeKBFunctionFontColor.observe(this, {})
-        vm.observeKBLeftSideMargin.observe(this, {
+        }
+        vm.observeKBVibrationUse.observe(this) { myKeyboardVibration = it }
+        vm.observeKBVibrationIntensity.observe(this) { myKeyboardVibrationIntensity = it }
+        vm.observeKBTheme.observe(this) { myKeyboardTheme = it }
+        vm.observeKBLeftSideMargin.observe(this) {
             val lPNum = kbNumLeftSide.layoutParams
             val lPChar = kbCharLeftSide.layoutParams
             lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
             lPChar.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
             kbNumLeftSide.layoutParams = lPNum
             kbCharLeftSide.layoutParams = lPChar
-        })
-        vm.observeKBRightSideMargin.observe(this, {
+        }
+        vm.observeKBRightSideMargin.observe(this) {
             val lPNum = kbNumRightSide.layoutParams
             val lPChar = kbCharRightSide.layoutParams
             lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
             lPChar.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
             kbNumRightSide.layoutParams = lPNum
             kbCharRightSide.layoutParams = lPChar
-        })
-        vm.observeKBToolBarVisibility.observe(this, {})
-        vm.observeKBHeight.observe(this, {})
-        vm.observeHeight.observe(this, {
+        }
+        vm.observeHeight.observe(this) {
             kbLayout.layoutParams.height = it.toInt()
             val bgImg = kbView.findViewById<ImageView>(R.id.keyboardBackgroundImage)
             bgImg.layoutParams.height = it.toInt()
-        })
-        vm.observeKBEnterKeyHolding.observe(this, {})
-        vm.observeKBSpecialKeyHolding.observe(this, {})
-        vm.observeKBAutoCapitalization.observe(this, {})
-        vm.observeKBAutoModeChange.observe(this, {})
-        vm.isSelecting.observe(this, {})
-        vm.orientation.observe(this, {})
+        }
+        vm.prefSettingToolbarSetting.observe(this) {
+            val toolbarLinearLayout = kbBinding.keyboardToolBarLine
+
+            val sortedToolbarSetting = it.toList().sortedBy { (_, value) -> kotlin.math.abs(value) }.toMap()
+            toolbarLinearLayout.removeAllViews()
+            sortedToolbarSetting.keys.toList().forEachIndexed { _, key ->
+                val ordering = sortedToolbarSetting[key]!!-1
+                when (key) {
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarLinearLayout.reorderChild(goSettingImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarLinearLayout.reorderChild(showBoilerPlateImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL -> toolbarLinearLayout.reorderChild(selectAllImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY -> toolbarLinearLayout.reorderChild(copyImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT -> toolbarLinearLayout.reorderChild(cutImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE -> toolbarLinearLayout.reorderChild(pasteImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR -> toolbarLinearLayout.reorderChild(showCursorImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER -> toolbarLinearLayout.reorderChild(showNumberImageButton, ordering)
+                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI -> toolbarLinearLayout.reorderChild(showEmojiImageButton, ordering)
+                }
+            }
+        }
 
         emojisViewPager.adapter = emojiPagerAdapter
         vm.emojiColumnsCounts.observe(
-            this,
-            { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) })
-        vm.observeE0RecentlyUsedEmoticons.observe(this, {
+            this
+        ) { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) }
+        vm.observeE0RecentlyUsedEmoticons.observe(this) {
             val jsonArray = JSONArray(it)
             val arr = mutableListOf<String>()
 
@@ -330,7 +522,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
                 if (jsonArray.optString(i) != "") arr.add(jsonArray.optString(i))
             }
             (emojisViewPager.adapter as EmojiViewPagerAdapter).changeAdapter(arr)
-        })
+        }
 
         val emojiIconClickListeners = MutableList(emojiIconList.size) { View.OnClickListener { } }
         for (i in emojiIconClickListeners.indices) {
@@ -397,7 +589,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             if ((candidatesStart != oldSelStart && candidatesEnd != newSelStart)) {
                 clearComposing()
             }
-        } else if (newSelStart == 0 && newSelEnd == 0 && candidatesStart == -1 && candidatesEnd == -1) {
+        } else if (newSelStart == 0 && newSelEnd == 0 && candidatesEnd == -1) {
             clearComposing()
         }
         /** TextField의 첫글자로 돌아갔을 때 대문자로 수정 **/
@@ -564,7 +756,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
 
-    fun startApp(uri: String) {
+    fun startApp(uri: String = KeyboardUtil.PACKAGE_NAME) {
         val intent =
             applicationContext.packageManager.getLaunchIntentForPackage(uri)
         if (intent != null) {

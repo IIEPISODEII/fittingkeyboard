@@ -1,7 +1,7 @@
 package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data
 
 /**
- * TODO
+ * TY
  *
  * @property iconDrawable 아이콘 드로어블 id값
  * @property descriptionText 세팅 설명
