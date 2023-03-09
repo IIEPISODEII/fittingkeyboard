@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="kbviewmodel"
+            type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+
+        <variable
+            name="kbservice"
+            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                app:emojiButton_theme="@{kbviewmodel.observeKBTheme}">
+
+                <ImageButton
+                    android:id="@+id/emoji_keyboard_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.15"
+                    android:background="@drawable/keydesign_15_function"
+                    android:onClick="@{() -> kbservice.changeMode(3)}"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_keyboard_black"
+                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}" />
+
+                <HorizontalScrollView
+                    android:id="@+id/emoji_scrollview"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:scrollbarSize="1dp">
+
+                    <com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
+                        android:id="@+id/emoji_viewpager_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+
+                <ImageButton
+                    android:id="@+id/emoji_delete_button"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.15"
+                    android:background="@drawable/keydesign_15_function"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_delete_black"
+                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
+                    app:onTouch="@{kbservice.repeatListenerDels[11]}" />
+            </LinearLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/emoji_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:emojiButton_theme="@{kbviewmodel.observeKBTheme}"/>
+        </LinearLayout>
+    </FrameLayout>
+</layout>
