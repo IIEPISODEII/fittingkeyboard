@@ -7,11 +7,11 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
+            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout
@@ -36,13 +36,13 @@
                     android:layout_weight="1"
                     android:onClick="@{() -> kbservice.copyText()}"
                     android:text="복사"
-                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="12dp"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/frag_cursor_pasteSelected"
@@ -51,13 +51,13 @@
                     android:layout_weight="1"
                     android:onClick="@{() -> kbservice.pasteText()}"
                     android:text="붙여넣기"
-                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="12dp"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/frag_cursor_cutSelected"
@@ -66,13 +66,13 @@
                     android:layout_weight="1"
                     android:onClick="@{() -> kbservice.cutText()}"
                     android:text="잘라내기"
-                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="12dp"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
             </LinearLayout>
 
             <LinearLayout
@@ -88,13 +88,13 @@
                     android:layout_weight="1"
                     android:onClick="@{() -> kbservice.selectAllTexts()}"
                     android:text="전체 선택"
-                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="12dp"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
                     android:id="@+id/frag_cursor_firstChar"
@@ -105,9 +105,9 @@
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_firstpage_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{1}"
                     app:onTouch="@{kbservice.rListenerCursorFirst}" />
 
@@ -120,9 +120,9 @@
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_arrowup_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{1}"
                     app:onTouch="@{kbservice.rListenerCursorUp}" />
 
@@ -135,9 +135,9 @@
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_lastpage_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{1}"
                     app:onTouch="@{kbservice.rListenerCursorLast}" />
 
@@ -150,9 +150,9 @@
                     android:gravity="center"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_foredelete_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
                     app:onTouch="@{kbservice.rListenerCursorForeDel}" />
             </LinearLayout>
@@ -170,13 +170,13 @@
                     android:layout_weight="1"
                     android:onClick="@{() -> kbservice.selectWord()}"
                     android:text="@{kbviewmodel.isSelecting==true ? @string/selection_cancel : @string/selection_activate}"
-                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="12dp"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.observeKBFontType}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
                     android:id="@+id/frag_cursor_left"
@@ -187,9 +187,9 @@
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_arrowleft_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{1}"
                     app:onTouch="@{kbservice.rListenerCursorLeft}" />
 
@@ -202,9 +202,9 @@
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_arrowdown_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{1}"
                     app:onTouch="@{kbservice.rListenerCursorDown}" />
 
@@ -217,9 +217,9 @@
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_arrowright_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{1}"
                     app:onTouch="@{kbservice.rListenerCursorRight}" />
 
@@ -232,9 +232,9 @@
                     android:gravity="center"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_delete_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
                     app:onTouch="@{kbservice.repeatListenerDels[8]}" />
             </LinearLayout>
@@ -255,9 +255,9 @@
                     android:onClick="@{() -> kbservice.changeMode(3)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_kbd_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}" />
 
                 <Button
@@ -267,13 +267,13 @@
                     android:layout_weight="1.5"
                     android:gravity="center"
                     android:text="SPACE"
-                    android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="14sp"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.observeKBFontType}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[21]}" />
 
                 <ImageButton
@@ -286,9 +286,9 @@
                     android:onClick="@{() -> kbservice.inputEnter()}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_enter_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{4}" />
             </LinearLayout>
         </LinearLayout>

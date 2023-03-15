@@ -2,25 +2,29 @@ package com.sb.fittingKeyboard.service
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.text.InputType
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.BoilerplateTextAdapter
 import com.sb.fittingKeyboard.databinding.*
 import com.sb.fittingKeyboard.keyboardSettings.MainActivity
 import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
@@ -33,18 +37,16 @@ import com.sb.fittingKeyboard.service.emoji.EmojiViewPagerAdapter
 import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
 import com.sb.fittingKeyboard.service.util.EmojiCollections
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
-import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_FONT_SIZE
-import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.KEYBOARD_SETTING
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.emojiIconList
 import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.getEmojiIconXPosition
 import com.sb.fittingKeyboard.service.util.RepeatListener
-import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 import org.json.JSONArray
 
 @SuppressLint("ClickableViewAccessibility")
-class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
+class MainKeyboardService : InputMethodService(), LifecycleOwner {
 
-    private lateinit var kbBinding: KeyLayoutNormalBinding
+    private lateinit var kbBinding: KbdLayoutContainerBinding
     private lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
     private lateinit var qwertyKrNormalBinding: FragmentKeyboardQwertyKrNormalBinding
     private lateinit var chunjiinBinding: FragmentKeyboardChunjiinBasicBinding
@@ -56,24 +58,28 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     private lateinit var boilerPlateBinding: FragmentBpBinding
     private lateinit var cursorBinding: FragmentCursorBinding
     private lateinit var emojiBinding: FragmentEmojiBinding
+    private lateinit var viewholderBpBinding: ViewholderBoilerplatesBinding
 
-    private lateinit var vm: SharedKBViewModel
-    private lateinit var kbFrame: FrameLayout
-    private lateinit var kbView: View
-    private lateinit var kbLayout: LinearLayout
-    private lateinit var kbLayoutBottomMargin: View
-    private lateinit var kbCharLeftSide: FrameLayout
-    private lateinit var kbCharRightSide: FrameLayout
-    private lateinit var kbNumLeftSide: Button
-    private lateinit var kbNumRightSide: Button
-    private lateinit var customEmojiIndicator: CustomIndicator
-    private lateinit var emojisViewPager: ViewPager2
-    private lateinit var emojiScrollView: HorizontalScrollView
+    private val vm: KeyboardViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(KeyboardViewModel::class.java) }
+    private val kbdLayout: View by lazy { layoutInflater.inflate(R.layout.kbd_layout_container, null) }
+    private val kbdCharaterAreaFramelayout: FrameLayout by lazy { kbdLayout.findViewById(R.id.framelayout_keyboard_character_rows) }
+    private val kbdMainboardConstLayout: ConstraintLayout by lazy { kbdLayout.findViewById(R.id.constraint_layout_keyboard_main_board) }
+    private val kbdBackgroundImageView: ImageView by lazy { kbdLayout.findViewById(R.id.iv_keyboard_bg_image) }
+    private val kbLayoutBottomMargin: View by lazy { kbdLayout.findViewById(R.id.view_keyboard_bottom_margin) }
+    private val kbCharLeftSide: FrameLayout by lazy { kbdLayout.findViewById(R.id.framelayout_keyboard_character_rows_left_margin) }
+    private val kbCharRightSide: FrameLayout by lazy { kbdLayout.findViewById(R.id.framelayout_keyboard_character_rows_right_margin) }
+    private val kbNumLeftSide: Button by lazy { kbdLayout.findViewById(R.id.view_keyboard_number_row_left_margin) }
+    private val kbNumRightSide: Button by lazy { kbdLayout.findViewById(R.id.view_keyboard_number_row_right_margin) }
+    private val emojiKBView by lazy { layoutInflater.inflate(R.layout.fragment_emoji, null) }
+    private val customEmojiIndicator: CustomIndicator by lazy { emojiKBView.findViewById(R.id.emoji_viewpager_indicator) }
+    private val emojisViewPager: ViewPager2 by lazy { emojiKBView.findViewById(R.id.emoji_viewpager) }
+    private val emojiScrollView: HorizontalScrollView by lazy { emojiKBView.findViewById(R.id.emoji_scrollview) }
     private val mLifecycle = LifecycleRegistry(this)
 
+    private val keyboardFunctions = KeyboardInputFuctions(this)
 
     private val goSettingImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -94,7 +100,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val showBoilerPlateImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -115,7 +121,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val selectAllImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -136,7 +142,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val copyImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -157,7 +163,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val cutImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -178,7 +184,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val pasteImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -199,7 +205,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val showCursorImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -220,7 +226,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val showNumberImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -241,7 +247,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
     private val showEmojiImageButton by lazy {
-        ImageButton(kbView.context).apply {
+        ImageButton(kbdLayout.context).apply {
             setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
@@ -250,7 +256,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
                 )
             )
             setOnClickListener {
-                vm.changeMode(1)
+                vm.changeMode(10)
             }
             setBackgroundColor(
                 ResourcesCompat.getColor(
@@ -262,20 +268,27 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         }
     }
 
+
     override fun getLifecycle(): Lifecycle = mLifecycle
 
-    private val inputTypeNumbers = arrayOf(2, 4098, 8194, 18, 3, 4, 14, 24, 24578, 16387)
+    private val inputTypeNumbers = arrayOf(
+        InputType.TYPE_CLASS_NUMBER,
+        InputType.TYPE_NUMBER_FLAG_DECIMAL,
+        InputType.TYPE_CLASS_PHONE,
+        InputType.TYPE_CLASS_DATETIME,
+        InputType.TYPE_DATETIME_VARIATION_TIME,
+        InputType.TYPE_NUMBER_VARIATION_PASSWORD
+    )
+    private val inputTypeTextFlags = listOf(
+        InputType.TYPE_CLASS_TEXT
+    )
 
     private var mKeyboardHolding: Long = 300
     private var myKeyboardVibration: Boolean = true
     private var myKeyboardVibrationIntensity: Int = 50
-    private var myKeyboardTheme: Int = 0
     private val normalInterval: Long = 37
     private var latestMode = 3
     private var savedCursorPosition = 0
-    private lateinit var prefs: SharedPreferences
-    private var _fontSize = MutableLiveData<Int>(15)
-    val fontSize: LiveData<Int> get() = _fontSize
     private val emojiAdapterList = listOf(
         EmojiRecyclerAdapter(EmojiCollections.e1SmileysAndEmoticons),
         EmojiRecyclerAdapter(EmojiCollections.e2PeopleAndBody),
@@ -287,23 +300,31 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         EmojiRecyclerAdapter(EmojiCollections.e8Symbols),
         EmojiRecyclerAdapter(EmojiCollections.e9Flags)
     )
+    private var emojiPageChangeCallback: OnPageChangeCallback? = null
     private val emojiPagerAdapter: EmojiViewPagerAdapter
         get() = EmojiViewPagerAdapter(mutableListOf(), emojiAdapterList, 0, null, null)
 
+    private var savedBottomMarginHeight = 0
+    private var savedKbdMainboardHeight = 0
+
     override fun onCreate() {
         super.onCreate()
+        mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+        mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_START)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
+    override fun onCreateInputView(): View {
+        super.onCreateInputView()
+        onConfigurationChanged(resources.configuration)
 
 
-        vm = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
-            .create(SharedKBViewModel::class.java)
-        kbView = layoutInflater.inflate(R.layout.key_layout_normal, null)
-        kbBinding = DataBindingUtil.bind(kbView)!!
+
+        kbBinding = DataBindingUtil.bind(kbdLayout)!!
         kbBinding.setVariable(BR.kbservice, this)
         kbBinding.lifecycleOwner = this
         kbBinding.kbviewmodel = vm
-        mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
-        mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_START)
-        prefs = applicationContext.getSharedPreferences(KEYBOARD_SETTING, MODE_PRIVATE)
 
         val qwertyEnNormalKBView =
             layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_en_normal, null)
@@ -320,8 +341,6 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         val danmoKBView = layoutInflater.inflate(R.layout.fragment_keyboard_danmoum, null)
         val naratguelKBView =
             layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null)
-        val emojiKBView =
-            layoutInflater.inflate(R.layout.fragment_emoji, null)
 
         qwertyEnNormalBinding = DataBindingUtil.bind(qwertyEnNormalKBView)!!
         qwertyEnNormalBinding.setVariable(BR.kbservice, this)
@@ -367,25 +386,30 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         emojiBinding.setVariable(BR.kbservice, this)
         emojiBinding.lifecycleOwner = this
         emojiBinding.kbviewmodel = vm
+        viewholderBpBinding = DataBindingUtil.bind(layoutInflater.inflate(R.layout.viewholder_boilerplates, null))!!
+        viewholderBpBinding.setVariable(BR.kbservice, this)
+        viewholderBpBinding.lifecycleOwner = this
+        viewholderBpBinding.kbviewmodel = vm
 
-        kbNumLeftSide = kbView.findViewById(R.id.keyboardNumberLeftMargin)
-        kbNumRightSide = kbView.findViewById(R.id.keyboardNumberRightMargin)
-        kbCharLeftSide = kbView.findViewById(R.id.keyboardLeftMargin)
-        kbCharRightSide = kbView.findViewById(R.id.keyboardRightMargin)
-        kbLayout = kbView.findViewById(R.id.keyboardLayout)
-        kbFrame = kbView.findViewById(R.id.keyboardViewFrameLayout)
-        kbLayoutBottomMargin = kbView.findViewById(R.id.keyboardBotMargin)
-        emojisViewPager = emojiKBView.findViewById(R.id.emoji_viewpager)
-        emojiScrollView = emojiKBView.findViewById(R.id.emoji_scrollview)
-        customEmojiIndicator = emojiKBView.findViewById(R.id.emoji_viewpager_indicator)
+        // 상용구창 어댑터 설정
+        val bpOnClick: (View) -> Unit = { view ->
+            inputBPStrings(view)
+        }
+        val bpOnLongClick: (View, Int) -> Unit = { view, i ->
+            jumpToBp(view, i)
+        }
+        val boilerplateTextsAdapter = BoilerplateTextAdapter(mutableMapOf(), bpOnClick, bpOnLongClick)
 
         var currentKRView = qwertyKrNormalKBView
-        vm.observeBottomMargin.observe(this) {
+        vm.kbResultBottomMargin.observe(this) {
             val lP = kbLayoutBottomMargin.layoutParams
-            lP.height = it * (resources.displayMetrics.density).toInt()
+            val newBottomMarginHeight = it * (resources.displayMetrics.density).toInt()
+            savedBottomMarginHeight = newBottomMarginHeight
+            lP.height = newBottomMarginHeight
+            kbdBackgroundImageView.layoutParams.height = newBottomMarginHeight + savedKbdMainboardHeight
             kbLayoutBottomMargin.layoutParams = lP
         }
-        vm.observeKBIME.observe(this) {
+        vm.kbKrImeMode.observe(this) {
             currentKRView =
                 when (it) {
                     KeyboardUtil.QWERTY -> qwertyKrNormalKBView
@@ -396,55 +420,75 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
                     else -> qwertyKrNormalKBView
                 }
             if (vm.mode.value == 3) {
-                kbFrame.removeAllViews()
-                kbFrame.addView(currentKRView)
+                kbdCharaterAreaFramelayout.removeAllViews()
+                kbdCharaterAreaFramelayout.addView(currentKRView)
             }
         }
         vm.mode.observe(this) {
             when (it) {
                 0, 1, 2 -> {
                     if (latestMode == it) return@observe
-                    kbFrame.removeAllViews()
-                    kbFrame.addView(qwertyEnNormalKBView)
+                    kbdCharaterAreaFramelayout.removeAllViews()
+                    kbdCharaterAreaFramelayout.addView(qwertyEnNormalKBView)
                 }
                 3, 4 -> {
                     if (latestMode == it) return@observe
-                    kbFrame.removeAllViews()
-                    kbFrame.addView(currentKRView)
+                    kbdCharaterAreaFramelayout.removeAllViews()
+                    kbdCharaterAreaFramelayout.addView(currentKRView)
                 }
                 5, 6 -> {
                     if (latestMode == it) return@observe
-                    kbFrame.removeAllViews()
-                    kbFrame.addView(qwertySpecialKBView)
+                    kbdCharaterAreaFramelayout.removeAllViews()
+                    kbdCharaterAreaFramelayout.addView(qwertySpecialKBView)
                 }
                 7 -> {
-                    kbFrame.removeAllViews()
-                    kbFrame.addView(boilerPlateKBView)
+                    kbdCharaterAreaFramelayout.removeAllViews()
+                    kbdCharaterAreaFramelayout.addView(boilerPlateKBView)
                 }
                 8 -> {
-                    kbFrame.removeAllViews()
-                    kbFrame.addView(cursorKBView)
+                    kbdCharaterAreaFramelayout.removeAllViews()
+                    kbdCharaterAreaFramelayout.addView(cursorKBView)
                 }
                 9 -> {
-                    kbFrame.removeAllViews()
-                    kbFrame.addView(numberKBView)
+                    kbdCharaterAreaFramelayout.removeAllViews()
+                    kbdCharaterAreaFramelayout.addView(numberKBView)
                 }
                 10 -> {
-                    kbFrame.removeAllViews()
-                    kbFrame.addView(emojiKBView)
+                    kbdCharaterAreaFramelayout.removeAllViews()
+                    kbdCharaterAreaFramelayout.addView(emojiKBView)
                 }
             }
+            showBoilerPlateImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    if (it==7) R.drawable.ic_keyboard_black else R.drawable.ic_boilerplatetext_black,
+                    null
+                )
+            )
+            showCursorImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    if (it==8) R.drawable.ic_keyboard_black else R.drawable.ic_move,
+                    null
+                )
+            )
+            showNumberImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    if (it==9) R.drawable.ic_keyboard_black else R.drawable.ic_number_keypad,
+                    null
+                )
+            )
+            showEmojiImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    this.resources,
+                    if (it==10) R.drawable.ic_keyboard_black else R.drawable.ic_outline_emoji_emotions_24,
+                    null
+                )
+            )
             latestMode = it
         }
-        vm.observeKBFontSize.observe(
-            this
-        ) {
-            _fontSize.value = (vm.kbSettingSP.intLiveData(
-                KEYBOARD_FONT_SIZE,
-                16
-            ).value!! * (resources.displayMetrics.scaledDensity)).toInt()
-        }
-        vm.observeKBHoldingTime.observe(this) {
+        vm.kbLongClickInterval.observe(this) {
             mKeyboardHolding = it.toLong() + 100
             for (rListener in repeatListenerChars) {
                 rListener.changeInitialInterval(mKeyboardHolding)
@@ -465,10 +509,15 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             }
             rListenerCursorForeDel.changeInitialInterval(mKeyboardHolding)
         }
-        vm.observeKBVibrationUse.observe(this) { myKeyboardVibration = it }
-        vm.observeKBVibrationIntensity.observe(this) { myKeyboardVibrationIntensity = it }
-        vm.observeKBTheme.observe(this) { myKeyboardTheme = it }
-        vm.observeKBLeftSideMargin.observe(this) {
+        vm.kbHasVibration.observe(this) { myKeyboardVibration = it }
+        vm.kbVibrationIntensity.observe(this) { myKeyboardVibrationIntensity = it }
+        vm.kbTheme.observe(this) {
+            boilerplateTextsAdapter.setTheme(it)
+        }
+        vm.kbFontSize.observe(this) { boilerplateTextsAdapter.setFontSize(it) }
+        vm.kbNormalKeysFontColor.observe(this) { boilerplateTextsAdapter.setFontColor(it) }
+        vm.kbFontType.observe(this) { boilerplateTextsAdapter.setFontType(it) }
+        vm.kbLeftSideMargin.observe(this) {
             val lPNum = kbNumLeftSide.layoutParams
             val lPChar = kbCharLeftSide.layoutParams
             lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
@@ -476,7 +525,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             kbNumLeftSide.layoutParams = lPNum
             kbCharLeftSide.layoutParams = lPChar
         }
-        vm.observeKBRightSideMargin.observe(this) {
+        vm.kbRightSideMargin.observe(this) {
             val lPNum = kbNumRightSide.layoutParams
             val lPChar = kbCharRightSide.layoutParams
             lPNum.width = it.toInt() * 3 * (resources.displayMetrics.density).toInt()
@@ -484,10 +533,9 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             kbNumRightSide.layoutParams = lPNum
             kbCharRightSide.layoutParams = lPChar
         }
-        vm.observeHeight.observe(this) {
-            kbLayout.layoutParams.height = it.toInt()
-            val bgImg = kbView.findViewById<ImageView>(R.id.keyboardBackgroundImage)
-            bgImg.layoutParams.height = it.toInt()
+        vm.kbResultedHeight.observe(this) {
+            savedKbdMainboardHeight = it.toInt()
+            kbdBackgroundImageView.layoutParams.height = (if (vm.kbNumberRowVisibility.value == View.VISIBLE) it.toInt() else (it*0.82).toInt()) + savedBottomMarginHeight
         }
         vm.prefSettingToolbarSetting.observe(this) {
             val toolbarLinearLayout = kbBinding.keyboardToolBarLine
@@ -509,12 +557,19 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
                 }
             }
         }
+        boilerPlateBinding.boilerplateRecyViewBpItems.apply {
+            adapter = boilerplateTextsAdapter
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        }
+        vm.boilerplateTexts.observe(this) {
+            boilerplateTextsAdapter.setBoilerplateTextsList(it)
+        }
 
         emojisViewPager.adapter = emojiPagerAdapter
-        vm.emojiColumnsCounts.observe(
+        vm.kbEmojiColumns.observe(
             this
         ) { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) }
-        vm.observeE0RecentlyUsedEmoticons.observe(this) {
+        vm.kbRecentlyUsedEmoticons.observe(this) {
             val jsonArray = JSONArray(it)
             val arr = mutableListOf<String>()
 
@@ -536,14 +591,14 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             position = 1,
             clickListeners = emojiIconClickListeners
         )
-        (emojisViewPager.adapter as EmojiViewPagerAdapter).initListener(object :
-            EmojiRecyclerAdapter.OnItemClickListener {
-            override fun onItemClick(v: View, pos: Int) {
-                clearComposing()
-                currentInputConnection.commitText((v as Button).text.toString(), 1)
-                vm.setRecentlyUsedEmoticon(v.text.toString())
-            }
-        },
+        (emojisViewPager.adapter as EmojiViewPagerAdapter).initListener(
+            object : EmojiRecyclerAdapter.OnItemClickListener {
+                override fun onItemClick(v: View, pos: Int) {
+                    clearComposing()
+                    currentInputConnection.commitText((v as Button).text.toString(), 1)
+                    vm.setRecentlyUsedEmoticon(v.text.toString())
+                }
+            },
             object : EmojiRecyclerLiveDataAdapter.OnItemClickListener {
                 override fun onItemClick(v: View, pos: Int) {
                     clearComposing()
@@ -554,7 +609,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
         emojisViewPager.offscreenPageLimit = 1
 
         // 무한스크롤 뷰페이저
-        emojisViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        emojiPageChangeCallback = object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 val mPosition = emojisViewPager.currentItem
                 customEmojiIndicator.selectPosition(position = mPosition)
@@ -565,15 +620,10 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
                  **/
                 if (mPosition == 0) (emojisViewPager.adapter as EmojiViewPagerAdapter).notifyE0DataSetChanged()
             }
-        })
-    }
+        }
+        emojisViewPager.registerOnPageChangeCallback(emojiPageChangeCallback!!)
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("ClickableViewAccessibility", "DefaultLocale", "NewApi")
-    override fun onCreateInputView(): View {
-        super.onCreateInputView()
-        onConfigurationChanged(resources.configuration)
-        return kbView
+        return kbdLayout
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -593,7 +643,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
             clearComposing()
         }
         /** TextField의 첫글자로 돌아갔을 때 대문자로 수정 **/
-        if (vm.observeKBAutoCapitalization.value!!
+        if (vm.kbHasAutoCapitalization.value!!
             && currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)
             && vm.mode.value == 2
         ) {
@@ -618,11 +668,19 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        if (currentInputEditorInfo.inputType in inputTypeNumbers) {
-            vm.changeMode(9)
-        } else if (vm.mode.value in listOf(5, 6, 7, 8, 9, 10)) {
-            vm.changeMode(1)
+        println("인풋타입 : ${currentInputEditorInfo.inputType}")
+        println("숫자타입 : ${inputTypeNumbers.contentDeepToString()}")
+        println("숫자: ${currentInputEditorInfo.inputType}")
+        for (type in inputTypeTextFlags) {
+            if (currentInputEditorInfo.inputType or type == currentInputEditorInfo.inputType) {
+
+                println("겹침? ${currentInputEditorInfo.inputType or type} vs $type")
+                vm.changeMode(new = 1, restart= true)
+                emojisViewPager.setCurrentItem(1, false)
+                return
+            }
         }
+        vm.changeMode(new = 9, restart = true)
         emojisViewPager.setCurrentItem(1, false)
     }
 
@@ -647,7 +705,9 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     @RequiresApi(Build.VERSION_CODES.S)
     override fun onDestroy() {
         super.onDestroy()
-        mLifecycle.markState(Lifecycle.State.DESTROYED)
+        mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        emojisViewPager.unregisterOnPageChangeCallback(emojiPageChangeCallback!!)
+        emojiPageChangeCallback = null
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -664,12 +724,11 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     fun inputChar(button: View) {
-        KeyboardInputFuctions.inputChar(
-            mIMEService = this,
+        keyboardFunctions.inputChar(
             clearComposing = { clearComposing() },
             button = button,
             mode = vm.mode.value!!,
-            krIME = vm.observeKBIME.value!!,
+            krIME = vm.kbKrImeMode.value!!,
             myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() },
             changeMode3 = { changeMode(3) },
@@ -682,11 +741,10 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     fun inputSpecial(button: View) {
-        KeyboardInputFuctions.inputSpecialButton(
-            mIMEService = this,
+        keyboardFunctions.inputSpecialButton(
             clearComposing = { clearComposing() },
             button = button,
-            autoModeChange = vm.observeKBAutoModeChange.value!!,
+            autoModeChange = vm.kbHasAutoModeChange.value!!,
             changeMode3 = { vm.changeMode(3) },
             myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() }
@@ -694,16 +752,14 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     fun longClickInputSpecial(button: View): Boolean {
-        return KeyboardInputFuctions.inputSpecialLongClicked(
-            mIMEService = this,
+        return keyboardFunctions.inputSpecialLongClicked(
             clearComposing = { clearComposing() },
             button = button
         )
     }
 
-    fun inputBPStrings(button: View) {
-        KeyboardInputFuctions.inputBPStrings(
-            mIMEService = this,
+    private fun inputBPStrings(button: View) {
+        keyboardFunctions.inputBPStrings(
             clearComposing = { clearComposing() },
             button = button,
             myKeyboardVibration = myKeyboardVibration,
@@ -712,18 +768,16 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     fun inputEnter() {
-        KeyboardInputFuctions.inputEnter(
-            mIMEService = this,
+        keyboardFunctions.inputEnter(
             clearComposing = { clearComposing() },
             myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() })
     }
 
     private fun inputDelete() {
-        KeyboardInputFuctions.inputDelete(
-            mIMEService = this,
+        keyboardFunctions.inputDelete(
             mode = vm.mode.value!!,
-            krIME = vm.observeKBIME.value!!,
+            krIME = vm.kbKrImeMode.value!!,
             clearComposing = { clearComposing() },
             changeMode3 = { vm.changeMode(3) },
             myKeyboardVibration = myKeyboardVibration,
@@ -732,8 +786,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     private fun inputForwardDelete() {
-        KeyboardInputFuctions.inputForwardDelete(
-            mIMEService = this,
+        keyboardFunctions.inputForwardDelete(
             clearComposing = { clearComposing() },
             myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() }
@@ -781,17 +834,14 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     fun selectAllTexts() {
-        KeyboardInputFuctions.selectAllTexts(
-            mIMEService = this,
+        keyboardFunctions.selectAllTexts(
             clearComposing = { clearComposing() },
-            setSavedCursorPositionDefault = { setSavedCursorPositionDefault() },
-            context = this
+            setSavedCursorPositionDefault = { setSavedCursorPositionDefault() }
         )
     }
 
     private fun moveCursorUp() {
-        KeyboardInputFuctions.moveCursorUp(
-            mIMEService = this,
+        keyboardFunctions.moveCursorUp(
             clearComposing = { clearComposing() },
             isSelectingMode = vm.isSelecting.value!!,
             savedCursorPosition = savedCursorPosition
@@ -799,8 +849,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     private fun moveCursorDown() {
-        KeyboardInputFuctions.moveCursorDown(
-            mIMEService = this,
+        keyboardFunctions.moveCursorDown(
             clearComposing = { clearComposing() },
             isSelectingMode = vm.isSelecting.value!!,
             savedCursorPosition = savedCursorPosition
@@ -808,8 +857,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     private fun moveCursorLeft() {
-        KeyboardInputFuctions.moveCursorLeft(
-            mIMEService = this,
+        keyboardFunctions.moveCursorLeft(
             clearComposing = { clearComposing() },
             isSelectingMode = vm.isSelecting.value!!,
             savedCursorPosition = savedCursorPosition
@@ -817,8 +865,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     private fun moveCursorRight() {
-        KeyboardInputFuctions.moveCursorRight(
-            mIMEService = this,
+        keyboardFunctions.moveCursorRight(
             clearComposing = { clearComposing() },
             isSelectingMode = vm.isSelecting.value!!,
             savedCursorPosition = savedCursorPosition
@@ -826,8 +873,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     private fun moveCursorFirst() {
-        KeyboardInputFuctions.moveCursorFirst(
-            mIMEService = this,
+        keyboardFunctions.moveCursorFirst(
             clearComposing = { clearComposing() },
             isSelectingMode = vm.isSelecting.value!!,
             savedCursorPosition = savedCursorPosition
@@ -835,8 +881,7 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
     }
 
     private fun moveCursorLast() {
-        KeyboardInputFuctions.moveCursorLast(
-            mIMEService = this,
+        keyboardFunctions.moveCursorLast(
             clearComposing = { clearComposing() },
             isSelectingMode = vm.isSelecting.value!!,
             savedCursorPosition = savedCursorPosition
@@ -867,28 +912,23 @@ class FittingKeyboardIME : InputMethodService(), LifecycleOwner {
 
     // 텍스트 복사하기
     fun copyText() {
-        KeyboardInputFuctions.copyText(
-            mIMEService = this,
+        keyboardFunctions.copyText(
             clearComposing = { clearComposing() },
-            switchSelectingMode = { vm.switchSelectingMode(false) },
-            context = this
+            switchSelectingMode = { vm.switchSelectingMode(false) }
         )
     }
 
     // 텍스트 잘라내기
     fun cutText() {
-        KeyboardInputFuctions.cutText(
-            mIMEService = this,
+        keyboardFunctions.cutText(
             clearComposing = { clearComposing() },
-            switchSelectingMode = { vm.switchSelectingMode(false) },
-            context = this
+            switchSelectingMode = { vm.switchSelectingMode(false) }
         )
     }
 
     // 텍스트 붙여넣기
     fun pasteText() {
-        KeyboardInputFuctions.pasteText(
-            mIMEService = this,
+        keyboardFunctions.pasteText(
             clearComposing = { clearComposing() },
             switchSelectingMode = { vm.switchSelectingMode(false) }
         )

@@ -35,7 +35,7 @@ class SettingBasicFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        myView = inflater.inflate(R.layout.setting_main_tab1, container, false)
+        myView = inflater.inflate(R.layout.fragment_setting_main, container, false)
 
 
         loadData()

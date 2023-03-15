@@ -1,9 +1,11 @@
 package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -37,9 +39,9 @@ class ToolbarSettingAdapter(
             itemView.findViewById<ImageView>(R.id.iv_toolbar_setting_viewholder_icon)
         private val descriptionTextView =
             itemView.findViewById<TextView>(R.id.tv_toolbar_setting_viewholder_description)
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
         private val isActiveSwitch =
-            itemView.findViewById<SwitchCompat>(R.id.switch_toolbar_setting_viewholder_activator)
-        private val divider = itemView.findViewById<View>(R.id.v_toolbar_setting_viewholder_divider)
+            itemView.findViewById<Switch>(R.id.switch_toolbar_setting_viewholder_activator)
 
         init {
             isActiveSwitch.setOnCheckedChangeListener { _, value ->
@@ -56,9 +58,6 @@ class ToolbarSettingAdapter(
 
             descriptionTextView.text = toolbarSettingDataHolderList[position].descriptionText
             isActiveSwitch.isChecked = toolbarSettingDataHolderList[position].isActivated
-
-            divider.visibility =
-                if (position == toolbarSettingDataHolderList.lastIndex) View.GONE else View.VISIBLE
         }
     }
 

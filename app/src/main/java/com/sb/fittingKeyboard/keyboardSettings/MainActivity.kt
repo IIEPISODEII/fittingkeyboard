@@ -1,13 +1,12 @@
 package com.sb.fittingKeyboard.keyboardSettings
 
 import android.annotation.SuppressLint
-import android.app.Service
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
+import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodInfo
@@ -19,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.textfield.TextInputEditText
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
 import kotlin.properties.Delegates
@@ -35,18 +35,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         currentIMM = applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         setContentView(R.layout.activity_main)
-        findViewById<Toolbar>(R.id.tb_MainAct).run {
+        findViewById<Toolbar>(R.id.toolbar_main_setting_activity).run {
             title = "키보드 설정"
             setTitleTextColor(resources.getColor(R.color.white))
         }
-        setSupportActionBar(findViewById(R.id.tb_MainAct))
-        findViewById<EditText>(R.id.textInputEditText).imeOptions
+        setSupportActionBar(findViewById(R.id.toolbar_main_setting_activity))
+        findViewById<EditText>(R.id.edittext_main_setting_activity_test).imeOptions
 
-        val mainViewPager = findViewById<ViewPager2>(R.id.setting_main_viewPager)
+        val mainViewPager = findViewById<ViewPager2>(R.id.viewpager2_main_setting_activity)
         mainViewPager.adapter = ViewPager(this)
         mainViewPager.offscreenPageLimit = 3
         TabLayoutMediator(
-            findViewById(R.id.setting_main_tabLayout),
+            findViewById(R.id.tablayout_main_setting_activity),
             mainViewPager
         ) { tab, position ->
             tab.text = tabTextList[position]
@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         if (intent.hasExtra("Index")) {
             mainViewPager.currentItem = 2
         }
+
+        findViewById<TextInputEditText>(R.id.edittext_main_setting_activity_test).inputType = InputType.TYPE_DATETIME_VARIATION_TIME
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         // When user long-clicks boiler-plate text button in keyboard, intent guides user boiler-plate setting fragment.
         if (intent.hasExtra("Index")) {
-            findViewById<ViewPager2>(R.id.setting_main_viewPager).currentItem = 2
+            findViewById<ViewPager2>(R.id.viewpager2_main_setting_activity).currentItem = 2
         }
     }
 

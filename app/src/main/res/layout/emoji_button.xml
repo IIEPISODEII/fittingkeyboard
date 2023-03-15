@@ -6,11 +6,11 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
+            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
 
         <variable
             name="util"

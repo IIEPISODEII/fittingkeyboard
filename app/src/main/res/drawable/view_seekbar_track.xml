@@ -4,7 +4,7 @@
     <!--시크바 배경-->
     <item android:id="@android:id/background">
         <shape android:shape="line">
-            <stroke android:width="3dp" android:color="#007bff" />
+            <stroke android:width="3dp" android:color="@color/lightgrey" />
         </shape>
     </item>
 

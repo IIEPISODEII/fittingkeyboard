@@ -41,7 +41,7 @@ class SettingThemeFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        myView = inflater.inflate(R.layout.setting_main_tab4, container, false)
+        myView = inflater.inflate(R.layout.fragment_setting_themes, container, false)
 
         themeList = arrayListOf(
             KeyboardThemes(R.drawable.thumbnail_01),
@@ -75,7 +75,7 @@ class SettingThemeFragment : Fragment() {
         val myRecyclerView = myView.findViewById<RecyclerView>(R.id.rv_Theme)
 
 
-        activity?.findViewById<TextInputEditText>(R.id.textInputEditText)?.setOnClickListener {
+        activity?.findViewById<TextInputEditText>(R.id.edittext_main_setting_activity_test)?.setOnClickListener {
             saveData()
         }
 

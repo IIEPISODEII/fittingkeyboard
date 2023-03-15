@@ -54,22 +54,24 @@ class KeyboardUtil {
         const val KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER = "KeyboardToolbarShowNumber"
         const val KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI = "KeyboardToolbarShowEmoji"
         const val KEYBOARD_IME_KR = "KeyboardInputMethodKR"
-        const val KEYBOARD_BP_0 = "AutoText0"
-        const val KEYBOARD_BP_1 = "AutoText1"
-        const val KEYBOARD_BP_2 = "AutoText2"
-        const val KEYBOARD_BP_3 = "AutoText3"
-        const val KEYBOARD_BP_4 = "AutoText4"
-        const val KEYBOARD_BP_5 = "AutoText5"
-        const val KEYBOARD_BP_6 = "AutoText6"
-        const val KEYBOARD_BP_7 = "AutoText7"
-        const val KEYBOARD_BP_8 = "AutoText8"
-        const val KEYBOARD_BP_9 = "AutoText9"
-        const val KEYBOARD_BP_10 = "AutoText10"
-        const val KEYBOARD_BP_11 = "AutoText11"
-        const val KEYBOARD_BP_12 = "AutoText12"
-        const val KEYBOARD_BP_13 = "AutoText13"
-        const val KEYBOARD_BP_14 = "AutoText14"
-        const val KEYBOARD_BP_15 = "AutoText15"
+        val KEYBOARD_BOILERPLATE_TEXTS_LIST = listOf(
+            "AutoText0",
+            "AutoText1",
+            "AutoText2",
+            "AutoText3",
+            "AutoText4",
+            "AutoText5",
+            "AutoText6",
+            "AutoText7",
+            "AutoText8",
+            "AutoText9",
+            "AutoText10",
+            "AutoText11",
+            "AutoText12",
+            "AutoText13",
+            "AutoText14",
+            "AutoText15"
+        )
         const val RECENTLY_USED_EMOTICONS = "RecentlyUsedEmotions"
 
 

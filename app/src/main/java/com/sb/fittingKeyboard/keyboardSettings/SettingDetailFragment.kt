@@ -17,33 +17,42 @@ import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ItemTouchHelperListener
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ToolbarSettingAdapter
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
-import com.sb.fittingKeyboard.databinding.SettingMainTab2Binding
+import com.sb.fittingKeyboard.databinding.FragmentSettingDetailsBinding
 import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
-import com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel
-import java.lang.Math.abs
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class SettingDetailFragment : Fragment() {
 
     private lateinit var prefSetting: SharedPreferences
-    private lateinit var binding: SettingMainTab2Binding
-    private lateinit var vm: SharedKBViewModel
+    private lateinit var binding: FragmentSettingDetailsBinding
+    private lateinit var vm: KeyboardViewModel
 
     private lateinit var toolbarSettingRecyclerView: RecyclerView
+    val toolbarSettingKeys = listOf(
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER,
+        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI
+    )
 
     private val onItemChanged = object: ToolbarSettingAdapter.OnToolbarChanged {
         override fun onToolbarChange(id: String, value: Int) {
-            println("id: $id, value: $value")
             prefSetting.edit().putInt(id, value).apply()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.setting_main_tab2, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_details, container, false)
 
         prefSetting = requireContext().getSharedPreferences(KeyboardUtil.KEYBOARD_SETTING, Context.MODE_PRIVATE)
 
-        vm = ViewModelProvider(this)[SharedKBViewModel::class.java]
+        vm = ViewModelProvider(this)[KeyboardViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
         binding.kbviewmodel = vm
 
@@ -179,17 +188,6 @@ class SettingDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbarSettingKeys = listOf(
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER,
-            KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI
-        )
         val toolbarSettingDataHolderList = mutableListOf(
             ToolbarSettingDataHolder(
                 KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
@@ -259,9 +257,7 @@ class SettingDetailFragment : Fragment() {
                 }
             ).toMutableList()
 
-        toolbarSettingDataHolderList.forEachIndexed { idx, it ->
-            println("$idx : $it")
-        }
+        binding.settingKeyboardFontsize.progress = (prefSetting.getInt(KeyboardUtil.KEYBOARD_FONT_SIZE, 16)-14)/2
 
         val toolbarSettingRecyclerViewAdapter = ToolbarSettingAdapter(toolbarSettingDataHolderList)
         toolbarSettingRecyclerViewAdapter.setOnToolbarChangeListener(onItemChanged)

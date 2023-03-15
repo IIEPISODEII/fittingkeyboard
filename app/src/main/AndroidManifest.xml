@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode">
         <service
-            android:name="com.sb.fittingKeyboard.service.FittingKeyboardIME"
+            android:name="com.sb.fittingKeyboard.service.MainKeyboardService"
             android:enabled="true"
             android:exported="true"
             android:label="@string/app_name"

@@ -18,6 +18,15 @@ import com.sb.fittingKeyboard.R
 
 object CustomBindingAdapters {
 
+    @JvmStatic
+    @BindingAdapter("height", "height_weight")
+    fun setLiveHeight(view: View, height: Float, ratio: Int) {
+        val layoutParams = view.layoutParams.apply {
+            this.height = (height * ratio * 0.01).toInt()
+        }
+        view.layoutParams = layoutParams
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     @JvmStatic
     @BindingAdapter("customFontStyle", "fontBold")
@@ -312,12 +321,14 @@ object CustomBindingAdapters {
             else -> return
         }
 
-        if (view is ImageButton) {
-            view.setBackgroundResource(mDrawableResource)
-            view.setPadding((padding * 0.05).toInt())
+        when (view) {
+            is ImageButton -> {
+                view.setBackgroundResource(mDrawableResource)
+                view.setPadding((padding * 0.05).toInt())
+            }
+            is ImageView -> view.setImageResource(mDrawableResource)
+            else -> view.setBackgroundResource(mDrawableResource)
         }
-        else if (view is ImageView) view.setImageResource(mDrawableResource)
-        else view.setBackgroundResource(mDrawableResource)
     }
 
     @JvmStatic

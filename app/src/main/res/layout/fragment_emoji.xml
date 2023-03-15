@@ -6,11 +6,11 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
+            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout
@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:orientation="horizontal"
-                app:emojiButton_theme="@{kbviewmodel.observeKBTheme}">
+                app:emojiButton_theme="@{kbviewmodel.kbTheme}">
 
                 <ImageButton
                     android:id="@+id/emoji_keyboard_button"
@@ -37,7 +37,7 @@
                     android:onClick="@{() -> kbservice.changeMode(3)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_keyboard_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}" />
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}" />
 
                 <HorizontalScrollView
                     android:id="@+id/emoji_scrollview"
@@ -61,7 +61,7 @@
                     android:background="@drawable/keydesign_15_function"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_delete_black"
-                    app:colorFilter="@{kbviewmodel.observeKBFunctionFontColor}"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
                     app:onTouch="@{kbservice.repeatListenerDels[11]}" />
             </LinearLayout>
 
@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                app:emojiButton_theme="@{kbviewmodel.observeKBTheme}"/>
+                app:emojiButton_theme="@{kbviewmodel.kbTheme}"/>
         </LinearLayout>
     </FrameLayout>
 </layout>

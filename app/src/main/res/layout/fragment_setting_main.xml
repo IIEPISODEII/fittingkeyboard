@@ -8,10 +8,7 @@
         android:id="@+id/setting_main_tab1_scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:background="@drawable/main_activity_background"
         android:fadeScrollbars="false"
-        android:padding="1dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="6dp"
@@ -22,7 +19,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -35,16 +31,9 @@
                     android:id="@+id/tv_inputMethodKR"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button2"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
                     android:text="한글입력기 선택"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textIsSelectable="false"
-                    android:textSize="16sp"
+                    style="@style/FKButtonLightGrey"
                     app:drawableEndCompat="@drawable/ic_baseline_help"
                     app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -69,16 +58,9 @@
                     android:id="@+id/tv_keyboard_height"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button2"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
                     android:text="키보드 높이"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textIsSelectable="false"
-                    android:textSize="16sp"
+                    style="@style/FKButtonLightGrey"
                     app:drawableEndCompat="@drawable/ic_baseline_help"
                     app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -123,16 +105,9 @@
                     android:id="@+id/tv_specialkeyAddon"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:background="@drawable/button2"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
                     android:text="특수문자키 부가기능"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textIsSelectable="false"
+                    style="@style/FKButtonLightGrey"
                     app:drawableEndCompat="@drawable/ic_baseline_help"
                     app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -157,16 +132,9 @@
                     android:id="@+id/tv_enterkeyAddon"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button2"
-                    android:gravity="center_vertical"
-                    android:padding="10dp"
                     android:text="엔터키 부가기능"
-                    android:textAllCaps="false"
-                    android:textColor="#000000"
-                    android:textIsSelectable="false"
-                    android:textSize="16sp"
+                    style="@style/FKButtonLightGrey"
                     app:drawableEndCompat="@drawable/ic_baseline_help"
                     app:drawableRightCompat="@drawable/ic_baseline_help" />
 

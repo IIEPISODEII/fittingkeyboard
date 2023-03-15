@@ -6,7 +6,7 @@
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.FittingKeyboardIME" />
+            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
 
         <variable
             name="util"
@@ -14,14 +14,14 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingKeyboard.service.viewmodel.SharedKBViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
         <import type="android.view.View" />
     </data>
-    <LinearLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.ui.ToolbarLayout
             android:id="@+id/keyboardToolBarLine"
@@ -29,8 +29,8 @@
             android:layout_height="30dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:visibility="@{kbviewmodel.observeKBToolBarVisibility}"
-            app:layout_constraintBottom_toTopOf="@id/keyboardRelativeLayout"
+            android:visibility="@{kbviewmodel.kbToolbarVisibility}"
+            app:layout_constraintBottom_toTopOf="@id/constraint_layout_keyboard_wrapper"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(7)}"
+                android:onClick="@{() -> kbviewmodel.changeMode(7, false)}"
                 android:src="@{kbviewmodel.mode==7 ? @drawable/ic_keyboard_black : @drawable/ic_boilerplatetext_black}" />
 
             <ImageButton
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:onClick="@{() -> kbservice.copyText()}"
-                android:src="@drawable/ic_baseline_copy_all_24"/>
+                android:src="@drawable/ic_baseline_copy_all_24" />
 
             <ImageButton
                 android:id="@+id/toolBarCut"
@@ -81,7 +81,7 @@
                 android:layout_weight="1"
                 android:background="@color/white"
                 android:onClick="@{() -> kbservice.cutText()}"
-                android:src="@drawable/ic_baseline_content_cut_24"/>
+                android:src="@drawable/ic_baseline_content_cut_24" />
 
             <ImageButton
                 android:id="@+id/toolBarPaste"
@@ -100,7 +100,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(8)}"
+                android:onClick="@{() -> kbviewmodel.changeMode(8, false)}"
                 android:src="@{kbviewmodel.mode==8 ? @drawable/ic_keyboard_black : @drawable/ic_move}" />
 
             <ImageButton
@@ -110,7 +110,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(9)}"
+                android:onClick="@{() -> kbviewmodel.changeMode(9, false)}"
                 android:src="@{kbviewmodel.mode==9 ? @drawable/ic_keyboard_black : @drawable/ic_number_keypad}" />
 
             <ImageButton
@@ -119,13 +119,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@{kbviewmodel.mode == 10 ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(10)}"/>
+                android:onClick="@{() -> kbviewmodel.changeMode(10, false)}"
+                android:src="@{kbviewmodel.mode == 10 ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}" />
         </com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.ui.ToolbarLayout>
 
-        <RelativeLayout
-            android:id="@+id/keyboardRelativeLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_keyboard_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -133,38 +133,45 @@
             app:layout_constraintRight_toRightOf="parent">
 
             <ImageView
-                android:id="@+id/keyboardBackgroundImage"
+                android:id="@+id/iv_keyboard_bg_image"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
                 android:contentDescription="KeyboardBackgroundImage"
                 android:scaleType="centerCrop"
-                app:customTheme_view="@{5}"
                 app:customTheme_padding="@{0}"
-                app:customTheme_theme="@{kbviewmodel.observeKBTheme}"/>
+                app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                app:customTheme_view="@{5}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/keyboardLayout"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout_keyboard_main_board"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <LinearLayout
-                    android:id="@+id/firstLine"
+                    android:id="@+id/keyboard_number_row"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.18"
-                    android:orientation="horizontal"
-                    android:visibility="@{kbviewmodel.observeNumberVisibility}">
+                    app:height="@{kbviewmodel.kbResultedHeight}"
+                    app:height_weight="@{18}"
+                    android:visibility="@{kbviewmodel.kbNumberRowVisibility}"
+                    app:layout_constraintBottom_toTopOf="@id/constraint_layout_keyboard_character_rows_wrapper"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <Button
-                        android:id="@+id/keyboardNumberLeftMargin"
+                        android:id="@+id/view_keyboard_number_row_left_margin"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{6}" />
 
                     <Button
@@ -173,12 +180,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="1"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[23]}" />
 
@@ -188,12 +195,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="2"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[24]}" />
 
@@ -203,12 +210,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="3"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[25]}" />
 
@@ -218,12 +225,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="4"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[26]}" />
 
@@ -233,12 +240,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="5"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[27]}" />
 
@@ -248,12 +255,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="6"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[28]}" />
 
@@ -263,12 +270,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="7"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[29]}" />
 
@@ -278,12 +285,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="8"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[30]}" />
 
@@ -293,12 +300,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="9"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[31]}" />
 
@@ -308,63 +315,80 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="0"
-                        android:textColor="@{kbviewmodel.observeKBFunctionFontColor}"
-                        android:textSize="@{kbservice.fontSize}"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:customFontStyle="@{kbviewmodel.observeKBFontType}"
                         app:fontBold="@{kbviewmodel.mode}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[32]}" />
 
                     <Button
-                        android:id="@+id/keyboardNumberRightMargin"
+                        android:id="@+id/view_keyboard_number_row_right_margin"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{6}" />
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/keyboardViewLinearLayout"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_layout_keyboard_character_rows_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.82"
-                    android:orientation="horizontal">
+                    app:height="@{kbviewmodel.kbResultedHeight}"
+                    app:height_weight="@{82}"
+                    app:layout_constraintBottom_toTopOf="@id/view_keyboard_bottom_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/keyboard_number_row">
 
                     <FrameLayout
-                        android:id="@+id/keyboardLeftMargin"
+                        android:id="@+id/framelayout_keyboard_character_rows_left_margin"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
-                        app:customTheme_view="@{6}" />
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{6}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <FrameLayout
-                        android:id="@+id/keyboardViewFrameLayout"
+                        android:id="@+id/framelayout_keyboard_character_rows"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/framelayout_keyboard_character_rows_right_margin"
+                        app:layout_constraintStart_toEndOf="@id/framelayout_keyboard_character_rows_left_margin"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <FrameLayout
-                        android:id="@+id/keyboardRightMargin"
+                        android:id="@+id/framelayout_keyboard_character_rows_right_margin"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                        app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
-                        app:customTheme_view="@{6}" />
-                </LinearLayout>
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{6}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
-                    android:id="@+id/keyboardBotMargin"
+                    android:id="@+id/view_keyboard_bottom_margin"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:customTheme_padding="@{kbviewmodel.observeHeight}"
-                    app:customTheme_theme="@{kbviewmodel.observeKBTheme}"
-                    app:customTheme_view="@{6}" />
-            </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
+                    android:layout_height="50dp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{6}"
+                    app:layout_constraintTop_toBottomOf="@id/constraint_layout_keyboard_character_rows_wrapper"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
