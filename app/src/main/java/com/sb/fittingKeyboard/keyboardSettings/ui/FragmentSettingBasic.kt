@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.keyboardSettings
+package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
 
-class SettingBasicFragment : Fragment() {
+class FragmentSettingBasic : Fragment() {
 
     private var keyboardHeight: Int = 0
 
@@ -20,18 +20,18 @@ class SettingBasicFragment : Fragment() {
     var selectedEnterKeyAddon: Int = 0
     var selectedInputMethodKR: Int = 0
 
-    private lateinit var specialKeyAddon: SpecialKeyAddon
-    private lateinit var enterKeyAddon: EnterKeyAddon
-    private lateinit var inputMethodKR: InputMethodKR
+    private lateinit var dialogSettingSpecialKeyAddon: DialogSettingSpecialKeyAddon
+    private lateinit var dialogSettingEnterKeyAddon: DialogSettingEnterKeyAddon
+    private lateinit var dialogSettingInputMethodKR: DialogSettingInputMethodKR
 
     private lateinit var myView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        specialKeyAddon = SpecialKeyAddon()
-        enterKeyAddon = EnterKeyAddon()
-        inputMethodKR = InputMethodKR()
+        dialogSettingSpecialKeyAddon = DialogSettingSpecialKeyAddon()
+        dialogSettingEnterKeyAddon = DialogSettingEnterKeyAddon()
+        dialogSettingInputMethodKR = DialogSettingInputMethodKR()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -40,9 +40,9 @@ class SettingBasicFragment : Fragment() {
 
         loadData()
 
-        specialKeyAddon.setFunction(selectedSpecialKeyAddon)
-        enterKeyAddon.setFunction(selectedEnterKeyAddon)
-        inputMethodKR.setFunction(selectedInputMethodKR)
+        dialogSettingSpecialKeyAddon.setFunction(selectedSpecialKeyAddon)
+        dialogSettingEnterKeyAddon.setFunction(selectedEnterKeyAddon)
+        dialogSettingInputMethodKR.setFunction(selectedInputMethodKR)
 
         keyboardHeight = myView.findViewById<SeekBar>(R.id.setting_keyboard_height).progress
         myView.findViewById<TextView>(R.id.tv_keyboard_height_progress).text = "${keyboardHeight+75}%"
@@ -85,15 +85,15 @@ class SettingBasicFragment : Fragment() {
             }
         })
         myView.findViewById<Button>(R.id.setting_specialkeyAddon).setOnClickListener {
-            specialKeyAddon.show(fragmentManager!!, "SpecialKeyAddonSelector")
+            dialogSettingSpecialKeyAddon.show(fragmentManager!!, "SpecialKeyAddonSelector")
             saveData()
         }
         myView.findViewById<Button>(R.id.setting_enterkeyAddon).setOnClickListener {
-            enterKeyAddon.show(fragmentManager!!, "EnterKeyAddonSelector")
+            dialogSettingEnterKeyAddon.show(fragmentManager!!, "EnterKeyAddonSelector")
             saveData()
         }
         myView.findViewById<Button>(R.id.setting_inputMethodKR).setOnClickListener {
-            inputMethodKR.show(fragmentManager!!, "InputMethodKRSelector")
+            dialogSettingInputMethodKR.show(fragmentManager!!, "InputMethodKRSelector")
             saveData()
         }
 
@@ -132,9 +132,9 @@ class SettingBasicFragment : Fragment() {
     fun saveData() {
         val prefSetting = activity?.getSharedPreferences("keyboardSetting", Context.MODE_PRIVATE)
 
-        selectedSpecialKeyAddon = specialKeyAddon.checkedFunction
-        selectedEnterKeyAddon = enterKeyAddon.checkedFunction
-        selectedInputMethodKR = inputMethodKR.checkedFunction
+        selectedSpecialKeyAddon = dialogSettingSpecialKeyAddon.checkedFunction
+        selectedEnterKeyAddon = dialogSettingEnterKeyAddon.checkedFunction
+        selectedInputMethodKR = dialogSettingInputMethodKR.checkedFunction
         prefSetting?.edit()?.putInt("KeyboardHeight", keyboardHeight)?.apply()
         prefSetting?.edit()?.putInt("KeyboardSpecialkeyAddon", selectedSpecialKeyAddon)?.apply()
         prefSetting?.edit()?.putInt("KeyboardEnterkeyAddon", selectedEnterKeyAddon)?.apply()

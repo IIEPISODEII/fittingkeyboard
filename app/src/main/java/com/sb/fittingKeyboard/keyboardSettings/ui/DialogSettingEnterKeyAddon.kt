@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.keyboardSettings
+package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.sb.fittingKeyboard.R
 
-class EnterKeyAddon : DialogFragment() {
+class DialogSettingEnterKeyAddon : DialogFragment() {
     var checkedFunction: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

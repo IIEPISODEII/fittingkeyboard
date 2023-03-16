@@ -15,7 +15,6 @@ import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
@@ -26,7 +25,7 @@ import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.BoilerplateTextAdapter
 import com.sb.fittingKeyboard.databinding.*
-import com.sb.fittingKeyboard.keyboardSettings.MainActivity
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.MainActivity
 import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
 import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
 import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
@@ -58,12 +57,11 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var boilerPlateBinding: FragmentBpBinding
     private lateinit var cursorBinding: FragmentCursorBinding
     private lateinit var emojiBinding: FragmentEmojiBinding
-    private lateinit var viewholderBpBinding: ViewholderBoilerplatesBinding
+//    private lateinit var viewholderBpBinding: ViewholderBoilerplatesBinding
 
     private val vm: KeyboardViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(KeyboardViewModel::class.java) }
     private val kbdLayout: View by lazy { layoutInflater.inflate(R.layout.kbd_layout_container, null) }
     private val kbdCharaterAreaFramelayout: FrameLayout by lazy { kbdLayout.findViewById(R.id.framelayout_keyboard_character_rows) }
-    private val kbdMainboardConstLayout: ConstraintLayout by lazy { kbdLayout.findViewById(R.id.constraint_layout_keyboard_main_board) }
     private val kbdBackgroundImageView: ImageView by lazy { kbdLayout.findViewById(R.id.iv_keyboard_bg_image) }
     private val kbLayoutBottomMargin: View by lazy { kbdLayout.findViewById(R.id.view_keyboard_bottom_margin) }
     private val kbCharLeftSide: FrameLayout by lazy { kbdLayout.findViewById(R.id.framelayout_keyboard_character_rows_left_margin) }
@@ -319,8 +317,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         super.onCreateInputView()
         onConfigurationChanged(resources.configuration)
 
-
-
         kbBinding = DataBindingUtil.bind(kbdLayout)!!
         kbBinding.setVariable(BR.kbservice, this)
         kbBinding.lifecycleOwner = this
@@ -386,10 +382,10 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         emojiBinding.setVariable(BR.kbservice, this)
         emojiBinding.lifecycleOwner = this
         emojiBinding.kbviewmodel = vm
-        viewholderBpBinding = DataBindingUtil.bind(layoutInflater.inflate(R.layout.viewholder_boilerplates, null))!!
-        viewholderBpBinding.setVariable(BR.kbservice, this)
-        viewholderBpBinding.lifecycleOwner = this
-        viewholderBpBinding.kbviewmodel = vm
+//        viewholderBpBinding = DataBindingUtil.bind(layoutInflater.inflate(R.layout.viewholder_boilerplates, null))!!
+//        viewholderBpBinding.setVariable(BR.kbservice, this)
+//        viewholderBpBinding.lifecycleOwner = this
+//        viewholderBpBinding.kbviewmodel = vm
 
         // 상용구창 어댑터 설정
         val bpOnClick: (View) -> Unit = { view ->
@@ -823,7 +819,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     fun jumpToBp(view: View, index: Int): Boolean {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.putExtra("Index", index)
+        intent.putExtra(MainActivity.INTENT_BOILERPLATE_TAB, index)
         startActivity(intent)
         return false
     }

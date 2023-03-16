@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.keyboardSettings
+package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.sb.fittingKeyboard.R
 
-class FontTypePicker : DialogFragment() {
-
-    var checkedFontType: Int = 1
+class DialogSettingFontTypePicker(fontTypeIndex: Int) : DialogFragment() {
+    private var checkedFontTypeIndex = fontTypeIndex
+    private var mOnCheckFontTypeListener: OnCheckFontTypeListener? = null
+    fun setOnCheckFontTypeListener(listener: OnCheckFontTypeListener) {
+        this.mOnCheckFontTypeListener = listener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +25,7 @@ class FontTypePicker : DialogFragment() {
         val dialogView = inflater.inflate(R.layout.dialog_font_type, container, false)
 
         dialogView.findViewById<RadioGroup>(R.id.dialog_FontType_rg).check(
-            when (checkedFontType) {
+            when (checkedFontTypeIndex) {
                 0 -> R.id.dialog_FontType_basic
                 1 -> R.id.dialog_FontType_aritta
                 2 -> R.id.dialog_FontType_dovemayo
@@ -39,7 +42,7 @@ class FontTypePicker : DialogFragment() {
             }
         )
         dialogView.findViewById<Button>(R.id.dialog_FontType_ok).setOnClickListener {
-            checkedFontType =
+            checkedFontTypeIndex =
                 when (dialog?.findViewById<RadioGroup>(R.id.dialog_FontType_rg)?.checkedRadioButtonId) {
                     R.id.dialog_FontType_basic -> 0
                     R.id.dialog_FontType_aritta -> 1
@@ -55,6 +58,7 @@ class FontTypePicker : DialogFragment() {
                     R.id.dialog_FontType_tadaktadak -> 11
                     else -> 0
                 }
+            mOnCheckFontTypeListener?.onCheck(checkedFontTypeIndex)
             dismiss()
             Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
         }
@@ -62,7 +66,7 @@ class FontTypePicker : DialogFragment() {
         return dialogView
     }
 
-    fun setFontType(checkPosition: Int) {
-        this.checkedFontType = checkPosition
+    interface OnCheckFontTypeListener {
+        fun onCheck(index: Int)
     }
 }

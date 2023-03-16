@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.keyboardSettings
+package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.BoilerplateTextSettingAdapter
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.adapter.BoilerplateTextSettingAdapter
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data.BoilerplateTextSettingDataHolder
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 
-class SettingBoilerPlateTextFragment : Fragment() {
+class FragmentSettingBoilerPlateText : Fragment() {
 
     private lateinit var myView: View
     private val boilerplatesRecyclerview by lazy { myView.findViewById<RecyclerView>(R.id.boilerplate_setting_rv) }

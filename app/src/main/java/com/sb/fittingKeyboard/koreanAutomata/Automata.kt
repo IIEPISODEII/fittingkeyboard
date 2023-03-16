@@ -48,7 +48,7 @@ abstract class Automata {
         0x3162,
         0x3163
     )
-    val finalCharArray: Array<Int> = arrayOf(
+    private val finalCharArray: Array<Int> = arrayOf(
         0x0000,
         0x3131,
         0x3132,

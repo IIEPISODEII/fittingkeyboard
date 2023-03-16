@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.keyboardSettings
+package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -14,15 +14,15 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ItemTouchHelperListener
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ToolbarSettingAdapter
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ItemTouchHelperListener
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ToolbarSettingAdapter
 import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
 import com.sb.fittingKeyboard.databinding.FragmentSettingDetailsBinding
 import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
-class SettingDetailFragment : Fragment() {
+class FragmentSettingDetails : Fragment() {
 
     private lateinit var prefSetting: SharedPreferences
     private lateinit var binding: FragmentSettingDetailsBinding
@@ -264,7 +264,7 @@ class SettingDetailFragment : Fragment() {
         toolbarSettingRecyclerView = binding.recyclerviewKeyboardToolbarSetting
         toolbarSettingRecyclerView.apply {
             adapter = toolbarSettingRecyclerViewAdapter
-            layoutManager = LinearLayoutManager(this@SettingDetailFragment.requireContext())
+            layoutManager = LinearLayoutManager(this@FragmentSettingDetails.requireContext())
             isNestedScrollingEnabled = false
         }
         val itemTouchHelperCallback = ItemTouchHelperCallback(toolbarSettingRecyclerViewAdapter)
