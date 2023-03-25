@@ -27,7 +27,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name="com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.MainActivity"
+        <activity android:name="com.sb.fittingKeyboard.keyboardSettings.ui.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
