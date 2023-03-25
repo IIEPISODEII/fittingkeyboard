@@ -6,7 +6,7 @@
 
         <variable
             name="mFragment"
-            type="com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingDetails" />
+            type="com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingDetails" />
 
         <variable
             name="kbviewmodel"
@@ -20,7 +20,7 @@
         android:layout_height="match_parent">
 
         <ScrollView
-            android:id="@+id/setting_main_tab2_scrollView"
+            android:id="@+id/scrollview_detailedsetting_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="36dp"
@@ -42,7 +42,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_fontsize"
+                        android:id="@+id/tv_detailedsetting_fontsize"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -56,7 +56,7 @@
                         android:orientation="vertical">
 
                         <SeekBar
-                            android:id="@+id/setting_keyboard_fontsize"
+                            android:id="@+id/seekbar_detailedsetting_fontsize"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight=".75"
@@ -100,7 +100,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_division_bool"
+                        android:id="@+id/tv_detailedsetting_description_for_division"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -110,7 +110,7 @@
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
-                        android:id="@+id/setting_keyboard_division_bool"
+                        android:id="@+id/switch_detailedsetting_division"
                         style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -127,7 +127,34 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_rightsize"
+                        android:id="@+id/tv_detailedsetting_description_for_gap"
+                        style="@style/FKButtonLightGrey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="자판 분리 사용"
+                        app:drawableEndCompat="@drawable/ic_baseline_help"
+                        app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                    <Switch
+                        android:id="@+id/switch_detailedsetting_gap"
+                        style="@style/FKSwitch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75"
+                        android:checked="@{(kbviewmodel.kbHasTopRowGap==View.VISIBLE) ? true : false}"
+                        android:paddingRight="20dp"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/tv_detailedsetting_description_for_rightsize"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -143,7 +170,7 @@
                         android:orientation="vertical">
 
                         <SeekBar
-                            android:id="@+id/setting_keyboard_rightsize"
+                            android:id="@+id/seekbar_detailedsetting_rightsize"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -153,7 +180,7 @@
                             android:thumb="@drawable/view_switch_thumb" />
 
                         <TextView
-                            android:id="@+id/tv_keyboard_rightsize_progress"
+                            android:id="@+id/tv_detailedsetting_rightsize_progress"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -174,7 +201,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_holding"
+                        android:id="@+id/tv_detailedsetting_description_for_longclick_duration"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -190,7 +217,7 @@
                         android:orientation="vertical">
 
                         <SeekBar
-                            android:id="@+id/setting_keyboard_holding"
+                            android:id="@+id/seekbar_detailedsetting_longclick_duration"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -200,7 +227,7 @@
                             android:thumb="@drawable/view_switch_thumb" />
 
                         <TextView
-                            android:id="@+id/tv_keyboard_holding_progress"
+                            android:id="@+id/tv_detailedsetting_longclick_duration_progress"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -221,7 +248,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_vibration"
+                        android:id="@+id/tv_detailedsetting_description_for_vibration"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -231,7 +258,7 @@
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
-                        android:id="@+id/setting_keyboard_vibration"
+                        android:id="@+id/switch_detailedsetting_vibration"
                         style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -261,7 +288,7 @@
                         android:orientation="vertical">
 
                         <SeekBar
-                            android:id="@+id/setting_keyboard_vibration_intensity"
+                            android:id="@+id/seekbar_detailedsetting_vibration_intensity"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -271,7 +298,7 @@
                             android:thumb="@drawable/view_switch_thumb" />
 
                         <TextView
-                            android:id="@+id/tv_keyboard_vibration_intensity"
+                            android:id="@+id/tv_detailedsetting_vibration_intensity_progress"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -292,7 +319,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_autoCapital"
+                        android:id="@+id/tv_detailedsetting_description_for_auto_capitalization"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -302,7 +329,7 @@
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
-                        android:id="@+id/setting_keyboard_autoCapital"
+                        android:id="@+id/switch_detailedsetting_auto_capitalization"
                         style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -319,7 +346,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_autoModeChange"
+                        android:id="@+id/tv_detailedsetting_description_for_auto_mode_change"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -329,7 +356,7 @@
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
-                        android:id="@+id/setting_keyboard_autoModeChange"
+                        android:id="@+id/switch_detailedsetting_auto_mode_change"
                         style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -346,7 +373,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_toggleToolbar"
+                        android:id="@+id/tv_detailedsetting_description_for_toolbar"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -356,7 +383,7 @@
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                     <Switch
-                        android:id="@+id/setting_keyboard_toggleToolbar"
+                        android:id="@+id/switch_detailedsetting_toggling_toolbar"
                         style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -373,7 +400,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_toggleNumber"
+                        android:id="@+id/tv_detailedsetting_description_for_number_row"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -381,7 +408,7 @@
                         android:text="숫자행 표시" />
 
                     <Switch
-                        android:id="@+id/setting_keyboard_toggleNumber"
+                        android:id="@+id/switch_detailedsetting_toggling_number_row"
                         style="@style/FKSwitch"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -398,7 +425,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_bot_margin"
+                        android:id="@+id/tv_detailedsetting_description_for_bottom_margin"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -414,7 +441,7 @@
                         android:orientation="vertical">
 
                         <SeekBar
-                            android:id="@+id/setting_keyboard_bot_margin"
+                            android:id="@+id/seekbar_detailedsetting_bottom_margin"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -424,7 +451,7 @@
                             android:thumb="@drawable/view_switch_thumb" />
 
                         <TextView
-                            android:id="@+id/tv_keyboard_bot_margin_progress"
+                            android:id="@+id/tv_detailedsetting_bottom_margin_progress"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -445,7 +472,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_leftside_margin"
+                        android:id="@+id/tv_detailedsetting_description_for_leftside_margin"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -461,7 +488,7 @@
                         android:orientation="vertical">
 
                         <SeekBar
-                            android:id="@+id/setting_keyboard_leftside_margin"
+                            android:id="@+id/seekbar_detailedsetting_leftside_margin"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -471,7 +498,7 @@
                             android:thumb="@drawable/view_switch_thumb" />
 
                         <TextView
-                            android:id="@+id/tv_keyboard_leftside_margin_progress"
+                            android:id="@+id/tv_detailedsetting_leftside_margin_progress"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -492,7 +519,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_keyboard_rightside_margin"
+                        android:id="@+id/tv_detailedsetting_description_for_rightside_margin"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -508,7 +535,7 @@
                         android:orientation="vertical">
 
                         <SeekBar
-                            android:id="@+id/setting_keyboard_rightside_margin"
+                            android:id="@+id/seekbar_detailedsetting_rightside_margin"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -518,7 +545,7 @@
                             android:thumb="@drawable/view_switch_thumb" />
 
                         <TextView
-                            android:id="@+id/tv_keyboard_rightside_margin_progress"
+                            android:id="@+id/tv_detailedsetting_rightside_margin_progress"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -540,7 +567,7 @@
                     android:padding="10dp">
 
                     <Button
-                        android:id="@+id/textview_keyboard_toolbar_setting_title"
+                        android:id="@+id/btn_detailedsetting_title_for_customizing_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -558,23 +585,23 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/view_keyboard_toolbar_setting_divider"
+                        android:id="@+id/view_detailedsetting_customizing_toolbar_divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/lightgrey"
-                        app:layout_constraintTop_toBottomOf="@id/textview_keyboard_toolbar_setting_title"
+                        app:layout_constraintTop_toBottomOf="@id/btn_detailedsetting_title_for_customizing_toolbar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerview_keyboard_toolbar_setting"
+                        android:id="@+id/recyview_detailedsetting_customizing_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/view_keyboard_toolbar_setting_divider" />
+                        app:layout_constraintTop_toBottomOf="@id/view_detailedsetting_customizing_toolbar_divider" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.sb.fittingKeyboard.service
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
@@ -23,21 +24,19 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.BoilerplateTextAdapter
+import com.sb.fittingKeyboard.Constants
+import com.sb.fittingKeyboard.keyboardSettings.ui.MainActivity
 import com.sb.fittingKeyboard.databinding.*
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.MainActivity
-import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
-import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
-import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
-import com.sb.fittingKeyboard.koreanAutomata.HanguelQWERTY
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelChunjiin
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelDanmoum
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelNARATGUL
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelQWERTY
 import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerAdapter
 import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerLiveDataAdapter
 import com.sb.fittingKeyboard.service.emoji.EmojiViewPagerAdapter
 import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
 import com.sb.fittingKeyboard.service.util.EmojiCollections
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
-import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.emojiIconList
-import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.getEmojiIconXPosition
 import com.sb.fittingKeyboard.service.util.RepeatListener
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 import org.json.JSONArray
@@ -45,7 +44,7 @@ import org.json.JSONArray
 @SuppressLint("ClickableViewAccessibility")
 class MainKeyboardService : InputMethodService(), LifecycleOwner {
 
-    private lateinit var kbBinding: KbdLayoutContainerBinding
+    private lateinit var kbBinding: LayoutKeyboardBinding
     private lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
     private lateinit var qwertyKrNormalBinding: FragmentKeyboardQwertyKrNormalBinding
     private lateinit var chunjiinBinding: FragmentKeyboardChunjiinBasicBinding
@@ -54,13 +53,12 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var danmoumBinding: FragmentKeyboardDanmoumBinding
     private lateinit var specialKBBinding: FragmentKeyboardQwertySpecialBinding
     private lateinit var numberBinding: FragmentKeyboardNumberBinding
-    private lateinit var boilerPlateBinding: FragmentBpBinding
-    private lateinit var cursorBinding: FragmentCursorBinding
+    private lateinit var boilerPlateBinding: FragmentBoilerplatetextBinding
+    private lateinit var cursorBinding: FragmentCursorkeypadBinding
     private lateinit var emojiBinding: FragmentEmojiBinding
-//    private lateinit var viewholderBpBinding: ViewholderBoilerplatesBinding
 
     private val vm: KeyboardViewModel by lazy { ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(KeyboardViewModel::class.java) }
-    private val kbdLayout: View by lazy { layoutInflater.inflate(R.layout.kbd_layout_container, null) }
+    private val kbdLayout: View by lazy { layoutInflater.inflate(R.layout.layout_keyboard, null) }
     private val kbdCharaterAreaFramelayout: FrameLayout by lazy { kbdLayout.findViewById(R.id.framelayout_keyboard_character_rows) }
     private val kbdBackgroundImageView: ImageView by lazy { kbdLayout.findViewById(R.id.iv_keyboard_bg_image) }
     private val kbLayoutBottomMargin: View by lazy { kbdLayout.findViewById(R.id.view_keyboard_bottom_margin) }
@@ -69,9 +67,9 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private val kbNumLeftSide: Button by lazy { kbdLayout.findViewById(R.id.view_keyboard_number_row_left_margin) }
     private val kbNumRightSide: Button by lazy { kbdLayout.findViewById(R.id.view_keyboard_number_row_right_margin) }
     private val emojiKBView by lazy { layoutInflater.inflate(R.layout.fragment_emoji, null) }
-    private val customEmojiIndicator: CustomIndicator by lazy { emojiKBView.findViewById(R.id.emoji_viewpager_indicator) }
-    private val emojisViewPager: ViewPager2 by lazy { emojiKBView.findViewById(R.id.emoji_viewpager) }
-    private val emojiScrollView: HorizontalScrollView by lazy { emojiKBView.findViewById(R.id.emoji_scrollview) }
+    private val customEmojiIndicator: CustomIndicator by lazy { emojiKBView.findViewById(R.id.indicator_emoji_list) }
+    private val emojisViewPager: ViewPager2 by lazy { emojiKBView.findViewById(R.id.viewpager_emoji) }
+    private val emojiScrollView: HorizontalScrollView by lazy { emojiKBView.findViewById(R.id.scrollview_emoji_container) }
     private val mLifecycle = LifecycleRegistry(this)
 
     private val keyboardFunctions = KeyboardInputFuctions(this)
@@ -328,8 +326,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_kr_normal, null)
         val qwertySpecialKBView =
             layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_special, null)
-        val boilerPlateKBView = layoutInflater.inflate(R.layout.fragment_bp, null)
-        val cursorKBView = layoutInflater.inflate(R.layout.fragment_cursor, null)
+        val boilerPlateKBView = layoutInflater.inflate(R.layout.fragment_boilerplatetext, null)
+        val cursorKBView = layoutInflater.inflate(R.layout.fragment_cursorkeypad, null)
         val numberKBView = layoutInflater.inflate(R.layout.fragment_keyboard_number, null)
         val chunjiinKBView = layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_basic, null)
         val chunjiinKBViewAmbi =
@@ -408,11 +406,11 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         vm.kbKrImeMode.observe(this) {
             currentKRView =
                 when (it) {
-                    KeyboardUtil.QWERTY -> qwertyKrNormalKBView
-                    KeyboardUtil.CHUN -> chunjiinKBView
-                    KeyboardUtil.CHUN_AMBI -> chunjiinKBViewAmbi
-                    KeyboardUtil.NARAT -> naratguelKBView
-                    KeyboardUtil.DAN -> danmoKBView
+                    Constants.IME_KR_FLAG_QWERTY -> qwertyKrNormalKBView
+                    Constants.IME_KR_FLAG_CHUN -> chunjiinKBView
+                    Constants.IME_KR_FLAG_CHUN_AMBI -> chunjiinKBViewAmbi
+                    Constants.IME_KR_FLAG_NARAT -> naratguelKBView
+                    Constants.IME_KR_FLAG_DAN -> danmoKBView
                     else -> qwertyKrNormalKBView
                 }
             if (vm.mode.value == 3) {
@@ -541,19 +539,19 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             sortedToolbarSetting.keys.toList().forEachIndexed { _, key ->
                 val ordering = sortedToolbarSetting[key]!!-1
                 when (key) {
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarLinearLayout.reorderChild(goSettingImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarLinearLayout.reorderChild(showBoilerPlateImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL -> toolbarLinearLayout.reorderChild(selectAllImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY -> toolbarLinearLayout.reorderChild(copyImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT -> toolbarLinearLayout.reorderChild(cutImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE -> toolbarLinearLayout.reorderChild(pasteImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR -> toolbarLinearLayout.reorderChild(showCursorImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER -> toolbarLinearLayout.reorderChild(showNumberImageButton, ordering)
-                    KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI -> toolbarLinearLayout.reorderChild(showEmojiImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarLinearLayout.reorderChild(goSettingImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarLinearLayout.reorderChild(showBoilerPlateImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL -> toolbarLinearLayout.reorderChild(selectAllImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_COPY -> toolbarLinearLayout.reorderChild(copyImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_CUT -> toolbarLinearLayout.reorderChild(cutImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_PASTE -> toolbarLinearLayout.reorderChild(pasteImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR -> toolbarLinearLayout.reorderChild(showCursorImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER -> toolbarLinearLayout.reorderChild(showNumberImageButton, ordering)
+                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI -> toolbarLinearLayout.reorderChild(showEmojiImageButton, ordering)
                 }
             }
         }
-        boilerPlateBinding.boilerplateRecyViewBpItems.apply {
+        boilerPlateBinding.recyviewBoilerplateBoilerplatetextItemsContainer.apply {
             adapter = boilerplateTextsAdapter
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
@@ -575,7 +573,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             (emojisViewPager.adapter as EmojiViewPagerAdapter).changeAdapter(arr)
         }
 
-        val emojiIconClickListeners = MutableList(emojiIconList.size) { View.OnClickListener { } }
+        val emojiIconClickListeners = MutableList(KeyboardUtil.emojiIconList.size) { View.OnClickListener { } }
         for (i in emojiIconClickListeners.indices) {
             emojiIconClickListeners[i] = View.OnClickListener {
                 emojisViewPager.currentItem = i
@@ -583,7 +581,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
 
         customEmojiIndicator.createIconPanel(
-            iconsList = emojiIconList,
+            iconsList = KeyboardUtil.emojiIconList,
             position = 1,
             clickListeners = emojiIconClickListeners
         )
@@ -805,7 +803,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
     }
 
-    fun startApp(uri: String = KeyboardUtil.PACKAGE_NAME) {
+    fun startApp(uri: String = Constants.PACKAGE_NAME) {
         val intent =
             applicationContext.packageManager.getLaunchIntentForPackage(uri)
         if (intent != null) {
@@ -988,5 +986,14 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     }
     var singleListenerSpecialSpace = View.OnClickListener {
         inputSpecial(it)
+    }
+
+    private fun getEmojiIconXPosition(view: FrameLayout, position: Int): Int {
+        val _position: Float = (view.width/ changeDpToPx(Constants.EMOJI_ICON_WIDTH)) / 2F
+        return (changeDpToPx(Constants.EMOJI_ICON_WIDTH) * (position - _position) + changeDpToPx(Constants.EMOJI_ICON_WIDTH) /2).toInt()
+    }
+
+    private fun changeDpToPx(dp: Int): Int {
+        return (dp * Resources.getSystem().displayMetrics.density).toInt()
     }
 }

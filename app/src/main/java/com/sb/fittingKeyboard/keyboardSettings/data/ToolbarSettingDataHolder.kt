@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data
+package com.sb.fittingKeyboard.keyboardSettings.data
 
 /**
  * TY

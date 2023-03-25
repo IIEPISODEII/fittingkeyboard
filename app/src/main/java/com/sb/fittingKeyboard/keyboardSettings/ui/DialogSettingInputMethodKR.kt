@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
+package com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -20,31 +20,31 @@ class DialogSettingInputMethodKR : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dialogView = inflater.inflate(R.layout.dialog_inputmethodkr, container, false)
+        val dialogView = inflater.inflate(R.layout.dialog_setting_ime_kr, container, false)
 
-        dialogView.findViewById<RadioGroup>(R.id.dialog_InputMethodKRSelect_rg).check(
+        dialogView.findViewById<RadioGroup>(R.id.radiogroup_settingimekr_container).check(
             when (checkedFunction) {
-                0 -> R.id.dialog_InputMethodKRSelect_QWERTY
-                1 -> R.id.dialog_InputMethodKRSelect_CHUN
-                2 -> R.id.dialog_InputMethodKRSelect_NA
-                3 -> R.id.dialog_InputMethodKRSelect_CHUNA
-                4 -> R.id.dialog_InputMethodKRSelect_DANMOUM
-                else -> R.id.dialog_InputMethodKRSelect_QWERTY
+                0 -> R.id.radiobtn_settingimekr_qwerty
+                1 -> R.id.radiobtn_settingimekr_chun
+                2 -> R.id.radiobtn_settingimekr_narat
+                3 -> R.id.radiobtn_settingimekr_chun_ambi
+                4 -> R.id.radiobtn_settingimekr_danmo
+                else -> R.id.radiobtn_settingimekr_qwerty
             }
         )
-        dialogView.findViewById<Button>(R.id.dialog_InputMethodKRSelect_ok).setOnClickListener {
+        dialogView.findViewById<Button>(R.id.btn_settingimekr_save).setOnClickListener {
             checkedFunction =
-                when (dialogView.findViewById<RadioGroup>(R.id.dialog_InputMethodKRSelect_rg).checkedRadioButtonId) {
-                    R.id.dialog_InputMethodKRSelect_QWERTY -> 0
-                    R.id.dialog_InputMethodKRSelect_CHUN -> 1
-                    R.id.dialog_InputMethodKRSelect_NA -> 2
-                    R.id.dialog_InputMethodKRSelect_CHUNA -> 3
-                    R.id.dialog_InputMethodKRSelect_DANMOUM -> 4
+                when (dialogView.findViewById<RadioGroup>(R.id.radiogroup_settingimekr_container).checkedRadioButtonId) {
+                    R.id.radiobtn_settingimekr_qwerty -> 0
+                    R.id.radiobtn_settingimekr_chun -> 1
+                    R.id.radiobtn_settingimekr_narat -> 2
+                    R.id.radiobtn_settingimekr_chun_ambi -> 3
+                    R.id.radiobtn_settingimekr_danmo -> 4
                     else -> 0
                 }
             dismiss()
             Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-            activity?.findViewById<TextView>(R.id.setting_inputMethodKR)?.text =
+            activity?.findViewById<TextView>(R.id.btn_basicsetting_ime_kr)?.text =
                 when (checkedFunction) {
                     0 -> "쿼티(기본)"
                     1 -> "천지인"

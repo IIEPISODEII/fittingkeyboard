@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.adapter
+package com.sb.fittingKeyboard.keyboardSettings.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
+import com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
 
 class ToolbarSettingAdapter(
     var toolbarSettingDataHolderList: MutableList<ToolbarSettingDataHolder>
@@ -20,7 +20,7 @@ class ToolbarSettingAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolbarSettingViewHolder {
         val layout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.viewholder_toolbar_setting, parent, false)
+            .inflate(R.layout.item_toolbar_setting, parent, false)
         return ToolbarSettingViewHolder(layout)
     }
 

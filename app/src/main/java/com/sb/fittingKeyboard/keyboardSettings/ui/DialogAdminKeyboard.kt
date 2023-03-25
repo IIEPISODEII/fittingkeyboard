@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
+package com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,7 @@ import com.sb.fittingKeyboard.R
 
 class DialogAdminKeyboard : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val dialogView = inflater.inflate(R.layout.admin_keyboard, container, false)
+        val dialogView = inflater.inflate(R.layout.dialog_admin_keyboard, container, false)
 
 
         dialogView.findViewById<Button>(R.id.dialog_AdminKeyboard_later).setOnClickListener {

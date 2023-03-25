@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.ui
+package com.sb.fittingKeyboard.service.ui
 
 import android.content.Context
 import android.util.AttributeSet

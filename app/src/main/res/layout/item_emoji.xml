@@ -19,7 +19,7 @@
 
     <androidx.emoji.widget.EmojiButton
         android:layout_margin="0.75dp"
-        android:id="@+id/emoji"
+        android:id="@+id/emjbtn_emoji"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:textSize="20sp"

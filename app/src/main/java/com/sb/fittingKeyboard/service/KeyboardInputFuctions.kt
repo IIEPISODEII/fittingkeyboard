@@ -12,12 +12,12 @@ import android.view.inputmethod.InputConnection
 import android.widget.Button
 import android.widget.Toast
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.koreanAutomata.HanguelChunjiin
-import com.sb.fittingKeyboard.koreanAutomata.HanguelDanmoum
-import com.sb.fittingKeyboard.koreanAutomata.HanguelNARATGUL
-import com.sb.fittingKeyboard.koreanAutomata.HanguelQWERTY
+import com.sb.fittingKeyboard.Constants
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelChunjiin
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelDanmoum
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelNARATGUL
+import com.sb.fittingKeyboard.service.koreanAutomata.HanguelQWERTY
 import com.sb.fittingKeyboard.service.util.KeyboardUtil
-import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.decToHex
 
 class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
     fun inputChar(
@@ -39,7 +39,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
         when (mode) {
             3, 4 -> {
                 when (krIME) {
-                    KeyboardUtil.QWERTY -> {
+                    Constants.IME_KR_FLAG_QWERTY -> {
                         val (c1, c2) = HanguelQWERTY.composeChar((button as Button).text!!.single())
                         if (c1 != null) {
                             mIMEService.currentInputConnection.commitText(c1, 1)
@@ -55,7 +55,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                         }
                         if (mode == 4) changeMode3(3)
                     }
-                    KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
+                    Constants.IME_KR_FLAG_CHUN, Constants.IME_KR_FLAG_CHUN_AMBI -> {
                         var c1: String?
                         var c2: String?
                         when (button.id) {
@@ -76,7 +76,6 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                         }
 
                         if (c1 != null) {
-                            println("nullChar: ${"\u0000" in c1}")
                             if ("\u0000" in c1) c1 = c1.filterNot { it == '\u0000' }
                             mIMEService.currentInputConnection.commitText(c1, 1)
                             if (c2 != null) {
@@ -90,7 +89,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                             }
                         }
                     }
-                    KeyboardUtil.NARAT -> {
+                    Constants.IME_KR_FLAG_NARAT -> {
                         var c1: String? = null
                         var c2: String? = null
 
@@ -121,7 +120,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                             )
                         }
                     }
-                    KeyboardUtil.DAN -> {
+                    Constants.IME_KR_FLAG_DAN -> {
                         val (c1, c2) = HanguelDanmoum.composeChar(
                             (button as Button).text!!.single(),
                             System.currentTimeMillis()
@@ -214,7 +213,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
         clearComposing()
         mIMEService.currentInputConnection.finishComposingText()
         val eventTime = SystemClock.uptimeMillis()
-        when (decToHex(mIMEService.currentInputEditorInfo.imeOptions).last()) {
+        when (KeyboardUtil.decToHex(mIMEService.currentInputEditorInfo.imeOptions).last()) {
             '2' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
             '3' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_SEARCH)
             '5' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_NEXT)
@@ -277,7 +276,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
             } else {
                 if (mode in arrayOf(3, 4)) {
                     when (krIME) {
-                        KeyboardUtil.QWERTY -> {
+                        Constants.IME_KR_FLAG_QWERTY -> {
                             val (c1, c2) = HanguelQWERTY.delete()
                             if (c1 == null) {
                                 if (c2 == null) {
@@ -289,7 +288,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                             }
                             if (mode == 4) changeMode3(3)
                         }
-                        KeyboardUtil.CHUN, KeyboardUtil.CHUN_AMBI -> {
+                        Constants.IME_KR_FLAG_CHUN, Constants.IME_KR_FLAG_CHUN_AMBI -> {
                             val (c1, c2) = HanguelChunjiin.delete(System.currentTimeMillis())
                             if (c1 == null) {
                                 if (c2 == null) {
@@ -300,7 +299,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                                 }
                             }
                         }
-                        KeyboardUtil.NARAT -> {
+                        Constants.IME_KR_FLAG_NARAT -> {
                             val (c1, c2) = HanguelNARATGUL.delete()
                             if (c1 == null) {
                                 if (c2 == null) {
@@ -311,7 +310,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                                 }
                             }
                         }
-                        KeyboardUtil.DAN -> {
+                        Constants.IME_KR_FLAG_DAN -> {
                             val (c1, c2) = HanguelDanmoum.delete(inputTime = System.currentTimeMillis())
                             if (c1 == null) {
                                 if (c2 == null) {

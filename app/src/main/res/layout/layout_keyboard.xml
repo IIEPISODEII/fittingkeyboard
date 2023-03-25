@@ -9,8 +9,8 @@
             type="com.sb.fittingKeyboard.service.MainKeyboardService" />
 
         <variable
-            name="util"
-            type="com.sb.fittingKeyboard.service.util.KeyboardUtil" />
+            name="constants"
+            type="com.sb.fittingKeyboard.Constants" />
 
         <variable
             name="kbviewmodel"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.ui.ToolbarLayout
+        <com.sb.fittingKeyboard.service.ui.ToolbarLayout
             android:id="@+id/keyboardToolBarLine"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbservice.startApp(util.PACKAGE_NAME)}"
+                android:onClick="@{() -> kbservice.startApp(constants.PACKAGE_NAME)}"
                 android:src="@drawable/ic_settings" />
 
             <ImageButton
@@ -122,7 +122,7 @@
                 android:background="@color/white"
                 android:onClick="@{() -> kbviewmodel.changeMode(10, false)}"
                 android:src="@{kbviewmodel.mode == 10 ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}" />
-        </com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.ui.ToolbarLayout>
+        </com.sb.fittingKeyboard.service.ui.ToolbarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_keyboard_wrapper"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/dialog_FontType_tv"
+        android:id="@+id/tv_settingfonttype_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -14,31 +14,31 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/dialog_FontType_rg"
+        app:layout_constraintBottom_toTopOf="@+id/radiogroup_settingfonttype_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/dialog_FontType_rg"
+        android:id="@+id/radiogroup_settingfonttype_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@id/dialog_FontType_ok"
+        app:layout_constraintBottom_toTopOf="@id/btn_settingfonttype_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_FontType_tv">
+        app:layout_constraintTop_toBottomOf="@+id/tv_settingfonttype_title">
 
         <RadioButton
-            android:id="@+id/dialog_FontType_basic"
+            android:id="@+id/radiobtn_settingfonttype_basic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="기본(시스템 글꼴)"
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_aritta"
+            android:id="@+id/radiobtn_settingfonttype_aritta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="아리따 돋움"
@@ -46,7 +46,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_dovemayo"
+            android:id="@+id/radiobtn_settingfonttype_dovemayo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="둘기마요"
@@ -54,7 +54,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_imcresoojin"
+            android:id="@+id/radiobtn_settingfonttype_imcresoojin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="임크리 수진"
@@ -62,7 +62,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_maplestorylight"
+            android:id="@+id/radiobtn_settingfonttype_maplestorylight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="메이플스토리"
@@ -70,7 +70,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_nanumbarungothic"
+            android:id="@+id/radiobtn_settingfonttype_nanumbarungothic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="나눔바른고딕"
@@ -78,7 +78,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_nanumsquarer"
+            android:id="@+id/radiobtn_settingfonttype_nanumsquarer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="나눔스퀘어"
@@ -86,7 +86,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_seoulnamsan"
+            android:id="@+id/radiobtn_settingfonttype_seoulnamsan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="서울남산 장체"
@@ -94,7 +94,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_tttogether"
+            android:id="@+id/radiobtn_settingfonttype_tttogether"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TT투게더"
@@ -102,7 +102,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_cookierun"
+            android:id="@+id/radiobtn_settingfonttype_cookierun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="쿠키런체"
@@ -110,7 +110,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_tmoney"
+            android:id="@+id/radiobtn_settingfonttype_tmoney"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="티머니"
@@ -118,7 +118,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/dialog_FontType_tadaktadak"
+            android:id="@+id/radiobtn_settingfonttype_tadaktadak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="타닥타닥"
@@ -127,17 +127,17 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/dialog_FontType_ok"
+        android:id="@+id/btn_settingfonttype_save"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
         android:layout_margin="3dp"
         android:background="@color/white"
-        android:text="확인"
+        android:text="저장"
         android:textColor="#299FFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_FontType_rg" />
+        app:layout_constraintTop_toBottomOf="@+id/radiogroup_settingfonttype_container" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

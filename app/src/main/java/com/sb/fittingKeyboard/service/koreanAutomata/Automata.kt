@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.koreanAutomata
+package com.sb.fittingKeyboard.service.koreanAutomata
 
 abstract class Automata {
     val BASE_INT: Int = 0xAC00

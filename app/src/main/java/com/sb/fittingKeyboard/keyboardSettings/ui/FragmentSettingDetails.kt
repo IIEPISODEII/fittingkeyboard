@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
+package com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -14,31 +14,31 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ItemTouchHelperListener
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ToolbarSettingAdapter
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
-import com.sb.fittingKeyboard.databinding.FragmentSettingDetailsBinding
-import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
-import com.sb.fittingKeyboard.service.util.KeyboardUtil
+import com.sb.fittingKeyboard.Constants
+import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ItemTouchHelperListener
+import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ToolbarSettingAdapter
+import com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
+import com.sb.fittingKeyboard.databinding.FragmentDetailedsettingBinding
+import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class FragmentSettingDetails : Fragment() {
 
     private lateinit var prefSetting: SharedPreferences
-    private lateinit var binding: FragmentSettingDetailsBinding
+    private lateinit var binding: FragmentDetailedsettingBinding
     private lateinit var vm: KeyboardViewModel
 
     private lateinit var toolbarSettingRecyclerView: RecyclerView
-    val toolbarSettingKeys = listOf(
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER,
-        KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI
+    private val toolbarSettingKeys = listOf(
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_COPY,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_CUT,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_PASTE,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER,
+        Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI
     )
 
     private val onItemChanged = object: ToolbarSettingAdapter.OnToolbarChanged {
@@ -48,140 +48,142 @@ class FragmentSettingDetails : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting_details, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detailedsetting, container, false)
 
-        prefSetting = requireContext().getSharedPreferences(KeyboardUtil.KEYBOARD_SETTING, Context.MODE_PRIVATE)
+        prefSetting = requireContext().getSharedPreferences(Constants.KEYBOARD_SETTING, Context.MODE_PRIVATE)
 
         vm = ViewModelProvider(this)[KeyboardViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
         binding.kbviewmodel = vm
 
-        binding.settingKeyboardRightsize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekbarDetailedsettingRightsize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                prefSetting.edit().putInt(KeyboardUtil.KEYBOARD_MO_SIZE, seekBar?.progress!!).apply()
+                prefSetting.edit().putInt(Constants.KEYBOARD_MO_SIZE, seekBar?.progress!!).apply()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                prefSetting.edit().putInt(KeyboardUtil.KEYBOARD_MO_SIZE, seekBar?.progress!!).apply()
+                prefSetting.edit().putInt(Constants.KEYBOARD_MO_SIZE, seekBar?.progress!!).apply()
             }
         })
-        binding.settingKeyboardDivisionBool.setOnCheckedChangeListener { _, it ->
-            prefSetting.edit().putBoolean(KeyboardUtil.KEYBOARD_DIVISION, it).apply()
+        binding.switchDetailedsettingDivision.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit().putBoolean(Constants.KEYBOARD_DIVISION, it).apply()
         }
-        binding.settingKeyboardToggleToolbar.setOnCheckedChangeListener { _, it ->
-            prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_TOGGLE_TOOLBAR, if (it) View.VISIBLE else View.GONE)?.apply()
+        binding.switchDetailedsettingGap.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit().putInt(Constants.KEYBOARD_TOP_ROW_GAP, if (it) View.VISIBLE else View.GONE).apply()
         }
-        binding.settingKeyboardBotMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.switchDetailedsettingTogglingToolbar.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putInt(Constants.KEYBOARD_TOGGLE_TOOLBAR, if (it) View.VISIBLE else View.GONE)?.apply()
+        }
+        binding.seekbarDetailedsettingBottomMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_BOTTOM_MARGIN, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_BOTTOM_MARGIN, seekBar?.progress!!)?.apply()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_BOTTOM_MARGIN, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_BOTTOM_MARGIN, seekBar?.progress!!)?.apply()
             }
         })
-        binding.settingKeyboardHolding.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekbarDetailedsettingLongclickDuration.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_HOLDING_TIME, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_HOLDING_TIME, seekBar?.progress!!)?.apply()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_HOLDING_TIME, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_HOLDING_TIME, seekBar?.progress!!)?.apply()
             }
         })
-        binding.settingKeyboardToggleNumber.setOnCheckedChangeListener { _, it ->
-            prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_TOGGLE_NUMBER, if (it) View.VISIBLE else View.GONE)?.apply()
+        binding.switchDetailedsettingTogglingNumberRow.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putInt(Constants.KEYBOARD_TOGGLE_NUMBER, if (it) View.VISIBLE else View.GONE)?.apply()
         }
-        binding.settingKeyboardVibration.setOnCheckedChangeListener { _, it ->
-            prefSetting.edit()?.putBoolean(KeyboardUtil.KEYBOARD_VIBRATION_USE, it)?.apply()
+        binding.switchDetailedsettingVibration.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putBoolean(Constants.KEYBOARD_VIBRATION_USE, it)?.apply()
         }
-        binding.settingKeyboardVibrationIntensity.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekbarDetailedsettingVibrationIntensity.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_VIBRATION_INTENSITY, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_VIBRATION_INTENSITY, seekBar?.progress!!)?.apply()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_VIBRATION_INTENSITY, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_VIBRATION_INTENSITY, seekBar?.progress!!)?.apply()
             }
         })
-        binding.settingKeyboardLeftsideMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekbarDetailedsettingLeftsideMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_LEFTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_LEFTSIDE_MARGIN, seekBar?.progress!!)?.apply()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_LEFTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_LEFTSIDE_MARGIN, seekBar?.progress!!)?.apply()
             }
         })
-        binding.settingKeyboardRightsideMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekbarDetailedsettingRightsideMargin.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_RIGHTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_RIGHTSIDE_MARGIN, seekBar?.progress!!)?.apply()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_RIGHTSIDE_MARGIN, seekBar?.progress!!)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_RIGHTSIDE_MARGIN, seekBar?.progress!!)?.apply()
             }
         })
-        binding.settingKeyboardFontsize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.seekbarDetailedsettingFontsize.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_FONT_SIZE, seekBar?.progress!!*2 + 14)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_FONT_SIZE, seekBar?.progress!!*2 + 14)?.apply()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                prefSetting.edit()?.putInt(KeyboardUtil.KEYBOARD_FONT_SIZE, seekBar?.progress!!*2 + 14)?.apply()
+                prefSetting.edit()?.putInt(Constants.KEYBOARD_FONT_SIZE, seekBar?.progress!!*2 + 14)?.apply()
             }
         })
-        binding.settingKeyboardAutoCapital.setOnCheckedChangeListener { _, it ->
-            prefSetting.edit()?.putBoolean(KeyboardUtil.KEYBOARD_AUTO_CAPITALIZATION, it)?.apply()
+        binding.switchDetailedsettingAutoCapitalization.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putBoolean(Constants.KEYBOARD_AUTO_CAPITALIZATION, it)?.apply()
         }
-        binding.settingKeyboardAutoModeChange.setOnCheckedChangeListener { _, it ->
-            prefSetting.edit()?.putBoolean(KeyboardUtil.KEYBOARD_AUTO_MODE_CHANGE, it)?.apply()
+        binding.switchDetailedsettingAutoModeChange.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putBoolean(Constants.KEYBOARD_AUTO_MODE_CHANGE, it)?.apply()
         }
 
-        binding.tvKeyboardDivisionBool.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_division_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForDivision.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_division_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardRightsize.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_right_size_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForRightsize.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_right_size_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardBotMargin.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_bot_margin_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForBottomMargin.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_bot_margin_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardHolding.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_holding_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForLongclickDuration.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_holding_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardLeftsideMargin.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_leftside_margin_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForLeftsideMargin.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_leftside_margin_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardRightsideMargin.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_rightside_margin_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForRightsideMargin.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_rightside_margin_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardVibration.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_vibration_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForVibration.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_vibration_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardToggleToolbar.setOnClickListener {
-
-            UsualFunctions().showHelpText(getString(R.string.keyboard_toggleSet_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForToolbar.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_toggleSet_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardAutoCapital.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_autoCapital_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForAutoCapitalization.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_autoCapital_help_text), this.requireActivity().window!!.context)
         }
-        binding.tvKeyboardAutoModeChange.setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_autoModeChange_help_text), this.requireActivity().window!!.context)
+        binding.tvDetailedsettingDescriptionForAutoModeChange.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_autoModeChange_help_text), this.requireActivity().window!!.context)
         }
         return binding.root
     }
@@ -190,58 +192,58 @@ class FragmentSettingDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val toolbarSettingDataHolderList = mutableListOf(
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING,
                 R.drawable.ic_settings,
                 "설정 바로가기",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING, 1) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING, 1) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE,
                 R.drawable.ic_boilerplatetext_black,
                 "상용구창 바로가기",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE, 2) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE, 2) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL,
                 R.drawable.ic_select,
                 "전체 선택",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL, 3) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL, 3) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_COPY,
                 R.drawable.ic_copy,
                 "복사",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_COPY, 4) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_COPY, 4) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_CUT,
                 R.drawable.ic_cut,
                 "잘라내기",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_CUT, 5) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_CUT, 5) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_PASTE,
                 R.drawable.ic_paste,
                 "붙여넣기",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_PASTE, 6) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_PASTE, 6) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR,
                 R.drawable.ic_move,
                 "커서창 바로가기",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR, 7) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR, 7) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER,
                 R.drawable.ic_number_keypad,
                 "숫자창 바로가기",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER, 8) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER, 8) >= 0
             ),
             ToolbarSettingDataHolder(
-                KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI,
+                Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI,
                 R.drawable.ic_outline_emoji_emotions_24,
                 "이모티콘창 바로가기",
-                prefSetting.getInt(KeyboardUtil.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI, 9) >= 0
+                prefSetting.getInt(Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI, 9) >= 0
             )
         )
             .sortedWith(
@@ -257,11 +259,11 @@ class FragmentSettingDetails : Fragment() {
                 }
             ).toMutableList()
 
-        binding.settingKeyboardFontsize.progress = (prefSetting.getInt(KeyboardUtil.KEYBOARD_FONT_SIZE, 16)-14)/2
+        binding.seekbarDetailedsettingFontsize.progress = (prefSetting.getInt(Constants.KEYBOARD_FONT_SIZE, 16)-14)/2
 
         val toolbarSettingRecyclerViewAdapter = ToolbarSettingAdapter(toolbarSettingDataHolderList)
         toolbarSettingRecyclerViewAdapter.setOnToolbarChangeListener(onItemChanged)
-        toolbarSettingRecyclerView = binding.recyclerviewKeyboardToolbarSetting
+        toolbarSettingRecyclerView = binding.recyviewDetailedsettingCustomizingToolbar
         toolbarSettingRecyclerView.apply {
             adapter = toolbarSettingRecyclerViewAdapter
             layoutManager = LinearLayoutManager(this@FragmentSettingDetails.requireContext())

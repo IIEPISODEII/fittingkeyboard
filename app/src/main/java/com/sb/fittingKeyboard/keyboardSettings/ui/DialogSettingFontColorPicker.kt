@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
+package com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -26,19 +26,24 @@ class DialogSettingFontColorPicker : DialogFragment() {
         this.onPickListener = listener
     }
 
-    private var dialogView: View? = null
-    private val colorPickerView by lazy { dialogView!!.findViewById<ColorPickerView>(R.id.colorPicker) }
-    private val btnSaveColor by lazy { dialogView!!.findViewById<Button>(R.id.fontColorSave) }
-    private val btnCancel by lazy { dialogView!!.findViewById<Button>(R.id.fontColorCancel) }
-    private val vPickedColor by lazy { dialogView!!.findViewById<View>(R.id.fontPickedColor) }
-    private val tvColorHex by lazy { dialogView!!.findViewById<TextView>(R.id.fontColorHex) }
+    private lateinit var dialogView: View
+    private lateinit var colorPickerView: ColorPickerView
+    private lateinit var btnSaveColor: Button
+    private lateinit var btnCancel: Button
+    private lateinit var vPickedColor: View
+    private lateinit var tvColorHex: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         dialogView = inflater.inflate(R.layout.dialog_setting_font_color, container, false)
+        colorPickerView = dialogView.findViewById(R.id.colorpicker_settingfontcolor)
+        btnSaveColor = dialogView.findViewById(R.id.btn_settingfontcolor_save)
+        btnCancel = dialogView.findViewById(R.id.btn_settingfontcolor_cancel)
+        vPickedColor = dialogView.findViewById(R.id.view_settingfontcolor_preview)
+        tvColorHex = dialogView.findViewById(R.id.tv_settingfontcolor_color_to_hex)
 
         colorPickerView.apply {
             setInitialColor(mColor)

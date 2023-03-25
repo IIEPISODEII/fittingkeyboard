@@ -2,12 +2,11 @@ package com.sb.fittingKeyboard.service.emoji.indicator
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.sb.fittingKeyboard.Constants
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.changeDpToPx
-import com.sb.fittingKeyboard.service.util.KeyboardUtil.Companion.emojiIconWidth
+import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
 
 class CustomIndicator : LinearLayout {
     constructor(context: Context) : super(context) {
@@ -29,7 +28,7 @@ class CustomIndicator : LinearLayout {
             iconPanels[i].setImageResource(iconsList[i])
             this.addView(iconPanels[i])
             this.getChildAt(i).layoutParams =
-                LayoutParams(changeDpToPx(emojiIconWidth), LayoutParams.MATCH_PARENT)
+                LayoutParams(Utilities.changeDPtoPX(Constants.EMOJI_ICON_WIDTH).toInt(), LayoutParams.MATCH_PARENT)
             this.getChildAt(i).setOnClickListener(clickListeners[i])
         }
         selectPosition(position)

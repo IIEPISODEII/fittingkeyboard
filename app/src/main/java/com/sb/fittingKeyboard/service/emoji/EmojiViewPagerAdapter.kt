@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.service.util.EmojiCollections
 
 class EmojiViewPagerAdapter(
     e0List: MutableList<String>,
@@ -44,7 +43,7 @@ class EmojiViewPagerAdapter(
 
     // ViewHolder 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val rv = LayoutInflater.from(parent.context).inflate(R.layout.emoji_items, parent, false)
+        val rv = LayoutInflater.from(parent.context).inflate(R.layout.item_emoji_container, parent, false)
         return ViewHolder(rv)
     }
 

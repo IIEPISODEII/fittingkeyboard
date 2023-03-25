@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
+package com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
@@ -18,8 +18,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.adapter.FragmentViewPagerAdapter
-import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingThemes
+import com.sb.fittingKeyboard.keyboardSettings.ui.DialogAdminKeyboard
+import com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingBasic
+import com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingBoilerPlateText
+import com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingDetails
+import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.FragmentViewPagerAdapter
+import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
 
 class MainActivity : AppCompatActivity() {
     private val currentIMEList = mutableListOf<InputMethodInfo>()
@@ -31,17 +36,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         currentIMM = applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         setContentView(R.layout.activity_main)
-        findViewById<Toolbar>(R.id.toolbar_main_setting_activity).run {
+        findViewById<Toolbar>(R.id.toolbar_main).run {
             title = "키보드 설정"
             setTitleTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
         }
-        setSupportActionBar(findViewById(R.id.toolbar_main_setting_activity))
+        setSupportActionBar(findViewById(R.id.toolbar_main))
 
-        val mainViewPager = findViewById<ViewPager2>(R.id.viewpager2_main_setting_activity)
+        val mainViewPager = findViewById<ViewPager2>(R.id.viewpager2_main)
         mainViewPager.adapter = FragmentViewPagerAdapter(this, settingFragmentList.map { it.second })
         mainViewPager.offscreenPageLimit = 3
         TabLayoutMediator(
-            findViewById(R.id.tablayout_main_setting_activity),
+            findViewById(R.id.tablayout_main),
             mainViewPager
         ) { tab, position ->
             tab.text = settingFragmentList[position].first
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
         // When user long-clicks boiler-plate text button in keyboard, intent guides user boiler-plate setting fragment.
         if (intent.hasExtra(INTENT_BOILERPLATE_TAB)) {
-            findViewById<ViewPager2>(R.id.viewpager2_main_setting_activity).currentItem = 2
+            findViewById<ViewPager2>(R.id.viewpager2_main).currentItem = 2
         }
     }
 
@@ -89,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 else showIMESettingAlert("취소")
             }
             R.id.menu_help -> {
-                UsualFunctions().showHelpText(
+                Utilities.showHelpDialog(
                     resources.getString(R.string.keyboard_enable_help_text),
                     this
                 )

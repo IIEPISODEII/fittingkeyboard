@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.service
+package com.sb.fittingKeyboard.service
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.Glide
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.service.util.KeyboardUtil
+import com.sb.fittingKeyboard.Constants
 
 class BoilerplateTextAdapter(
     private val boilerplateTextsList: MutableMap<String, String>,
@@ -30,7 +28,7 @@ class BoilerplateTextAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoilerplateViewHolder {
         val layout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.viewholder_boilerplates, parent, false)
+            .inflate(R.layout.item_boilerplate_text, parent, false)
 
         return BoilerplateViewHolder(layout)
     }
@@ -64,7 +62,7 @@ class BoilerplateTextAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
             boilerplateButton.apply {
-                text = boilerplateTextsList[KeyboardUtil.KEYBOARD_BOILERPLATE_TEXTS_LIST[position]]
+                text = boilerplateTextsList[Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST[position]]
                 typeface = when(mFontType) {
                     1 -> ResourcesCompat.getFont(this.context, R.font.aritta)
                     2 -> ResourcesCompat.getFont(this.context, R.font.dovemayo)
@@ -112,9 +110,9 @@ class BoilerplateTextAdapter(
     }
 
     fun setBoilerplateTextsList(newMap: MutableMap<String, String>) {
-        for (key in KeyboardUtil.KEYBOARD_BOILERPLATE_TEXTS_LIST) {
+        for (key in Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST) {
             if (newMap[key] == boilerplateTextsList[key]) continue
-            notifyItemChanged(KeyboardUtil.KEYBOARD_BOILERPLATE_TEXTS_LIST.indexOf(key))
+            notifyItemChanged(Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST.indexOf(key))
             boilerplateTextsList[key] = newMap[key]!!
         }
     }

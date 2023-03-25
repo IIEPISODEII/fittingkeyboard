@@ -11,7 +11,7 @@ class EmojiRecyclerLiveDataAdapter(private var emojis: MutableList<String>) :
     RecyclerView.Adapter<EmojiRecyclerLiveDataAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val emoji = view.findViewById<EmojiButton>(R.id.emoji)
+        val emoji = view.findViewById<EmojiButton>(R.id.emjbtn_emoji)
 
         fun bindEmoji(emojis: MutableList<String>, listener: OnItemClickListener?, position: Int) {
             emoji.text = emojis.elementAt(position)
@@ -31,7 +31,7 @@ class EmojiRecyclerLiveDataAdapter(private var emojis: MutableList<String>) :
     //Create ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val emojiButton =
-            LayoutInflater.from(parent.context).inflate(R.layout.emoji_button, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_emoji, parent, false)
         return ViewHolder(emojiButton)
     }
 

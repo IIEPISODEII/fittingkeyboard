@@ -1,4 +1,7 @@
-package com.sb.fittingKeyboard.koreanAutomata
+package com.sb.fittingKeyboard.service.koreanAutomata
+
+import com.sb.fittingKeyboard.service.koreanAutomata.Automata
+import com.sb.fittingKeyboard.service.koreanAutomata.UpdatedChars
 
 object HanguelChunjiin: Automata() {
     private val rrr: Array<Char> = arrayOf('ㄱ', 'ㅋ', 'ㄲ')
@@ -997,11 +1000,11 @@ object HanguelChunjiin: Automata() {
                             'ㅎ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄱ'
-                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) nullChar else 'ㅆ'
+                                firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) nullChar else 'ㅆ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
@@ -1015,7 +1018,7 @@ object HanguelChunjiin: Automata() {
                             'ㅆ', nullChar -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     'ㅅ'
                                 } else 'ㄳ'
@@ -1034,7 +1037,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString() + firstSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -1077,7 +1080,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString() + firstSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -1099,7 +1102,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -1134,7 +1137,7 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             'ㄱ'
                         } else 'ㄲ'
@@ -1150,7 +1153,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1171,7 +1174,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1210,7 +1213,7 @@ object HanguelChunjiin: Automata() {
                         setSecondInputTimer(inputTime = inputTime)
                         firstChar = 'ㄱ'
                         firstSubChar = 'ㅎ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = "ㅅ"
                             'ㅅ'
                         } else 'ㅎ'
@@ -1227,7 +1230,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1250,7 +1253,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1296,7 +1299,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString()
                                 state = 1
                                 firstChar = inputChar
@@ -1315,7 +1318,7 @@ object HanguelChunjiin: Automata() {
                             'ㅅ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime > separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime > separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄶ'
@@ -1332,11 +1335,11 @@ object HanguelChunjiin: Automata() {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
                                 firstChar = 'ㄴ'
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄴ'
-                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) nullChar else 'ㅅ'
+                                firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) nullChar else 'ㅅ'
                                 middleChar = nullChar
                                 finalChar = nullChar
                                 finalSubChar = nullChar
@@ -1354,7 +1357,7 @@ object HanguelChunjiin: Automata() {
                             'ㅈ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄵ'
@@ -1368,11 +1371,11 @@ object HanguelChunjiin: Automata() {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
                                 firstChar = 'ㄴ'
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄴ'
-                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     nullChar
                                 } else 'ㅈ'
                                 composeResult()
@@ -1387,7 +1390,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString() + firstSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -1409,7 +1412,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -1432,7 +1435,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString() + firstSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -1454,7 +1457,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -1493,11 +1496,11 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄴ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             nullChar
                         } else 'ㅊ'
                         middleChar = nullChar
@@ -1512,7 +1515,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1535,7 +1538,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1574,11 +1577,11 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄴ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             nullChar
                         } else 'ㅆ'
                         middleChar = nullChar
@@ -1594,7 +1597,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1617,7 +1620,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1656,7 +1659,7 @@ object HanguelChunjiin: Automata() {
                     'ㄷ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅌ'
@@ -1672,7 +1675,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1693,7 +1696,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1730,7 +1733,7 @@ object HanguelChunjiin: Automata() {
                     'ㄷ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄷ'
@@ -1746,7 +1749,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1767,7 +1770,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -1806,11 +1809,11 @@ object HanguelChunjiin: Automata() {
                             'ㅋ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄹ'
-                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     nullChar
                                 } else 'ㄲ'
                                 middleChar = nullChar
@@ -1826,7 +1829,7 @@ object HanguelChunjiin: Automata() {
                             'ㄲ', nullChar -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄺ'
@@ -1878,7 +1881,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar == 'ㄷ') {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString() + firstSubChar.toString()
                                 firstChar = 'ㄷ'
                                 firstSubChar = nullChar
@@ -1905,11 +1908,11 @@ object HanguelChunjiin: Automata() {
                             'ㅃ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄹ'
-                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     nullChar
                                 } else 'ㅍ'
                                 middleChar = nullChar
@@ -1925,7 +1928,7 @@ object HanguelChunjiin: Automata() {
                             'ㅍ', nullChar -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄼ'
@@ -1953,7 +1956,7 @@ object HanguelChunjiin: Automata() {
                             'ㅆ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㅀ'
@@ -1969,7 +1972,7 @@ object HanguelChunjiin: Automata() {
                             nullChar -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString()
                                     inputChar
                                 } else 'ㄽ'
@@ -1997,7 +2000,7 @@ object HanguelChunjiin: Automata() {
                             'ㅇ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㄻ'
@@ -2013,11 +2016,11 @@ object HanguelChunjiin: Automata() {
                             nullChar -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString()
                                     inputChar
                                 } else 'ㄹ'
-                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     nullChar
                                 } else 'ㅇ'
                                 middleChar = nullChar
@@ -2044,7 +2047,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString() + firstSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -2066,7 +2069,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -2089,7 +2092,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -2109,7 +2112,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -2143,11 +2146,11 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄹ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             nullChar
                         } else 'ㅋ'
                         middleChar = nullChar
@@ -2163,7 +2166,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2184,7 +2187,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2221,11 +2224,11 @@ object HanguelChunjiin: Automata() {
                     'ㅇ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄹ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             nullChar
                         } else 'ㅇ'
                         middleChar = nullChar
@@ -2241,7 +2244,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2262,7 +2265,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2299,11 +2302,11 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄹ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             nullChar
                         } else 'ㅃ'
                         middleChar = nullChar
@@ -2319,7 +2322,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2340,7 +2343,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2377,7 +2380,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅀ'
@@ -2393,7 +2396,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2414,7 +2417,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2451,7 +2454,7 @@ object HanguelChunjiin: Automata() {
                     'ㄷ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             firstChar = inputChar
                             firstSubChar = nullChar
@@ -2466,7 +2469,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2487,7 +2490,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2524,7 +2527,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2541,7 +2544,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2562,7 +2565,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2599,11 +2602,11 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄹ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             nullChar
                         } else 'ㅆ'
                         middleChar = nullChar
@@ -2619,7 +2622,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2640,7 +2643,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2677,7 +2680,7 @@ object HanguelChunjiin: Automata() {
                     'ㅇ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅇ'
@@ -2693,7 +2696,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2712,7 +2715,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2747,7 +2750,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString() + firstSubChar.toString()
                             inputChar
                         } else 'ㅍ'
@@ -2765,11 +2768,11 @@ object HanguelChunjiin: Automata() {
                             'ㅎ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㅂ'
-                                firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     nullChar
                                 } else 'ㅆ'
                                 middleChar = nullChar
@@ -2785,7 +2788,7 @@ object HanguelChunjiin: Automata() {
                             'ㅆ', nullChar -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                                firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                                     temp = firstChar.toString() + firstSubChar.toString()
                                     inputChar
                                 } else 'ㅄ'
@@ -2812,7 +2815,7 @@ object HanguelChunjiin: Automata() {
                         if (firstSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime1) {
+                            if (secondInputTime - firstInputTime >= separationTime1) {
                                 temp = firstChar.toString() + firstSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -2852,7 +2855,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2884,7 +2887,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅂ'
@@ -2900,7 +2903,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2919,7 +2922,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2954,11 +2957,11 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅂ'
-                        firstSubChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstSubChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             nullChar
                         } else 'ㅎ'
                         middleChar = nullChar
@@ -2974,7 +2977,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -2995,7 +2998,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3032,7 +3035,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅎ'
@@ -3048,7 +3051,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3067,7 +3070,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3102,7 +3105,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅅ'
@@ -3118,7 +3121,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3164,7 +3167,7 @@ object HanguelChunjiin: Automata() {
                     'ㅇ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅁ'
@@ -3180,7 +3183,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3199,7 +3202,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3234,7 +3237,7 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅊ'
@@ -3250,7 +3253,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3269,7 +3272,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3304,7 +3307,7 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅈ'
@@ -3320,7 +3323,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3339,7 +3342,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3374,7 +3377,7 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅉ'
@@ -3390,7 +3393,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3409,7 +3412,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3444,7 +3447,7 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄲ'
@@ -3460,7 +3463,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3479,7 +3482,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3514,7 +3517,7 @@ object HanguelChunjiin: Automata() {
                     'ㄷ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㄸ'
@@ -3530,7 +3533,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3549,7 +3552,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3584,7 +3587,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅃ'
@@ -3600,7 +3603,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3619,7 +3622,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3654,7 +3657,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        firstChar = if (secondInputTime-firstInputTime >= separationTime1) {
+                        firstChar = if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             inputChar
                         } else 'ㅆ'
@@ -3670,7 +3673,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3689,7 +3692,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -3745,7 +3748,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -3768,7 +3771,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -3790,7 +3793,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -3824,7 +3827,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -3847,7 +3850,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -3869,7 +3872,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -3903,7 +3906,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -3926,7 +3929,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -3960,7 +3963,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -3983,7 +3986,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4017,7 +4020,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4040,7 +4043,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4074,7 +4077,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4097,7 +4100,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4131,7 +4134,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4167,7 +4170,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4188,7 +4191,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4211,7 +4214,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4233,7 +4236,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4267,7 +4270,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4290,7 +4293,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4337,7 +4340,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4360,7 +4363,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4382,7 +4385,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4416,7 +4419,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4439,7 +4442,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4461,7 +4464,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4494,7 +4497,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4530,7 +4533,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4564,7 +4567,7 @@ object HanguelChunjiin: Automata() {
                     else -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             composeResult()
                             temp = composedResult.toString()
                             state = 1
@@ -4587,7 +4590,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString() + middleChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -4609,7 +4612,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString() + middleChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -4633,7 +4636,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString() + middleChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -4670,7 +4673,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString() + middleChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -4692,7 +4695,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString() + middleChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -4716,7 +4719,7 @@ object HanguelChunjiin: Automata() {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
                         firstSubChar = nullChar
-                        if (secondInputTime-firstInputTime >= separationTime1) {
+                        if (secondInputTime - firstInputTime >= separationTime1) {
                             temp = firstChar.toString() + middleChar.toString()
                             state = -1
                             firstChar = nullChar
@@ -4762,7 +4765,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -4786,7 +4789,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -4813,7 +4816,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -4837,7 +4840,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -4911,7 +4914,7 @@ object HanguelChunjiin: Automata() {
                         nullChar, 'ㅆ' -> {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = 1
                                 firstChar = inputChar
@@ -4931,7 +4934,7 @@ object HanguelChunjiin: Automata() {
                         'ㅎ' -> {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = 1
                                 firstChar = inputChar
@@ -4957,7 +4960,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -4982,7 +4985,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5022,7 +5025,7 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -5043,7 +5046,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5068,7 +5071,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5108,7 +5111,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -5134,7 +5137,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5158,7 +5161,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5185,7 +5188,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5209,7 +5212,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5236,7 +5239,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5294,7 +5297,7 @@ object HanguelChunjiin: Automata() {
                             'ㅅ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5315,7 +5318,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㅆ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5354,7 +5357,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㅉ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5375,7 +5378,7 @@ object HanguelChunjiin: Automata() {
                             'ㅊ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5413,7 +5416,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5438,7 +5441,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5478,7 +5481,7 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -5502,7 +5505,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5527,7 +5530,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5567,7 +5570,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -5591,7 +5594,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5616,7 +5619,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -5643,7 +5646,7 @@ object HanguelChunjiin: Automata() {
                     'ㄷ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -5678,7 +5681,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5702,7 +5705,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5729,7 +5732,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5754,7 +5757,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -5784,7 +5787,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㄲ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5805,7 +5808,7 @@ object HanguelChunjiin: Automata() {
                             'ㅋ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5854,7 +5857,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = 1
                                 firstChar = inputChar
@@ -5876,7 +5879,7 @@ object HanguelChunjiin: Automata() {
                             'ㄷ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5897,7 +5900,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㄸ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5934,7 +5937,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㅃ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -5970,7 +5973,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㅆ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -6007,7 +6010,7 @@ object HanguelChunjiin: Automata() {
                             'ㅇ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -6028,7 +6031,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㅁ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -6080,7 +6083,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6105,7 +6108,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6145,7 +6148,7 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6170,7 +6173,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6196,7 +6199,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6237,7 +6240,7 @@ object HanguelChunjiin: Automata() {
                     'ㅇ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6262,7 +6265,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6289,7 +6292,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6330,7 +6333,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6354,7 +6357,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6380,7 +6383,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6420,7 +6423,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6443,7 +6446,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6469,7 +6472,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6509,7 +6512,7 @@ object HanguelChunjiin: Automata() {
                     'ㄷ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6532,7 +6535,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6559,7 +6562,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6600,7 +6603,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6625,7 +6628,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6650,7 +6653,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6690,7 +6693,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6714,7 +6717,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6741,7 +6744,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -6782,7 +6785,7 @@ object HanguelChunjiin: Automata() {
                     'ㅇ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6806,7 +6809,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -6830,7 +6833,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -6859,7 +6862,7 @@ object HanguelChunjiin: Automata() {
                         if (finalSubChar != nullChar) {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString() + finalSubChar.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -6883,7 +6886,7 @@ object HanguelChunjiin: Automata() {
                         } else {
                             var temp: String? = null
                             setSecondInputTimer(inputTime = inputTime)
-                            if (secondInputTime-firstInputTime >= separationTime2) {
+                            if (secondInputTime - firstInputTime >= separationTime2) {
                                 temp = composedResult.toString()
                                 state = -1
                                 firstChar = nullChar
@@ -6910,7 +6913,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -6946,7 +6949,7 @@ object HanguelChunjiin: Automata() {
                             nullChar, 'ㅆ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -6967,7 +6970,7 @@ object HanguelChunjiin: Automata() {
                             'ㅎ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -6992,7 +6995,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7019,7 +7022,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7061,7 +7064,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7086,7 +7089,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7113,7 +7116,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7155,7 +7158,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7178,7 +7181,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7205,7 +7208,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7247,7 +7250,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7270,7 +7273,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7297,7 +7300,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7339,7 +7342,7 @@ object HanguelChunjiin: Automata() {
                     'ㅇ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7362,7 +7365,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7389,7 +7392,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7431,7 +7434,7 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7454,7 +7457,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7481,7 +7484,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7523,7 +7526,7 @@ object HanguelChunjiin: Automata() {
                     'ㅈ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7548,7 +7551,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7575,7 +7578,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7617,7 +7620,7 @@ object HanguelChunjiin: Automata() {
                     'ㄱ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7640,7 +7643,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7667,7 +7670,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7709,7 +7712,7 @@ object HanguelChunjiin: Automata() {
                     'ㄷ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7734,7 +7737,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7761,7 +7764,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7803,7 +7806,7 @@ object HanguelChunjiin: Automata() {
                     'ㅂ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7828,7 +7831,7 @@ object HanguelChunjiin: Automata() {
                     'ㅣ', 'ㅡ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7855,7 +7858,7 @@ object HanguelChunjiin: Automata() {
                     'ᆞ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = -1
                             firstChar = nullChar
@@ -7897,7 +7900,7 @@ object HanguelChunjiin: Automata() {
                     'ㅅ' -> {
                         var temp: String? = null
                         setSecondInputTimer(inputTime = inputTime)
-                        if (secondInputTime-firstInputTime >= separationTime2) {
+                        if (secondInputTime - firstInputTime >= separationTime2) {
                             temp = composedResult.toString()
                             state = 1
                             firstChar = inputChar
@@ -7922,7 +7925,7 @@ object HanguelChunjiin: Automata() {
                             'ㄷ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -7943,7 +7946,7 @@ object HanguelChunjiin: Automata() {
                             'ㅣ', 'ㅡ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = -1
                                     firstChar = nullChar
@@ -7969,7 +7972,7 @@ object HanguelChunjiin: Automata() {
                             'ᆞ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = -1
                                     firstChar = nullChar
@@ -8010,7 +8013,7 @@ object HanguelChunjiin: Automata() {
                             'ㅂ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -8031,7 +8034,7 @@ object HanguelChunjiin: Automata() {
                             'ㅣ', 'ㅡ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = -1
                                     firstChar = nullChar
@@ -8057,7 +8060,7 @@ object HanguelChunjiin: Automata() {
                             'ᆞ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = -1
                                     firstChar = nullChar
@@ -8097,7 +8100,7 @@ object HanguelChunjiin: Automata() {
                             'ㅈ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = 1
                                     firstChar = inputChar
@@ -8118,7 +8121,7 @@ object HanguelChunjiin: Automata() {
                             'ㅣ', 'ㅡ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = -1
                                     firstChar = nullChar
@@ -8144,7 +8147,7 @@ object HanguelChunjiin: Automata() {
                             'ᆞ' -> {
                                 var temp: String? = null
                                 setSecondInputTimer(inputTime = inputTime)
-                                if (secondInputTime-firstInputTime >= separationTime2) {
+                                if (secondInputTime - firstInputTime >= separationTime2) {
                                     temp = composedResult.toString() + finalSubChar.toString()
                                     state = -1
                                     firstChar = nullChar

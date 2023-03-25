@@ -27,8 +27,8 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/tv_inputMethodKR"
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_ime_kr"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -38,7 +38,7 @@
                     app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                 <Button
-                    android:id="@+id/setting_inputMethodKR"
+                    android:id="@+id/btn_basicsetting_ime_kr"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.75"
@@ -54,8 +54,8 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/tv_keyboard_height"
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_keyboard_height"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -71,7 +71,7 @@
                     android:orientation="vertical">
 
                     <SeekBar
-                        android:id="@+id/setting_keyboard_height"
+                        android:id="@+id/seekbar_basicsetting_keyboard_height"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1.5"
@@ -81,7 +81,7 @@
                         android:thumb="@drawable/view_switch_thumb" />
 
                     <TextView
-                        android:id="@+id/tv_keyboard_height_progress"
+                        android:id="@+id/tv_basicsetting_keyboard_height_progress"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -101,8 +101,8 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/tv_specialkeyAddon"
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_specialkey_longclick"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -112,7 +112,7 @@
                     app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                 <Button
-                    android:id="@+id/setting_specialkeyAddon"
+                    android:id="@+id/btn_basicsetting_specialkey_longclick"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.75"
@@ -128,8 +128,8 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/tv_enterkeyAddon"
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_enterkey_longclick"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -139,7 +139,7 @@
                     app:drawableRightCompat="@drawable/ic_baseline_help" />
 
                 <Button
-                    android:id="@+id/setting_enterkeyAddon"
+                    android:id="@+id/btn_basicsetting_enterkey_longclick"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.75"

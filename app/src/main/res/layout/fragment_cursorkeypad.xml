@@ -30,7 +30,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/frag_cursor_copySelected"
+                    android:id="@+id/btn_cursorkeypad_copy"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -45,7 +45,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/frag_cursor_pasteSelected"
+                    android:id="@+id/btn_cursorkeypad_paste"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -60,7 +60,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/frag_cursor_cutSelected"
+                    android:id="@+id/btn_cursorkeypad_cut"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -82,7 +82,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/frag_cursor_selectAll"
+                    android:id="@+id/btn_cursorkeypad_select_all"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -97,7 +97,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_firstChar"
+                    android:id="@+id/imgbtn_cursorkeypad_move_to_head"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -112,7 +112,7 @@
                     app:onTouch="@{kbservice.rListenerCursorFirst}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_up"
+                    android:id="@+id/imgbtn_cursorkeypad_move_up"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -127,7 +127,7 @@
                     app:onTouch="@{kbservice.rListenerCursorUp}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_lastChar"
+                    android:id="@+id/imgbtn_cursorkeypad_move_to_tail"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -142,7 +142,7 @@
                     app:onTouch="@{kbservice.rListenerCursorLast}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_foredelete"
+                    android:id="@+id/imgbtn_cursorkeypad_delete_previous_char"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -164,7 +164,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/frag_cursor_selectWord"
+                    android:id="@+id/btn_cursorkeypad_select"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -179,7 +179,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_left"
+                    android:id="@+id/imgbtn_cursorkeypad_move_left"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -194,7 +194,7 @@
                     app:onTouch="@{kbservice.rListenerCursorLeft}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_down"
+                    android:id="@+id/imgbtn_cursorkeypad_move_down"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -209,7 +209,7 @@
                     app:onTouch="@{kbservice.rListenerCursorDown}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_right"
+                    android:id="@+id/imgbtn_cursorkeypad_move_right"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -224,7 +224,7 @@
                     app:onTouch="@{kbservice.rListenerCursorRight}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_delete"
+                    android:id="@+id/imgbtn_cursorkeypad_delete"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -246,7 +246,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_kbd"
+                    android:id="@+id/imgbtn_cursorkeypad_back"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
@@ -261,7 +261,7 @@
                     app:customTheme_view="@{3}" />
 
                 <Button
-                    android:id="@+id/frag_cursor_space"
+                    android:id="@+id/btn_cursorkeypad_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
@@ -277,7 +277,7 @@
                     app:onTouch="@{kbservice.repeatListenerSpecials[21]}" />
 
                 <ImageButton
-                    android:id="@+id/frag_cursor_enter"
+                    android:id="@+id/imgbtn_cursorkeypad_enter"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"

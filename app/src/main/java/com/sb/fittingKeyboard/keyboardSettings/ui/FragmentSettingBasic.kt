@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
+package com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -8,57 +8,63 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.keyboardSettings.util.UsualFunctions
+import com.sb.fittingKeyboard.Constants
+import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
 
 class FragmentSettingBasic : Fragment() {
+    private val prefSetting by lazy { requireContext().getSharedPreferences(Constants.KEYBOARD_SETTING, Context.MODE_PRIVATE) }
 
     private var keyboardHeight: Int = 0
+    private var specialkeyLongClickFunction: Int = 0
+    private var enterkeyLongClickFunction: Int = 0
+    private var selectedInputMethodKR: Int = 0
 
-    var selectedSpecialKeyAddon: Int = 0
-    var selectedEnterKeyAddon: Int = 0
-    var selectedInputMethodKR: Int = 0
+    private val dialogSettingSpecialkeyLongClick = DialogSettingLongClickFunction()
+    private val dialogSettingEnterkeyLongClick = DialogSettingLongClickFunction()
+    private val dialogSettingInputMethodKR = DialogSettingInputMethodKR()
 
-    private lateinit var dialogSettingSpecialKeyAddon: DialogSettingSpecialKeyAddon
-    private lateinit var dialogSettingEnterKeyAddon: DialogSettingEnterKeyAddon
-    private lateinit var dialogSettingInputMethodKR: DialogSettingInputMethodKR
-
-    private lateinit var myView: View
+    private var fragmentView: View? = null
+    private lateinit var seekbarKeyboardHeightSetting: SeekBar
+    private lateinit var tvKeyboardHeightSetting: TextView
+    private lateinit var btnSpecialKeyLongClickSetting: Button
+    private lateinit var tvSpecialKeyLongClickSetting: TextView
+    private lateinit var btnEnterKeyLongClickSetting: Button
+    private lateinit var tvEnterKeyLongClickSetting: TextView
+    private lateinit var btnIMEKRSetting: Button
+    private lateinit var tvIMEKRSetting: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        dialogSettingSpecialKeyAddon = DialogSettingSpecialKeyAddon()
-        dialogSettingEnterKeyAddon = DialogSettingEnterKeyAddon()
-        dialogSettingInputMethodKR = DialogSettingInputMethodKR()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        myView = inflater.inflate(R.layout.fragment_setting_main, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        fragmentView = inflater.inflate(R.layout.fragment_basicsetting, container, false)
+        seekbarKeyboardHeightSetting = fragmentView!!.findViewById(R.id.seekbar_basicsetting_keyboard_height)
+        tvKeyboardHeightSetting = fragmentView!!.findViewById(R.id.tv_basicsetting_keyboard_height_progress)
+        btnSpecialKeyLongClickSetting = fragmentView!!.findViewById(R.id.btn_basicsetting_specialkey_longclick)
+        tvSpecialKeyLongClickSetting = fragmentView!!.findViewById(R.id.tv_basicsetting_description_for_specialkey_longclick)
+        btnEnterKeyLongClickSetting = fragmentView!!.findViewById(R.id.btn_basicsetting_enterkey_longclick)
+        tvEnterKeyLongClickSetting = fragmentView!!.findViewById(R.id.tv_basicsetting_description_for_enterkey_longclick)
+        btnIMEKRSetting = fragmentView!!.findViewById(R.id.btn_basicsetting_ime_kr)
+        tvIMEKRSetting = fragmentView!!.findViewById(R.id.tv_basicsetting_description_for_ime_kr)
 
-
+        initializeSetting()
         loadData()
-
-        dialogSettingSpecialKeyAddon.setFunction(selectedSpecialKeyAddon)
-        dialogSettingEnterKeyAddon.setFunction(selectedEnterKeyAddon)
         dialogSettingInputMethodKR.setFunction(selectedInputMethodKR)
 
-        keyboardHeight = myView.findViewById<SeekBar>(R.id.setting_keyboard_height).progress
-        myView.findViewById<TextView>(R.id.tv_keyboard_height_progress).text = "${keyboardHeight+75}%"
-        myView.findViewById<Button>(R.id.setting_specialkeyAddon).text = when (selectedSpecialKeyAddon) {
+        keyboardHeight = seekbarKeyboardHeightSetting.progress
+        tvKeyboardHeightSetting.text = "${keyboardHeight+75}%"
+        btnEnterKeyLongClickSetting.text = when (enterkeyLongClickFunction) {
             0 -> "없음"
             1 -> "상용구"
-            2 -> "커서이동 및 편집"
+            2 -> "커서키패드"
+            10 -> "숫자키패드"
             else -> "없음"
         }
-        myView.findViewById<Button>(R.id.setting_enterkeyAddon).text = when (selectedEnterKeyAddon) {
-            0 -> "없음"
-            1 -> "상용구"
-            2 -> "커서이동 및 편집"
-            else -> "없음"
-        }
-        myView.findViewById<Button>(R.id.setting_inputMethodKR).text = when (selectedInputMethodKR) {
+        btnIMEKRSetting.text = when (selectedInputMethodKR) {
             0 -> "쿼티(기본)"
             1 -> "천지인"
             2 -> "나랏글"
@@ -67,61 +73,53 @@ class FragmentSettingBasic : Fragment() {
             else -> "쿼티(기본)"
         }
 
-        myView.findViewById<SeekBar>(R.id.setting_keyboard_height).setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekbarKeyboardHeightSetting.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 keyboardHeight = seekBar?.progress!!
-                myView.findViewById<TextView>(R.id.tv_keyboard_height_progress).text = "${keyboardHeight + 75}%"
-                saveData()
+                tvKeyboardHeightSetting.text = "${keyboardHeight + 75}%"
+                prefSetting.edit().putInt(Constants.KEYBOARD_HEIGHT, keyboardHeight).apply()
+
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
                 keyboardHeight = seekBar?.progress!!
-                saveData()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 keyboardHeight = seekBar?.progress!!
-                saveData()
+                prefSetting.edit().putInt(Constants.KEYBOARD_HEIGHT, keyboardHeight).apply()
+
             }
         })
-        myView.findViewById<Button>(R.id.setting_specialkeyAddon).setOnClickListener {
-            dialogSettingSpecialKeyAddon.show(fragmentManager!!, "SpecialKeyAddonSelector")
-            saveData()
+        btnSpecialKeyLongClickSetting.setOnClickListener {
+            dialogSettingSpecialkeyLongClick.show(requireActivity().supportFragmentManager, "SpecialKeyAddonSelector")
         }
-        myView.findViewById<Button>(R.id.setting_enterkeyAddon).setOnClickListener {
-            dialogSettingEnterKeyAddon.show(fragmentManager!!, "EnterKeyAddonSelector")
-            saveData()
+        btnEnterKeyLongClickSetting.setOnClickListener {
+            dialogSettingEnterkeyLongClick.show(requireActivity().supportFragmentManager, "EnterKeyAddonSelector")
         }
-        myView.findViewById<Button>(R.id.setting_inputMethodKR).setOnClickListener {
-            dialogSettingInputMethodKR.show(fragmentManager!!, "InputMethodKRSelector")
-            saveData()
+        btnIMEKRSetting.setOnClickListener {
+            dialogSettingInputMethodKR.show(requireActivity().supportFragmentManager, "InputMethodKRSelector")
         }
 
-        myView.findViewById<Button>(R.id.tv_keyboard_height).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.keyboard_height_help_text), this.activity!!.window!!.context)
+        tvKeyboardHeightSetting.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_height_help_text), this.requireActivity().window.context)
         }
-        myView.findViewById<Button>(R.id.tv_specialkeyAddon).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.specialkeyAddon_help_text), this.activity!!.window!!.context)
+        tvSpecialKeyLongClickSetting.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.specialkeyAddon_help_text), this.requireActivity().window.context)
         }
-        myView.findViewById<Button>(R.id.tv_enterkeyAddon).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.enterkeyAddon_help_text), this.activity!!.window!!.context)
+        tvEnterKeyLongClickSetting.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.enterkeyAddon_help_text), this.requireActivity().window.context)
         }
-        myView.findViewById<Button>(R.id.tv_inputMethodKR).setOnClickListener {
-            UsualFunctions().showHelpText(getString(R.string.inputMethodKR_help_text), this.activity!!.window!!.context)
+        tvIMEKRSetting.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.inputMethodKR_help_text), this.requireActivity().window.context)
         }
 
-
-        return myView
+        return fragmentView
     }
 
-    override fun onPause() {
-        super.onPause()
-        saveData()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        saveData()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentView = null
     }
 
     override fun onResume() {
@@ -129,25 +127,74 @@ class FragmentSettingBasic : Fragment() {
         loadData()
     }
 
-    fun saveData() {
-        val prefSetting = activity?.getSharedPreferences("keyboardSetting", Context.MODE_PRIVATE)
+    private fun initializeSetting() {
+        dialogSettingSpecialkeyLongClick.apply {
+            initializeSetting(prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0))
 
-        selectedSpecialKeyAddon = dialogSettingSpecialKeyAddon.checkedFunction
-        selectedEnterKeyAddon = dialogSettingEnterKeyAddon.checkedFunction
-        selectedInputMethodKR = dialogSettingInputMethodKR.checkedFunction
-        prefSetting?.edit()?.putInt("KeyboardHeight", keyboardHeight)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardSpecialkeyAddon", selectedSpecialKeyAddon)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardEnterkeyAddon", selectedEnterKeyAddon)?.apply()
-        prefSetting?.edit()?.putInt("KeyboardInputMethodKR", selectedInputMethodKR)?.apply()
+            setOnRadioButtonSelectListener(object: DialogSettingLongClickFunction.OnRadioButtonSelectListener {
+                override fun onSelect(functionIndex: Int) {
+                    specialkeyLongClickFunction = functionIndex
+                    prefSetting.edit().putInt(Constants.KEYBOARD_SPECIALKEY_LONGCLICK, functionIndex).apply()
+
+                    btnSpecialKeyLongClickSetting.text = when (functionIndex) {
+                        0 -> "없음"
+                        1 -> "상용구"
+                        2 -> "커서키패드"
+                        10 -> "숫자키패드"
+                        else -> "없음"
+                    }
+                    Toast.makeText(requireContext(), "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            })
+            setTitleText("특수키 부가기능")
+        }
+        dialogSettingEnterkeyLongClick.apply {
+            initializeSetting(prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0))
+
+            setOnRadioButtonSelectListener(object: DialogSettingLongClickFunction.OnRadioButtonSelectListener {
+                override fun onSelect(functionIndex: Int) {
+                    enterkeyLongClickFunction = functionIndex
+                    prefSetting.edit().putInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, functionIndex).apply()
+
+                    btnEnterKeyLongClickSetting.text = when (functionIndex) {
+                        0 -> "없음"
+                        1 -> "상용구"
+                        2 -> "커서키패드"
+                        10 -> "숫자키패드"
+                        else -> "없음"
+                    }
+                    Toast.makeText(requireContext(), "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                }
+            })
+            setTitleText("엔터키 부가기능")
+        }
     }
 
-    fun loadData() {
+    private fun loadData() {
+        keyboardHeight = prefSetting.getInt(Constants.KEYBOARD_HEIGHT, 25)
 
-        val prefSetting = activity?.getSharedPreferences("keyboardSetting", Context.MODE_PRIVATE)
+        specialkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0)
 
-        if (prefSetting != null) myView.findViewById<SeekBar>(R.id.setting_keyboard_height).progress = prefSetting.getInt("KeyboardHeight", 25)
-        if (prefSetting != null) selectedSpecialKeyAddon = prefSetting.getInt("KeyboardSpecialkeyAddon", 0)
-        if (prefSetting != null) selectedEnterKeyAddon = prefSetting.getInt("KeyboardEnterkeyAddon", 0)
-        if (prefSetting != null) selectedInputMethodKR = prefSetting.getInt("KeyboardInputMethodKR", 0)
+        enterkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_SPECIALKEY_LONGCLICK, 0)
+
+        selectedInputMethodKR = prefSetting.getInt(Constants.KEYBOARD_IME_KR, 0)
+
+
+        dialogSettingSpecialkeyLongClick.initializeSetting(specialkeyLongClickFunction)
+        dialogSettingEnterkeyLongClick.initializeSetting(enterkeyLongClickFunction)
+        btnSpecialKeyLongClickSetting.text = when (specialkeyLongClickFunction) {
+            0 -> "없음"
+            1 -> "상용구"
+            2 -> "커서키패드"
+            10 -> "숫자키패드"
+            else -> "없음"
+        }
+        btnEnterKeyLongClickSetting.text = when (enterkeyLongClickFunction) {
+            0 -> "없음"
+            1 -> "상용구"
+            2 -> "커서키패드"
+            10 -> "숫자키패드"
+            else -> "없음"
+        }
     }
 }

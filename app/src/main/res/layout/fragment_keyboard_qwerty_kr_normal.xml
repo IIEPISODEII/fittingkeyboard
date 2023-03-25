@@ -113,6 +113,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.35"
+                    android:visibility="@{kbviewmodel.kbHasTopRowGap}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{6}" />
