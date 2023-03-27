@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.Constants
@@ -57,13 +58,24 @@ class FragmentSettingBasic : Fragment() {
 
         keyboardHeight = seekbarKeyboardHeightSetting.progress
         tvKeyboardHeightSetting.text = "${keyboardHeight+75}%"
-        btnEnterKeyLongClickSetting.text = when (enterkeyLongClickFunction) {
-            0 -> "없음"
-            1 -> "상용구"
-            2 -> "커서키패드"
-            10 -> "숫자키패드"
-            else -> "없음"
-        }
+        btnEnterKeyLongClickSetting.text = requireActivity().resources.getString(
+            when(enterkeyLongClickFunction) {
+                1 -> R.string.longclick_funciton_boilerplate
+                2 -> R.string.longclick_funciton_cursor_pad
+                3 -> R.string.longclick_funciton_number_pad
+                4 -> R.string.longclick_funciton_emoji
+                else -> R.string.longclick_function_none
+            }
+        )
+        btnSpecialKeyLongClickSetting.text = requireActivity().resources.getString(
+            when(specialkeyLongClickFunction) {
+                1 -> R.string.longclick_funciton_boilerplate
+                2 -> R.string.longclick_funciton_cursor_pad
+                3 -> R.string.longclick_funciton_number_pad
+                4 -> R.string.longclick_funciton_emoji
+                else -> R.string.longclick_function_none
+            }
+        )
         btnIMEKRSetting.text = when (selectedInputMethodKR) {
             0 -> "쿼티(기본)"
             1 -> "천지인"
@@ -136,13 +148,15 @@ class FragmentSettingBasic : Fragment() {
                     specialkeyLongClickFunction = functionIndex
                     prefSetting.edit().putInt(Constants.KEYBOARD_SPECIALKEY_LONGCLICK, functionIndex).apply()
 
-                    btnSpecialKeyLongClickSetting.text = when (functionIndex) {
-                        0 -> "없음"
-                        1 -> "상용구"
-                        2 -> "커서키패드"
-                        10 -> "숫자키패드"
-                        else -> "없음"
-                    }
+                    btnSpecialKeyLongClickSetting.text = requireActivity().resources.getString(
+                        when(functionIndex) {
+                            1 -> R.string.longclick_funciton_boilerplate
+                            2 -> R.string.longclick_funciton_cursor_pad
+                            3 -> R.string.longclick_funciton_number_pad
+                            4 -> R.string.longclick_funciton_emoji
+                            else -> R.string.longclick_function_none
+                        }
+                    )
                     Toast.makeText(requireContext(), "저장되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -156,13 +170,15 @@ class FragmentSettingBasic : Fragment() {
                     enterkeyLongClickFunction = functionIndex
                     prefSetting.edit().putInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, functionIndex).apply()
 
-                    btnEnterKeyLongClickSetting.text = when (functionIndex) {
-                        0 -> "없음"
-                        1 -> "상용구"
-                        2 -> "커서키패드"
-                        10 -> "숫자키패드"
-                        else -> "없음"
-                    }
+                    btnEnterKeyLongClickSetting.text = requireActivity().resources.getString(
+                        when(functionIndex) {
+                            1 -> R.string.longclick_funciton_boilerplate
+                            2 -> R.string.longclick_funciton_cursor_pad
+                            3 -> R.string.longclick_funciton_number_pad
+                            4 -> R.string.longclick_funciton_emoji
+                            else -> R.string.longclick_function_none
+                        }
+                    )
                     Toast.makeText(requireContext(), "저장되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -182,19 +198,23 @@ class FragmentSettingBasic : Fragment() {
 
         dialogSettingSpecialkeyLongClick.initializeSetting(specialkeyLongClickFunction)
         dialogSettingEnterkeyLongClick.initializeSetting(enterkeyLongClickFunction)
-        btnSpecialKeyLongClickSetting.text = when (specialkeyLongClickFunction) {
-            0 -> "없음"
-            1 -> "상용구"
-            2 -> "커서키패드"
-            10 -> "숫자키패드"
-            else -> "없음"
-        }
-        btnEnterKeyLongClickSetting.text = when (enterkeyLongClickFunction) {
-            0 -> "없음"
-            1 -> "상용구"
-            2 -> "커서키패드"
-            10 -> "숫자키패드"
-            else -> "없음"
-        }
+        btnEnterKeyLongClickSetting.text = requireActivity().resources.getString(
+            when(enterkeyLongClickFunction) {
+                1 -> R.string.longclick_funciton_boilerplate
+                2 -> R.string.longclick_funciton_cursor_pad
+                3 -> R.string.longclick_funciton_number_pad
+                4 -> R.string.longclick_funciton_emoji
+                else -> R.string.longclick_function_none
+            }
+        )
+        btnSpecialKeyLongClickSetting.text = requireActivity().resources.getString(
+            when(specialkeyLongClickFunction) {
+                1 -> R.string.longclick_funciton_boilerplate
+                2 -> R.string.longclick_funciton_cursor_pad
+                3 -> R.string.longclick_funciton_number_pad
+                4 -> R.string.longclick_funciton_emoji
+                else -> R.string.longclick_function_none
+            }
+        )
     }
 }

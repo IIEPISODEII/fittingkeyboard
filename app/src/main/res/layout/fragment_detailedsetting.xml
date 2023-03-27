@@ -97,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <Button
@@ -105,7 +106,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="왼/오른 자판 분리"
+                        android:text="자판 왼/오른편 비대칭 사용"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -127,39 +128,12 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/tv_detailedsetting_description_for_gap"
-                        style="@style/FKButtonLightGrey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="자판 분리 사용"
-                        app:drawableEndCompat="@drawable/ic_baseline_help"
-                        app:drawableRightCompat="@drawable/ic_baseline_help" />
-
-                    <Switch
-                        android:id="@+id/switch_detailedsetting_gap"
-                        style="@style/FKSwitch"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.75"
-                        android:checked="@{(kbviewmodel.kbHasTopRowGap==View.VISIBLE) ? true : false}"
-                        android:paddingRight="20dp"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <Button
                         android:id="@+id/tv_detailedsetting_description_for_rightsize"
                         style="@style/FKButtonLightGrey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="오른편 자판 상대크기"
+                        android:text="오른편 자판 상대비율"
                         app:drawableEndCompat="@drawable/ic_baseline_help"
                         app:drawableRightCompat="@drawable/ic_baseline_help" />
 
@@ -192,6 +166,33 @@
                             android:textIsSelectable="false"
                             android:textSize="12sp" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/tv_detailedsetting_description_for_gap"
+                        style="@style/FKButtonLightGrey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="쿼티자판 윗줄 중앙 분리"
+                        app:drawableEndCompat="@drawable/ic_baseline_help"
+                        app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                    <Switch
+                        android:id="@+id/switch_detailedsetting_gap"
+                        style="@style/FKSwitch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75"
+                        android:checked="@{(kbviewmodel.kbHasTopRowGap==View.VISIBLE) ? true : false}"
+                        android:paddingRight="20dp"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
                 <LinearLayout

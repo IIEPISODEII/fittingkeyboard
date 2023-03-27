@@ -161,6 +161,9 @@ class FragmentSettingDetails : Fragment() {
         binding.tvDetailedsettingDescriptionForRightsize.setOnClickListener {
             Utilities.showHelpDialog(getString(R.string.keyboard_right_size_help_text), this.requireActivity().window!!.context)
         }
+        binding.tvDetailedsettingDescriptionForGap.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_top_row_gap_help_text), this.requireActivity().window!!.context)
+        }
         binding.tvDetailedsettingDescriptionForBottomMargin.setOnClickListener {
             Utilities.showHelpDialog(getString(R.string.keyboard_bot_margin_help_text), this.requireActivity().window!!.context)
         }
@@ -184,6 +187,9 @@ class FragmentSettingDetails : Fragment() {
         }
         binding.tvDetailedsettingDescriptionForAutoModeChange.setOnClickListener {
             Utilities.showHelpDialog(getString(R.string.keyboard_autoModeChange_help_text), this.requireActivity().window!!.context)
+        }
+        binding.btnDetailedsettingTitleForCustomizingToolbar.setOnClickListener {
+            Utilities.showHelpDialog(getString(R.string.keyboard_toolbar_setting_help_text), this.requireActivity().window!!.context)
         }
         return binding.root
     }

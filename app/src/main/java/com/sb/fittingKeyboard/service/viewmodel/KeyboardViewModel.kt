@@ -80,7 +80,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                         savedLangMode = 0
                     }
                     2 -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                         savedLangMode = _mode.value!!
                     }
                     3 -> {
@@ -139,7 +139,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                         savedLangMode = _mode.value!!
                     }
                     3 -> {
-                        _mode.postValue(3)
+                        _mode.value = 3
                     }
                     5, 7, 8, 9, 10 -> {
                         _mode.postValue(new)
@@ -191,6 +191,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
             7, 8, 9, 10 -> {
                 when(new) {
                     _mode.value -> {
+                        if (restart) return
                         _mode.postValue(savedLangMode)
                         savedLangMode = 3
                     }
@@ -226,7 +227,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
     private val _kbNumberRowVisibility = MutableLiveData(kbSettingSP?.getInt(Constants.KEYBOARD_TOGGLE_NUMBER, View.VISIBLE) ?: View.VISIBLE)
     val kbNumberRowVisibility: LiveData<Int>
         get() = _kbNumberRowVisibility
-    private val _kbMoeumSize = MutableLiveData(kbSettingSP?.getInt(Constants.KEYBOARD_MO_SIZE, 20) ?: 20)
+    private val _kbMoeumSize = MutableLiveData(kbSettingSP?.getInt(Constants.KEYBOARD_MO_SIZE, 40) ?: 40)
     val kbMoeumSize: LiveData<Int>
         get() = _kbMoeumSize
     private val _kbHasDivision = MutableLiveData(kbSettingSP?.getBoolean(Constants.KEYBOARD_DIVISION, true) ?: true)

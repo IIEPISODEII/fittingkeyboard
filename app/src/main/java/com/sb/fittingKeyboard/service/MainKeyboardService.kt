@@ -662,13 +662,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-        println("인풋타입 : ${currentInputEditorInfo.inputType}")
-        println("숫자타입 : ${inputTypeNumbers.contentDeepToString()}")
-        println("숫자: ${currentInputEditorInfo.inputType}")
         for (type in inputTypeTextFlags) {
             if (currentInputEditorInfo.inputType or type == currentInputEditorInfo.inputType) {
-
-                println("겹침? ${currentInputEditorInfo.inputType or type} vs $type")
                 vm.changeMode(new = 1, restart= true)
                 emojisViewPager.setCurrentItem(1, false)
                 return
@@ -885,14 +880,11 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     // 엔터키, 특수문자 전환 키를 LongClick할 경우 작동
     fun addFunction(addOn: Int): Boolean {
         when (addOn) {
-            1 -> {
-                vm.changeMode(7)
-            }
-            2 -> {
-                vm.changeMode(8)
-            }
-            else -> {
-            }
+            1 -> vm.changeMode(7)
+            2 -> vm.changeMode(8)
+            3 -> vm.changeMode(9)
+            4 -> vm.changeMode(10)
+            else -> {}
         }
         vibrateByButton()
         return true

@@ -38,7 +38,8 @@ class DialogSettingLongClickFunction : DialogFragment() {
                 0 -> R.id.radiobtn_settinglongclick_none
                 1 -> R.id.radiobtn_settinglongclick_boilerplate
                 2 -> R.id.radiobtn_settinglongclick_cursor_keypad
-                10 -> R.id.radiobtn_settinglongclick_number_keypad
+                3 -> R.id.radiobtn_settinglongclick_number_keypad
+                4 -> R.id.radiobtn_settinglongclick_emoji
                 else -> R.id.radiobtn_settinglongclick_none
             }
         )
@@ -47,7 +48,8 @@ class DialogSettingLongClickFunction : DialogFragment() {
                 R.id.radiobtn_settinglongclick_none -> 0
                 R.id.radiobtn_settinglongclick_boilerplate -> 1
                 R.id.radiobtn_settinglongclick_cursor_keypad -> 2
-                R.id.radiobtn_settinglongclick_number_keypad -> 10
+                R.id.radiobtn_settinglongclick_number_keypad -> 3
+                R.id.radiobtn_settinglongclick_emoji -> 4
                 else -> 0
             }
             onRadioButtonSelectListener?.onSelect(selectedFunction)

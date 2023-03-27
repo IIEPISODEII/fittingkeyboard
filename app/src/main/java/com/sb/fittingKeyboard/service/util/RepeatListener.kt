@@ -36,17 +36,18 @@ class RepeatListener(
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> {
+                view.isPressed = true
                 handler.removeCallbacks(handlerRunnable)
+                clickListener.onClick(view)
                 touchedView = view
                 touchedView!!.isPressed = true
                 if (view.id != com.sb.fittingKeyboard.R.id.btnSpecialSPACE) handler.postDelayed(handlerRunnable, initialInterval)
-                clickListener.onClick(view)
                 return false
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 handler.removeCallbacks(handlerRunnable)
                 if (touchedView == null) return false
-                else touchedView!!.isPressed = false
+                touchedView!!.isPressed = false
                 touchedView = null
                 return true
             }

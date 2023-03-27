@@ -56,6 +56,13 @@
             android:layout_height="50dp"
             android:text="숫자키패드"
             android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/radiobtn_settinglongclick_emoji"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="이모지"
+            android:textSize="18sp" />
     </RadioGroup>
 
     <Button
