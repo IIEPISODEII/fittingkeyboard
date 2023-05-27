@@ -29,7 +29,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/krbtnQ"
+                    android:id="@+id/btn_kr_qwerty_q"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -45,7 +45,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[0]}" />
 
                 <Button
-                    android:id="@+id/btnW"
+                    android:id="@+id/btn_kr_qwerty_w"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -61,7 +61,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[1]}" />
 
                 <Button
-                    android:id="@+id/btnE"
+                    android:id="@+id/btn_kr_qwerty_e"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -77,7 +77,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[2]}" />
 
                 <Button
-                    android:id="@+id/btnR"
+                    android:id="@+id/btn_kr_qwerty_r"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -93,7 +93,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[3]}" />
 
                 <Button
-                    android:id="@+id/btnT"
+                    android:id="@+id/btn_kr_qwerty_t"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -109,7 +109,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[4]}" />
 
                 <Button
-                    android:id="@+id/blank"
+                    android:id="@+id/btn_kr_qwerty_blank"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.35"
@@ -119,7 +119,7 @@
                     app:customTheme_view="@{6}" />
 
                 <Button
-                    android:id="@+id/btnY"
+                    android:id="@+id/btn_kr_qwerty_y"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -137,7 +137,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnU"
+                    android:id="@+id/btn_kr_qwerty_u"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -155,7 +155,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnI"
+                    android:id="@+id/btn_kr_qwerty_i"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -173,7 +173,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnO"
+                    android:id="@+id/btn_kr_qwerty_o"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -191,7 +191,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnP"
+                    android:id="@+id/btn_kr_qwerty_p"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -216,7 +216,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnA"
+                    android:id="@+id/btn_kr_qwerty_a"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -232,7 +232,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[10]}" />
 
                 <Button
-                    android:id="@+id/btnS"
+                    android:id="@+id/btn_kr_qwerty_s"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -248,7 +248,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[11]}" />
 
                 <Button
-                    android:id="@+id/btnD"
+                    android:id="@+id/btn_kr_qwerty_d"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -264,7 +264,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[12]}" />
 
                 <Button
-                    android:id="@+id/btnF"
+                    android:id="@+id/btn_kr_qwerty_f"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -280,7 +280,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[13]}" />
 
                 <Button
-                    android:id="@+id/btnG"
+                    android:id="@+id/btn_kr_qwerty_g"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -296,7 +296,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[14]}" />
 
                 <Button
-                    android:id="@+id/btnH"
+                    android:id="@+id/btn_kr_qwerty_h"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -314,7 +314,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnJ"
+                    android:id="@+id/btn_kr_qwerty_j"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -332,7 +332,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnK"
+                    android:id="@+id/btn_kr_qwerty_k"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -350,7 +350,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnL"
+                    android:id="@+id/btn_kr_qwerty_l"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -375,13 +375,12 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/btnSHIFT"
+                    android:id="@+id/imgbtn_kr_qwerty_shift"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1.3"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.changeMode(3)}"
                     android:scaleType="fitCenter"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
@@ -390,7 +389,7 @@
                     app:image="@{kbviewmodel.mode}" />
 
                 <Button
-                    android:id="@+id/btnZ"
+                    android:id="@+id/btn_kr_qwerty_z"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -406,7 +405,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[19]}" />
 
                 <Button
-                    android:id="@+id/btnX"
+                    android:id="@+id/btn_kr_qwerty_x"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -422,7 +421,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[20]}" />
 
                 <Button
-                    android:id="@+id/btnC"
+                    android:id="@+id/btn_kr_qwerty_c"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -438,7 +437,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[21]}" />
 
                 <Button
-                    android:id="@+id/btnV"
+                    android:id="@+id/btn_kr_qwerty_v"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -454,7 +453,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[22]}" />
 
                 <Button
-                    android:id="@+id/btnB"
+                    android:id="@+id/btn_kr_qwerty_b"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -472,7 +471,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnN"
+                    android:id="@+id/btn_kr_qwerty_n"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -490,7 +489,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <Button
-                    android:id="@+id/btnM"
+                    android:id="@+id/btn_kr_qwerty_m"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -508,7 +507,7 @@
                     app:weight_constant="@{1.0F}" />
 
                 <ImageButton
-                    android:id="@+id/btnDEL"
+                    android:id="@+id/imgbtn_kr_qwerty_del"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -530,11 +529,10 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnSPECIAL"
+                    android:id="@+id/btn_kr_qwerty_special"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".9"
-                    android:onClick="@{() -> kbservice.changeMode(5)}"
                     android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.kbSpecialKeyOnLongClickFunction)}"
                     android:text="!#$"
                     android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -546,7 +544,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/btnLANG"
+                    android:id="@+id/imgbtn_kr_qwerty_lang"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -561,7 +559,7 @@
                     app:customTheme_view="@{3}" />
 
                 <Button
-                    android:id="@+id/btnCOMMA"
+                    android:id="@+id/btn_kr_qwerty_comma"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:text=","
@@ -576,7 +574,7 @@
                     app:onTouch="@{kbservice.repeatListenerSpecials[0]}" />
 
                 <Button
-                    android:id="@+id/btnSPACE"
+                    android:id="@+id/btn_kr_qwerty_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -591,7 +589,7 @@
                     app:onTouch="@{kbservice.repeatListenerSpecials[1]}" />
 
                 <Button
-                    android:id="@+id/btnDOT"
+                    android:id="@+id/btn_kr_qwerty_dot"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:text="."
@@ -606,7 +604,7 @@
                     app:onTouch="@{kbservice.repeatListenerSpecials[2]}" />
 
                 <ImageButton
-                    android:id="@+id/btnENTER"
+                    android:id="@+id/imgbtn_kr_qwerty_enter"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
