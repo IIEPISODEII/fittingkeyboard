@@ -1,8 +1,11 @@
 package com.sb.fittingKeyboard.service.util
 
 import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageButton
+import com.sb.fittingKeyboard.R
 
 /**
  * A class, that can be used as a TouchListener on any view (e.g. a Button).
@@ -22,18 +25,26 @@ class RepeatListener(
     clickListener: View.OnClickListener?
 ) :
     View.OnTouchListener {
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
     private val normalInterval: Long
     private val clickListener: View.OnClickListener
     private var touchedView: View? = null
     private val handlerRunnable: Runnable = object : Runnable {
         override fun run() {
+            if (touchedView == null) return
+//            if (isIntercepted) {
+//                isIntercepted = false
+//                touchedView!!.isPressed = false
+//                touchedView = null
+//                return
+//            }
             handler.postDelayed(this, normalInterval)
             clickListener!!.onClick(touchedView)
         }
     }
 
     override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
+        view.performClick()
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> {
                 view.isPressed = true
@@ -41,15 +52,21 @@ class RepeatListener(
                 clickListener.onClick(view)
                 touchedView = view
                 touchedView!!.isPressed = true
-                if (view.id != com.sb.fittingKeyboard.R.id.btnSpecialSPACE) handler.postDelayed(handlerRunnable, initialInterval)
+                handler.postDelayed(handlerRunnable, initialInterval)
                 return false
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+            MotionEvent.ACTION_UP -> {
                 handler.removeCallbacks(handlerRunnable)
                 if (touchedView == null) return false
                 touchedView!!.isPressed = false
                 touchedView = null
                 return true
+            }
+            MotionEvent.ACTION_CANCEL -> {
+//                mOnIntercept?.invoke()
+                handler.removeCallbacks(handlerRunnable)
+                if (touchedView == null) return false
+                return false
             }
         }
         return false
@@ -71,5 +88,14 @@ class RepeatListener(
 
     fun changeInitialInterval(newInterval: Long) {
         initialInterval = newInterval
+    }
+
+    companion object {
+//        private var isIntercepted = false
+//
+//        private var mOnIntercept: (() -> Unit)? = null
+//        fun setOnIntercept(onIntercept: () -> Unit) {
+//            mOnIntercept = onIntercept
+//        }
     }
 }

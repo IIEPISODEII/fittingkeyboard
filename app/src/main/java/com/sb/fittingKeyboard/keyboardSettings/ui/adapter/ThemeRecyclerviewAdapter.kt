@@ -19,6 +19,7 @@ class ThemeRecyclerAdapter(private val themeList: List<KeyboardThemesDataHolder>
 
     fun initializeCurrentTheme(position: Int) {
         selectedPosition = position
+        notifyItemChanged(selectedPosition)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThemeDataViewHolder {

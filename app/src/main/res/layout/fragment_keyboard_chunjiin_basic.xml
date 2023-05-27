@@ -30,7 +30,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnChunL"
+                    android:id="@+id/btn_kr_chun_l"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -46,7 +46,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunK"
+                    android:id="@+id/btn_kr_chun_k"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -62,7 +62,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunM"
+                    android:id="@+id/btn_kr_chun_m"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -78,7 +78,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/btnChunDEL"
+                    android:id="@+id/imgbtn_kr_chun_del"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -100,7 +100,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnChunRZ"
+                    android:id="@+id/btn_kr_chun_rz"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -116,7 +116,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunSF"
+                    android:id="@+id/btn_kr_chun_sf"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -132,7 +132,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunEX"
+                    android:id="@+id/btn_kr_chun_ex"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -148,7 +148,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunSPACE"
+                    android:id="@+id/btn_kr_chun_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -171,7 +171,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnChunQV"
+                    android:id="@+id/btn_kr_chun_qv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -187,7 +187,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunTG"
+                    android:id="@+id/btn_kr_chun_tg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -203,7 +203,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunWC"
+                    android:id="@+id/btn_kr_chun_wc"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -219,7 +219,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/btnChunENTER"
+                    android:id="@+id/imgbtn_kr_chun_enter"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -242,7 +242,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnChunSPECIAL"
+                    android:id="@+id/btn_kr_chun_special"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
@@ -258,7 +258,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/btnChunLANG"
+                    android:id="@+id/imgbtn_kr_chun_lang"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -273,7 +273,7 @@
                     app:customTheme_view="@{3}" />
 
                 <Button
-                    android:id="@+id/btnChunDA"
+                    android:id="@+id/btn_kr_chun_da"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -289,7 +289,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/btnChunInit"
+                    android:id="@+id/imgbtn_kr_chun_initialize"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -304,7 +304,7 @@
                     app:customTheme_view="@{1}" />
 
                 <Button
-                    android:id="@+id/btnChunDOT"
+                    android:id="@+id/btn_kr_chun_dot"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
@@ -321,7 +321,7 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
-                    android:id="@+id/btnChunAT"
+                    android:id="@+id/btn_kr_chun_at"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"

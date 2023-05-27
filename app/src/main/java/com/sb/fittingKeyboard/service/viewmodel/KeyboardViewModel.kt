@@ -37,7 +37,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
     val orientation: LiveData<Orientation>
         get() = _orientation
     fun changeOrientation(config: Int) {
-        _orientation.postValue(if (config == Configuration.ORIENTATION_PORTRAIT) Orientation.VERTICAL else Orientation.HORIZONTAL)
+        _orientation.value = if (config == Configuration.ORIENTATION_PORTRAIT) Orientation.VERTICAL else Orientation.HORIZONTAL
     }
 
     private var _isSelecting: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -58,16 +58,16 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
             0 -> {
                 when (new) {
                     1 -> {
-                        _mode.postValue(2)
+                        _mode.value = 2
                         savedLangMode = 2
                     }
                     3 -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                         savedLangMode = new
                     }
                     5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                     else -> return
                 }
@@ -76,7 +76,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                 when (new) {
                     1 -> {
                         if (restart) return
-                        _mode.postValue(0)
+                        _mode.value = 0
                         savedLangMode = 0
                     }
                     2 -> {
@@ -84,12 +84,12 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                         savedLangMode = _mode.value!!
                     }
                     3 -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                         savedLangMode = new
                     }
                     5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                     else -> return
                 }
@@ -98,16 +98,16 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                 when (new) {
                     1 -> {
                         if (restart) return
-                        _mode.postValue(1)
+                        _mode.value = 1
                         savedLangMode = 1
                     }
                     3 -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                         savedLangMode = new
                     }
                     5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                     else -> return
                 }
@@ -116,16 +116,16 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                 when (new) {
                     1 -> {
                         if (restart) return
-                        if (kbHasAutoCapitalization.value == true) _mode.postValue(new)
-                        else _mode.postValue(2)
+                        if (kbHasAutoCapitalization.value == true) _mode.value = new
+                        else _mode.value = 2
                         savedLangMode = new
                     }
                     3 -> {
-                        _mode.postValue(4)
+                        _mode.value = 4
                     }
                     5, 7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                     else -> return
                 }
@@ -134,15 +134,15 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                 when (new) {
                     1 -> {
                         if (restart) return
-                        if (kbHasAutoCapitalization.value == true) _mode.postValue(new)
-                        else _mode.postValue(2)
+                        if (kbHasAutoCapitalization.value == true) _mode.value = new
+                        else _mode.value = 2
                         savedLangMode = _mode.value!!
                     }
                     3 -> {
-                        _mode.value = 3
+                        _mode.value = new
                     }
                     5, 7, 8, 9, 10 -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                         savedLangMode = 3
                     }
                     else -> return
@@ -152,18 +152,18 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                 when (new) {
                     1, 3 -> {
                         if (savedLangMode == 1 || savedLangMode == 2) {
-                            if (kbHasAutoCapitalization.value == true) _mode.postValue(1)
-                            else _mode.postValue(2)
+                            if (kbHasAutoCapitalization.value == true) _mode.value = 1
+                            else _mode.value = 2
                         }
-                        else _mode.postValue(savedLangMode)
+                        else _mode.value = savedLangMode
                         savedLangMode = _mode.value!!
                     }
                     6 -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                     7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                     else -> return
                 }
@@ -172,35 +172,35 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                 when (new) {
                     1, 3 -> {
                         if (savedLangMode == 1 || savedLangMode == 2) {
-                            if (kbHasAutoCapitalization.value == true) _mode.postValue(1)
-                            else _mode.postValue(2)
+                            if (kbHasAutoCapitalization.value == true) _mode.value = 1
+                            else _mode.value = 2
                         }
-                        else _mode.postValue(new)
+                        else _mode.value = new
                         savedLangMode = _mode.value!!
                     }
                     6 -> {
-                        _mode.postValue(5)
+                        _mode.value = 5
                     }
                     7, 8, 9, 10 -> {
                         savedLangMode = _mode.value!!
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                     else -> return
                 }
             }
             7, 8, 9, 10 -> {
                 when(new) {
-                    _mode.value -> {
+                    7, 8, 9, 10 -> {
                         if (restart) return
-                        _mode.postValue(savedLangMode)
+                        _mode.value = savedLangMode
                         savedLangMode = 3
                     }
                     0, 1, 2, 3, 4 -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                         savedLangMode = _mode.value!!
                     }
                     else -> {
-                        _mode.postValue(new)
+                        _mode.value = new
                     }
                 }
             }
@@ -307,7 +307,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
             Constants.KEYBOARD_HEIGHT -> _kbHeight.postValue(pref.getInt(key, 1))
             Constants.KEYBOARD_BOTTOM_MARGIN -> _kbBottomMargin.postValue(pref.getInt(key, 0))
             Constants.KEYBOARD_FONT_SIZE -> _kbFontSize.postValue(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, pref.getInt(key, 16).toFloat(), application.resources.displayMetrics).toInt())
-            Constants.KEYBOARD_FONT_TYPE -> _kbFontType.postValue(pref.getInt(key, 0))
+            Constants.KEYBOARD_FONT_TYPE -> { _kbFontType.postValue(pref.getInt(key, 0)) }
             Constants.KEYBOARD_TOGGLE_NUMBER -> _kbNumberRowVisibility.postValue(pref.getInt(key, View.VISIBLE))
             Constants.KEYBOARD_MO_SIZE -> _kbMoeumSize.postValue(pref.getInt(key, 20))
             Constants.KEYBOARD_DIVISION -> _kbHasDivision.postValue(pref.getBoolean(key, true))
@@ -357,13 +357,13 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
     init {
         _kbResultBottomMargin.apply {
             addSource(kbBottomMargin) {
-                this.postValue(
+                this.value = (
                     if (orientation.value == Orientation.HORIZONTAL) 0
                     else kbBottomMargin.value
                 )
             }
             addSource(orientation) {
-                this.postValue(
+                this.setValue(
                     if (orientation.value == Orientation.HORIZONTAL) 0
                     else kbBottomMargin.value
                 )
@@ -372,34 +372,34 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
 
         _kbResultedHeight.apply {
             addSource(kbHeight) {
-                this.postValue(setKbdHeightsInternally())
+                this.setValue(setKbdHeightsInternally())
             }
             addSource(mode) {
-                this.postValue(setKbdHeightsInternally())
+                this.setValue(setKbdHeightsInternally())
             }
             addSource(kbBottomMargin) {
-                this.postValue(setKbdHeightsInternally())
+                this.setValue(setKbdHeightsInternally())
             }
             addSource(kbNumberRowVisibility) {
-                this.postValue(setKbdHeightsInternally())
+                this.setValue(setKbdHeightsInternally())
             }
             addSource(orientation) {
-                this.postValue(setKbdHeightsInternally())
+                this.setValue(setKbdHeightsInternally())
             }
         }
 
         _kbRightSize.apply {
             addSource(kbHasDivision) {
-                this.postValue(getRightSize())
+                this.setValue(getRightSize())
             }
             addSource(kbMoeumSize) {
-                this.postValue(getRightSize())
+                this.setValue(getRightSize())
             }
         }
 
         _kbEmojiColumns.addSource(orientation) {
             val emojiPixelSize: Float = (Resources.getSystem().displayMetrics.density * 50 + 0.5).toFloat()
-            _kbEmojiColumns.postValue((Resources.getSystem().displayMetrics.widthPixels.toFloat()/emojiPixelSize).toInt())
+            _kbEmojiColumns.value = (Resources.getSystem().displayMetrics.widthPixels.toFloat()/emojiPixelSize).toInt()
         }
 
         kbSettingSP?.registerOnSharedPreferenceChangeListener(onPrefSettingChangeListener)

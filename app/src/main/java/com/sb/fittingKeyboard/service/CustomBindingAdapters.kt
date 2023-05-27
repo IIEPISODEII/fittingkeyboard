@@ -1,6 +1,7 @@
 package com.sb.fittingKeyboard.service
 
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Build
 import android.view.View
@@ -31,18 +32,20 @@ object CustomBindingAdapters {
     @JvmStatic
     @BindingAdapter("customFontStyle", "fontBold")
     fun setFontStyle(view: View, fontType: Int, mode: Int) {
+        val mContext = view.context
+
         val typeFace = when (fontType) {
-            1 -> ResourcesCompat.getFont(view.context, R.font.aritta)
-            2 -> ResourcesCompat.getFont(view.context, R.font.dovemayo)
-            3 -> ResourcesCompat.getFont(view.context, R.font.imcresoojin)
-            4 -> ResourcesCompat.getFont(view.context, R.font.maplestorylight)
-            5 -> ResourcesCompat.getFont(view.context, R.font.nanumbarungothic)
-            6 -> ResourcesCompat.getFont(view.context, R.font.nanumsquarer)
-            7 -> ResourcesCompat.getFont(view.context, R.font.seoulnamsan)
-            8 -> ResourcesCompat.getFont(view.context, R.font.tttogether)
-            9 -> ResourcesCompat.getFont(view.context, R.font.cookierun)
-            10 -> ResourcesCompat.getFont(view.context, R.font.tmoney)
-            11 -> ResourcesCompat.getFont(view.context, R.font.tadaktadak)
+            1 -> ResourcesCompat.getFont(mContext, R.font.aritta)
+            2 -> ResourcesCompat.getFont(mContext, R.font.dovemayo)
+            3 -> ResourcesCompat.getFont(mContext, R.font.imcresoojin)
+            4 -> ResourcesCompat.getFont(mContext, R.font.maplestorylight)
+            5 -> ResourcesCompat.getFont(mContext, R.font.nanumbarungothic)
+            6 -> ResourcesCompat.getFont(mContext, R.font.nanumsquarer)
+            7 -> ResourcesCompat.getFont(mContext, R.font.seoulnamsan)
+            8 -> ResourcesCompat.getFont(mContext, R.font.tttogether)
+            9 -> ResourcesCompat.getFont(mContext, R.font.cookierun)
+            10 -> ResourcesCompat.getFont(mContext, R.font.tmoney)
+            11 -> ResourcesCompat.getFont(mContext, R.font.tadaktadak)
             else -> Typeface.DEFAULT
         }
 

@@ -29,7 +29,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnDanQ"
+                    android:id="@+id/btn_kr_danmo_q"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -45,7 +45,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[89]}" />
 
                 <Button
-                    android:id="@+id/btnDanW"
+                    android:id="@+id/btn_kr_danmo_w"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -61,7 +61,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[90]}" />
 
                 <Button
-                    android:id="@+id/btnDanE"
+                    android:id="@+id/btn_kr_danmo_e"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -77,7 +77,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[91]}" />
 
                 <Button
-                    android:id="@+id/btnDanR"
+                    android:id="@+id/btn_kr_danmo_r"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -93,7 +93,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[92]}" />
 
                 <Button
-                    android:id="@+id/btnDanT"
+                    android:id="@+id/btn_kr_danmo_t"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -109,7 +109,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[93]}" />
 
                 <Button
-                    android:id="@+id/blank"
+                    android:id="@+id/btn_kr_danmo_blank"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.35"
@@ -119,7 +119,7 @@
                     app:customTheme_view="@{6}" />
 
                 <Button
-                    android:id="@+id/btnDanH"
+                    android:id="@+id/btn_kr_danmo_h"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -135,7 +135,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[94]}" />
 
                 <Button
-                    android:id="@+id/btnDanO"
+                    android:id="@+id/btn_kr_danmo_o"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -151,7 +151,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[95]}" />
 
                 <Button
-                    android:id="@+id/btnDanP"
+                    android:id="@+id/btn_kr_danmo_p"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -174,7 +174,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnDanA"
+                    android:id="@+id/btn_kr_danmo_a"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -190,7 +190,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[97]}" />
 
                 <Button
-                    android:id="@+id/btnDanS"
+                    android:id="@+id/btn_kr_danmo_s"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -206,7 +206,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[98]}" />
 
                 <Button
-                    android:id="@+id/btnDanD"
+                    android:id="@+id/btn_kr_danmo_d"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -222,7 +222,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[99]}" />
 
                 <Button
-                    android:id="@+id/btnDanF"
+                    android:id="@+id/btn_kr_danmo_f"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -238,7 +238,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[100]}" />
 
                 <Button
-                    android:id="@+id/btnDanG"
+                    android:id="@+id/btn_kr_danmo_g"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -254,7 +254,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[101]}" />
 
                 <Button
-                    android:id="@+id/btnDanJ"
+                    android:id="@+id/btn_kr_danmo_j"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -270,7 +270,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[102]}" />
 
                 <Button
-                    android:id="@+id/btnDanK"
+                    android:id="@+id/btn_kr_danmo_k"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -286,7 +286,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[103]}" />
 
                 <Button
-                    android:id="@+id/btnDanL"
+                    android:id="@+id/btn_kr_danmo_l"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -309,7 +309,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/blank2"
+                    android:id="@+id/btn_kr_danmo_blank2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
@@ -318,7 +318,7 @@
                     app:customTheme_view="@{6}" />
 
                 <Button
-                    android:id="@+id/btnDanZ"
+                    android:id="@+id/btn_kr_danmo_z"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -334,7 +334,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[105]}" />
 
                 <Button
-                    android:id="@+id/btnDanX"
+                    android:id="@+id/btn_kr_danmo_x"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -350,7 +350,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[106]}" />
 
                 <Button
-                    android:id="@+id/btnDanC"
+                    android:id="@+id/btn_kr_danmo_c"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -366,7 +366,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[107]}" />
 
                 <Button
-                    android:id="@+id/btnDanV"
+                    android:id="@+id/btn_kr_danmo_v"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -382,7 +382,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[108]}" />
 
                 <Button
-                    android:id="@+id/btnDanN"
+                    android:id="@+id/btn_kr_danmo_n"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -398,7 +398,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[109]}" />
 
                 <Button
-                    android:id="@+id/btnDanM"
+                    android:id="@+id/btn_kr_danmo_m"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -414,7 +414,7 @@
                     app:onTouch="@{kbservice.repeatListenerChars[110]}" />
 
                 <ImageButton
-                    android:id="@+id/btnDanDEL"
+                    android:id="@+id/imgbtn_kr_danmo_del"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
@@ -436,7 +436,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnDanSPECIAL"
+                    android:id="@+id/btn_kr_danmo_special"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".9"
@@ -452,13 +452,12 @@
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
-                    android:id="@+id/btnDanLANG"
+                    android:id="@+id/imgbtn_kr_danmo_lang"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".9"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.changeMode(1)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -467,7 +466,7 @@
                     app:customTheme_view="@{3}" />
 
                 <Button
-                    android:id="@+id/btnDanCOMMA"
+                    android:id="@+id/btn_kr_danmo_comma"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:text=","
@@ -482,7 +481,7 @@
                     app:onTouch="@{kbservice.repeatListenerSpecials[14]}" />
 
                 <Button
-                    android:id="@+id/btnDanSPACE"
+                    android:id="@+id/btn_kr_danmo_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
@@ -492,12 +491,12 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
+                    app:onTouch="@{kbservice.repeatListenerSpecials[15]}"
                     app:fontBold="@{kbviewmodel.mode}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[15]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"/>
 
                 <Button
-                    android:id="@+id/btnDanDOT"
+                    android:id="@+id/btn_kr_danmo_dot"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:text="."
@@ -512,7 +511,7 @@
                     app:onTouch="@{kbservice.repeatListenerSpecials[16]}" />
 
                 <ImageButton
-                    android:id="@+id/btnDanENTER"
+                    android:id="@+id/imgbtn_kr_danmo_enter"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"

@@ -17,7 +17,7 @@ import com.sb.fittingKeyboard.service.koreanAutomata.HanguelChunjiin
 import com.sb.fittingKeyboard.service.koreanAutomata.HanguelDanmoum
 import com.sb.fittingKeyboard.service.koreanAutomata.HanguelNARATGUL
 import com.sb.fittingKeyboard.service.koreanAutomata.HanguelQWERTY
-import com.sb.fittingKeyboard.service.util.KeyboardUtil
+import com.sb.fittingKeyboard.service.util.decToHex
 
 class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
     fun inputChar(
@@ -59,7 +59,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                         var c1: String?
                         var c2: String?
                         when (button.id) {
-                            in arrayOf(R.id.btnChunK, R.id.btnChunKa) -> {
+                            in arrayOf(R.id.btn_kr_chun_k, R.id.btn_kr_chun_left_k) -> {
                                 val chars =
                                     HanguelChunjiin.composeChar('ᆞ', System.currentTimeMillis())
                                 c1 = chars.commited
@@ -90,14 +90,14 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                         }
                     }
                     Constants.IME_KR_FLAG_NARAT -> {
-                        var c1: String? = null
-                        var c2: String? = null
+                        val c1: String?
+                        val c2: String?
 
-                        if (button.id == R.id.btnNaADD) {
+                        if (button.id == R.id.btn_kr_narat_add) {
                             val chars = HanguelNARATGUL.composeChar('ᆞ')
                             c1 = chars.commited
                             c2 = chars.composing
-                        } else if (button.id == R.id.btnNaSHIFT) {
+                        } else if (button.id == R.id.btn_kr_narat_shift) {
                             val chars = HanguelNARATGUL.composeChar('ᆢ')
                             c1 = chars.commited
                             c2 = chars.composing
@@ -213,7 +213,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
         clearComposing()
         mIMEService.currentInputConnection.finishComposingText()
         val eventTime = SystemClock.uptimeMillis()
-        when (KeyboardUtil.decToHex(mIMEService.currentInputEditorInfo.imeOptions).last()) {
+        when (decToHex(mIMEService.currentInputEditorInfo.imeOptions).last()) {
             '2' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
             '3' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_SEARCH)
             '5' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_NEXT)

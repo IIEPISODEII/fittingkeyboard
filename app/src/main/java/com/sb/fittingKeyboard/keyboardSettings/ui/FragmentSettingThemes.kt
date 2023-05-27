@@ -62,8 +62,8 @@ class FragmentSettingThemes: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentView = inflater.inflate(R.layout.fragment_themesetting, container, false)
 
-        initializeSettingValue()
         loadData()
+        initializeSettingValue()
         btnShowDefaultFontColorPicker.setOnClickListener {
             dialogDefaultFontColor.show(requireActivity().supportFragmentManager, "colorPicker")
         }
@@ -247,7 +247,7 @@ class FragmentSettingThemes: Fragment() {
         })
         dialogFontTypePicker.setOnCheckFontTypeListener(object: DialogSettingFontTypePicker.OnCheckFontTypeListener {
             override fun onCheck(index: Int) {
-                prefSetting.getInt(Constants.KEYBOARD_FONT_TYPE, index)
+                prefSetting.edit().putInt(Constants.KEYBOARD_FONT_TYPE, index).apply()
             }
         })
     }

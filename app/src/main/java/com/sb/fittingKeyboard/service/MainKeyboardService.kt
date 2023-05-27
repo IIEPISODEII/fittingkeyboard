@@ -7,10 +7,14 @@ import android.content.res.Resources
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import android.os.Handler
+import android.os.SystemClock
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.InputType
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
@@ -35,9 +39,7 @@ import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerAdapter
 import com.sb.fittingKeyboard.service.emoji.EmojiRecyclerLiveDataAdapter
 import com.sb.fittingKeyboard.service.emoji.EmojiViewPagerAdapter
 import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
-import com.sb.fittingKeyboard.service.util.EmojiCollections
-import com.sb.fittingKeyboard.service.util.KeyboardUtil
-import com.sb.fittingKeyboard.service.util.RepeatListener
+import com.sb.fittingKeyboard.service.util.*
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 import org.json.JSONArray
 
@@ -48,9 +50,9 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
     private lateinit var qwertyKrNormalBinding: FragmentKeyboardQwertyKrNormalBinding
     private lateinit var chunjiinBinding: FragmentKeyboardChunjiinBasicBinding
-    private lateinit var chunAKBBinding: FragmentKeyboardChunjiinAmbiBinding
+    private lateinit var chunLeftKBBinding: FragmentKeyboardChunjiinLeftBinding
     private lateinit var naratguelBinding: FragmentKeyboardNaratgulBasicBinding
-    private lateinit var danmoumBinding: FragmentKeyboardDanmoumBinding
+    private lateinit var danmoumKBBinding: FragmentKeyboardDanmoumBinding
     private lateinit var specialKBBinding: FragmentKeyboardQwertySpecialBinding
     private lateinit var numberBinding: FragmentKeyboardNumberBinding
     private lateinit var boilerPlateBinding: FragmentBoilerplatetextBinding
@@ -286,15 +288,15 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private var latestMode = 3
     private var savedCursorPosition = 0
     private val emojiAdapterList = listOf(
-        EmojiRecyclerAdapter(EmojiCollections.e1SmileysAndEmoticons),
-        EmojiRecyclerAdapter(EmojiCollections.e2PeopleAndBody),
-        EmojiRecyclerAdapter(EmojiCollections.e3AnimalsAndNature),
-        EmojiRecyclerAdapter(EmojiCollections.e4FoodAndDrink),
-        EmojiRecyclerAdapter(EmojiCollections.e5TravelAndPlaces),
-        EmojiRecyclerAdapter(EmojiCollections.e6Activities),
-        EmojiRecyclerAdapter(EmojiCollections.e7Objects),
-        EmojiRecyclerAdapter(EmojiCollections.e8Symbols),
-        EmojiRecyclerAdapter(EmojiCollections.e9Flags)
+        EmojiRecyclerAdapter(e1SmileysAndEmoticons),
+        EmojiRecyclerAdapter(e2PeopleAndBody),
+        EmojiRecyclerAdapter(e3AnimalsAndNature),
+        EmojiRecyclerAdapter(e4FoodAndDrink),
+        EmojiRecyclerAdapter(e5TravelAndPlaces),
+        EmojiRecyclerAdapter(e6Activities),
+        EmojiRecyclerAdapter(e7Objects),
+        EmojiRecyclerAdapter(e8Symbols),
+        EmojiRecyclerAdapter(e9Flags)
     )
     private var emojiPageChangeCallback: OnPageChangeCallback? = null
     private val emojiPagerAdapter: EmojiViewPagerAdapter
@@ -330,8 +332,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         val cursorKBView = layoutInflater.inflate(R.layout.fragment_cursorkeypad, null)
         val numberKBView = layoutInflater.inflate(R.layout.fragment_keyboard_number, null)
         val chunjiinKBView = layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_basic, null)
-        val chunjiinKBViewAmbi =
-            layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_ambi, null)
+        val chunjiinLeftKBView =
+            layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_left, null)
         val danmoKBView = layoutInflater.inflate(R.layout.fragment_keyboard_danmoum, null)
         val naratguelKBView =
             layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null)
@@ -352,18 +354,18 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         naratguelBinding.setVariable(BR.kbservice, this)
         naratguelBinding.lifecycleOwner = this
         naratguelBinding.kbviewmodel = vm
-        danmoumBinding = DataBindingUtil.bind(danmoKBView)!!
-        danmoumBinding.setVariable(BR.kbservice, this)
-        danmoumBinding.lifecycleOwner = this
-        danmoumBinding.kbviewmodel = vm
+        danmoumKBBinding = DataBindingUtil.bind(danmoKBView)!!
+        danmoumKBBinding.setVariable(BR.kbservice, this)
+        danmoumKBBinding.lifecycleOwner = this
+        danmoumKBBinding.kbviewmodel = vm
         specialKBBinding = DataBindingUtil.bind(qwertySpecialKBView)!!
         specialKBBinding.setVariable(BR.kbservice, this)
         specialKBBinding.lifecycleOwner = this
         specialKBBinding.kbviewmodel = vm
-        chunAKBBinding = DataBindingUtil.bind(chunjiinKBViewAmbi)!!
-        chunAKBBinding.setVariable(BR.kbservice, this)
-        chunAKBBinding.lifecycleOwner = this
-        chunAKBBinding.kbviewmodel = vm
+        chunLeftKBBinding = DataBindingUtil.bind(chunjiinLeftKBView)!!
+        chunLeftKBBinding.setVariable(BR.kbservice, this)
+        chunLeftKBBinding.lifecycleOwner = this
+        chunLeftKBBinding.kbviewmodel = vm
         boilerPlateBinding = DataBindingUtil.bind(boilerPlateKBView)!!
         boilerPlateBinding.setVariable(BR.kbservice, this)
         boilerPlateBinding.lifecycleOwner = this
@@ -408,7 +410,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 when (it) {
                     Constants.IME_KR_FLAG_QWERTY -> qwertyKrNormalKBView
                     Constants.IME_KR_FLAG_CHUN -> chunjiinKBView
-                    Constants.IME_KR_FLAG_CHUN_AMBI -> chunjiinKBViewAmbi
+                    Constants.IME_KR_FLAG_CHUN_AMBI -> chunjiinLeftKBView
                     Constants.IME_KR_FLAG_NARAT -> naratguelKBView
                     Constants.IME_KR_FLAG_DAN -> danmoKBView
                     else -> qwertyKrNormalKBView
@@ -510,7 +512,9 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         vm.kbFontSize.observe(this) { boilerplateTextsAdapter.setFontSize(it) }
         vm.kbNormalKeysFontColor.observe(this) { boilerplateTextsAdapter.setFontColor(it) }
-        vm.kbFontType.observe(this) { boilerplateTextsAdapter.setFontType(it) }
+        vm.kbFontType.observe(this) {
+            boilerplateTextsAdapter.setFontType(it)
+        }
         vm.kbLeftSideMargin.observe(this) {
             val lPNum = kbNumLeftSide.layoutParams
             val lPChar = kbCharLeftSide.layoutParams
@@ -573,7 +577,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             (emojisViewPager.adapter as EmojiViewPagerAdapter).changeAdapter(arr)
         }
 
-        val emojiIconClickListeners = MutableList(KeyboardUtil.emojiIconList.size) { View.OnClickListener { } }
+        val emojiIconClickListeners = MutableList(emojiIconList.size) { View.OnClickListener { } }
         for (i in emojiIconClickListeners.indices) {
             emojiIconClickListeners[i] = View.OnClickListener {
                 emojisViewPager.currentItem = i
@@ -581,7 +585,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
 
         customEmojiIndicator.createIconPanel(
-            iconsList = KeyboardUtil.emojiIconList,
+            iconsList = emojiIconList,
             position = 1,
             clickListeners = emojiIconClickListeners
         )
@@ -616,6 +620,17 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             }
         }
         emojisViewPager.registerOnPageChangeCallback(emojiPageChangeCallback!!)
+
+        qwertyEnNormalBinding.imgbtnEnLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(3) }))
+        qwertyEnNormalBinding.imgbtnEnShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(1) }))
+        qwertyEnNormalBinding.btnEnSpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(5) }))
+        qwertyKrNormalBinding.imgbtnKrQwertyLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(1) }))
+        qwertyKrNormalBinding.imgbtnKrQwertyShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(3) }))
+        qwertyKrNormalBinding.btnKrQwertySpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(5) }))
+        specialKBBinding.imgbtnSpecialLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(1) }))
+        specialKBBinding.imgbtnSpecialShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(6) }))
+        specialKBBinding.btnSpecialSpace.setOnTouchListener(ButtonTouchListener(actionDownEvent = { view, _ -> singleListenerSpecialSpace.onClick(view) }))
+        danmoumKBBinding.imgbtnKrDanmoLang.setOnTouchListener(ButtonTouchListener(actionDownEvent =  {_, _ -> changeMode(1)} ))
 
         return kbdLayout
     }
@@ -987,5 +1002,42 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
 
     private fun changeDpToPx(dp: Int): Int {
         return (dp * Resources.getSystem().displayMetrics.density).toInt()
+    }
+
+    inner class ButtonTouchListener(
+        private val actionCancelOrUpEvent: ((View, MotionEvent) -> Unit)? = null,
+        private val actionDownEvent: ((View, MotionEvent) -> Unit)? = null
+    ): OnTouchListener {
+        override fun onTouch(view: View, motionEvent: MotionEvent?): Boolean {
+            if (motionEvent == null) return false
+            view.performClick()
+            when (motionEvent.action) {
+                MotionEvent.ACTION_CANCEL -> {
+                    view.isPressed = false
+                    val downTime = System.currentTimeMillis()
+                    view.dispatchTouchEvent(MotionEvent.obtain(
+                        downTime,
+                        downTime+20L,
+                        MotionEvent.ACTION_UP,
+                        view.x,
+                        view.y,
+                        0
+                    ))
+//                    RepeatListener.setInterception(true)
+                    actionCancelOrUpEvent?.invoke(view, motionEvent)
+                }
+                MotionEvent.ACTION_UP -> {
+                    view.isPressed = false
+                    actionCancelOrUpEvent?.invoke(view, motionEvent)
+                }
+                MotionEvent.ACTION_DOWN -> {
+                    view.isPressed = true
+                    Handler(mainLooper).postDelayed({
+                        actionDownEvent?.invoke(view, motionEvent)
+                    }, 30L)
+                }
+            }
+            return true
+        }
     }
 }

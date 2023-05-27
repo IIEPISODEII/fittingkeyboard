@@ -14,7 +14,7 @@
 
         <variable
             name="util"
-            type="com.sb.fittingKeyboard.service.util.KeyboardUtil" />
+            type="com.sb.fittingKeyboard.service.util.KeyboardUtilKt" />
     </data>
 
     <androidx.emoji.widget.EmojiButton
