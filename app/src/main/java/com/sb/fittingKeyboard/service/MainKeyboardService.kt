@@ -413,7 +413,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             }
         }
         vm.inputTypeState.observe(this) {
-            println("바뀜: $it")
             when (it) {
                 KeyboardViewModel.InputTypeState.EN_BOLD_UPPER, KeyboardViewModel.InputTypeState.EN_UPPER, KeyboardViewModel.InputTypeState.EN_LOWER -> {
                     if (latestInputTypeState == it) return@observe
@@ -673,14 +672,17 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
         for (type in inputTypeTextFlags) {
             if (currentInputEditorInfo.inputType or type == currentInputEditorInfo.inputType) {
-                println("리스타트: ${decToHex(currentInputEditorInfo.inputType)}")
                 vm.setInputTypeState(newState = KeyboardViewModel.InputTypeState.EN_UPPER, restart= true)
                 emojisViewPager.setCurrentItem(1, false)
                 return
             }
         }
-        println("onStartInputView: 모드 9로 바꿈")
-        vm.setInputTypeState(newState = KeyboardViewModel.InputTypeState.NUMBER, restart = true)
+        for (type in inputTypeNumbers) {
+            if (currentInputEditorInfo.inputType or type == currentInputEditorInfo.inputType) {
+                vm.setInputTypeState(newState = KeyboardViewModel.InputTypeState.NUMBER, restart = true)
+                return
+            }
+        }
         emojisViewPager.setCurrentItem(1, false)
     }
 

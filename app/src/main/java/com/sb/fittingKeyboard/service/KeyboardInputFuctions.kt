@@ -212,7 +212,6 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
         clearComposing()
         mIMEService.currentInputConnection.finishComposingText()
         val eventTime = SystemClock.uptimeMillis()
-        println("엔터키 눌렀을 때: ${decToHex(mIMEService.currentInputEditorInfo.imeOptions) }")
         when (decToHex(mIMEService.currentInputEditorInfo.imeOptions).last()) {
             '2' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
             '3' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_SEARCH)
