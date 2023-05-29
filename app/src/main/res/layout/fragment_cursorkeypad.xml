@@ -9,6 +9,8 @@
             name="kbviewmodel"
             type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
+        <import type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState" />
+
         <variable
             name="kbservice"
             type="com.sb.fittingKeyboard.service.MainKeyboardService" />
@@ -41,7 +43,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
@@ -56,7 +58,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
@@ -71,7 +73,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
             </LinearLayout>
 
@@ -93,7 +95,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
@@ -175,7 +177,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
@@ -252,7 +254,7 @@
                     android:layout_weight=".5"
                     android:elevation="2dp"
                     android:gravity="center"
-                    android:onClick="@{() -> kbservice.changeMode(3)}"
+                    android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.KR_NORMAL)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_kbd_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -272,7 +274,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[21]}" />
 

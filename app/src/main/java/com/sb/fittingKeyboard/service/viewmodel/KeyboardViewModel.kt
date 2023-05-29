@@ -14,6 +14,17 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.sb.fittingKeyboard.Constants
 import org.json.JSONArray
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.EN_BOLD_UPPER
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.EN_UPPER
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.EN_LOWER
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.KR_NORMAL
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.KR_SHIFT
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.SPECIAL_FIRST
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.SPECIAL_SECOND
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.BOILERPLATE
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.CURSOR
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.NUMBER
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.EMOJI
 
 class KeyboardViewModel(application: Application) : AndroidViewModel(application) {
     /** mode
@@ -29,9 +40,9 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
      * 9: Number Pad
      * 10 : Emojis
      * **/
-    private var _mode: MutableLiveData<Int> = MutableLiveData(1)
-    val mode: LiveData<Int>
-        get() = _mode
+    private var _inputTypeState: MutableLiveData<InputTypeState> = MutableLiveData(EN_UPPER)
+    val inputTypeState: LiveData<InputTypeState>
+        get() = _inputTypeState
 
     private val _orientation = MutableLiveData(Orientation.VERTICAL)
     val orientation: LiveData<Orientation>
@@ -52,155 +63,155 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
      * @savedLangMode: saves mode value before change. It could be used while mode value complicatedly varies.
      * e.g. English KB -> SpecialChar KB -> English KB
      */
-    private var savedLangMode = 0
-    fun changeMode(new: Int, restart: Boolean = false) {
-        when (_mode.value) {
-            0 -> {
-                when (new) {
-                    1 -> {
-                        _mode.value = 2
-                        savedLangMode = 2
+    private var preInputTypeState = EN_BOLD_UPPER
+    fun setInputTypeState(newState: InputTypeState, restart: Boolean = false) {
+        when (_inputTypeState.value) {
+            EN_BOLD_UPPER -> {
+                when (newState) {
+                    EN_UPPER -> {
+                        _inputTypeState.value = EN_LOWER
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    3 -> {
-                        _mode.value = new
-                        savedLangMode = new
+                    KR_NORMAL -> {
+                        _inputTypeState.value = newState
+                        preInputTypeState = newState
                     }
-                    5, 7, 8, 9, 10 -> {
-                        savedLangMode = _mode.value!!
-                        _mode.value = new
+                    SPECIAL_FIRST, BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                        preInputTypeState = _inputTypeState.value!!
+                        _inputTypeState.value = newState
                     }
                     else -> return
                 }
             }
-            1 -> {
-                when (new) {
-                    1 -> {
+            EN_UPPER -> {
+                when (newState) {
+                    EN_UPPER -> {
                         if (restart) return
-                        _mode.value = 0
-                        savedLangMode = 0
+                        _inputTypeState.value = EN_BOLD_UPPER
+                        preInputTypeState = EN_BOLD_UPPER
                     }
-                    2 -> {
-                        _mode.value = new
-                        savedLangMode = _mode.value!!
+                    EN_LOWER -> {
+                        _inputTypeState.value = newState
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    3 -> {
-                        _mode.value = new
-                        savedLangMode = new
+                    KR_NORMAL -> {
+                        _inputTypeState.value = newState
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    5, 7, 8, 9, 10 -> {
-                        savedLangMode = _mode.value!!
-                        _mode.value = new
+                    SPECIAL_FIRST, BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                        preInputTypeState = _inputTypeState.value!!
+                        _inputTypeState.value = newState
                     }
                     else -> return
                 }
             }
-            2 -> {
-                when (new) {
-                    1 -> {
+            EN_LOWER -> {
+                when (newState) {
+                    EN_UPPER -> {
                         if (restart) return
-                        _mode.value = 1
-                        savedLangMode = 1
+                        _inputTypeState.value = newState
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    3 -> {
-                        _mode.value = new
-                        savedLangMode = new
+                    KR_NORMAL -> {
+                        _inputTypeState.value = newState
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    5, 7, 8, 9, 10 -> {
-                        savedLangMode = _mode.value!!
-                        _mode.value = new
+                    SPECIAL_FIRST, BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                        preInputTypeState = _inputTypeState.value!!
+                        _inputTypeState.value = newState
                     }
                     else -> return
                 }
             }
-            3 -> {
-                when (new) {
-                    1 -> {
+            KR_NORMAL -> {
+                when (newState) {
+                    EN_UPPER -> {
                         if (restart) return
-                        if (kbHasAutoCapitalization.value == true) _mode.value = new
-                        else _mode.value = 2
-                        savedLangMode = new
+                        if (kbHasAutoCapitalization.value == true) _inputTypeState.value = newState
+                        else _inputTypeState.value = EN_LOWER
+                        preInputTypeState = newState
                     }
-                    3 -> {
-                        _mode.value = 4
+                    KR_NORMAL -> {
+                        _inputTypeState.value = KR_SHIFT
                     }
-                    5, 7, 8, 9, 10 -> {
-                        savedLangMode = _mode.value!!
-                        _mode.value = new
+                    SPECIAL_FIRST, BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                        preInputTypeState = _inputTypeState.value!!
+                        _inputTypeState.value = newState
                     }
                     else -> return
                 }
             }
-            4 -> {
-                when (new) {
-                    1 -> {
+            KR_SHIFT -> {
+                when (newState) {
+                    EN_UPPER -> {
                         if (restart) return
-                        if (kbHasAutoCapitalization.value == true) _mode.value = new
-                        else _mode.value = 2
-                        savedLangMode = _mode.value!!
+                        if (kbHasAutoCapitalization.value == true) _inputTypeState.value = newState
+                        else _inputTypeState.value = EN_LOWER
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    3 -> {
-                        _mode.value = new
+                    KR_NORMAL -> {
+                        _inputTypeState.value = newState
                     }
-                    5, 7, 8, 9, 10 -> {
-                        _mode.value = new
-                        savedLangMode = 3
+                    SPECIAL_FIRST, BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                        _inputTypeState.value = newState
+                        preInputTypeState = KR_NORMAL
                     }
                     else -> return
                 }
             }
-            5 -> {
-                when (new) {
-                    1, 3 -> {
-                        if (savedLangMode == 1 || savedLangMode == 2) {
-                            if (kbHasAutoCapitalization.value == true) _mode.value = 1
-                            else _mode.value = 2
+            SPECIAL_FIRST -> {
+                when (newState) {
+                    EN_UPPER, KR_NORMAL -> {
+                        if (preInputTypeState in listOf(EN_UPPER, EN_LOWER)) {
+                            if (kbHasAutoCapitalization.value == true) _inputTypeState.value = EN_UPPER
+                            else _inputTypeState.value = EN_LOWER
                         }
-                        else _mode.value = savedLangMode
-                        savedLangMode = _mode.value!!
+                        else _inputTypeState.value = preInputTypeState
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    6 -> {
-                        _mode.value = new
+                    SPECIAL_SECOND -> {
+                        _inputTypeState.value = newState
                     }
-                    7, 8, 9, 10 -> {
-                        savedLangMode = _mode.value!!
-                        _mode.value = new
+                    BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                        preInputTypeState = _inputTypeState.value!!
+                        _inputTypeState.value = newState
                     }
                     else -> return
                 }
             }
-            6 -> {
-                when (new) {
-                    1, 3 -> {
-                        if (savedLangMode == 1 || savedLangMode == 2) {
-                            if (kbHasAutoCapitalization.value == true) _mode.value = 1
-                            else _mode.value = 2
+            SPECIAL_SECOND -> {
+                when (newState) {
+                    EN_UPPER, KR_NORMAL -> {
+                        if (preInputTypeState in listOf(EN_UPPER, EN_LOWER)) {
+                            if (kbHasAutoCapitalization.value == true) _inputTypeState.value = EN_UPPER
+                            else _inputTypeState.value = EN_LOWER
                         }
-                        else _mode.value = new
-                        savedLangMode = _mode.value!!
+                        else _inputTypeState.value = newState
+                        preInputTypeState = _inputTypeState.value!!
                     }
-                    6 -> {
-                        _mode.value = 5
+                    SPECIAL_SECOND -> {
+                        _inputTypeState.value = SPECIAL_FIRST
                     }
-                    7, 8, 9, 10 -> {
-                        savedLangMode = _mode.value!!
-                        _mode.value = new
+                    BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                        preInputTypeState = _inputTypeState.value!!
+                        _inputTypeState.value = newState
                     }
                     else -> return
                 }
             }
-            7, 8, 9, 10 -> {
-                when(new) {
-                    7, 8, 9, 10 -> {
+            BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
+                when(newState) {
+                    BOILERPLATE, CURSOR, NUMBER, EMOJI -> {
                         if (restart) return
-                        _mode.value = savedLangMode
-                        savedLangMode = 3
+                        _inputTypeState.value = preInputTypeState
+                        preInputTypeState = KR_NORMAL
                     }
-                    0, 1, 2, 3, 4 -> {
-                        _mode.value = new
-                        savedLangMode = _mode.value!!
+                    EN_BOLD_UPPER, EN_UPPER, EN_LOWER, KR_NORMAL, KR_SHIFT -> {
+                        _inputTypeState.value = newState
+                        preInputTypeState = _inputTypeState.value!!
                     }
                     else -> {
-                        _mode.value = new
+                        _inputTypeState.value = newState
                     }
                 }
             }
@@ -374,7 +385,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
             addSource(kbHeight) {
                 this.setValue(setKbdHeightsInternally())
             }
-            addSource(mode) {
+            addSource(inputTypeState) {
                 this.setValue(setKbdHeightsInternally())
             }
             addSource(kbBottomMargin) {
@@ -459,5 +470,19 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
     enum class Orientation {
         HORIZONTAL,
         VERTICAL
+    }
+
+    enum class InputTypeState {
+        EN_BOLD_UPPER,
+        EN_UPPER,
+        EN_LOWER,
+        KR_NORMAL,
+        KR_SHIFT,
+        SPECIAL_FIRST,
+        SPECIAL_SECOND,
+        BOILERPLATE,
+        CURSOR,
+        NUMBER,
+        EMOJI
     }
 }

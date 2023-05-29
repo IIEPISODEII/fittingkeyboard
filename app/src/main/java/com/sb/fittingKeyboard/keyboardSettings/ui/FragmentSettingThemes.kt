@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui
+package com.sb.fittingKeyboard.keyboardSettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -13,8 +13,6 @@ import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.keyboardSettings.data.KeyboardThemesDataHolder
 import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ThemeRecyclerAdapter
 import com.sb.fittingKeyboard.Constants
-import com.sb.fittingKeyboard.keyboardSettings.ui.DialogSettingFontColorPicker
-import com.sb.fittingKeyboard.keyboardSettings.ui.DialogSettingFontTypePicker
 
 class FragmentSettingThemes: Fragment() {
     private val prefSetting by lazy { requireContext().getSharedPreferences(Constants.KEYBOARD_SETTING, Context.MODE_PRIVATE) }

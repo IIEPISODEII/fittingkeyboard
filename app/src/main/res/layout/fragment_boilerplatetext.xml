@@ -8,6 +8,8 @@
             name="kbviewmodel"
             type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
+        <import type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState" />
+
         <variable
             name="kbservice"
             type="com.sb.fittingKeyboard.service.MainKeyboardService" />
@@ -63,7 +65,7 @@
                 app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                 app:customTheme_theme="@{kbviewmodel.kbTheme}"
                 app:customTheme_view="@{2}"
-                app:fontBold="@{kbviewmodel.mode}"
+                app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.BOILERPLATE}"
                 app:layout_constraintBottom_toTopOf="@id/imgbtn_boilerplate_enter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/recyview_boilerplate_boilerplatetext_items_container"
@@ -93,7 +95,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:onClick="@{() -> kbservice.changeMode(3)}"
+                android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.KR_NORMAL)}"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_keyboard_black"
                 app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"

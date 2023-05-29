@@ -18,17 +18,18 @@ import com.sb.fittingKeyboard.service.koreanAutomata.HanguelDanmoum
 import com.sb.fittingKeyboard.service.koreanAutomata.HanguelNARATGUL
 import com.sb.fittingKeyboard.service.koreanAutomata.HanguelQWERTY
 import com.sb.fittingKeyboard.service.util.decToHex
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
     fun inputChar(
         clearComposing: () -> Unit,
         button: View,
-        mode: Int,
+        inputTypeState: KeyboardViewModel.InputTypeState,
         krIME: Int,
         myKeyboardVibration: Boolean,
         vibrateByButton: () -> Unit,
-        changeMode3: (Int) -> Unit,
-        changeMode2: (Int) -> Unit
+        setInputTypeStateToKR: () -> Unit,
+        setInputTypeStateToEN: () -> Unit
     ) {
         if (mIMEService.currentInputConnection == null) return
         val cursorCS =
@@ -36,8 +37,8 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
         if (cursorCS != null && cursorCS.isNotEmpty()) {
             clearComposing() // 선택 중인 글자가 있으면 초기화
         }
-        when (mode) {
-            3, 4 -> {
+        when (inputTypeState) {
+            KeyboardViewModel.InputTypeState.KR_NORMAL, KeyboardViewModel.InputTypeState.KR_SHIFT -> {
                 when (krIME) {
                     Constants.IME_KR_FLAG_QWERTY -> {
                         val (c1, c2) = HanguelQWERTY.composeChar((button as Button).text!!.single())
@@ -53,7 +54,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                                 1
                             )
                         }
-                        if (mode == 4) changeMode3(3)
+                        if (inputTypeState == KeyboardViewModel.InputTypeState.KR_SHIFT) setInputTypeStateToKR.invoke()
                     }
                     Constants.IME_KR_FLAG_CHUN, Constants.IME_KR_FLAG_CHUN_AMBI -> {
                         var c1: String?
@@ -143,9 +144,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
             else -> {
                 clearComposing()
                 mIMEService.currentInputConnection.commitText((button as Button).text.toString(), 1)
-                if (mode == 1) {
-                    changeMode2(2)
-                }
+                if (inputTypeState == KeyboardViewModel.InputTypeState.EN_UPPER) setInputTypeStateToEN()
             }
         }
         if (myKeyboardVibration) vibrateByButton()
@@ -155,14 +154,14 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
         clearComposing: () -> Unit,
         button: View,
         autoModeChange: Boolean,
-        changeMode3: (Int) -> Unit,
+        setInputTypeStateToKR: () -> Unit,
         myKeyboardVibration: Boolean,
         vibrateByButton: () -> Unit
     ) {
         if (mIMEService.currentInputConnection == null) return
         clearComposing()
         when {
-            (button as Button).text in arrayOf(
+            (button as Button).text in listOf(
                 "한글",
                 "english",
                 "English",
@@ -170,8 +169,8 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
             ) -> {
                 mIMEService.currentInputConnection.commitText(" ", 1)
             }
-            button.text in arrayOf("특수 1", "특수 2") -> {
-                if (autoModeChange) changeMode3(3)
+            button.text in listOf("특수 1", "특수 2") -> {
+                if (autoModeChange) setInputTypeStateToKR()
                 mIMEService.currentInputConnection.commitText(" ", 1)
             }
             else -> {
@@ -213,6 +212,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
         clearComposing()
         mIMEService.currentInputConnection.finishComposingText()
         val eventTime = SystemClock.uptimeMillis()
+        println("엔터키 눌렀을 때: ${decToHex(mIMEService.currentInputEditorInfo.imeOptions) }")
         when (decToHex(mIMEService.currentInputEditorInfo.imeOptions).last()) {
             '2' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
             '3' -> mIMEService.currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_SEARCH)
@@ -251,10 +251,10 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
     }
 
     fun inputDelete(
-        mode: Int,
-        krIME: Int,
+        inputTypeState: KeyboardViewModel.InputTypeState,
+        inputMethodKR: Int,
         clearComposing: () -> Unit,
-        changeMode3: (Int) -> Unit,
+        setInputTypeStateToKR: () -> Unit,
         myKeyboardVibration: Boolean,
         vibrateByButton: () -> Unit
     ) {
@@ -267,15 +267,12 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                 InputConnection.GET_TEXT_WITH_STYLES
             )
             // 이모지 삭제 / 일반 삭제 나눔
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && c!!.isNotEmpty() && Character.isSurrogate(
-                    c[0]
-                )
-            ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && c!!.isNotEmpty() && Character.isSurrogate(c[0])) {
                 val deleteKeyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL)
                 mIMEService.currentInputConnection.sendKeyEvent(deleteKeyEvent)
             } else {
-                if (mode in arrayOf(3, 4)) {
-                    when (krIME) {
+                if (inputTypeState in listOf(KeyboardViewModel.InputTypeState.KR_NORMAL, KeyboardViewModel.InputTypeState.KR_SHIFT)) {
+                    when (inputMethodKR) {
                         Constants.IME_KR_FLAG_QWERTY -> {
                             val (c1, c2) = HanguelQWERTY.delete()
                             if (c1 == null) {
@@ -286,7 +283,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                                     mIMEService.currentInputConnection.setComposingText(c2, 1)
                                 }
                             }
-                            if (mode == 4) changeMode3(3)
+                            if (inputTypeState == KeyboardViewModel.InputTypeState.KR_SHIFT) setInputTypeStateToKR.invoke()
                         }
                         Constants.IME_KR_FLAG_CHUN, Constants.IME_KR_FLAG_CHUN_AMBI -> {
                             val (c1, c2) = HanguelChunjiin.delete(System.currentTimeMillis())

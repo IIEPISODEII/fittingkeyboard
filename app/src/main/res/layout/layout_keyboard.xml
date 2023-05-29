@@ -9,12 +9,12 @@
             type="com.sb.fittingKeyboard.service.MainKeyboardService" />
 
         <variable
-            name="constants"
-            type="com.sb.fittingKeyboard.Constants" />
-
-        <variable
             name="kbviewmodel"
             type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
+
+        <import type="com.sb.fittingKeyboard.Constants" />
+
+        <import type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState" />
 
         <import type="android.view.View" />
     </data>
@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbservice.startApp(constants.PACKAGE_NAME)}"
+                android:onClick="@{() -> kbservice.startApp(Constants.PACKAGE_NAME)}"
                 android:src="@drawable/ic_settings" />
 
             <ImageButton
@@ -50,8 +50,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(7, false)}"
-                android:src="@{kbviewmodel.mode==7 ? @drawable/ic_keyboard_black : @drawable/ic_boilerplatetext_black}" />
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.BOILERPLATE, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.BOILERPLATE ? @drawable/ic_keyboard_black : @drawable/ic_boilerplatetext_black}" />
 
             <ImageButton
                 android:id="@+id/selectAll"
@@ -100,8 +100,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(8, false)}"
-                android:src="@{kbviewmodel.mode==8 ? @drawable/ic_keyboard_black : @drawable/ic_move}" />
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.CURSOR, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.CURSOR ? @drawable/ic_keyboard_black : @drawable/ic_move}" />
 
             <ImageButton
                 android:id="@+id/numberKeypadButton"
@@ -110,8 +110,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(9, false)}"
-                android:src="@{kbviewmodel.mode==9 ? @drawable/ic_keyboard_black : @drawable/ic_number_keypad}" />
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.NUMBER, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.NUMBER ? @drawable/ic_keyboard_black : @drawable/ic_number_keypad}" />
 
             <ImageButton
                 android:id="@+id/emoticon_button"
@@ -120,8 +120,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:onClick="@{() -> kbviewmodel.changeMode(10, false)}"
-                android:src="@{kbviewmodel.mode == 10 ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}" />
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.EMOJI, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.EMOJI ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}" />
         </com.sb.fittingKeyboard.service.ui.ToolbarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -149,18 +149,18 @@
                 android:id="@+id/constraint_layout_keyboard_main_board"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
                     android:id="@+id/keyboard_number_row"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:visibility="@{kbviewmodel.kbNumberRowVisibility}"
                     app:height="@{kbviewmodel.kbResultedHeight}"
                     app:height_weight="@{18}"
-                    android:visibility="@{kbviewmodel.kbNumberRowVisibility}"
                     app:layout_constraintBottom_toTopOf="@id/constraint_layout_keyboard_character_rows_wrapper"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +186,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[23]}" />
 
                     <Button
@@ -201,7 +201,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[24]}" />
 
                     <Button
@@ -216,7 +216,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[25]}" />
 
                     <Button
@@ -231,7 +231,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[26]}" />
 
                     <Button
@@ -246,7 +246,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[27]}" />
 
                     <Button
@@ -261,7 +261,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[28]}" />
 
                     <Button
@@ -276,7 +276,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[29]}" />
 
                     <Button
@@ -291,7 +291,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[30]}" />
 
                     <Button
@@ -306,7 +306,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[31]}" />
 
                     <Button
@@ -321,7 +321,7 @@
                         app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                         app:customTheme_theme="@{kbviewmodel.kbTheme}"
                         app:customTheme_view="@{2}"
-                        app:fontBold="@{kbviewmodel.mode}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                         app:onTouch="@{kbservice.repeatListenerSpecials[32]}" />
 
                     <Button
@@ -384,10 +384,10 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{6}"
-                    app:layout_constraintTop_toBottomOf="@id/constraint_layout_keyboard_character_rows_wrapper"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/constraint_layout_keyboard_character_rows_wrapper" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

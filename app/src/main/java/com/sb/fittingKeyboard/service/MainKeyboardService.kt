@@ -8,7 +8,6 @@ import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Handler
-import android.os.SystemClock
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.InputType
@@ -107,7 +106,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 )
             )
             setOnClickListener {
-                vm.changeMode(7)
+                vm.setInputTypeState(KeyboardViewModel.InputTypeState.BOILERPLATE)
             }
             setBackgroundColor(
                 ResourcesCompat.getColor(
@@ -212,7 +211,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 )
             )
             setOnClickListener {
-                vm.changeMode(8)
+                vm.setInputTypeState(KeyboardViewModel.InputTypeState.CURSOR)
             }
             setBackgroundColor(
                 ResourcesCompat.getColor(
@@ -233,7 +232,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 )
             )
             setOnClickListener {
-                vm.changeMode(9)
+                vm.setInputTypeState(KeyboardViewModel.InputTypeState.NUMBER)
             }
             setBackgroundColor(
                 ResourcesCompat.getColor(
@@ -254,7 +253,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 )
             )
             setOnClickListener {
-                vm.changeMode(10)
+                vm.setInputTypeState(KeyboardViewModel.InputTypeState.EMOJI)
             }
             setBackgroundColor(
                 ResourcesCompat.getColor(
@@ -285,7 +284,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private var myKeyboardVibration: Boolean = true
     private var myKeyboardVibrationIntensity: Int = 50
     private val normalInterval: Long = 37
-    private var latestMode = 3
+    private var latestInputTypeState = KeyboardViewModel.InputTypeState.KR_NORMAL
     private var savedCursorPosition = 0
     private val emojiAdapterList = listOf(
         EmojiRecyclerAdapter(e1SmileysAndEmoticons),
@@ -322,21 +321,16 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         kbBinding.lifecycleOwner = this
         kbBinding.kbviewmodel = vm
 
-        val qwertyEnNormalKBView =
-            layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_en_normal, null)
-        val qwertyKrNormalKBView =
-            layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_kr_normal, null)
-        val qwertySpecialKBView =
-            layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_special, null)
+        val qwertyEnNormalKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_en_normal, null)
+        val qwertyKrNormalKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_kr_normal, null)
+        val qwertySpecialKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_special, null)
         val boilerPlateKBView = layoutInflater.inflate(R.layout.fragment_boilerplatetext, null)
         val cursorKBView = layoutInflater.inflate(R.layout.fragment_cursorkeypad, null)
         val numberKBView = layoutInflater.inflate(R.layout.fragment_keyboard_number, null)
         val chunjiinKBView = layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_basic, null)
-        val chunjiinLeftKBView =
-            layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_left, null)
+        val chunjiinLeftKBView = layoutInflater.inflate(R.layout.fragment_keyboard_chunjiin_left, null)
         val danmoKBView = layoutInflater.inflate(R.layout.fragment_keyboard_danmoum, null)
-        val naratguelKBView =
-            layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null)
+        val naratguelKBView = layoutInflater.inflate(R.layout.fragment_keyboard_naratgul_basic, null)
 
         qwertyEnNormalBinding = DataBindingUtil.bind(qwertyEnNormalKBView)!!
         qwertyEnNormalBinding.setVariable(BR.kbservice, this)
@@ -382,10 +376,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         emojiBinding.setVariable(BR.kbservice, this)
         emojiBinding.lifecycleOwner = this
         emojiBinding.kbviewmodel = vm
-//        viewholderBpBinding = DataBindingUtil.bind(layoutInflater.inflate(R.layout.viewholder_boilerplates, null))!!
-//        viewholderBpBinding.setVariable(BR.kbservice, this)
-//        viewholderBpBinding.lifecycleOwner = this
-//        viewholderBpBinding.kbviewmodel = vm
+        
+        vm.inputTypeState
 
         // 상용구창 어댑터 설정
         val bpOnClick: (View) -> Unit = { view ->
@@ -415,74 +407,76 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                     Constants.IME_KR_FLAG_DAN -> danmoKBView
                     else -> qwertyKrNormalKBView
                 }
-            if (vm.mode.value == 3) {
+            if (vm.inputTypeState.value == KeyboardViewModel.InputTypeState.KR_NORMAL) {
                 kbdCharaterAreaFramelayout.removeAllViews()
                 kbdCharaterAreaFramelayout.addView(currentKRView)
             }
         }
-        vm.mode.observe(this) {
+        vm.inputTypeState.observe(this) {
+            println("바뀜: $it")
             when (it) {
-                0, 1, 2 -> {
-                    if (latestMode == it) return@observe
+                KeyboardViewModel.InputTypeState.EN_BOLD_UPPER, KeyboardViewModel.InputTypeState.EN_UPPER, KeyboardViewModel.InputTypeState.EN_LOWER -> {
+                    if (latestInputTypeState == it) return@observe
                     kbdCharaterAreaFramelayout.removeAllViews()
                     kbdCharaterAreaFramelayout.addView(qwertyEnNormalKBView)
                 }
-                3, 4 -> {
-                    if (latestMode == it) return@observe
+                KeyboardViewModel.InputTypeState.KR_NORMAL, KeyboardViewModel.InputTypeState.KR_SHIFT -> {
+                    if (latestInputTypeState == it) return@observe
                     kbdCharaterAreaFramelayout.removeAllViews()
                     kbdCharaterAreaFramelayout.addView(currentKRView)
                 }
-                5, 6 -> {
-                    if (latestMode == it) return@observe
+                KeyboardViewModel.InputTypeState.SPECIAL_FIRST, KeyboardViewModel.InputTypeState.SPECIAL_SECOND -> {
+                    if (latestInputTypeState == it) return@observe
                     kbdCharaterAreaFramelayout.removeAllViews()
                     kbdCharaterAreaFramelayout.addView(qwertySpecialKBView)
                 }
-                7 -> {
+                KeyboardViewModel.InputTypeState.BOILERPLATE -> {
                     kbdCharaterAreaFramelayout.removeAllViews()
                     kbdCharaterAreaFramelayout.addView(boilerPlateKBView)
                 }
-                8 -> {
+                KeyboardViewModel.InputTypeState.CURSOR -> {
                     kbdCharaterAreaFramelayout.removeAllViews()
                     kbdCharaterAreaFramelayout.addView(cursorKBView)
                 }
-                9 -> {
+                KeyboardViewModel.InputTypeState.NUMBER -> {
                     kbdCharaterAreaFramelayout.removeAllViews()
                     kbdCharaterAreaFramelayout.addView(numberKBView)
                 }
-                10 -> {
+                KeyboardViewModel.InputTypeState.EMOJI -> {
                     kbdCharaterAreaFramelayout.removeAllViews()
                     kbdCharaterAreaFramelayout.addView(emojiKBView)
                 }
+                else -> {}
             }
             showBoilerPlateImageButton.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
-                    if (it==7) R.drawable.ic_keyboard_black else R.drawable.ic_boilerplatetext_black,
+                    if (it == KeyboardViewModel.InputTypeState.BOILERPLATE) R.drawable.ic_keyboard_black else R.drawable.ic_boilerplatetext_black,
                     null
                 )
             )
             showCursorImageButton.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
-                    if (it==8) R.drawable.ic_keyboard_black else R.drawable.ic_move,
+                    if (it == KeyboardViewModel.InputTypeState.CURSOR) R.drawable.ic_keyboard_black else R.drawable.ic_move,
                     null
                 )
             )
             showNumberImageButton.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
-                    if (it==9) R.drawable.ic_keyboard_black else R.drawable.ic_number_keypad,
+                    if (it == KeyboardViewModel.InputTypeState.NUMBER) R.drawable.ic_keyboard_black else R.drawable.ic_number_keypad,
                     null
                 )
             )
             showEmojiImageButton.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     this.resources,
-                    if (it==10) R.drawable.ic_keyboard_black else R.drawable.ic_outline_emoji_emotions_24,
+                    if (it == KeyboardViewModel.InputTypeState.EMOJI) R.drawable.ic_keyboard_black else R.drawable.ic_outline_emoji_emotions_24,
                     null
                 )
             )
-            latestMode = it
+            latestInputTypeState = it
         }
         vm.kbLongClickInterval.observe(this) {
             mKeyboardHolding = it.toLong() + 100
@@ -621,16 +615,16 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         emojisViewPager.registerOnPageChangeCallback(emojiPageChangeCallback!!)
 
-        qwertyEnNormalBinding.imgbtnEnLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(3) }))
-        qwertyEnNormalBinding.imgbtnEnShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(1) }))
-        qwertyEnNormalBinding.btnEnSpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(5) }))
-        qwertyKrNormalBinding.imgbtnKrQwertyLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(1) }))
-        qwertyKrNormalBinding.imgbtnKrQwertyShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(3) }))
-        qwertyKrNormalBinding.btnKrQwertySpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(5) }))
-        specialKBBinding.imgbtnSpecialLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(1) }))
-        specialKBBinding.imgbtnSpecialShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> changeMode(6) }))
+        qwertyEnNormalBinding.imgbtnEnLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }))
+        qwertyEnNormalBinding.imgbtnEnShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
+        qwertyEnNormalBinding.btnEnSpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_FIRST) }))
+        qwertyKrNormalBinding.imgbtnKrQwertyLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
+        qwertyKrNormalBinding.imgbtnKrQwertyShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }))
+        qwertyKrNormalBinding.btnKrQwertySpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_FIRST) }))
+        specialKBBinding.imgbtnSpecialLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
+        specialKBBinding.imgbtnSpecialShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_SECOND) }))
         specialKBBinding.btnSpecialSpace.setOnTouchListener(ButtonTouchListener(actionDownEvent = { view, _ -> singleListenerSpecialSpace.onClick(view) }))
-        danmoumKBBinding.imgbtnKrDanmoLang.setOnTouchListener(ButtonTouchListener(actionDownEvent =  {_, _ -> changeMode(1)} ))
+        danmoumKBBinding.imgbtnKrDanmoLang.setOnTouchListener(ButtonTouchListener(actionDownEvent =  {_, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER)} ))
 
         return kbdLayout
     }
@@ -654,7 +648,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         /** TextField의 첫글자로 돌아갔을 때 대문자로 수정 **/
         if (vm.kbHasAutoCapitalization.value!!
             && currentInputConnection.requestCursorUpdates(CURSOR_UPDATE_IMMEDIATE)
-            && vm.mode.value == 2
+            && vm.inputTypeState.value == KeyboardViewModel.InputTypeState.EN_LOWER
         ) {
             var autoCapitalCondition = false
             for (i in 0..3) {
@@ -667,7 +661,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 }
             }
             if ((newSelStart == 0 && newSelEnd == 0 && candidatesStart == -1 && candidatesEnd == -1) || autoCapitalCondition) {
-                vm.changeMode(1)
+                vm.setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER)
             }
         }
     }
@@ -679,12 +673,14 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
         for (type in inputTypeTextFlags) {
             if (currentInputEditorInfo.inputType or type == currentInputEditorInfo.inputType) {
-                vm.changeMode(new = 1, restart= true)
+                println("리스타트: ${decToHex(currentInputEditorInfo.inputType)}")
+                vm.setInputTypeState(newState = KeyboardViewModel.InputTypeState.EN_UPPER, restart= true)
                 emojisViewPager.setCurrentItem(1, false)
                 return
             }
         }
-        vm.changeMode(new = 9, restart = true)
+        println("onStartInputView: 모드 9로 바꿈")
+        vm.setInputTypeState(newState = KeyboardViewModel.InputTypeState.NUMBER, restart = true)
         emojisViewPager.setCurrentItem(1, false)
     }
 
@@ -731,12 +727,12 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         keyboardFunctions.inputChar(
             clearComposing = { clearComposing() },
             button = button,
-            mode = vm.mode.value!!,
+            inputTypeState = vm.inputTypeState.value!!,
             krIME = vm.kbKrImeMode.value!!,
             myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() },
-            changeMode3 = { changeMode(3) },
-            changeMode2 = { changeMode(2) }
+            setInputTypeStateToKR = { setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) },
+            setInputTypeStateToEN = { setInputTypeState(KeyboardViewModel.InputTypeState.EN_LOWER) }
         )
     }
 
@@ -749,7 +745,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             clearComposing = { clearComposing() },
             button = button,
             autoModeChange = vm.kbHasAutoModeChange.value!!,
-            changeMode3 = { vm.changeMode(3) },
+            setInputTypeStateToKR = { vm.setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) },
             myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() }
         )
@@ -780,10 +776,10 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
 
     private fun inputDelete() {
         keyboardFunctions.inputDelete(
-            mode = vm.mode.value!!,
-            krIME = vm.kbKrImeMode.value!!,
+            inputTypeState = vm.inputTypeState.value!!,
+            inputMethodKR = vm.kbKrImeMode.value!!,
             clearComposing = { clearComposing() },
-            changeMode3 = { vm.changeMode(3) },
+            setInputTypeStateToKR = { vm.setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) },
             myKeyboardVibration = myKeyboardVibration,
             vibrateByButton = { vibrateByButton() }
         )
@@ -895,10 +891,10 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     // 엔터키, 특수문자 전환 키를 LongClick할 경우 작동
     fun addFunction(addOn: Int): Boolean {
         when (addOn) {
-            1 -> vm.changeMode(7)
-            2 -> vm.changeMode(8)
-            3 -> vm.changeMode(9)
-            4 -> vm.changeMode(10)
+            1 -> vm.setInputTypeState(KeyboardViewModel.InputTypeState.BOILERPLATE)
+            2 -> vm.setInputTypeState(KeyboardViewModel.InputTypeState.CURSOR)
+            3 -> vm.setInputTypeState(KeyboardViewModel.InputTypeState.NUMBER)
+            4 -> vm.setInputTypeState(KeyboardViewModel.InputTypeState.EMOJI)
             else -> {}
         }
         vibrateByButton()
@@ -906,8 +902,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     }
 
     // 키보드 전환
-    fun changeMode(new: Int) {
-        vm.changeMode(new)
+    fun setInputTypeState(newState: KeyboardViewModel.InputTypeState) {
+        vm.setInputTypeState(newState)
         if (myKeyboardVibration) vibrateByButton()
     }
 
@@ -1010,7 +1006,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     ): OnTouchListener {
         override fun onTouch(view: View, motionEvent: MotionEvent?): Boolean {
             if (motionEvent == null) return false
-            view.performClick()
+//            view.performClick()
             when (motionEvent.action) {
                 MotionEvent.ACTION_CANCEL -> {
                     view.isPressed = false

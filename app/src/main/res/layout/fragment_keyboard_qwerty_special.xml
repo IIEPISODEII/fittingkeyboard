@@ -8,6 +8,8 @@
             name="kbviewmodel"
             type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
+        <import type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState" />
+
         <variable
             name="kbservice"
             type="com.sb.fittingKeyboard.service.MainKeyboardService" />
@@ -33,14 +35,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spQ : @string/spq}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spQ : @string/spq}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[52]}" />
 
@@ -49,14 +51,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spW : @string/spw}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spW : @string/spw}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[53]}" />
 
@@ -65,14 +67,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spE : @string/spe}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spE : @string/spe}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[54]}" />
 
@@ -81,14 +83,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spR : @string/spr}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spR : @string/spr}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[55]}" />
 
@@ -97,14 +99,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spT : @string/spt}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spT : @string/spt}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[56]}" />
 
@@ -122,14 +124,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spY : @string/spy}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spY : @string/spy}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[57]}" />
 
@@ -145,7 +147,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[58]}" />
 
@@ -161,7 +163,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[59]}" />
 
@@ -177,7 +179,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[60]}" />
 
@@ -193,7 +195,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[61]}" />
             </LinearLayout>
@@ -209,14 +211,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spA : @string/spa}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spA : @string/spa}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[62]}" />
 
@@ -225,14 +227,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spS : @string/sps}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spS : @string/sps}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[63]}" />
 
@@ -241,14 +243,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spD : @string/spd}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spD : @string/spd}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[64]}" />
 
@@ -257,14 +259,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spF : @string/spf}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spF : @string/spf}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[65]}" />
 
@@ -273,14 +275,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spG : @string/spg}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spG : @string/spg}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[66]}" />
 
@@ -289,14 +291,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spH : @string/sph}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spH : @string/sph}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[67]}" />
 
@@ -305,14 +307,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spJ : @string/spj}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spJ : @string/spj}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[68]}" />
 
@@ -321,14 +323,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spK : @string/spk}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spK : @string/spk}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[69]}" />
 
@@ -337,14 +339,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1.3"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spL : @string/spl}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spL : @string/spl}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[70]}" />
             </LinearLayout>
@@ -367,21 +369,21 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
-                    app:image="@{kbviewmodel.mode}" />
+                    app:image="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}" />
 
                 <Button
                     android:id="@+id/btn_special_z"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spZ : @string/spz}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spZ : @string/spz}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[71]}" />
 
@@ -390,14 +392,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spX : @string/spx}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spX : @string/spx}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[72]}" />
 
@@ -406,14 +408,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spC : @string/spc}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spC : @string/spc}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[73]}" />
 
@@ -422,14 +424,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spV : @string/spv}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spV : @string/spv}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[74]}" />
 
@@ -438,14 +440,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spB : @string/spb}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spB : @string/spb}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[75]}" />
 
@@ -454,14 +456,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spN : @string/spn}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spN : @string/spn}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[76]}" />
 
@@ -470,14 +472,14 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@{kbviewmodel.mode==5 ? @string/spM : @string/spm}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/spM : @string/spm}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[77]}" />
 
@@ -528,7 +530,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[6]}" />
 
@@ -537,13 +539,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:text="@{kbviewmodel.mode==5 ? @string/special1 : @string/special2}"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.SPECIAL_FIRST ? @string/special1 : @string/special2}"
                     android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
@@ -557,7 +559,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.SPECIAL_FIRST}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[8]}" />
 

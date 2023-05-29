@@ -8,6 +8,8 @@
             name="kbviewmodel"
             type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
+        <import type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState" />
+
         <variable
             name="kbservice"
             type="com.sb.fittingKeyboard.service.MainKeyboardService" />
@@ -40,7 +42,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[78]}" />
 
@@ -56,7 +58,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[79]}" />
 
@@ -72,7 +74,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[80]}" />
 
@@ -111,7 +113,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[81]}" />
 
@@ -127,7 +129,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[82]}" />
 
@@ -143,7 +145,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[83]}" />
 
@@ -159,7 +161,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[11]}" />
             </LinearLayout>
@@ -182,7 +184,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[84]}" />
 
@@ -198,7 +200,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[85]}" />
 
@@ -214,7 +216,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[86]}" />
 
@@ -248,7 +250,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".5"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.changeMode(3)}"
+                    android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.KR_NORMAL)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -267,7 +269,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[11]}" />
 
@@ -283,7 +285,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[87]}" />
 
@@ -299,7 +301,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerChars[88]}" />
 
@@ -315,7 +317,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[12]}" />
 
@@ -331,7 +333,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.mode}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.NUMBER}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:onTouch="@{kbservice.repeatListenerSpecials[13]}" />
             </LinearLayout>

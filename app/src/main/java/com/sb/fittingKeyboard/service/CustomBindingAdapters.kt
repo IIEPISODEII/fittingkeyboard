@@ -1,7 +1,5 @@
 package com.sb.fittingKeyboard.service
 
-import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Build
 import android.view.View
@@ -10,12 +8,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 object CustomBindingAdapters {
 
@@ -31,7 +29,7 @@ object CustomBindingAdapters {
     @RequiresApi(Build.VERSION_CODES.O)
     @JvmStatic
     @BindingAdapter("customFontStyle", "fontBold")
-    fun setFontStyle(view: View, fontType: Int, mode: Int) {
+    fun setFontStyle(view: View, fontType: Int, inputTypeState: KeyboardViewModel.InputTypeState) {
         val mContext = view.context
 
         val typeFace = when (fontType) {
@@ -49,7 +47,7 @@ object CustomBindingAdapters {
             else -> Typeface.DEFAULT
         }
 
-        if (mode == 0) {
+        if (inputTypeState == KeyboardViewModel.InputTypeState.EN_BOLD_UPPER) {
             (view as Button).setTypeface(typeFace, Typeface.BOLD)
         } else {
             (view as Button).setTypeface(typeFace, Typeface.NORMAL)
@@ -58,11 +56,11 @@ object CustomBindingAdapters {
 
     @JvmStatic
     @BindingAdapter("image")
-    fun setImage(view: View, mode: Int) {
-        val mImage: Int = when (mode) {
-            1, 4, 6 -> R.drawable.keyic_shift_activated_black
-            2, 3, 5 -> R.drawable.keyic_shift_deactivated_black
-            0 -> R.drawable.keyic_shift_hyperactivated_black
+    fun setImage(view: View, inputTypeState: KeyboardViewModel.InputTypeState) {
+        val mImage: Int = when (inputTypeState) {
+            KeyboardViewModel.InputTypeState.EN_UPPER, KeyboardViewModel.InputTypeState.KR_SHIFT, KeyboardViewModel.InputTypeState.SPECIAL_SECOND -> R.drawable.keyic_shift_activated_black
+            KeyboardViewModel.InputTypeState.EN_LOWER, KeyboardViewModel.InputTypeState.KR_NORMAL, KeyboardViewModel.InputTypeState.SPECIAL_FIRST -> R.drawable.keyic_shift_deactivated_black
+            KeyboardViewModel.InputTypeState.EN_BOLD_UPPER -> R.drawable.keyic_shift_hyperactivated_black
             else -> R.drawable.keyic_shift_deactivated_black
         }
         (view as ImageView).setImageResource(mImage)

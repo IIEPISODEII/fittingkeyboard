@@ -18,11 +18,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingThemes
-import com.sb.fittingKeyboard.keyboardSettings.ui.DialogAdminKeyboard
-import com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingBasic
-import com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingBoilerPlateText
-import com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingDetails
 import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.FragmentViewPagerAdapter
 import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
 
