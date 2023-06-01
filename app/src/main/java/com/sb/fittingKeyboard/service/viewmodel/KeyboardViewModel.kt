@@ -271,6 +271,9 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
     private val _kbRightSideMargin = MutableLiveData(kbSettingSP?.getInt(Constants.KEYBOARD_RIGHTSIDE_MARGIN, 0) ?: 0)
     val kbRightSideMargin: LiveData<Int>
         get() = _kbRightSideMargin
+    private val _kbSwipeableSpace = MutableLiveData(kbSettingSP?.getBoolean(Constants.KEYBOARD_SWIPEABLE_SPACE, false) ?: false)
+    val kbSwipeableSpace: LiveData<Boolean>
+        get() = _kbSwipeableSpace
     private val _kbToolbarVisibility = MutableLiveData(kbSettingSP?.getInt(Constants.KEYBOARD_TOGGLE_TOOLBAR, View.VISIBLE) ?: View.VISIBLE)
     val kbToolbarVisibility: LiveData<Int>
         get() = _kbToolbarVisibility
@@ -334,6 +337,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
             Constants.KEYBOARD_TOGGLE_TOOLBAR -> _kbToolbarVisibility.postValue(pref.getInt(key, View.VISIBLE))
             Constants.KEYBOARD_AUTO_CAPITALIZATION -> _kbHasAutoCapitalization.postValue(pref.getBoolean(key, true))
             Constants.KEYBOARD_AUTO_MODE_CHANGE -> _kbHasAutoModeChange.postValue(pref.getBoolean(key, true))
+            Constants.KEYBOARD_SWIPEABLE_SPACE -> _kbSwipeableSpace.postValue(pref.getBoolean(key, false))
             Constants.KEYBOARD_SPECIALKEY_LONGCLICK -> _kbSpecialKeyOnLongClickFunction.postValue(pref.getInt(key, 0))
             Constants.KEYBOARD_ENTERKEY_LONGCLICK -> _kbEnterKeyOnLongClickFunction.postValue(pref.getInt(key, 0))
             Constants.KEYBOARD_IME_KR -> _kbKrImeMode.postValue(pref.getInt(key, 0))

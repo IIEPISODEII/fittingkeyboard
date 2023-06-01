@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.sb.fittingKeyboard.Constants
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
+import com.sb.fittingKeyboard.keyboardSettings.util.changeDPtoPX
 
 class CustomIndicator : LinearLayout {
     constructor(context: Context) : super(context) {
@@ -28,7 +28,7 @@ class CustomIndicator : LinearLayout {
             iconPanels[i].setImageResource(iconsList[i])
             this.addView(iconPanels[i])
             this.getChildAt(i).layoutParams =
-                LayoutParams(Utilities.changeDPtoPX(Constants.EMOJI_ICON_WIDTH).toInt(), LayoutParams.MATCH_PARENT)
+                LayoutParams(changeDPtoPX(Constants.EMOJI_ICON_WIDTH).toInt(), LayoutParams.MATCH_PARENT)
             this.getChildAt(i).setOnClickListener(clickListeners[i])
         }
         selectPosition(position)

@@ -48,6 +48,12 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:background="@color/semi_grey"
+                android:layout_marginHorizontal="12dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -95,6 +101,12 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:background="@color/semi_grey"
+                android:layout_marginHorizontal="12dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -121,6 +133,12 @@
                     android:text="없음"
                     android:textSize="14sp" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:background="@color/semi_grey"
+                android:layout_marginHorizontal="12dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -4,17 +4,14 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.res.Resources
 
-object Utilities {
+fun changeDPtoPX(dp: Int): Float {
+    return dp * (Resources.getSystem().displayMetrics.density)
+}
 
-    fun changeDPtoPX(dp: Int): Float {
-        return dp * (Resources.getSystem().displayMetrics.density)
-    }
-
-    fun showHelpDialog(text: String, context: Context) {
-        val builder = android.app.AlertDialog.Builder(context)
-        builder.setTitle("도움말")
-        builder.setMessage(text)
-        builder.setPositiveButton("확인") { _: DialogInterface?, _: Int -> }
-        builder.show()
-    }
+fun showHelpDialog(text: String, context: Context) {
+    val builder = android.app.AlertDialog.Builder(context)
+    builder.setTitle("도움말")
+    builder.setMessage(text)
+    builder.setPositiveButton("확인") { _: DialogInterface?, _: Int -> }
+    builder.show()
 }

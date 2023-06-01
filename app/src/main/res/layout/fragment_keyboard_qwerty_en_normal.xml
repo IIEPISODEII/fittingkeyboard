@@ -562,8 +562,8 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[4]}" />
+                    app:onTouch="@{kbservice.repeatListenerSpecials[4]}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}" />
 
                 <Button
                     android:id="@+id/btn_en_dot"

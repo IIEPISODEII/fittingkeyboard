@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <variable
-            name="mFragment"
-            type="com.sb.fittingKeyboard.keyboardSettings.ui.FragmentSettingDetails" />
 
         <variable
             name="kbviewmodel"
@@ -15,7 +12,7 @@
         <import type="android.view.View" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -34,6 +31,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:paddingStart="8dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/semi_grey"
+                    android:text="스타일"
+                    android:textSize="14dp"
+                    android:paddingLeft="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -93,6 +103,13 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:visibility="gone"
+                    android:layout_marginHorizontal="12dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -120,6 +137,12 @@
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -168,6 +191,12 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -194,6 +223,19 @@
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:paddingStart="8dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/semi_grey"
+                    android:text="기능"
+                    android:textSize="14dp"
+                    android:paddingLeft="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -242,6 +284,12 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -268,6 +316,12 @@
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -313,6 +367,12 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -339,6 +399,12 @@
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -367,6 +433,53 @@
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/tv_detailedsetting_description_for_swipeable_space"
+                        style="@style/FKButtonLightGrey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="스페이스바 스와이프"
+                        app:drawableEndCompat="@drawable/ic_baseline_help"
+                        app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                    <Switch
+                        android:id="@+id/switch_detailedsetting_swipeable_space"
+                        style="@style/FKSwitch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75"
+                        android:checked="@{kbviewmodel.kbSwipeableSpace}"
+                        android:paddingRight="20dp"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    android:paddingStart="8dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/semi_grey"
+                    android:text="레이아웃"
+                    android:textSize="14dp"
+                    android:paddingLeft="8dp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -394,6 +507,12 @@
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -418,6 +537,12 @@
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -466,6 +591,12 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -512,6 +643,12 @@
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

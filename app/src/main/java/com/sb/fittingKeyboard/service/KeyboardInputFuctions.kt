@@ -266,7 +266,7 @@ class KeyboardInputFuctions(private val mIMEService: InputMethodService) {
                 InputConnection.GET_TEXT_WITH_STYLES
             )
             // 이모지 삭제 / 일반 삭제 나눔
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && c!!.isNotEmpty() && Character.isSurrogate(c[0])) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && c != null && c.isNotEmpty() && Character.isSurrogate(c[0])) {
                 val deleteKeyEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL)
                 mIMEService.currentInputConnection.sendKeyEvent(deleteKeyEvent)
             } else {

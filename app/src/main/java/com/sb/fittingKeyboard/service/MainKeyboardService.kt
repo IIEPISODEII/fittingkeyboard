@@ -41,6 +41,7 @@ import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
 import com.sb.fittingKeyboard.service.util.*
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 import org.json.JSONArray
+import kotlin.math.abs
 
 @SuppressLint("ClickableViewAccessibility")
 class MainKeyboardService : InputMethodService(), LifecycleOwner {
@@ -505,9 +506,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         vm.kbFontSize.observe(this) { boilerplateTextsAdapter.setFontSize(it) }
         vm.kbNormalKeysFontColor.observe(this) { boilerplateTextsAdapter.setFontColor(it) }
-        vm.kbFontType.observe(this) {
-            boilerplateTextsAdapter.setFontType(it)
-        }
+        vm.kbFontType.observe(this) { boilerplateTextsAdapter.setFontType(it) }
         vm.kbLeftSideMargin.observe(this) {
             val lPNum = kbNumLeftSide.layoutParams
             val lPChar = kbCharLeftSide.layoutParams
@@ -1006,9 +1005,10 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         private val actionCancelOrUpEvent: ((View, MotionEvent) -> Unit)? = null,
         private val actionDownEvent: ((View, MotionEvent) -> Unit)? = null
     ): OnTouchListener {
+
         override fun onTouch(view: View, motionEvent: MotionEvent?): Boolean {
             if (motionEvent == null) return false
-//            view.performClick()
+
             when (motionEvent.action) {
                 MotionEvent.ACTION_CANCEL -> {
                     view.isPressed = false
@@ -1021,7 +1021,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         view.y,
                         0
                     ))
-//                    RepeatListener.setInterception(true)
                     actionCancelOrUpEvent?.invoke(view, motionEvent)
                 }
                 MotionEvent.ACTION_UP -> {

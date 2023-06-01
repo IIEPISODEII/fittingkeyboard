@@ -23,6 +23,7 @@ object Constants {
     const val KEYBOARD_TOGGLE_TOOLBAR = "KeyboardToggleToolBar"
     const val KEYBOARD_AUTO_CAPITALIZATION = "KeyboardAutoCapital"
     const val KEYBOARD_AUTO_MODE_CHANGE = "KeyboardAutoModeChange"
+    const val KEYBOARD_SWIPEABLE_SPACE = "KeyboardSwipeableSpace"
     const val KEYBOARD_SPECIALKEY_LONGCLICK = "KeyboardSpecialkeyAddon"
     const val KEYBOARD_ENTERKEY_LONGCLICK = "KeyboardEnterkeyAddon"
     const val KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING = "KeyboardToolbarGoSetting"

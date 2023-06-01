@@ -19,7 +19,7 @@ import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ItemTouchHelperListene
 import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.ToolbarSettingAdapter
 import com.sb.fittingKeyboard.keyboardSettings.data.ToolbarSettingDataHolder
 import com.sb.fittingKeyboard.databinding.FragmentDetailedsettingBinding
-import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
+import com.sb.fittingKeyboard.keyboardSettings.util.showHelpDialog
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class FragmentSettingDetails : Fragment() {
@@ -154,42 +154,48 @@ class FragmentSettingDetails : Fragment() {
         binding.switchDetailedsettingAutoModeChange.setOnCheckedChangeListener { _, it ->
             prefSetting.edit()?.putBoolean(Constants.KEYBOARD_AUTO_MODE_CHANGE, it)?.apply()
         }
+        binding.switchDetailedsettingSwipeableSpace.setOnCheckedChangeListener { _, it ->
+            prefSetting.edit()?.putBoolean(Constants.KEYBOARD_SWIPEABLE_SPACE, it)?.apply()
+        }
 
         binding.tvDetailedsettingDescriptionForDivision.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_division_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_division_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForRightsize.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_right_size_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_right_size_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForGap.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_top_row_gap_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_top_row_gap_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForBottomMargin.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_bot_margin_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_bot_margin_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForLongclickDuration.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_holding_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_holding_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForLeftsideMargin.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_leftside_margin_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_leftside_margin_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForRightsideMargin.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_rightside_margin_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_rightside_margin_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForVibration.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_vibration_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_vibration_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForToolbar.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_toggleSet_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_toggleSet_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForAutoCapitalization.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_autoCapital_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_autoCapital_help_text), this.requireActivity().window!!.context)
         }
         binding.tvDetailedsettingDescriptionForAutoModeChange.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_autoModeChange_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_autoModeChange_help_text), this.requireActivity().window!!.context)
+        }
+        binding.tvDetailedsettingDescriptionForSwipeableSpace.setOnClickListener {
+            showHelpDialog(getString(R.string.keyboard_swipeable_space_help_text), this.requireActivity().window!!.context)
         }
         binding.btnDetailedsettingTitleForCustomizingToolbar.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_toolbar_setting_help_text), this.requireActivity().window!!.context)
+            showHelpDialog(getString(R.string.keyboard_toolbar_setting_help_text), this.requireActivity().window!!.context)
         }
         return binding.root
     }

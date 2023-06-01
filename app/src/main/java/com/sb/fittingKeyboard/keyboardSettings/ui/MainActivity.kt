@@ -19,7 +19,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.keyboardSettings.ui.adapter.FragmentViewPagerAdapter
-import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
+import com.sb.fittingKeyboard.keyboardSettings.util.showHelpDialog
 
 class MainActivity : AppCompatActivity() {
     private val currentIMEList = mutableListOf<InputMethodInfo>()
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 else showIMESettingAlert("취소")
             }
             R.id.menu_help -> {
-                Utilities.showHelpDialog(
+                showHelpDialog(
                     resources.getString(R.string.keyboard_enable_help_text),
                     this
                 )

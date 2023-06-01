@@ -13,7 +13,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.Constants
-import com.sb.fittingKeyboard.keyboardSettings.util.Utilities
+import com.sb.fittingKeyboard.keyboardSettings.util.showHelpDialog
 
 class FragmentSettingBasic : Fragment() {
     private val prefSetting by lazy { requireContext().getSharedPreferences(Constants.KEYBOARD_SETTING, Context.MODE_PRIVATE) }
@@ -114,16 +114,16 @@ class FragmentSettingBasic : Fragment() {
         }
 
         tvKeyboardHeightSetting.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.keyboard_height_help_text), this.requireActivity().window.context)
+            showHelpDialog(getString(R.string.keyboard_height_help_text), this.requireActivity().window.context)
         }
         tvSpecialKeyLongClickSetting.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.specialkeyAddon_help_text), this.requireActivity().window.context)
+            showHelpDialog(getString(R.string.specialkeyAddon_help_text), this.requireActivity().window.context)
         }
         tvEnterKeyLongClickSetting.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.enterkeyAddon_help_text), this.requireActivity().window.context)
+            showHelpDialog(getString(R.string.enterkeyAddon_help_text), this.requireActivity().window.context)
         }
         tvIMEKRSetting.setOnClickListener {
-            Utilities.showHelpDialog(getString(R.string.inputMethodKR_help_text), this.requireActivity().window.context)
+            showHelpDialog(getString(R.string.inputMethodKR_help_text), this.requireActivity().window.context)
         }
 
         return fragmentView

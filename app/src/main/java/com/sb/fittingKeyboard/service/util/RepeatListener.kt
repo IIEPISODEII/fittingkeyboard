@@ -32,12 +32,7 @@ class RepeatListener(
     private val handlerRunnable: Runnable = object : Runnable {
         override fun run() {
             if (touchedView == null) return
-//            if (isIntercepted) {
-//                isIntercepted = false
-//                touchedView!!.isPressed = false
-//                touchedView = null
-//                return
-//            }
+
             handler.postDelayed(this, normalInterval)
             clickListener!!.onClick(touchedView)
         }
@@ -63,7 +58,6 @@ class RepeatListener(
                 return true
             }
             MotionEvent.ACTION_CANCEL -> {
-//                mOnIntercept?.invoke()
                 handler.removeCallbacks(handlerRunnable)
                 if (touchedView == null) return false
                 return false
@@ -88,14 +82,5 @@ class RepeatListener(
 
     fun changeInitialInterval(newInterval: Long) {
         initialInterval = newInterval
-    }
-
-    companion object {
-//        private var isIntercepted = false
-//
-//        private var mOnIntercept: (() -> Unit)? = null
-//        fun setOnIntercept(onIntercept: () -> Unit) {
-//            mOnIntercept = onIntercept
-//        }
     }
 }

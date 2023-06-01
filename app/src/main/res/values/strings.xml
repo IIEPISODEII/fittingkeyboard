@@ -21,6 +21,7 @@
     <string name="keyboard_autoCapital_help_text">영어자판 사용 시 첫 글자를 대문자로 설정합니다.</string>
     <string name="keyboard_autoModeChange_help_text">특수문자 자판에서 스페이스바를 누르면 원래 자판으로 돌아옵니다.</string>
     <string name="keyboard_toolbar_setting_help_text">툴바 메뉴 중 표시할 메뉴와 표시 순서를 설정합니다.</string>
+    <string name="keyboard_swipeable_space_help_text">"영/한 자판에서 스페이스바를 스와이프하면 한/영 자판으로 전환됩니다.\n활성화 시 스페이스바를 꾹 눌러서 빈칸을 입력하는 기능은 비활성화됩니다."</string>
     <string name="admin1_help_text"><b><i>STEP 1</i></b> : 키보드 관리 화면에서 "피팅키보드"를 활성화해주세요.</string>
     <string name="admin2_help_text"><b><i>STEP 2</i></b> : 키보드 변경 화면에서 "피팅키보드"를 선택해주세요.</string>
     <string name="specialkeyAddon_help_text">특수문자키를 길게 누를 때 부가기능을 설정합니다.</string>
