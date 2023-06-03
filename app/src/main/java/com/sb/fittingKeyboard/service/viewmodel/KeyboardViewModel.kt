@@ -27,20 +27,10 @@ import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.EMOJI
 
 class KeyboardViewModel(application: Application) : AndroidViewModel(application) {
-    /** mode
-     * 0: English, Always UpperCase
-     * 1: English, UpperCase
-     * 2: English, LowerCase
-     * 3: KR
-     * 4: KR with Shift
-     * 5: Special 1
-     * 6: Special 2
-     * 7: BoilerPlate Text
-     * 8: Cursor Pad
-     * 9: Number Pad
-     * 10 : Emojis
-     * **/
-    private var _inputTypeState: MutableLiveData<InputTypeState> = MutableLiveData(EN_UPPER)
+    var _a: MutableLiveData<Int> = MutableLiveData(1)
+
+
+    var _inputTypeState: MutableLiveData<InputTypeState> = MutableLiveData(EN_UPPER)
     val inputTypeState: LiveData<InputTypeState>
         get() = _inputTypeState
 

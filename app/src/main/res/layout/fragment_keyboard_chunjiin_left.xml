@@ -91,7 +91,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.repeatListenerDels[7]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerDels[7]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -162,8 +162,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[19]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"/>
             </LinearLayout>
 
             <LinearLayout
@@ -336,7 +335,7 @@
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[20]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[20]}" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

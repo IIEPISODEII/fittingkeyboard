@@ -64,7 +64,7 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_delete_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
-                    app:onTouch="@{kbservice.repeatListenerDels[11]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerDels[11]}" />
             </LinearLayout>
 
             <androidx.viewpager2.widget.ViewPager2

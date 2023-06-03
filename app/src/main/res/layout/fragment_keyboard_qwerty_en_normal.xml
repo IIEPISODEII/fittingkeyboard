@@ -44,7 +44,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[26]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[26]}" />
 
                 <Button
                     android:id="@+id/btn_en_w"
@@ -60,7 +60,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[27]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[27]}" />
 
                 <Button
                     android:id="@+id/btn_en_e"
@@ -76,7 +76,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[28]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[28]}" />
 
                 <Button
                     android:id="@+id/btn_en_r"
@@ -92,7 +92,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[29]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[29]}" />
 
                 <Button
                     android:id="@+id/btn_en_t"
@@ -108,7 +108,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[30]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[30]}" />
 
                 <Button
                     android:id="@+id/btn_en_blank"
@@ -134,7 +134,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[31]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[31]}" />
 
                 <Button
                     android:id="@+id/btn_en_u"
@@ -150,7 +150,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[32]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[32]}" />
 
                 <Button
                     android:id="@+id/btn_en_i"
@@ -166,7 +166,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[33]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[33]}" />
 
                 <Button
                     android:id="@+id/btn_en_o"
@@ -182,7 +182,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[34]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[34]}" />
 
                 <Button
                     android:id="@+id/btn_en_p"
@@ -198,7 +198,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[35]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[35]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -221,7 +221,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[36]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[36]}" />
 
                 <Button
                     android:id="@+id/btn_en_s"
@@ -237,7 +237,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[37]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[37]}" />
 
                 <Button
                     android:id="@+id/btn_en_d"
@@ -253,7 +253,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[38]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[38]}" />
 
                 <Button
                     android:id="@+id/btn_en_f"
@@ -269,7 +269,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[39]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[39]}" />
 
                 <Button
                     android:id="@+id/btn_en_g"
@@ -285,7 +285,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[40]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[40]}" />
 
                 <Button
                     android:id="@+id/btn_en_h"
@@ -301,7 +301,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[41]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[41]}" />
 
                 <Button
                     android:id="@+id/btn_en_j"
@@ -317,7 +317,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[42]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[42]}" />
 
                 <Button
                     android:id="@+id/btn_en_k"
@@ -333,7 +333,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[43]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[43]}" />
 
                 <Button
                     android:id="@+id/btn_en_l"
@@ -349,7 +349,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[44]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[44]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -386,7 +386,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[45]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[45]}" />
 
                 <Button
                     android:id="@+id/btn_en_x"
@@ -402,7 +402,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[46]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[46]}" />
 
                 <Button
                     android:id="@+id/btn_en_c"
@@ -418,7 +418,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[47]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[47]}" />
 
                 <Button
                     android:id="@+id/btn_en_v"
@@ -434,13 +434,14 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[48]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[48]}" />
 
                 <Button
                     android:id="@+id/btn_en_b"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/keydesign_07_char"
                     android:text="@{kbviewmodel.inputTypeState == InputTypeState.EN_LOWER ? `b` : `B`}"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -450,7 +451,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[49]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[49]}" />
 
                 <Button
                     android:id="@+id/btn_en_n"
@@ -466,7 +467,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[50]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[50]}" />
 
                 <Button
                     android:id="@+id/btn_en_m"
@@ -482,7 +483,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerChars[51]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[51]}" />
 
                 <ImageButton
                     android:id="@+id/imgbtn_en_del"
@@ -497,7 +498,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.repeatListenerDels[1]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerDels[1]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -520,6 +521,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}" />
+
                 <ImageButton
                     android:id="@+id/imgbtn_en_lang"
                     android:layout_width="0dp"
@@ -527,13 +529,13 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".9"
                     android:elevation="2dp"
-                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.kbSpecialKeyOnLongClickFunction)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}" />
+<!--                android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.kbSpecialKeyOnLongClickFunction)}"-->
 
                 <Button
                     android:id="@+id/btn_en_comma"
@@ -548,7 +550,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[3]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[3]}" />
 
                 <Button
                     android:id="@+id/btn_en_space"
@@ -562,8 +564,8 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[4]}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}" />
+                <!--                app:onTouch="@{kbservice.repeatListenerSpecials[4]}"-->
 
                 <Button
                     android:id="@+id/btn_en_dot"
@@ -578,7 +580,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.EN_UPPER}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[5]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[5]}" />
 
                 <ImageButton
                     android:id="@+id/imgbtn_en_enter"

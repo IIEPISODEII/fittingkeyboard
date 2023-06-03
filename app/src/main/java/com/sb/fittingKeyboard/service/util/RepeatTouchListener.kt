@@ -4,8 +4,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageButton
-import com.sb.fittingKeyboard.R
 
 /**
  * A class, that can be used as a TouchListener on any view (e.g. a Button).
@@ -19,22 +17,23 @@ import com.sb.fittingKeyboard.R
  * achieve this.
  */
 
-class RepeatListener(
-    var initialInterval: Long,
-    normalInterval: Long,
-    clickListener: View.OnClickListener?
+class RepeatTouchListener(
+    private var initialInterval: Long,
+    private val normalInterval: Long,
+    private val actionDownEvent: ((View, MotionEvent) -> Unit)? = null,
+    private val actionUpEvent: ((View, MotionEvent) -> Unit)? = null,
+    private val actionCancelEvent: ((View, MotionEvent) -> Unit)? = null
 ) :
     View.OnTouchListener {
     private val handler = Handler(Looper.getMainLooper())
-    private val normalInterval: Long
-    private val clickListener: View.OnClickListener
     private var touchedView: View? = null
+    private var touchedMotionEvent: MotionEvent? = null
     private val handlerRunnable: Runnable = object : Runnable {
         override fun run() {
-            if (touchedView == null) return
+            if (touchedView == null || touchedMotionEvent == null) return
 
             handler.postDelayed(this, normalInterval)
-            clickListener!!.onClick(touchedView)
+            actionDownEvent?.invoke(touchedView!!, touchedMotionEvent!!)
         }
     }
 
@@ -44,43 +43,33 @@ class RepeatListener(
             MotionEvent.ACTION_DOWN -> {
                 view.isPressed = true
                 handler.removeCallbacks(handlerRunnable)
-                clickListener.onClick(view)
                 touchedView = view
                 touchedView!!.isPressed = true
+                touchedMotionEvent = motionEvent
+                handler.post { actionDownEvent?.invoke(view, motionEvent) }
                 handler.postDelayed(handlerRunnable, initialInterval)
-                return false
             }
             MotionEvent.ACTION_UP -> {
                 handler.removeCallbacks(handlerRunnable)
-                if (touchedView == null) return false
+                actionUpEvent?.invoke(view, motionEvent)
+                if (touchedView == null || touchedMotionEvent == null) return false
                 touchedView!!.isPressed = false
                 touchedView = null
-                return true
+                touchedMotionEvent = null
             }
             MotionEvent.ACTION_CANCEL -> {
                 handler.removeCallbacks(handlerRunnable)
-                if (touchedView == null) return false
-                return false
+                actionCancelEvent?.invoke(view, motionEvent)
+                if (touchedView == null || touchedMotionEvent == null) return false
+                touchedView?.isPressed = false
+                touchedView = null
+                touchedMotionEvent = null
             }
         }
-        return false
+        return true
     }
 
-    /**
-     * @param initialInterval The interval after first click event
-     * @param normalInterval The interval after second and subsequent click
-     * events
-     * @param clickListener The OnClickListener, that will be called
-     * periodically
-     */
-    init {
-        requireNotNull(clickListener) { "null runnable" }
-        require(!(initialInterval < 0 || normalInterval < 0)) { "negative interval" }
-        this.normalInterval = normalInterval
-        this.clickListener = clickListener
-    }
-
-    fun changeInitialInterval(newInterval: Long) {
+    fun setInitialInterval(newInterval: Long) {
         initialInterval = newInterval
     }
 }

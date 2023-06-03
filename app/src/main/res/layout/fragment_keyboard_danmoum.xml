@@ -44,7 +44,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[89]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[89]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_w"
@@ -60,7 +60,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[90]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[90]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_e"
@@ -76,7 +76,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[91]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[91]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_r"
@@ -92,7 +92,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[92]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[92]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_t"
@@ -108,7 +108,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[93]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[93]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_blank"
@@ -134,7 +134,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[94]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[94]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_o"
@@ -150,7 +150,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[95]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[95]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_p"
@@ -166,7 +166,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[96]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[96]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -189,7 +189,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[97]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[97]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_s"
@@ -205,7 +205,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[98]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[98]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_d"
@@ -221,7 +221,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[99]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[99]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_f"
@@ -237,7 +237,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[100]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[100]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_g"
@@ -253,7 +253,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[101]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[101]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_j"
@@ -269,7 +269,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[102]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[102]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_k"
@@ -285,7 +285,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[103]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[103]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_l"
@@ -301,7 +301,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[104]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[104]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -333,7 +333,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[105]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[105]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_x"
@@ -349,7 +349,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[106]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[106]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_c"
@@ -365,7 +365,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[107]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[107]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_v"
@@ -381,7 +381,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[108]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[108]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_n"
@@ -397,7 +397,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[109]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[109]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_m"
@@ -413,7 +413,7 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerChars[110]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerChars[110]}" />
 
                 <ImageButton
                     android:id="@+id/imgbtn_kr_danmo_del"
@@ -428,7 +428,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.repeatListenerDels[5]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerDels[5]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -480,7 +480,7 @@
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[14]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[14]}" />
 
                 <Button
                     android:id="@+id/btn_kr_danmo_space"
@@ -493,7 +493,6 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[15]}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"/>
 
@@ -510,7 +509,7 @@
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[16]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[16]}" />
 
                 <ImageButton
                     android:id="@+id/imgbtn_kr_danmo_enter"

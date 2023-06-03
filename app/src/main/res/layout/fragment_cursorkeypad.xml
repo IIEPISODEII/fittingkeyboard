@@ -156,7 +156,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.rListenerCursorForeDel}" />
+                    app:onTouch="@{kbservice.RListenerCursorDeleteNextChar}" />
             </LinearLayout>
 
             <LinearLayout
@@ -238,7 +238,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.repeatListenerDels[8]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerDels[8]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -276,7 +276,7 @@
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[21]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[21]}" />
 
                 <ImageButton
                     android:id="@+id/imgbtn_cursorkeypad_enter"

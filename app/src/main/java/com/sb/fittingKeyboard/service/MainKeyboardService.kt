@@ -7,13 +7,10 @@ import android.content.res.Resources
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
-import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.InputType
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
 import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
@@ -28,6 +25,8 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.Constants
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.util.SingleTouchListener
+import com.sb.fittingKeyboard.com.sb.fittingKeyboard.service.util.SwipeableButtonTouchListener
 import com.sb.fittingKeyboard.keyboardSettings.ui.MainActivity
 import com.sb.fittingKeyboard.databinding.*
 import com.sb.fittingKeyboard.service.koreanAutomata.HanguelChunjiin
@@ -41,7 +40,6 @@ import com.sb.fittingKeyboard.service.emoji.indicator.CustomIndicator
 import com.sb.fittingKeyboard.service.util.*
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 import org.json.JSONArray
-import kotlin.math.abs
 
 @SuppressLint("ClickableViewAccessibility")
 class MainKeyboardService : InputMethodService(), LifecycleOwner {
@@ -480,24 +478,24 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         vm.kbLongClickInterval.observe(this) {
             mKeyboardHolding = it.toLong() + 100
-            for (rListener in repeatListenerChars) {
-                rListener.changeInitialInterval(mKeyboardHolding)
+            for (rListener in repeatTouchListenerChars) {
+                rListener.setInitialInterval(mKeyboardHolding)
             }
-            for (rListener in repeatListenerSpecials) {
-                rListener.changeInitialInterval(mKeyboardHolding)
+            for (rListener in repeatTouchListenerSpecials) {
+                rListener.setInitialInterval(mKeyboardHolding)
             }
-            for (rListener in repeatListenerDels) {
-                rListener.changeInitialInterval(mKeyboardHolding)
+            for (rListener in repeatTouchListenerDels) {
+                rListener.setInitialInterval(mKeyboardHolding)
             }
-            rListenerCursorLeft.changeInitialInterval(mKeyboardHolding)
-            rListenerCursorRight.changeInitialInterval(mKeyboardHolding)
-            rListenerCursorUp.changeInitialInterval(mKeyboardHolding)
-            rListenerCursorDown.changeInitialInterval(mKeyboardHolding)
+            rListenerCursorLeft.setInitialInterval(mKeyboardHolding)
+            rListenerCursorRight.setInitialInterval(mKeyboardHolding)
+            rListenerCursorUp.setInitialInterval(mKeyboardHolding)
+            rListenerCursorDown.setInitialInterval(mKeyboardHolding)
             if (SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                rListenerCursorFirst.changeInitialInterval(mKeyboardHolding)
-                rListenerCursorLast.changeInitialInterval(mKeyboardHolding)
+                rListenerCursorFirst.setInitialInterval(mKeyboardHolding)
+                rListenerCursorLast.setInitialInterval(mKeyboardHolding)
             }
-            rListenerCursorForeDel.changeInitialInterval(mKeyboardHolding)
+            rListenerCursorDeleteNextChar.setInitialInterval(mKeyboardHolding)
         }
         vm.kbHasVibration.observe(this) { myKeyboardVibration = it }
         vm.kbVibrationIntensity.observe(this) { myKeyboardVibrationIntensity = it }
@@ -553,6 +551,120 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         vm.boilerplateTexts.observe(this) {
             boilerplateTextsAdapter.setBoilerplateTextsList(it)
+        }
+        vm.kbSwipeableSpace.observe(this) {
+            qwertyEnNormalBinding.btnEnSpace.apply {
+                setOnTouchListener(
+                    if (!it) {
+                        RepeatTouchListener(
+                            initialInterval = mKeyboardHolding,
+                            normalInterval = normalInterval,
+                            actionDownEvent = { view, _ -> inputSpecial(view) }
+                        )
+                    } else {
+                        SwipeableButtonTouchListener(
+                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }
+                        )
+                    }
+                )
+            }
+            qwertyKrNormalBinding.btnKrQwertySpace.apply {
+                setOnTouchListener(
+                    if (!it) {
+                        RepeatTouchListener(
+                            initialInterval = mKeyboardHolding,
+                            normalInterval = normalInterval,
+                            actionDownEvent = { view, _ -> inputSpecial(view) }
+                        )
+                    } else {
+                        SwipeableButtonTouchListener(
+                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
+                        )
+                    }
+                )
+            }
+            danmoumKBBinding.btnKrDanmoSpace.apply {
+                setOnTouchListener(
+                    if (!it) {
+                        RepeatTouchListener(
+                            initialInterval = mKeyboardHolding,
+                            normalInterval = normalInterval,
+                            actionDownEvent = { view, _ -> inputSpecial(view) }
+                        )
+                    } else {
+                        SwipeableButtonTouchListener(
+                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
+                        )
+                    }
+                )
+            }
+            naratguelBinding.btnKrNaratSpace.apply {
+                setOnTouchListener(
+                    if (!it) {
+                    RepeatTouchListener(
+                        initialInterval = mKeyboardHolding,
+                        normalInterval = normalInterval,
+                        actionDownEvent = { view, _ -> inputSpecial(view) }
+                    )
+                } else {
+                    SwipeableButtonTouchListener(
+                        actionDownEvent = { view, _ -> inputSpecial(view) },
+                        actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
+                    )
+                }
+                )
+            }
+            chunjiinBinding.btnKrChunSpace.apply {
+                setOnTouchListener(
+                    if (!it) {
+                        RepeatTouchListener(
+                            initialInterval = mKeyboardHolding,
+                            normalInterval = normalInterval,
+                            actionDownEvent = { view, _ -> inputSpecial(view) }
+                        )
+                    } else {
+                        SwipeableButtonTouchListener(
+                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
+                        )
+                    }
+                )
+            }
+            chunLeftKBBinding.btnKrChunLeftSpace.apply {
+                setOnTouchListener(
+                    if (!it) {
+                    RepeatTouchListener(
+                        initialInterval = mKeyboardHolding,
+                        normalInterval = normalInterval,
+                        actionDownEvent = { view, _ -> inputSpecial(view) }
+                    )
+                } else {
+                    SwipeableButtonTouchListener(
+                        actionDownEvent = { view, _ -> inputSpecial(view) },
+                        actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
+                    )
+                }
+                )
+            }
+            specialKBBinding.btnSpecialSpace.apply {
+                setOnTouchListener(
+                    if (!it) {
+                        RepeatTouchListener(
+                            initialInterval = mKeyboardHolding,
+                            normalInterval = normalInterval,
+                            actionDownEvent = { view, _ -> inputSpecial(view) }
+                        )
+                    } else {
+                        SwipeableButtonTouchListener(
+                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_SECOND) }
+                        )
+                    }
+                )
+            }
         }
 
         emojisViewPager.adapter = emojiPagerAdapter
@@ -613,16 +725,15 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         emojisViewPager.registerOnPageChangeCallback(emojiPageChangeCallback!!)
 
-        qwertyEnNormalBinding.imgbtnEnLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }))
-        qwertyEnNormalBinding.imgbtnEnShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
-        qwertyEnNormalBinding.btnEnSpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_FIRST) }))
-        qwertyKrNormalBinding.imgbtnKrQwertyLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
-        qwertyKrNormalBinding.imgbtnKrQwertyShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }))
-        qwertyKrNormalBinding.btnKrQwertySpecial.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_FIRST) }))
-        specialKBBinding.imgbtnSpecialLang.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
-        specialKBBinding.imgbtnSpecialShift.setOnTouchListener(ButtonTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_SECOND) }))
-        specialKBBinding.btnSpecialSpace.setOnTouchListener(ButtonTouchListener(actionDownEvent = { view, _ -> singleListenerSpecialSpace.onClick(view) }))
-        danmoumKBBinding.imgbtnKrDanmoLang.setOnTouchListener(ButtonTouchListener(actionDownEvent =  {_, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER)} ))
+        qwertyEnNormalBinding.imgbtnEnLang.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }))
+        qwertyEnNormalBinding.imgbtnEnShift.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
+        qwertyEnNormalBinding.btnEnSpecial.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_FIRST) }))
+        qwertyKrNormalBinding.imgbtnKrQwertyLang.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
+        qwertyKrNormalBinding.imgbtnKrQwertyShift.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }))
+        qwertyKrNormalBinding.btnKrQwertySpecial.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_FIRST) }))
+        specialKBBinding.imgbtnSpecialLang.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
+        specialKBBinding.imgbtnSpecialShift.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_SECOND) }))
+        danmoumKBBinding.imgbtnKrDanmoLang.setOnTouchListener(SingleTouchListener(actionDownEvent =  {_, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER)} ))
 
         return kbdLayout
     }
@@ -712,17 +823,26 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    var rListenerCursorFirst = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorFirst()
-    }
+    var rListenerCursorFirst =
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> moveCursorFirst() }
+        )
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    var rListenerCursorLast = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorLast()
-    }
-    var rListenerCursorForeDel = RepeatListener(mKeyboardHolding, normalInterval) {
-        inputForwardDelete()
-    }
+    var rListenerCursorLast =
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> moveCursorLast() }
+        )
+    var rListenerCursorDeleteNextChar =
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> deleteNextChar() }
+        )
 
     fun inputChar(button: View) {
         keyboardFunctions.inputChar(
@@ -786,7 +906,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         )
     }
 
-    private fun inputForwardDelete() {
+    private fun deleteNextChar() {
         keyboardFunctions.inputForwardDelete(
             clearComposing = { clearComposing() },
             myKeyboardVibration = myKeyboardVibration,
@@ -961,33 +1081,51 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         HanguelDanmoum.initResult()
     }
 
-    var repeatListenerChars = Array(200) {
-        RepeatListener(mKeyboardHolding, normalInterval) {
-            inputChar(it)
-        }
+    var repeatTouchListenerChars = Array(200) {
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { view, _ -> inputChar(view) }
+        )
     }
-    var repeatListenerSpecials = Array(100) {
-        RepeatListener(mKeyboardHolding, normalInterval) {
-            inputSpecial(it)
-        }
+    var repeatTouchListenerSpecials = Array(100) {
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { view, _ -> inputSpecial(view) }
+        )
     }
-    var repeatListenerDels = Array(100) {
-        RepeatListener(mKeyboardHolding, normalInterval) {
-            inputDelete()
-        }
+    var repeatTouchListenerDels = Array(100) {
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> inputDelete() }
+        )
     }
-    var rListenerCursorLeft = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorLeft()
-    }
-    var rListenerCursorRight = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorRight()
-    }
-    var rListenerCursorUp = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorUp()
-    }
-    var rListenerCursorDown = RepeatListener(mKeyboardHolding, normalInterval) {
-        moveCursorDown()
-    }
+    var rListenerCursorLeft =
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> moveCursorLeft() }
+        )
+    var rListenerCursorRight =
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> moveCursorRight() }
+        )
+    var rListenerCursorUp =
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> moveCursorUp() }
+        )
+    var rListenerCursorDown =
+        RepeatTouchListener(
+            initialInterval = mKeyboardHolding,
+            normalInterval = normalInterval,
+            actionDownEvent = { _, _ -> moveCursorDown() }
+        )
     var singleListenerSpecialSpace = View.OnClickListener {
         inputSpecial(it)
     }
@@ -999,42 +1137,5 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
 
     private fun changeDpToPx(dp: Int): Int {
         return (dp * Resources.getSystem().displayMetrics.density).toInt()
-    }
-
-    inner class ButtonTouchListener(
-        private val actionCancelOrUpEvent: ((View, MotionEvent) -> Unit)? = null,
-        private val actionDownEvent: ((View, MotionEvent) -> Unit)? = null
-    ): OnTouchListener {
-
-        override fun onTouch(view: View, motionEvent: MotionEvent?): Boolean {
-            if (motionEvent == null) return false
-
-            when (motionEvent.action) {
-                MotionEvent.ACTION_CANCEL -> {
-                    view.isPressed = false
-                    val downTime = System.currentTimeMillis()
-                    view.dispatchTouchEvent(MotionEvent.obtain(
-                        downTime,
-                        downTime+20L,
-                        MotionEvent.ACTION_UP,
-                        view.x,
-                        view.y,
-                        0
-                    ))
-                    actionCancelOrUpEvent?.invoke(view, motionEvent)
-                }
-                MotionEvent.ACTION_UP -> {
-                    view.isPressed = false
-                    actionCancelOrUpEvent?.invoke(view, motionEvent)
-                }
-                MotionEvent.ACTION_DOWN -> {
-                    view.isPressed = true
-                    Handler(mainLooper).postDelayed({
-                        actionDownEvent?.invoke(view, motionEvent)
-                    }, 30L)
-                }
-            }
-            return true
-        }
     }
 }

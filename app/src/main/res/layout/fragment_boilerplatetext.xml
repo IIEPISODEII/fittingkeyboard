@@ -51,7 +51,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/recyview_boilerplate_boilerplatetext_items_container"
                 app:layout_constraintTop_toTopOf="parent"
-                app:onTouch="@{kbservice.repeatListenerDels[9]}" />
+                app:onTouch="@{kbservice.repeatTouchListenerDels[9]}" />
 
             <Button
                 android:id="@+id/btn_boilerplate_space"
@@ -70,7 +70,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/recyview_boilerplate_boilerplatetext_items_container"
                 app:layout_constraintTop_toBottomOf="@id/imgbtn_boilerplate_delete"
-                app:onTouch="@{kbservice.repeatListenerSpecials[22]}" />
+                app:onTouch="@{kbservice.repeatTouchListenerSpecials[22]}" />
 
             <ImageButton
                 android:id="@+id/imgbtn_boilerplate_enter"

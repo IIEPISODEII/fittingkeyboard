@@ -91,7 +91,7 @@
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.repeatListenerDels[3]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerDels[3]}" />
             </LinearLayout>
 
             <LinearLayout
@@ -161,8 +161,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[9]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
             </LinearLayout>
 
             <LinearLayout
@@ -235,7 +234,7 @@
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatListenerSpecials[10]}" />
+                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[10]}" />
 
                 <ImageButton
                     android:id="@+id/imgbtn_kr_narat_enter"
