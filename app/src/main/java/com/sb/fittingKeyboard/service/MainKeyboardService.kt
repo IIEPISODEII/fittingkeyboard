@@ -4,6 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
@@ -17,6 +21,8 @@ import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -263,6 +269,12 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             )
         }
     }
+    private val spaceBtnLeftArrow by lazy {
+        ResourcesCompat.getDrawable(resources, R.drawable.keyic_arrowleft_black, null)
+    }
+    private val spaceBtnRightArrow by lazy {
+        ResourcesCompat.getDrawable(resources, R.drawable.keyic_arrowright_black, null)
+    }
 
 
     override fun getLifecycle(): Lifecycle = mLifecycle
@@ -502,6 +514,18 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         vm.kbTheme.observe(this) {
             boilerplateTextsAdapter.setTheme(it)
         }
+        vm.kbFunctionKeysFontColor.observe(this) {
+            spaceBtnLeftArrow?.let { drawable ->
+                drawable.clearColorFilter()
+                if (SDK_INT >= Build.VERSION_CODES.Q) drawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(it, BlendModeCompat.SRC_ATOP)
+                else drawable.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
+            }
+            spaceBtnRightArrow?.let { drawable ->
+                drawable.clearColorFilter()
+                if (SDK_INT >= Build.VERSION_CODES.Q) drawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(it, BlendModeCompat.SRC_ATOP)
+                else drawable.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
+            }
+        }
         vm.kbFontSize.observe(this) { boilerplateTextsAdapter.setFontSize(it) }
         vm.kbNormalKeysFontColor.observe(this) { boilerplateTextsAdapter.setFontColor(it) }
         vm.kbFontType.observe(this) { boilerplateTextsAdapter.setFontType(it) }
@@ -568,6 +592,12 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     }
                 )
+                setCompoundDrawablesWithIntrinsicBounds(
+                    if (it) spaceBtnLeftArrow else null,
+                    null,
+                    if (it) spaceBtnRightArrow else null,
+                    null
+                )
             }
             qwertyKrNormalBinding.btnKrQwertySpace.apply {
                 setOnTouchListener(
@@ -583,6 +613,12 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
                         )
                     }
+                )
+                setCompoundDrawablesWithIntrinsicBounds(
+                    if (it) spaceBtnLeftArrow else null,
+                    null,
+                    if (it) spaceBtnRightArrow else null,
+                    null
                 )
             }
             danmoumKBBinding.btnKrDanmoSpace.apply {
@@ -600,21 +636,33 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     }
                 )
+                setCompoundDrawablesWithIntrinsicBounds(
+                    if (it) spaceBtnLeftArrow else null,
+                    null,
+                    if (it) spaceBtnRightArrow else null,
+                    null
+                )
             }
             naratguelBinding.btnKrNaratSpace.apply {
                 setOnTouchListener(
                     if (!it) {
-                    RepeatTouchListener(
-                        initialInterval = mKeyboardHolding,
-                        normalInterval = normalInterval,
-                        actionDownEvent = { view, _ -> inputSpecial(view) }
-                    )
-                } else {
-                    SwipeableButtonTouchListener(
-                        actionDownEvent = { view, _ -> inputSpecial(view) },
-                        actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
-                    )
-                }
+                        RepeatTouchListener(
+                            initialInterval = mKeyboardHolding,
+                            normalInterval = normalInterval,
+                            actionDownEvent = { view, _ -> inputSpecial(view) }
+                        )
+                    } else {
+                        SwipeableButtonTouchListener(
+                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
+                        )
+                    }
+                )
+                setCompoundDrawablesWithIntrinsicBounds(
+                    if (it) spaceBtnLeftArrow else null,
+                    null,
+                    if (it) spaceBtnRightArrow else null,
+                    null
                 )
             }
             chunjiinBinding.btnKrChunSpace.apply {
@@ -632,21 +680,33 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     }
                 )
+                setCompoundDrawablesWithIntrinsicBounds(
+                    if (it) spaceBtnLeftArrow else null,
+                    null,
+                    if (it) spaceBtnRightArrow else null,
+                    null
+                )
             }
             chunLeftKBBinding.btnKrChunLeftSpace.apply {
                 setOnTouchListener(
                     if (!it) {
-                    RepeatTouchListener(
-                        initialInterval = mKeyboardHolding,
-                        normalInterval = normalInterval,
-                        actionDownEvent = { view, _ -> inputSpecial(view) }
-                    )
-                } else {
-                    SwipeableButtonTouchListener(
-                        actionDownEvent = { view, _ -> inputSpecial(view) },
-                        actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
-                    )
-                }
+                        RepeatTouchListener(
+                            initialInterval = mKeyboardHolding,
+                            normalInterval = normalInterval,
+                            actionDownEvent = { view, _ -> inputSpecial(view) }
+                        )
+                    } else {
+                        SwipeableButtonTouchListener(
+                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
+                        )
+                    }
+                )
+                setCompoundDrawablesWithIntrinsicBounds(
+                    if (it) spaceBtnLeftArrow else null,
+                    null,
+                    if (it) spaceBtnRightArrow else null,
+                    null
                 )
             }
             specialKBBinding.btnSpecialSpace.apply {
@@ -664,13 +724,17 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     }
                 )
+                setCompoundDrawablesWithIntrinsicBounds(
+                    if (it) spaceBtnLeftArrow else null,
+                    null,
+                    if (it) spaceBtnRightArrow else null,
+                    null
+                )
             }
         }
 
         emojisViewPager.adapter = emojiPagerAdapter
-        vm.kbEmojiColumns.observe(
-            this
-        ) { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) }
+        vm.kbEmojiColumns.observe(this) { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) }
         vm.kbRecentlyUsedEmoticons.observe(this) {
             val jsonArray = JSONArray(it)
             val arr = mutableListOf<String>()
