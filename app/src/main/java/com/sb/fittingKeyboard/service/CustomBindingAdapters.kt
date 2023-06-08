@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
@@ -48,9 +49,9 @@ object CustomBindingAdapters {
         }
 
         if (inputTypeState == KeyboardViewModel.InputTypeState.EN_BOLD_UPPER) {
-            (view as Button).setTypeface(typeFace, Typeface.BOLD)
+            (view as TextView).setTypeface(typeFace, Typeface.BOLD)
         } else {
-            (view as Button).setTypeface(typeFace, Typeface.NORMAL)
+            (view as TextView).setTypeface(typeFace, Typeface.NORMAL)
         }
     }
 

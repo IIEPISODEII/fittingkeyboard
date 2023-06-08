@@ -4,16 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
+import android.graphics.*
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.InputType
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
@@ -295,6 +293,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private var myKeyboardVibration: Boolean = true
     private var myKeyboardVibrationIntensity: Int = 50
     private val normalInterval: Long = 37
+    private val defaultFontSize = 12F
     private var latestInputTypeState = KeyboardViewModel.InputTypeState.KR_NORMAL
     private var savedCursorPosition = 0
     private val emojiAdapterList = listOf(
@@ -314,6 +313,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
 
     private var savedBottomMarginHeight = 0
     private var savedKbdMainboardHeight = 0
+
+    private var isTextSizeFixed = false
 
     override fun onCreate() {
         super.onCreate()
@@ -387,8 +388,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         emojiBinding.setVariable(BR.kbservice, this)
         emojiBinding.lifecycleOwner = this
         emojiBinding.kbviewmodel = vm
-        
-        vm.inputTypeState
 
         // 상용구창 어댑터 설정
         val bpOnClick: (View) -> Unit = { view ->
@@ -399,6 +398,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         val boilerplateTextsAdapter = BoilerplateTextAdapter(mutableMapOf(), bpOnClick, bpOnLongClick)
 
+        // 설정값으로 키보드 레이아웃 및 기능 변경 
         var currentKRView = qwertyKrNormalKBView
         vm.kbResultBottomMargin.observe(this) {
             val lP = kbLayoutBottomMargin.layoutParams
@@ -526,7 +526,19 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 else drawable.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
             }
         }
-        vm.kbFontSize.observe(this) { boilerplateTextsAdapter.setFontSize(it) }
+        vm.kbFontSize.observe(this) {
+            boilerplateTextsAdapter.setFontSize(it)
+            if (!isTextSizeFixed) {
+                naratguelBinding.btnKrNaratSpace.textSize = it.toFloat() / resources.displayMetrics.density
+                chunjiinBinding.btnKrChunSpace.textSize = it.toFloat() / resources.displayMetrics.density
+                chunLeftKBBinding.btnKrChunLeftSpace.textSize = it.toFloat() / resources.displayMetrics.density
+            }
+            else {
+                naratguelBinding.btnKrNaratSpace.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
+                chunjiinBinding.btnKrChunSpace.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
+                chunLeftKBBinding.btnKrChunLeftSpace.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
+            }
+        }
         vm.kbNormalKeysFontColor.observe(this) { boilerplateTextsAdapter.setFontColor(it) }
         vm.kbFontType.observe(this) { boilerplateTextsAdapter.setFontType(it) }
         vm.kbLeftSideMargin.observe(this) {
@@ -577,6 +589,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             boilerplateTextsAdapter.setBoilerplateTextsList(it)
         }
         vm.kbSwipeableSpace.observe(this) {
+            isTextSizeFixed = it
             qwertyEnNormalBinding.btnEnSpace.apply {
                 setOnTouchListener(
                     if (!it) {
@@ -587,7 +600,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     } else {
                         SwipeableButtonTouchListener(
-                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionUpEvent = { view, _ -> inputSpecial(view) },
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }
                         )
                     }
@@ -609,7 +622,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     } else {
                         SwipeableButtonTouchListener(
-                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionUpEvent = { view, _ -> inputSpecial(view) },
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
                         )
                     }
@@ -631,7 +644,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     } else {
                         SwipeableButtonTouchListener(
-                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionUpEvent = { view, _ -> inputSpecial(view) },
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
                         )
                     }
@@ -653,7 +666,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     } else {
                         SwipeableButtonTouchListener(
-                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionUpEvent = { view, _ -> inputSpecial(view) },
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
                         )
                     }
@@ -664,6 +677,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                     if (it) spaceBtnRightArrow else null,
                     null
                 )
+                if (!isTextSizeFixed) this.textSize = vm.kbFontSize.value!! / resources.displayMetrics.density
+                else this.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
             }
             chunjiinBinding.btnKrChunSpace.apply {
                 setOnTouchListener(
@@ -675,7 +690,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     } else {
                         SwipeableButtonTouchListener(
-                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionUpEvent = { view, _ -> inputSpecial(view) },
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
                         )
                     }
@@ -686,6 +701,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                     if (it) spaceBtnRightArrow else null,
                     null
                 )
+                if (!isTextSizeFixed) this.textSize = vm.kbFontSize.value!! / resources.displayMetrics.density
+                else this.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
             }
             chunLeftKBBinding.btnKrChunLeftSpace.apply {
                 setOnTouchListener(
@@ -697,7 +714,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     } else {
                         SwipeableButtonTouchListener(
-                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionUpEvent = { view, _ -> inputSpecial(view) },
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }
                         )
                     }
@@ -708,6 +725,8 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                     if (it) spaceBtnRightArrow else null,
                     null
                 )
+                if (!isTextSizeFixed) this.textSize = vm.kbFontSize.value!! / resources.displayMetrics.density
+                else this.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
             }
             specialKBBinding.btnSpecialSpace.apply {
                 setOnTouchListener(
@@ -719,7 +738,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                         )
                     } else {
                         SwipeableButtonTouchListener(
-                            actionDownEvent = { view, _ -> inputSpecial(view) },
+                            actionUpEvent = { view, _ -> inputSpecial(view) },
                             actionSwipeEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_SECOND) }
                         )
                     }
@@ -732,7 +751,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
                 )
             }
         }
-
+        
         emojisViewPager.adapter = emojiPagerAdapter
         vm.kbEmojiColumns.observe(this) { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) }
         vm.kbRecentlyUsedEmoticons.observe(this) {
@@ -789,6 +808,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         }
         emojisViewPager.registerOnPageChangeCallback(emojiPageChangeCallback!!)
 
+        // 스페이스바 기능 설정
         qwertyEnNormalBinding.imgbtnEnLang.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.KR_NORMAL) }))
         qwertyEnNormalBinding.imgbtnEnShift.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.EN_UPPER) }))
         qwertyEnNormalBinding.btnEnSpecial.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(KeyboardViewModel.InputTypeState.SPECIAL_FIRST) }))
@@ -1190,9 +1210,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             normalInterval = normalInterval,
             actionDownEvent = { _, _ -> moveCursorDown() }
         )
-    var singleListenerSpecialSpace = View.OnClickListener {
-        inputSpecial(it)
-    }
 
     private fun getEmojiIconXPosition(view: FrameLayout, position: Int): Int {
         val _position: Float = (view.width/ changeDpToPx(Constants.EMOJI_ICON_WIDTH)) / 2F

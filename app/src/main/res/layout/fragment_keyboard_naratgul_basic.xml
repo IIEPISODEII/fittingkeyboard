@@ -148,7 +148,7 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
-                <Button
+                <com.sb.fittingKeyboard.service.ui.CompoundButton
                     android:id="@+id/btn_kr_narat_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -156,7 +156,6 @@
                     android:text="SPACE"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
-                    android:textSize="@{kbviewmodel.kbFontSize}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
