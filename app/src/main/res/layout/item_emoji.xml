@@ -20,8 +20,9 @@
     <androidx.emoji.widget.EmojiButton
         android:layout_margin="0.75dp"
         android:id="@+id/emjbtn_emoji"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
         android:textSize="20sp"
         style="?android:attr/borderlessButtonStyle" />
 

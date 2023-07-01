@@ -27,8 +27,6 @@ import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState
 import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState.EMOJI
 
 class KeyboardViewModel(application: Application) : AndroidViewModel(application) {
-    var _a: MutableLiveData<Int> = MutableLiveData(1)
-
 
     private val _inputTypeState: MutableLiveData<InputTypeState> = MutableLiveData(EN_UPPER)
     val inputTypeState: LiveData<InputTypeState>
@@ -331,6 +329,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
             Constants.KEYBOARD_SPECIALKEY_LONGCLICK -> _kbSpecialKeyOnLongClickFunction.postValue(pref.getInt(key, 0))
             Constants.KEYBOARD_ENTERKEY_LONGCLICK -> _kbEnterKeyOnLongClickFunction.postValue(pref.getInt(key, 0))
             Constants.KEYBOARD_IME_KR -> _kbKrImeMode.postValue(pref.getInt(key, 0))
+            Constants.RECENTLY_USED_EMOTICONS -> _kbRecentlyUsedEmoticons.postValue(pref.getString(key, ""))
             in Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST -> boilerplateTextMap[key] = pref.getString(key, "") ?: ""
             Constants.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarSettingMap[key] = pref.getInt(key, 1)
             Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarSettingMap[key] = pref.getInt(key, 2)
@@ -433,7 +432,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
         val arr = mutableListOf<String>()
 
         for (i in 0 until jsonArray.length()) {
-            if (jsonArray.optString(i) != "") arr.add(jsonArray.optString(i))
+            if (jsonArray.optString(i).isNotBlank()) arr.add(jsonArray.optString(i))
         }
 
         if (emoji in arr) {

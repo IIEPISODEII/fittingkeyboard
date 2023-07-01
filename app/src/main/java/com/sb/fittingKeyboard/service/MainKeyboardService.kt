@@ -759,7 +759,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             val arr = mutableListOf<String>()
 
             for (i in 0 until jsonArray.length()) {
-                if (jsonArray.optString(i) != "") arr.add(jsonArray.optString(i))
+                if (jsonArray.optString(i).isNotBlank()) arr.add(jsonArray.optString(i))
             }
             (emojisViewPager.adapter as EmojiViewPagerAdapter).changeAdapter(arr)
         }
