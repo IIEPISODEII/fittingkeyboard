@@ -30,7 +30,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
     var _a: MutableLiveData<Int> = MutableLiveData(1)
 
 
-    var _inputTypeState: MutableLiveData<InputTypeState> = MutableLiveData(EN_UPPER)
+    private val _inputTypeState: MutableLiveData<InputTypeState> = MutableLiveData(EN_UPPER)
     val inputTypeState: LiveData<InputTypeState>
         get() = _inputTypeState
 
