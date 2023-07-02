@@ -6,15 +6,15 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
+            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
+            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
 
         <variable
             name="util"
-            type="com.sb.fittingKeyboard.service.util.KeyboardUtilKt" />
+            type="com.sb.fittingkeyboard.service.util.KeyboardUtilKt" />
     </data>
 
     <androidx.emoji.widget.EmojiButton

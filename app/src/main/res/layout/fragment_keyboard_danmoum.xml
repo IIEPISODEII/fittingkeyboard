@@ -6,13 +6,13 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
-        
-        <import type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState" />
+            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
+
+        <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
+            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout

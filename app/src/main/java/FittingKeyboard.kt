@@ -1,4 +1,4 @@
-package com.sb.fittingKeyboard
+package com.sb.fittingkeyboard
 
 import android.app.Application
 import android.content.Context

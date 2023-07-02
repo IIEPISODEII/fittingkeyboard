@@ -6,13 +6,13 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
+            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
-        <import type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel.InputTypeState" />
+        <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
 
         <variable
             name="kbservice"
-            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
+            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout
@@ -149,7 +149,7 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
-                <com.sb.fittingKeyboard.service.ui.CompoundButton
+                <com.sb.fittingkeyboard.service.ui.CompoundButton
                     android:id="@+id/btn_kr_chun_left_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
