@@ -29,12 +29,20 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
         _orientation.value = if (config == Configuration.ORIENTATION_PORTRAIT) Orientation.VERTICAL else Orientation.HORIZONTAL
     }
 
-    private var _isSelecting: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isSelecting: LiveData<Boolean>
-        get() = _isSelecting
+    private var _isSelectingText = false
+    val isSelectingText: Boolean
+        get() = _isSelectingText
 
-    fun switchSelectingMode(bool: Boolean) {
-        _isSelecting.value = bool
+    fun switchSelectingTextMode(bool: Boolean) {
+        _isSelectingText = bool
+    }
+
+    private var _savedCursorPosition = 0
+    val savedCursorPosition: Int
+        get() = _savedCursorPosition
+
+    fun initializeSavedCursorPosition() {
+        _savedCursorPosition = -1
     }
 
     /**

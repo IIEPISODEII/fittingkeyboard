@@ -11,7 +11,7 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.FragmentKeyboardChunjiinLeftBinding
-import com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.core.defaultFontSize
+import com.sb.fittingkeyboard.service.keyboardtype.core.defaultFontSize
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
@@ -22,7 +22,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class ChunjiinLeftTypedKeyboard(
     private val binding: FragmentKeyboardChunjiinLeftBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard() {
+    ): TypedKeyboard(binding.kbviewmodel, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {

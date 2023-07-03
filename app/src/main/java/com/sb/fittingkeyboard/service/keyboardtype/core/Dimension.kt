@@ -1,3 +1,3 @@
-package com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.core
+package com.sb.fittingkeyboard.service.keyboardtype.core
 
-val defaultFontSize = 12F
+const val defaultFontSize = 12F

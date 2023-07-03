@@ -1,17 +1,15 @@
-package com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.special
+package com.sb.fittingkeyboard.service.keyboardtype.special
 
 import android.annotation.SuppressLint
 import android.content.Context.VIBRATOR_SERVICE
 import android.graphics.PorterDuff
 import android.os.Build
 import android.os.Vibrator
-import android.util.TypedValue
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.FragmentKeyboardQwertySpecialBinding
-import com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.core.defaultFontSize
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
@@ -23,7 +21,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class QwertySpecialTypedKeyboard(
     private val binding: FragmentKeyboardQwertySpecialBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard() {
+    ): TypedKeyboard(binding.kbviewmodel, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {

@@ -11,7 +11,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.InputType
-import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection.CURSOR_UPDATE_IMMEDIATE
@@ -19,8 +18,6 @@ import android.view.inputmethod.InputConnection.GET_TEXT_WITH_STYLES
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -28,25 +25,27 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
+import com.sb.fittingKeyboard.databinding.*
 import com.sb.fittingkeyboard.Constants
 import com.sb.fittingkeyboard.keyboardsettings.ui.MainActivity
-import com.sb.fittingKeyboard.databinding.*
-import com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.danmo.DanmoumTypedKeyboard
-import com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.english.QwertyEnglishTypedKeyboard
-import com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.narat.NaratguelTypedKeyboard
-import com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.qwertykr.QwertyKrTypedKeyboard
-import com.sb.fittingkeyboard.com.sb.fittingkeyboard.service.keyboardtype.special.QwertySpecialTypedKeyboard
+import com.sb.fittingkeyboard.service.keyboardtype.MainFrameKeyboard
+import com.sb.fittingkeyboard.service.keyboardtype.boilerplate.BoilerplateTypedKeyboard
 import com.sb.fittingkeyboard.service.keyboardtype.chun.ChunjiinBasicTypedKeyboard
 import com.sb.fittingkeyboard.service.keyboardtype.chunleft.ChunjiinLeftTypedKeyboard
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelChunjiin
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelDanmoum
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelNARATGUL
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelQWERTY
+import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingkeyboard.service.keyboardtype.danmo.DanmoumTypedKeyboard
 import com.sb.fittingkeyboard.service.keyboardtype.emoji.EmojiRecyclerAdapter
 import com.sb.fittingkeyboard.service.keyboardtype.emoji.EmojiRecyclerLiveDataAdapter
 import com.sb.fittingkeyboard.service.keyboardtype.emoji.EmojiViewPagerAdapter
 import com.sb.fittingkeyboard.service.keyboardtype.emoji.indicator.CustomIndicator
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingkeyboard.service.keyboardtype.english.QwertyEnglishTypedKeyboard
+import com.sb.fittingkeyboard.service.keyboardtype.narat.NaratguelTypedKeyboard
+import com.sb.fittingkeyboard.service.keyboardtype.qwertykr.QwertyKrTypedKeyboard
+import com.sb.fittingkeyboard.service.keyboardtype.special.QwertySpecialTypedKeyboard
+import com.sb.fittingkeyboard.service.koreanautomata.HanguelChunjiin
+import com.sb.fittingkeyboard.service.koreanautomata.HanguelDanmoum
+import com.sb.fittingkeyboard.service.koreanautomata.HanguelNARATGUL
+import com.sb.fittingkeyboard.service.koreanautomata.HanguelQWERTY
 import com.sb.fittingkeyboard.service.util.*
 import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 import org.json.JSONArray
@@ -55,6 +54,7 @@ import org.json.JSONArray
 class MainKeyboardService : InputMethodService(), LifecycleOwner {
 
     private lateinit var kbBinding: LayoutKeyboardBinding
+    private lateinit var mainFrameKeyboard: MainFrameKeyboard
     private lateinit var qwertyEnNormalBinding: FragmentKeyboardQwertyEnNormalBinding
     private lateinit var qwertyEnKeyboard: QwertyEnglishTypedKeyboard
     private lateinit var qwertyKrNormalBinding: FragmentKeyboardQwertyKrNormalBinding
@@ -71,6 +71,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private lateinit var specialKeyboard: QwertySpecialTypedKeyboard
     private lateinit var numberBinding: FragmentKeyboardNumberBinding
     private lateinit var boilerPlateBinding: FragmentBoilerplatetextBinding
+    private lateinit var boilerPlateKeyboard: BoilerplateTypedKeyboard
     private lateinit var cursorBinding: FragmentCursorkeypadBinding
     private lateinit var emojiBinding: FragmentEmojiBinding
 
@@ -280,13 +281,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             )
         }
     }
-    private val spaceBtnLeftArrow by lazy {
-        ResourcesCompat.getDrawable(resources, R.drawable.keyic_arrowleft_black, null)
-    }
-    private val spaceBtnRightArrow by lazy {
-        ResourcesCompat.getDrawable(resources, R.drawable.keyic_arrowright_black, null)
-    }
-
 
     override fun getLifecycle(): Lifecycle = mLifecycle
 
@@ -306,7 +300,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private var myKeyboardVibration: Boolean = true
     private var myKeyboardVibrationIntensity: Int = 50
     private val normalInterval: Long = 37
-    private val defaultFontSize = 12F
     private var latestInputTypeState = InputTypeState.KR_NORMAL
     private var savedCursorPosition = 0
     private val emojiAdapterList = listOf(
@@ -327,8 +320,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private var savedBottomMarginHeight = 0
     private var savedKbdMainboardHeight = 0
 
-    private var isTextSizeFixed = false
-
     override fun onCreate() {
         super.onCreate()
         mLifecycle.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -345,6 +336,11 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         kbBinding.setVariable(BR.kbservice, this)
         kbBinding.lifecycleOwner = this
         kbBinding.kbviewmodel = vm
+        mainFrameKeyboard = MainFrameKeyboard(
+            binding = kbBinding,
+            imeService = this
+        )
+        mainFrameKeyboard.init()
 
         val qwertyEnNormalKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_en_normal, null)
         val qwertyKrNormalKBView = layoutInflater.inflate(R.layout.fragment_keyboard_qwerty_kr_normal, null)
@@ -431,6 +427,11 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         boilerPlateBinding.setVariable(BR.kbservice, this)
         boilerPlateBinding.lifecycleOwner = this
         boilerPlateBinding.kbviewmodel = vm
+        boilerPlateKeyboard = BoilerplateTypedKeyboard(
+            binding = boilerPlateBinding,
+            imeService = this
+        )
+
         cursorBinding = DataBindingUtil.bind(cursorKBView)!!
         cursorBinding.setVariable(BR.kbservice, this)
         cursorBinding.lifecycleOwner = this
@@ -554,14 +555,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             for (rListener in repeatTouchListenerDels) {
                 rListener.setInitialInterval(mKeyboardHolding)
             }
-            rListenerCursorLeft.setInitialInterval(mKeyboardHolding)
-            rListenerCursorRight.setInitialInterval(mKeyboardHolding)
-            rListenerCursorUp.setInitialInterval(mKeyboardHolding)
-            rListenerCursorDown.setInitialInterval(mKeyboardHolding)
-            if (SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                rListenerCursorFirst.setInitialInterval(mKeyboardHolding)
-                rListenerCursorLast.setInitialInterval(mKeyboardHolding)
-            }
             rListenerCursorDeleteNextChar.setInitialInterval(mKeyboardHolding)
         }
         vm.kbHasVibration.observe(this) { myKeyboardVibration = it }
@@ -569,28 +562,9 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         vm.kbTheme.observe(this) {
             boilerplateTextsAdapter.setTheme(it)
         }
-        vm.kbFunctionKeysFontColor.observe(this) {
-            spaceBtnLeftArrow?.let { drawable ->
-                drawable.clearColorFilter()
-                if (SDK_INT >= Build.VERSION_CODES.Q) drawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(it, BlendModeCompat.SRC_ATOP)
-                else drawable.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
-            }
-            spaceBtnRightArrow?.let { drawable ->
-                drawable.clearColorFilter()
-                if (SDK_INT >= Build.VERSION_CODES.Q) drawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(it, BlendModeCompat.SRC_ATOP)
-                else drawable.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
-            }
-        }
+        vm.kbFunctionKeysFontColor.observe(this) {}
         vm.kbFontSize.observe(this) {
             boilerplateTextsAdapter.setFontSize(it)
-//            if (!isTextSizeFixed) {
-//                naratguelBinding.btnKrNaratSpace.textSize = it.toFloat() / resources.displayMetrics.density
-//                chunLeftKBBinding.btnKrChunLeftSpace.textSize = it.toFloat() / resources.displayMetrics.density
-//            }
-//            else {
-//                naratguelBinding.btnKrNaratSpace.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
-//                chunLeftKBBinding.btnKrChunLeftSpace.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
-//            }
         }
         vm.kbNormalKeysFontColor.observe(this) { boilerplateTextsAdapter.setFontColor(it) }
         vm.kbFontType.observe(this) { boilerplateTextsAdapter.setFontType(it) }
@@ -641,121 +615,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         vm.boilerplateTexts.observe(this) {
             boilerplateTextsAdapter.setBoilerplateTextsList(it)
         }
-        vm.kbHasSwipeableSpace.observe(this) {
-            isTextSizeFixed = it
-//            qwertyEnNormalBinding.btnEnSpace.apply {
-//                setOnTouchListener(
-//                    if (!it) {
-//                        RepeatTouchListener(
-//                            initialInterval = mKeyboardHolding,
-//                            normalInterval = normalInterval,
-//                            actionDownEvent = { view, _ -> inputSpecial(view) }
-//                        )
-//                    } else {
-//                        SwipeableButtonTouchListener(
-//                            actionUpEvent = { view, _ -> inputSpecial(view) },
-//                            actionSwipeEvent = { _, _ -> setInputTypeState(InputTypeState.KR_NORMAL) }
-//                        )
-//                    }
-//                )
-//                setCompoundDrawablesWithIntrinsicBounds(
-//                    if (it) spaceBtnLeftArrow else null,
-//                    null,
-//                    if (it) spaceBtnRightArrow else null,
-//                    null
-//                )
-//            }
-//            qwertyKrNormalBinding.btnKrQwertySpace.apply {
-//                setOnTouchListener(
-//                    if (!it) {
-//                        RepeatTouchListener(
-//                            initialInterval = mKeyboardHolding,
-//                            normalInterval = normalInterval,
-//                            actionDownEvent = { view, _ -> inputSpecial(view) }
-//                        )
-//                    } else {
-//                        SwipeableButtonTouchListener(
-//                            actionUpEvent = { view, _ -> inputSpecial(view) },
-//                            actionSwipeEvent = { _, _ -> setInputTypeState(InputTypeState.EN_UPPER) }
-//                        )
-//                    }
-//                )
-//                setCompoundDrawablesWithIntrinsicBounds(
-//                    if (it) spaceBtnLeftArrow else null,
-//                    null,
-//                    if (it) spaceBtnRightArrow else null,
-//                    null
-//                )
-//            }
-//            danmoumKBBinding.btnKrDanmoSpace.apply {
-//                setOnTouchListener(
-//                    if (!it) {
-//                        RepeatTouchListener(
-//                            initialInterval = mKeyboardHolding,
-//                            normalInterval = normalInterval,
-//                            actionDownEvent = { view, _ -> inputSpecial(view) }
-//                        )
-//                    } else {
-//                        SwipeableButtonTouchListener(
-//                            actionUpEvent = { view, _ -> inputSpecial(view) },
-//                            actionSwipeEvent = { _, _ -> setInputTypeState(InputTypeState.EN_UPPER) }
-//                        )
-//                    }
-//                )
-//                setCompoundDrawablesWithIntrinsicBounds(
-//                    if (it) spaceBtnLeftArrow else null,
-//                    null,
-//                    if (it) spaceBtnRightArrow else null,
-//                    null
-//                )
-//            }
-//            naratguelBinding.btnKrNaratSpace.apply {
-//                setOnTouchListener(
-//                    if (!it) {
-//                        RepeatTouchListener(
-//                            initialInterval = mKeyboardHolding,
-//                            normalInterval = normalInterval,
-//                            actionDownEvent = { view, _ -> inputSpecial(view) }
-//                        )
-//                    } else {
-//                        SwipeableButtonTouchListener(
-//                            actionUpEvent = { view, _ -> inputSpecial(view) },
-//                            actionSwipeEvent = { _, _ -> setInputTypeState(InputTypeState.EN_UPPER) }
-//                        )
-//                    }
-//                )
-//                setCompoundDrawablesWithIntrinsicBounds(
-//                    if (it) spaceBtnLeftArrow else null,
-//                    null,
-//                    if (it) spaceBtnRightArrow else null,
-//                    null
-//                )
-//                if (!isTextSizeFixed) this.textSize = vm.kbFontSize.value!! / resources.displayMetrics.density
-//                else this.setTextSize(TypedValue.COMPLEX_UNIT_SP, defaultFontSize)
-//            }
-//            specialKBBinding.btnSpecialSpace.apply {
-//                setOnTouchListener(
-//                    if (!it) {
-//                        RepeatTouchListener(
-//                            initialInterval = mKeyboardHolding,
-//                            normalInterval = normalInterval,
-//                            actionDownEvent = { view, _ -> inputSpecial(view) }
-//                        )
-//                    } else {
-//                        SwipeableButtonTouchListener(
-//                            actionUpEvent = { view, _ -> inputSpecial(view) },
-//                            actionSwipeEvent = { _, _ -> setInputTypeState(InputTypeState.SPECIAL_SECOND) }
-//                        )
-//                    }
-//                )
-//                setCompoundDrawablesWithIntrinsicBounds(
-//                    if (it) spaceBtnLeftArrow else null,
-//                    null,
-//                    if (it) spaceBtnRightArrow else null,
-//                    null
-//                )
-//            }
-        }
+        vm.kbHasSwipeableSpace.observe(this) {}
         
         emojisViewPager.adapter = emojiPagerAdapter
         vm.kbEmojiColumns.observe(this) { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) }
@@ -812,15 +672,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             }
         }
         emojisViewPager.registerOnPageChangeCallback(emojiPageChangeCallback!!)
-
-        // 스페이스바 기능 설정
-//        qwertyEnNormalBinding.imgbtnEnLang.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(InputTypeState.KR_NORMAL) }))
-//        qwertyEnNormalBinding.imgbtnEnShift.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(InputTypeState.EN_UPPER) }))
-//        qwertyEnNormalBinding.btnEnSpecial.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(InputTypeState.SPECIAL_FIRST) }))
-//        qwertyKrNormalBinding.imgbtnKrQwertyLang.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(InputTypeState.EN_UPPER) }))
-//        qwertyKrNormalBinding.imgbtnKrQwertyShift.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(InputTypeState.KR_NORMAL) }))
-//        qwertyKrNormalBinding.btnKrQwertySpecial.setOnTouchListener(SingleTouchListener(actionDownEvent = { _, _ -> setInputTypeState(InputTypeState.SPECIAL_FIRST) }))
-//        danmoumKBBinding.imgbtnKrDanmoLang.setOnTouchListener(SingleTouchListener(actionDownEvent =  {_, _ -> setInputTypeState(InputTypeState.EN_UPPER)} ))
 
         return kbdLayout
     }
@@ -886,7 +737,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     override fun onConfigurationChanged(newConfig: Configuration) {
         onFinishInputView(finishingInput = true)
 
-        // vm(SharedKBViewModel.kt)에 있는 방향 전환 메소드 실행
         vm.changeOrientation(newConfig.orientation)
     }
 
@@ -898,7 +748,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     override fun onFinishInputView(finishingInput: Boolean) {
         super.onFinishInputView(finishingInput)
         clearComposing()
-        vm.switchSelectingMode(false)
+        vm.switchSelectingTextMode(false)
     }
 
     @RequiresApi(Build.VERSION_CODES.S)
@@ -909,21 +759,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         emojiPageChangeCallback = null
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    var rListenerCursorFirst =
-        RepeatTouchListener(
-            initialInterval = mKeyboardHolding,
-            normalInterval = normalInterval,
-            actionDownEvent = { _, _ -> moveCursorFirst() }
-        )
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    var rListenerCursorLast =
-        RepeatTouchListener(
-            initialInterval = mKeyboardHolding,
-            normalInterval = normalInterval,
-            actionDownEvent = { _, _ -> moveCursorLast() }
-        )
     var rListenerCursorDeleteNextChar =
         RepeatTouchListener(
             initialInterval = mKeyboardHolding,
@@ -1035,63 +870,10 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         return false
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun selectWord() {
-        vm.switchSelectingMode(!vm.isSelecting.value!!)
-    }
-
     fun selectAllTexts() {
         keyboardFunctions.selectAllTexts(
             clearComposing = { clearComposing() },
             setSavedCursorPositionDefault = { setSavedCursorPositionDefault() }
-        )
-    }
-
-    private fun moveCursorUp() {
-        keyboardFunctions.moveCursorUp(
-            clearComposing = { clearComposing() },
-            isSelectingMode = vm.isSelecting.value!!,
-            savedCursorPosition = savedCursorPosition
-        )
-    }
-
-    private fun moveCursorDown() {
-        keyboardFunctions.moveCursorDown(
-            clearComposing = { clearComposing() },
-            isSelectingMode = vm.isSelecting.value!!,
-            savedCursorPosition = savedCursorPosition
-        )
-    }
-
-    private fun moveCursorLeft() {
-        keyboardFunctions.moveCursorLeft(
-            clearComposing = { clearComposing() },
-            isSelectingMode = vm.isSelecting.value!!,
-            savedCursorPosition = savedCursorPosition
-        )
-    }
-
-    private fun moveCursorRight() {
-        keyboardFunctions.moveCursorRight(
-            clearComposing = { clearComposing() },
-            isSelectingMode = vm.isSelecting.value!!,
-            savedCursorPosition = savedCursorPosition
-        )
-    }
-
-    private fun moveCursorFirst() {
-        keyboardFunctions.moveCursorFirst(
-            clearComposing = { clearComposing() },
-            isSelectingMode = vm.isSelecting.value!!,
-            savedCursorPosition = savedCursorPosition
-        )
-    }
-
-    private fun moveCursorLast() {
-        keyboardFunctions.moveCursorLast(
-            clearComposing = { clearComposing() },
-            isSelectingMode = vm.isSelecting.value!!,
-            savedCursorPosition = savedCursorPosition
         )
     }
 
@@ -1118,7 +900,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     fun copyText() {
         keyboardFunctions.copyText(
             clearComposing = { clearComposing() },
-            switchSelectingMode = { vm.switchSelectingMode(false) }
+            switchSelectingMode = { vm.switchSelectingTextMode(false) }
         )
     }
 
@@ -1126,7 +908,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     fun cutText() {
         keyboardFunctions.cutText(
             clearComposing = { clearComposing() },
-            switchSelectingMode = { vm.switchSelectingMode(false) }
+            switchSelectingMode = { vm.switchSelectingTextMode(false) }
         )
     }
 
@@ -1134,7 +916,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     fun pasteText() {
         keyboardFunctions.pasteText(
             clearComposing = { clearComposing() },
-            switchSelectingMode = { vm.switchSelectingMode(false) }
+            switchSelectingMode = { vm.switchSelectingTextMode(false) }
         )
     }
 
@@ -1188,30 +970,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
             actionDownEvent = { _, _ -> inputDelete() }
         )
     }
-    var rListenerCursorLeft =
-        RepeatTouchListener(
-            initialInterval = mKeyboardHolding,
-            normalInterval = normalInterval,
-            actionDownEvent = { _, _ -> moveCursorLeft() }
-        )
-    var rListenerCursorRight =
-        RepeatTouchListener(
-            initialInterval = mKeyboardHolding,
-            normalInterval = normalInterval,
-            actionDownEvent = { _, _ -> moveCursorRight() }
-        )
-    var rListenerCursorUp =
-        RepeatTouchListener(
-            initialInterval = mKeyboardHolding,
-            normalInterval = normalInterval,
-            actionDownEvent = { _, _ -> moveCursorUp() }
-        )
-    var rListenerCursorDown =
-        RepeatTouchListener(
-            initialInterval = mKeyboardHolding,
-            normalInterval = normalInterval,
-            actionDownEvent = { _, _ -> moveCursorDown() }
-        )
 
     private fun getEmojiIconXPosition(view: FrameLayout, position: Int): Int {
         val _position: Float = (view.width/ changeDpToPx(Constants.EMOJI_ICON_WIDTH)) / 2F
