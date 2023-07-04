@@ -1,10 +1,8 @@
 package com.sb.fittingkeyboard.service.keyboardtype.qwertykr
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
 import android.graphics.PorterDuff
 import android.os.Build
-import android.os.Vibrator
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -21,7 +19,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class QwertyKrTypedKeyboard(
     private val binding: FragmentKeyboardQwertyKrNormalBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
@@ -162,7 +160,7 @@ class QwertyKrTypedKeyboard(
             )
 
             btnKrQwertySpecial.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Special)
+                inputKeyLong(keyType = KeyType.Special)
             }
 
             imgbtnKrQwertyLang.setOnClickListener {
@@ -175,8 +173,17 @@ class QwertyKrTypedKeyboard(
             }
 
             imgbtnKrQwertyEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter)
+                inputKeyLong(keyType = KeyType.Enter)
             }
+
+            imgbtnKrQwertyShift.setOnTouchListener(
+                SingleTouchListener(
+                    actionDownEvent = { _, _ ->
+                        vibrate()
+                        viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
+                    }
+                )
+            )
         }
     }
 }

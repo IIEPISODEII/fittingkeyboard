@@ -9,10 +9,6 @@
             type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
         <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
-
-        <variable
-            name="kbservice"
-            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout
@@ -36,7 +32,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.15"
                     android:background="@drawable/keydesign_15_function"
-                    android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.KR_NORMAL)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_keyboard_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}" />
@@ -63,8 +58,7 @@
                     android:background="@drawable/keydesign_15_function"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_delete_black"
-                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
-                    app:onTouch="@{kbservice.repeatTouchListenerDels[11]}" />
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}" />
             </LinearLayout>
 
             <androidx.viewpager2.widget.ViewPager2

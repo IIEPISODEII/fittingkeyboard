@@ -192,12 +192,11 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         }
     }
 
-    fun inputKeyLong(view: View, keyType: KeyType): Boolean {
+    fun inputKeyLong(keyType: KeyType): Boolean {
         val crit =
             when (keyType) {
                 KeyType.Special -> viewModel.kbSpecialKeyOnLongClickFunction.value!!
                 KeyType.Enter -> viewModel.kbEnterKeyOnLongClickFunction.value!!
-                else -> -1
             }
 
         when (crit) {
@@ -207,7 +206,6 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
             4 -> viewModel.setInputTypeState(InputTypeState.EMOJI)
             else -> {
                 clearComposingStep()
-                imeService.currentInputConnection.commitText((view as Button).text[1].toString(), 1)
                 return true
             }
         }
@@ -349,7 +347,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
                 clearComposingStep()
-                if (viewModel.isSelectingText) {
+                if (viewModel.isSelectingText.value!!) {
                     imeService.currentInputConnection.sendKeyEvent(
                         KeyEvent(
                             KeyEvent.ACTION_DOWN,
@@ -380,7 +378,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
                 clearComposingStep()
-                if (viewModel.isSelectingText) {
+                if (viewModel.isSelectingText.value!!) {
                     imeService.currentInputConnection.sendKeyEvent(
                         KeyEvent(
                             KeyEvent.ACTION_DOWN,
@@ -408,7 +406,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
             imeService.currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionEnd
 
         clearComposingStep()
-        if (viewModel.isSelectingText) {
+        if (viewModel.isSelectingText.value!!) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
                     KeyEvent.ACTION_DOWN,
@@ -472,7 +470,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                 0
             ).selectionEnd
         clearComposingStep()
-        if (viewModel.isSelectingText) {
+        if (viewModel.isSelectingText.value!!) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
                     KeyEvent.ACTION_DOWN,
@@ -533,7 +531,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
             imeService.currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
 
         clearComposingStep()
-        if (viewModel.isSelectingText) {
+        if (viewModel.isSelectingText.value!!) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
                     KeyEvent.ACTION_DOWN,
@@ -602,7 +600,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                 0
             ).text.length
         clearComposingStep()
-        if (viewModel.isSelectingText) {
+        if (viewModel.isSelectingText.value!!) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
                     KeyEvent.ACTION_DOWN,
@@ -715,7 +713,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
     }
 
     fun selectText() {
-        viewModel.switchSelectingTextMode(!viewModel.isSelectingText)
+        viewModel.switchSelectingTextMode(!viewModel.isSelectingText.value!!)
     }
 
     fun clearComposingStep() {

@@ -19,7 +19,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class QwertySpecialTypedKeyboard(
     private val binding: FragmentKeyboardQwertySpecialBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
@@ -186,7 +186,7 @@ class QwertySpecialTypedKeyboard(
             }
 
             imgbtnSpecialEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter)
+                inputKeyLong(keyType = KeyType.Enter)
             }
         }
     }

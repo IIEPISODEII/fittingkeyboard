@@ -1,10 +1,8 @@
 package com.sb.fittingkeyboard.service.keyboardtype.chun
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
 import android.graphics.PorterDuff
 import android.os.Build
-import android.os.Vibrator
 import android.util.TypedValue
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
@@ -22,7 +20,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class ChunjiinBasicTypedKeyboard(
     private val binding: FragmentKeyboardChunjiinBasicBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
@@ -138,7 +136,7 @@ class ChunjiinBasicTypedKeyboard(
             }
 
             imgbtnKrChunEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter)
+                inputKeyLong(keyType = KeyType.Enter)
             }
 
             btnKrChunSpecial.setOnClickListener { view ->
@@ -147,7 +145,7 @@ class ChunjiinBasicTypedKeyboard(
             }
 
             btnKrChunSpecial.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Special)
+                inputKeyLong(keyType = KeyType.Special)
             }
 
             imgbtnKrChunLang.setOnClickListener {

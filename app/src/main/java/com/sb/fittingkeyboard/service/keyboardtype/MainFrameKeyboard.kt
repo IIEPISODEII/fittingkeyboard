@@ -1,17 +1,10 @@
 package com.sb.fittingkeyboard.service.keyboardtype
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.os.Vibrator
-import android.view.inputmethod.ExtractedTextRequest
-import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import com.sb.fittingKeyboard.R
-import com.sb.fittingKeyboard.databinding.FragmentKeyboardChunjiinBasicBinding
 import com.sb.fittingKeyboard.databinding.LayoutKeyboardBinding
 import com.sb.fittingkeyboard.Constants
 import com.sb.fittingkeyboard.service.MainKeyboardService
@@ -23,7 +16,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class MainFrameKeyboard(
     private val binding: LayoutKeyboardBinding,
     private val imeService: MainKeyboardService
-): TypedKeyboard(binding.kbviewmodel, imeService) {
+): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {

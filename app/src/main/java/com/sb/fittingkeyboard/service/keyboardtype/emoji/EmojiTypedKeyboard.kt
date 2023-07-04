@@ -1,5 +1,6 @@
 package com.sb.fittingkeyboard.service.keyboardtype.emoji
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.view.View
 import android.widget.Button
@@ -10,8 +11,10 @@ import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.FragmentEmojiBinding
 import com.sb.fittingkeyboard.Constants
 import com.sb.fittingkeyboard.service.MainKeyboardService
+import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
 import com.sb.fittingkeyboard.service.keyboardtype.emoji.indicator.CustomIndicator
+import com.sb.fittingkeyboard.service.util.RepeatTouchListener
 import com.sb.fittingkeyboard.service.util.e1SmileysAndEmoticons
 import com.sb.fittingkeyboard.service.util.e2PeopleAndBody
 import com.sb.fittingkeyboard.service.util.e3AnimalsAndNature
@@ -28,7 +31,7 @@ import org.json.JSONArray
 class EmojiTypedKeyboard(
     private val binding: FragmentEmojiBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     private val emojisViewPager by lazy { binding.root.findViewById<ViewPager2>(R.id.viewpager_emoji) }
     private val customEmojiIndicator by lazy { binding.root.findViewById<CustomIndicator>(R.id.indicator_emoji_list) }
@@ -36,6 +39,7 @@ class EmojiTypedKeyboard(
 
     private var emojiPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
 
@@ -59,8 +63,31 @@ class EmojiTypedKeyboard(
             null
         )
 
+        binding.apply {
+            imgbtnEmojiBack.setOnClickListener {
+                vibrate()
+                viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
+            }
+        }
+
+        viewModel.kbLongClickInterval.observe(imeService) {
+            val longClickInterval = it.toLong() + 100L
+
+            binding.imgbtnEmojiDelete.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { _, _ ->
+                        deleteChar()
+                    }
+                )
+            )
+        }
+
         emojisViewPager.adapter = emojiPagerAdapter
+
         viewModel.kbEmojiColumns.observe(imeService) { (emojisViewPager.adapter as EmojiViewPagerAdapter).changeColumns(it) }
+
         viewModel.kbRecentlyUsedEmoticons.observe(imeService) {
             val jsonArray = JSONArray(it)
             val arr = mutableListOf<String>()

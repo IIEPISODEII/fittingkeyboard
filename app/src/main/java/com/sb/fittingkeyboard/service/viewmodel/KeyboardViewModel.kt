@@ -29,12 +29,12 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
         _orientation.value = if (config == Configuration.ORIENTATION_PORTRAIT) Orientation.VERTICAL else Orientation.HORIZONTAL
     }
 
-    private var _isSelectingText = false
-    val isSelectingText: Boolean
+    private var _isSelectingText = MutableLiveData(false)
+    val isSelectingText: LiveData<Boolean>
         get() = _isSelectingText
 
     fun switchSelectingTextMode(bool: Boolean) {
-        _isSelectingText = bool
+        _isSelectingText.value = bool
     }
 
     private var _savedCursorPosition = 0
@@ -185,16 +185,68 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
                     else -> return
                 }
             }
-            InputTypeState.BOILERPLATE, InputTypeState.CURSOR, InputTypeState.NUMBER, InputTypeState.EMOJI -> {
-                when(newState) {
-                    InputTypeState.BOILERPLATE, InputTypeState.CURSOR, InputTypeState.NUMBER, InputTypeState.EMOJI -> {
+            InputTypeState.BOILERPLATE -> {
+                when (newState) {
+                    InputTypeState.BOILERPLATE -> {
                         if (restart) return
                         _inputTypeState.value = prevInputTypeState
                         prevInputTypeState = InputTypeState.KR_NORMAL
                     }
-                    InputTypeState.EN_BOLD_UPPER, InputTypeState.EN_UPPER, InputTypeState.EN_LOWER, InputTypeState.KR_NORMAL, InputTypeState.KR_SHIFT -> {
+                    InputTypeState.CURSOR, InputTypeState.NUMBER, InputTypeState.EMOJI -> {
+                        if (restart) return
                         _inputTypeState.value = newState
-                        prevInputTypeState = _inputTypeState.value!!
+                        prevInputTypeState = InputTypeState.KR_NORMAL
+                    }
+                    else -> {
+                        _inputTypeState.value = newState
+                    }
+                }
+            }
+            InputTypeState.CURSOR -> {
+                when (newState) {
+                    InputTypeState.CURSOR -> {
+                        if (restart) return
+                        _inputTypeState.value = prevInputTypeState
+                        prevInputTypeState = InputTypeState.KR_NORMAL
+                    }
+                    InputTypeState.BOILERPLATE, InputTypeState.NUMBER, InputTypeState.EMOJI -> {
+                        if (restart) return
+                        _inputTypeState.value = newState
+                        prevInputTypeState = InputTypeState.KR_NORMAL
+                    }
+                    else -> {
+                        _inputTypeState.value = newState
+                    }
+                }
+            }
+            InputTypeState.NUMBER -> {
+                when (newState) {
+                    InputTypeState.NUMBER -> {
+                        if (restart) return
+                        _inputTypeState.value = prevInputTypeState
+                        prevInputTypeState = InputTypeState.KR_NORMAL
+                    }
+                    InputTypeState.BOILERPLATE, InputTypeState.CURSOR, InputTypeState.EMOJI -> {
+                        if (restart) return
+                        _inputTypeState.value = newState
+                        prevInputTypeState = InputTypeState.KR_NORMAL
+                    }
+                    else -> {
+                        _inputTypeState.value = newState
+                    }
+                }
+            }
+            InputTypeState.EMOJI -> {
+                when (newState) {
+                    InputTypeState.EMOJI -> {
+                        if (restart) return
+                        _inputTypeState.value = prevInputTypeState
+                        prevInputTypeState = InputTypeState.KR_NORMAL
+                    }
+                    InputTypeState.BOILERPLATE, InputTypeState.CURSOR, InputTypeState.NUMBER -> {
+                        if (restart) return
+                        _inputTypeState.value = newState
+                        prevInputTypeState = InputTypeState.KR_NORMAL
                     }
                     else -> {
                         _inputTypeState.value = newState

@@ -237,7 +237,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".5"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.KR_NORMAL)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"

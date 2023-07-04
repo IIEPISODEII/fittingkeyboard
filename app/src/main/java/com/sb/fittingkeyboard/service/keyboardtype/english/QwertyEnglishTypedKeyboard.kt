@@ -19,7 +19,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class QwertyEnglishTypedKeyboard(
     private val binding: FragmentKeyboardQwertyEnNormalBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
@@ -160,7 +160,7 @@ class QwertyEnglishTypedKeyboard(
             )
 
             btnEnSpecial.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Special)
+                inputKeyLong(keyType = KeyType.Special)
             }
 
             imgbtnEnLang.setOnTouchListener(
@@ -177,8 +177,17 @@ class QwertyEnglishTypedKeyboard(
             }
 
             imgbtnEnEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter)
+                inputKeyLong(keyType = KeyType.Enter)
             }
+
+            imgbtnEnShift.setOnTouchListener(
+                SingleTouchListener(
+                    actionDownEvent = { _, _ ->
+                        vibrate()
+                        viewModel.setInputTypeState(InputTypeState.EN_UPPER)
+                    }
+                )
+            )
         }
     }
 }

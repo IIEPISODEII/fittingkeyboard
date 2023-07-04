@@ -21,7 +21,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class DanmoumTypedKeyboard(
     private val binding: FragmentKeyboardDanmoumBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
@@ -162,7 +162,7 @@ class DanmoumTypedKeyboard(
             }
 
             btnKrDanmoSpecial.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Special)
+                inputKeyLong(keyType = KeyType.Special)
             }
 
             imgbtnKrDanmoLang.setOnTouchListener(
@@ -179,7 +179,7 @@ class DanmoumTypedKeyboard(
             }
 
             imgbtnKrDanmoEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter)
+                inputKeyLong(keyType = KeyType.Enter)
             }
         }
     }

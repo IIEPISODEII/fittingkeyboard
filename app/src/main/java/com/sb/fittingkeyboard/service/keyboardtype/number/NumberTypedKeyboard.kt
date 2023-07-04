@@ -1,8 +1,6 @@
 package com.sb.fittingkeyboard.service.keyboardtype.number
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
-import android.os.Vibrator
 import com.sb.fittingKeyboard.databinding.FragmentKeyboardNumberBinding
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
@@ -13,7 +11,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class NumberTypedKeyboard(
     private val binding: FragmentKeyboardNumberBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
@@ -104,7 +102,7 @@ class NumberTypedKeyboard(
             }
 
             imgbtnNumEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter)
+                inputKeyLong(keyType = KeyType.Enter)
             }
 
             imgbtnNumLang.setOnClickListener {

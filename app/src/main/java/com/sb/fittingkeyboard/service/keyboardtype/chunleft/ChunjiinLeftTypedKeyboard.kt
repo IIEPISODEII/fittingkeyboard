@@ -20,7 +20,7 @@ import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 class ChunjiinLeftTypedKeyboard(
     private val binding: FragmentKeyboardChunjiinLeftBinding,
     private val imeService: MainKeyboardService
-    ): TypedKeyboard(binding.kbviewmodel, imeService) {
+    ): TypedKeyboard(binding.kbviewmodel!!, imeService) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
@@ -146,7 +146,7 @@ class ChunjiinLeftTypedKeyboard(
             }
 
             imgbtnKrChunLeftEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter)
+                inputKeyLong(keyType = KeyType.Enter)
             }
 
             btnKrChunLeftSpecial.setOnClickListener {
@@ -155,7 +155,7 @@ class ChunjiinLeftTypedKeyboard(
             }
 
             btnKrChunLeftSpecial.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Special)
+                inputKeyLong(keyType = KeyType.Special)
             }
 
             btnKrChunLeftSpecial.setOnClickListener {

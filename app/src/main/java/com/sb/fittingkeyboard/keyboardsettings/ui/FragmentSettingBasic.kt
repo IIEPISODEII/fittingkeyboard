@@ -188,9 +188,9 @@ class FragmentSettingBasic : Fragment() {
     private fun loadData() {
         keyboardHeight = prefSetting.getInt(Constants.KEYBOARD_HEIGHT, 25)
 
-        specialkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0)
+        enterkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0)
 
-        enterkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_SPECIALKEY_LONGCLICK, 0)
+        specialkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_SPECIALKEY_LONGCLICK, 0)
 
         selectedInputMethodKR = prefSetting.getInt(Constants.KEYBOARD_IME_KR, 0)
 
