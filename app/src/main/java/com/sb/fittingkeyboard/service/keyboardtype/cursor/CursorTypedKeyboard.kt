@@ -22,80 +22,42 @@ class CursorTypedKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(VIBRATOR_SERVICE) as Vibrator
 
         binding.btnCursorkeypadCopy.setOnClickListener {
-            viewModel.switchSelectingTextMode(false)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                    clearComposingStep(imeService)
-                    if (imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES) == null) {
-                        Toast.makeText(imeService, "문구를 복사하시려면\n문구를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        imeService.currentInputConnection.performContextMenuAction(android.R.id.copy)
-                    }
-                }
-            }
+            copyText()
         }
 
         binding.btnCursorkeypadPaste.setOnClickListener {
-            viewModel.switchSelectingTextMode(false)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                    clearComposingStep(imeService)
-                    imeService.currentInputConnection.performContextMenuAction(android.R.id.paste)
-                }
-            }
+            pasteText()
         }
 
         binding.btnCursorkeypadCut.setOnClickListener {
-            viewModel.switchSelectingTextMode(false)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                    clearComposingStep(imeService)
-                    if (imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES) == null) {
-                        Toast.makeText(
-                            imeService,
-                            "문구를 잘라내시려면\n문구를 먼저 선택해주세요.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        imeService.currentInputConnection.performContextMenuAction(android.R.id.cut)
-                    }
-                }
-            }
+            cutText()
         }
 
         binding.btnCursorkeypadSelectAll.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                    val textLength =
-                        imeService.currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
-                    clearComposingStep(imeService)
-                    imeService.currentInputConnection.setSelection(0, textLength)
-                    viewModel.initializeSavedCursorPosition()
-                    if (textLength == 0) Toast.makeText(imeService, "선택할 문구가 없습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
+            selectAllText()
         }
 
         binding.btnCursorkeypadSelect.setOnClickListener {
-            viewModel.switchSelectingTextMode(!viewModel.isSelectingText)
+            selectText()
         }
 
         binding.imgbtnCursorkeypadBack.setOnClickListener {
+            vibrate()
             viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
-            if (viewModel.kbHasVibration.value!!) vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong())
         }
 
         binding.imgbtnCursorkeypadEnter.setOnClickListener {
-            inputEnter(vibrator)
+            inputEnter()
         }
 
         viewModel.kbLongClickInterval.observe(imeService) {
+            val longClickInterval = it.toLong() + 100L
+
             binding.imgbtnCursorkeypadMoveToHead.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
                         moveCursorToHead()
@@ -105,7 +67,7 @@ class CursorTypedKeyboard(
 
             binding.imgbtnCursorkeypadMoveUp.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
                         moveCursorUp()
@@ -115,7 +77,7 @@ class CursorTypedKeyboard(
 
             binding.imgbtnCursorkeypadMoveToTail.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
                         moveCursorToTail()
@@ -125,17 +87,17 @@ class CursorTypedKeyboard(
 
             binding.imgbtnCursorkeypadDeletePreviousChar.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
-                        deletePrevChar(vibrator)
+                        deletePrevChar()
                     }
                 )
             )
 
             binding.imgbtnCursorkeypadMoveLeft.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
                         moveCursorLeft()
@@ -145,7 +107,7 @@ class CursorTypedKeyboard(
 
             binding.imgbtnCursorkeypadMoveDown.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
                         moveCursorDown()
@@ -155,7 +117,7 @@ class CursorTypedKeyboard(
 
             binding.imgbtnCursorkeypadMoveRight.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
                         moveCursorRight()
@@ -165,20 +127,20 @@ class CursorTypedKeyboard(
 
             binding.imgbtnCursorkeypadDelete.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { _, _ ->
-                        deleteChar(vibrator)
+                        deleteChar()
                     }
                 )
             )
 
             binding.btnCursorkeypadSpace.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
                     actionDownEvent = { view, _ ->
-                        inputSpecialKey(view, vibrator)
+                        inputSpecialKey(view)
                     }
                 )
             )

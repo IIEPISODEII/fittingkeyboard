@@ -9,10 +9,6 @@
             type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
         <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
-
-        <variable
-            name="kbservice"
-            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout
@@ -43,8 +39,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[0]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_w"
@@ -59,8 +54,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[1]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_e"
@@ -75,8 +69,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[2]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_r"
@@ -91,8 +84,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[3]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_t"
@@ -107,8 +99,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[4]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_blank"
@@ -135,7 +126,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[5]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -153,7 +143,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[6]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -171,7 +160,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[7]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -189,7 +177,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[8]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -207,7 +194,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[9]}"
                     app:weight_constant="@{1.0F}" />
             </LinearLayout>
 
@@ -230,8 +216,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[10]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_s"
@@ -246,8 +231,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[11]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_d"
@@ -262,8 +246,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[12]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_f"
@@ -278,8 +261,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[13]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_g"
@@ -294,8 +276,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[14]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_h"
@@ -312,7 +293,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[15]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -330,7 +310,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[16]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -348,7 +327,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[17]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -366,7 +344,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[18]}"
                     app:weight_constant="@{1.3F}" />
             </LinearLayout>
 
@@ -403,8 +380,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[19]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_x"
@@ -419,8 +395,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[20]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_c"
@@ -435,8 +410,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[21]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_v"
@@ -451,8 +425,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[22]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_b"
@@ -469,7 +442,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[23]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -487,7 +459,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[24]}"
                     app:weight_constant="@{1.0F}" />
 
                 <Button
@@ -505,7 +476,6 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}"
                     app:layout_weight="@{kbviewmodel.kbRightSize}"
-                    app:onTouch="@{kbservice.repeatTouchListenerChars[25]}"
                     app:weight_constant="@{1.0F}" />
 
                 <ImageButton
@@ -520,8 +490,7 @@
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
-                    app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.repeatTouchListenerDels[0]}" />
+                    app:customTheme_view="@{3}" />
             </LinearLayout>
 
             <LinearLayout
@@ -535,7 +504,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".9"
-                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.kbSpecialKeyOnLongClickFunction)}"
                     android:text="!#$"
                     android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="12sp"
@@ -552,7 +520,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".9"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.EN_UPPER)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -572,8 +539,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[0]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <Button
                     android:id="@+id/btn_kr_qwerty_space"
@@ -601,8 +567,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[2]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
                 <ImageButton
                     android:id="@+id/imgbtn_kr_qwerty_enter"
@@ -611,8 +576,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1.25"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.inputEnter()}"
-                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.kbEnterKeyOnLongClickFunction)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_enter_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"

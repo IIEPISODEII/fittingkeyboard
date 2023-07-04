@@ -27,7 +27,18 @@ class ChunjiinBasicTypedKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(VIBRATOR_SERVICE) as Vibrator
+        val charKeyList = listOf(
+            binding.btnKrChunL,
+            binding.btnKrChunK,
+            binding.btnKrChunM,
+            binding.btnKrChunRz,
+            binding.btnKrChunSf,
+            binding.btnKrChunEx,
+            binding.btnKrChunQv,
+            binding.btnKrChunTg,
+            binding.btnKrChunWc,
+            binding.btnKrChunDa
+        )
 
         viewModel.kbHasSwipeableSpace.observe(imeService) {
             binding.btnKrChunSpace.apply {
@@ -35,25 +46,17 @@ class ChunjiinBasicTypedKeyboard(
                     if (it) {
                         SwipeableButtonTouchListener(
                             actionUpEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+                                clearComposingStep()
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 imeService.currentInputConnection.commitText(" ", 1)
                             },
                             actionSwipeEvent = { _, _ ->
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                             }
                         )
                     } else {
-                        RepeatTouchListener(
-                            initialInterval = viewModel.kbLongClickInterval.value!!.toLong() + 100L,
-                            normalInterval = normalInterval,
-                            actionDownEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
-                                imeService.currentInputConnection.commitText(" ", 1)
-                            }
-                        )
+                        spaceRepeatTouchListener
                     }
                 )
 
@@ -94,129 +97,78 @@ class ChunjiinBasicTypedKeyboard(
         }
 
         viewModel.kbLongClickInterval.observe(imeService) {
-            binding.btnKrChunSpace.setOnTouchListener(
-                if (viewModel.kbHasSwipeableSpace.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = it.toLong() + 100L,
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
+            val longClickInterval = it.toLong() + 100L
+
+            spaceRepeatTouchListener.setInitialInterval(longClickInterval)
 
             binding.btnKrChunAt.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
-                    actionDownEvent = { view, _ ->
-                        inputSpecialKey(view, vibrator)
-                    }
+                    actionDownEvent = { view, _ -> inputSpecialKey(view) }
                 )
             )
 
             binding.imgbtnKrChunDel.setOnTouchListener(
                 RepeatTouchListener(
-                    initialInterval = it.toLong() + 100L,
+                    initialInterval = longClickInterval,
                     normalInterval = normalInterval,
-                    actionDownEvent = { _, _ ->
-                        deleteChar(vibrator)
-                    }
+                    actionDownEvent = { _, _ -> deleteChar() }
+                )
+            )
+
+            binding.btnKrChunAt.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ -> inputSpecialKey(view) }
                 )
             )
         }
 
+        charKeyList.forEach { btn ->
+            btn.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+        }
+
         binding.apply {
-            btnKrChunL.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunK.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunM.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunRz.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunSf.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunEx.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunQv.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunTg.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunWc.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
-            btnKrChunWc.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
             imgbtnKrChunEnter.setOnClickListener {
-                inputEnter(vibrator)
+                inputEnter()
             }
 
             imgbtnKrChunEnter.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Enter, vibrator = vibrator)
+                inputKeyLong(view = view, keyType = KeyType.Enter)
             }
 
             btnKrChunSpecial.setOnClickListener { view ->
-                inputSpecialKey(view, vibrator)
+                vibrate()
+                viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
             }
 
             btnKrChunSpecial.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Special, vibrator = vibrator)
+                inputKeyLong(view = view, keyType = KeyType.Special)
             }
 
             imgbtnKrChunLang.setOnClickListener {
-                vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+                vibrate()
                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
             }
 
-            btnKrChunDa.setOnClickListener { view ->
-                inputCharKey(view, vibrator)
-            }
-
             imgbtnKrChunInitialize.setOnClickListener {
-                clearComposingStep(imeService)
+                clearComposingStep()
             }
 
             btnKrChunDot.setOnClickListener { view ->
-                inputSpecialKey(view, vibrator)
+                inputSpecialKey(view)
             }
 
-            btnKrChunDot.setOnLongClickListener { view ->
-                inputKeyLong(view = view, keyType = KeyType.Dot, vibrator = vibrator)
+            btnKrChunDot.setOnLongClickListener {
+                clearComposingStep()
+                vibrate()
+                imeService.currentInputConnection.commitText(",", 1)
+
+                true
             }
         }
     }

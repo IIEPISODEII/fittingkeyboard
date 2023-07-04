@@ -1,10 +1,8 @@
 package com.sb.fittingkeyboard.service.keyboardtype.narat
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
 import android.graphics.PorterDuff
 import android.os.Build
-import android.os.Vibrator
 import android.util.TypedValue
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
@@ -27,7 +25,20 @@ class NaratguelTypedKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(VIBRATOR_SERVICE) as Vibrator
+        val charKeyList = listOf(
+            binding.btnKrNaratR,
+            binding.btnKrNaratS,
+            binding.btnKrNaratK,
+            binding.btnKrNaratF,
+            binding.btnKrNaratA,
+            binding.btnKrNaratH,
+            binding.btnKrNaratT,
+            binding.btnKrNaratD,
+            binding.btnKrNaratL,
+            binding.btnKrNaratM,
+            binding.btnKrNaratAdd,
+            binding.btnKrNaratShift
+        )
 
         viewModel.kbHasSwipeableSpace.observe(imeService) {
             binding.btnKrNaratSpace.apply {
@@ -35,25 +46,17 @@ class NaratguelTypedKeyboard(
                     if (it) {
                         SwipeableButtonTouchListener(
                             actionUpEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                clearComposingStep()
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 imeService.currentInputConnection.commitText(" ", 1)
                             },
                             actionSwipeEvent = { _, _ ->
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                             }
                         )
                     } else {
-                        RepeatTouchListener(
-                            initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                            normalInterval = normalInterval,
-                            actionDownEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                                imeService.currentInputConnection.commitText(" ", 1)
-                            }
-                        )
+                        spaceRepeatTouchListener
                     }
                 )
 
@@ -93,88 +96,60 @@ class NaratguelTypedKeyboard(
             else binding.btnKrNaratSpace.textSize = it / binding.btnKrNaratSpace.resources.displayMetrics.density
         }
 
-        viewModel.kbHasVibration.observe(imeService) {
-            binding.btnKrNaratSpace.setOnTouchListener(
-                if (viewModel.kbHasSwipeableSpace.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-        }
-
-        viewModel.kbVibrationIntensity.observe(imeService) {
-            binding.btnKrNaratSpace.setOnTouchListener(
-                if (viewModel.kbHasSwipeableSpace.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-        }
-
         viewModel.kbLongClickInterval.observe(imeService) {
-            binding.btnKrNaratSpace.setOnTouchListener(
-                if (viewModel.kbHasSwipeableSpace.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = it.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
+            val longClickInterval = it.toLong() + 100L
+
+            spaceRepeatTouchListener.setInitialInterval(longClickInterval)
+
+            binding.imgbtnKrNaratDel.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { _, _ ->
+                        deleteChar()
+                    }
+                )
             )
+
+            binding.btnKrNaratDot.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ ->
+                        inputSpecialKey(view)
+                    }
+                )
+            )
+        }
+
+        binding.apply {
+            imgbtnKrNaratEnter.setOnClickListener {
+                inputEnter()
+            }
+
+            imgbtnKrNaratEnter.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Enter)
+            }
+
+            imgbtnKrNaratLang.setOnClickListener {
+                vibrate()
+                viewModel.setInputTypeState(InputTypeState.EN_UPPER)
+            }
+
+            btnKrNaratSpecial.setOnClickListener {
+                vibrate()
+                viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
+            }
+
+            btnKrNaratSpecial.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Special)
+            }
+        }
+
+        charKeyList.forEach { btn ->
+            btn.setOnClickListener {
+                inputCharKey(btn)
+            }
         }
     }
 }

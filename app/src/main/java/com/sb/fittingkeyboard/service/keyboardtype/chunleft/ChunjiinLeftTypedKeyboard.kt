@@ -1,10 +1,8 @@
 package com.sb.fittingkeyboard.service.keyboardtype.chunleft
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
 import android.graphics.PorterDuff
 import android.os.Build
-import android.os.Vibrator
 import android.util.TypedValue
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
@@ -27,7 +25,6 @@ class ChunjiinLeftTypedKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(VIBRATOR_SERVICE) as Vibrator
 
         viewModel.kbHasSwipeableSpace.observe(imeService) {
             binding.btnKrChunLeftSpace.apply {
@@ -35,25 +32,17 @@ class ChunjiinLeftTypedKeyboard(
                     if (it) {
                         SwipeableButtonTouchListener(
                             actionUpEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                clearComposingStep()
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 imeService.currentInputConnection.commitText(" ", 1)
                             },
                             actionSwipeEvent = { _, _ ->
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                             }
                         )
                     } else {
-                        RepeatTouchListener(
-                            initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                            normalInterval = normalInterval,
-                            actionDownEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                                imeService.currentInputConnection.commitText(" ", 1)
-                            }
-                        )
+                        spaceRepeatTouchListener
                     }
                 )
 
@@ -93,88 +82,106 @@ class ChunjiinLeftTypedKeyboard(
             else binding.btnKrChunLeftSpace.textSize = it / binding.btnKrChunLeftSpace.resources.displayMetrics.density
         }
 
-        viewModel.kbHasVibration.observe(imeService) {
-            binding.btnKrChunLeftSpace.setOnTouchListener(
-                if (viewModel.kbHasSwipeableSpace.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-        }
-
-        viewModel.kbVibrationIntensity.observe(imeService) {
-            binding.btnKrChunLeftSpace.setOnTouchListener(
-                if (viewModel.kbHasSwipeableSpace.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-        }
-
         viewModel.kbLongClickInterval.observe(imeService) {
-            binding.btnKrChunLeftSpace.setOnTouchListener(
-                if (viewModel.kbHasSwipeableSpace.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = it.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
+            val longClickInterval = it.toLong() + 100L
+
+            spaceRepeatTouchListener.setInitialInterval(longClickInterval)
+
+            binding.imgbtnKrChunLeftDel.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { _, _ -> deleteChar() }
+                )
             )
+
+            binding.btnKrChunLeftAt.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ -> inputSpecialKey(view) }
+                )
+            )
+        }
+
+        binding.apply {
+            btnChunLeftRz.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftSf.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftL.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftEx.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftQv.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftK.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftTg.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftWc.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            btnKrChunLeftM.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            imgbtnKrChunLeftEnter.setOnClickListener {
+                inputEnter()
+            }
+
+            imgbtnKrChunLeftEnter.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Enter)
+            }
+
+            btnKrChunLeftSpecial.setOnClickListener {
+                viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
+                vibrate()
+            }
+
+            btnKrChunLeftSpecial.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Special)
+            }
+
+            btnKrChunLeftSpecial.setOnClickListener {
+                viewModel.setInputTypeState(InputTypeState.EN_UPPER)
+                vibrate()
+            }
+
+            btnKrChunLeftDa.setOnClickListener { view ->
+                inputCharKey(view)
+            }
+
+            imgbtnKrChunLeftInitialize.setOnClickListener { view ->
+                clearComposingStep()
+            }
+
+            btnKrChunLeftDot.setOnClickListener { view ->
+                inputSpecialKey(view)
+            }
+
+            btnKrChunLeftDot.setOnLongClickListener {
+                clearComposingStep()
+                vibrate()
+                imeService.currentInputConnection.commitText(",", 1)
+
+                true
+            }
         }
     }
 }

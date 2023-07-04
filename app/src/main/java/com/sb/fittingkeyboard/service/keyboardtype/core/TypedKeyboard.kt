@@ -1,7 +1,7 @@
 package com.sb.fittingkeyboard.service.keyboardtype.core
 
+import android.content.Context.VIBRATOR_SERVICE
 import android.content.Intent
-import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.SystemClock
 import android.os.VibrationEffect
@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection
 import android.widget.Button
+import android.widget.Toast
 import com.sb.fittingKeyboard.R
 import com.sb.fittingkeyboard.Constants
 import com.sb.fittingkeyboard.keyboardsettings.ui.MainActivity
@@ -21,6 +22,7 @@ import com.sb.fittingkeyboard.service.koreanautomata.HanguelChunjiin
 import com.sb.fittingkeyboard.service.koreanautomata.HanguelDanmoum
 import com.sb.fittingkeyboard.service.koreanautomata.HanguelNARATGUL
 import com.sb.fittingkeyboard.service.koreanautomata.HanguelQWERTY
+import com.sb.fittingkeyboard.service.util.RepeatTouchListener
 import com.sb.fittingkeyboard.service.util.decToHex
 import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 
@@ -30,28 +32,40 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
 
     val normalInterval: Long = 37
 
-    fun vibrate(vibratorService: Vibrator, intensity: Long) {
-        val vibrationIntensity = intensity+25L
+    val vibrator = imeService.applicationContext.getSystemService(VIBRATOR_SERVICE) as Vibrator
 
-        if (vibratorService.hasVibrator()) {
+    val spaceRepeatTouchListener = RepeatTouchListener(
+        initialInterval = viewModel.kbLongClickInterval.value!!.toLong() + 100L,
+        normalInterval = normalInterval,
+        actionDownEvent = { _, _ ->
+            clearComposingStep()
+            if (viewModel.kbHasVibration.value!!) vibrate()
+            imeService.currentInputConnection.commitText(" ", 1)
+        }
+    )
+
+    fun vibrate() {
+        val vibrationIntensity = viewModel.kbVibrationIntensity.value!!.toLong() + 25L
+
+        if (vibrator.hasVibrator()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibratorService.vibrate(
+                vibrator.vibrate(
                     VibrationEffect.createOneShot(
                         vibrationIntensity,
                         vibrationIntensity.toInt()
                     )
                 )
             } else {
-                vibratorService.vibrate(vibrationIntensity)
+                vibrator.vibrate(vibrationIntensity)
             }
         }
     }
 
-    fun inputCharKey(view: View, vibrator: Vibrator) {
+    fun inputCharKey(view: View) {
         val cursorCS =
             imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES)
         if (cursorCS != null && cursorCS.isNotEmpty()) {
-            clearComposingStep(imeService) // 선택 중인 글자가 있으면 초기화
+            clearComposingStep() // 선택 중인 글자가 있으면 초기화
         }
         when (viewModel.inputTypeState.value!!) {
             InputTypeState.KR_NORMAL, InputTypeState.KR_SHIFT -> {
@@ -143,45 +157,42 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                 }
             }
             else -> {
-                clearComposingStep(imeService)
+                clearComposingStep()
                 imeService.currentInputConnection.commitText((view as Button).text.toString(), 1)
                 if (viewModel.inputTypeState.value!! == InputTypeState.EN_UPPER) viewModel.setInputTypeState(InputTypeState.EN_LOWER)
             }
         }
-        if (viewModel.kbHasVibration.value!!) vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+        if (viewModel.kbHasVibration.value!!) vibrate()
     }
 
-    fun inputSpecialKey(view: View, vibrator: Vibrator) {
-        clearComposingStep(imeService)
-        vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
-        when {
-            viewModel.inputTypeState.value!! in listOf(
-                InputTypeState.KR_NORMAL,
-                InputTypeState.KR_SHIFT,
-                InputTypeState.EN_UPPER,
-                InputTypeState.EN_LOWER,
-                InputTypeState.EN_BOLD_UPPER,
-                InputTypeState.BOILERPLATE,
-                InputTypeState.CURSOR,
-                InputTypeState.NUMBER,
-                InputTypeState.EMOJI
+    fun inputSpecialKey(view: View) {
+        clearComposingStep()
+        vibrate()
+
+        if (view !is Button) return
+        when (view.text) {
+            in listOf(
+                "한글",
+                "english",
+                "English",
+                "SPACE"
             ) -> {
                 imeService.currentInputConnection.commitText(" ", 1)
             }
-            viewModel.inputTypeState.value!! in listOf(
-                InputTypeState.SPECIAL_FIRST,
-                InputTypeState.SPECIAL_SECOND
+            in listOf(
+                "특수 1",
+                "특수 2"
             ) -> {
                 if (viewModel.kbHasTypeChange.value!!) viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
                 imeService.currentInputConnection.commitText(" ", 1)
             }
             else -> {
-                if (view is Button) imeService.currentInputConnection.commitText(view.text[0].toString(), 1)
+                imeService.currentInputConnection.commitText(view.text[0].toString(), 1)
             }
         }
     }
 
-    fun inputKeyLong(view: View, keyType: KeyType, vibrator: Vibrator): Boolean {
+    fun inputKeyLong(view: View, keyType: KeyType): Boolean {
         val crit =
             when (keyType) {
                 KeyType.Special -> viewModel.kbSpecialKeyOnLongClickFunction.value!!
@@ -195,16 +206,16 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
             3 -> viewModel.setInputTypeState(InputTypeState.NUMBER)
             4 -> viewModel.setInputTypeState(InputTypeState.EMOJI)
             else -> {
-                clearComposingStep(imeService)
+                clearComposingStep()
                 imeService.currentInputConnection.commitText((view as Button).text[1].toString(), 1)
                 return true
             }
         }
-        vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+        vibrate()
         return true
     }
 
-    fun deleteChar(vibrator: Vibrator) {
+    fun deleteChar() {
         val selectedText =
             imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES)
         if (TextUtils.isEmpty(selectedText)) {
@@ -223,7 +234,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                             val (c1, c2) = HanguelQWERTY.delete()
                             if (c1 == null) {
                                 if (c2 == null) {
-                                    clearComposingStep(imeService)
+                                    clearComposingStep()
                                     imeService.currentInputConnection.deleteSurroundingText(1, 0)
                                 } else {
                                     imeService.currentInputConnection.setComposingText(c2, 1)
@@ -235,7 +246,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                             val (c1, c2) = HanguelChunjiin.delete(System.currentTimeMillis())
                             if (c1 == null) {
                                 if (c2 == null) {
-                                    clearComposingStep(imeService)
+                                    clearComposingStep()
                                     imeService.currentInputConnection.deleteSurroundingText(1, 0)
                                 } else {
                                     imeService.currentInputConnection.setComposingText(c2, 1)
@@ -246,7 +257,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                             val (c1, c2) = HanguelNARATGUL.delete()
                             if (c1 == null) {
                                 if (c2 == null) {
-                                    clearComposingStep(imeService)
+                                    clearComposingStep()
                                     imeService.currentInputConnection.deleteSurroundingText(1, 0)
                                 } else {
                                     imeService.currentInputConnection.setComposingText(c2, 1)
@@ -257,7 +268,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                             val (c1, c2) = HanguelDanmoum.delete(inputTime = System.currentTimeMillis())
                             if (c1 == null) {
                                 if (c2 == null) {
-                                    clearComposingStep(imeService)
+                                    clearComposingStep()
                                     imeService.currentInputConnection.deleteSurroundingText(1, 0)
                                 } else {
                                     imeService.currentInputConnection.setComposingText(c2, 1)
@@ -267,34 +278,34 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                         else -> HanguelQWERTY.delete()
                     }
                 } else {
-                    clearComposingStep(imeService)
+                    clearComposingStep()
                     imeService.currentInputConnection.deleteSurroundingText(1, 0)
                 }
             }
         } else {
-            clearComposingStep(imeService)
+            clearComposingStep()
             imeService.currentInputConnection.finishComposingText()
             imeService.currentInputConnection.commitText("", 0)
         }
-        if (viewModel.kbHasVibration.value!!) vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+        if (viewModel.kbHasVibration.value!!) vibrate()
     }
 
-    fun deletePrevChar(vibrator: Vibrator) {
+    fun deletePrevChar() {
         val selectedText =
             imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES)
         if (TextUtils.isEmpty(selectedText)) {
-            clearComposingStep(imeService)
+            clearComposingStep()
             imeService.currentInputConnection.deleteSurroundingText(0, 1)
         } else {
-            clearComposingStep(imeService)
+            clearComposingStep()
             imeService.currentInputConnection.finishComposingText()
             imeService.currentInputConnection.commitText("", 1)
         }
-        if (viewModel.kbHasVibration.value!!) vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+        if (viewModel.kbHasVibration.value!!) vibrate()
     }
 
-    fun inputEnter(vibrator: Vibrator) {
-        clearComposingStep(imeService)
+    fun inputEnter() {
+        clearComposingStep()
         imeService.currentInputConnection.finishComposingText()
         val eventTime = SystemClock.uptimeMillis()
         when (decToHex(imeService.currentInputEditorInfo.imeOptions).last()) {
@@ -331,13 +342,13 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                 )
             }
         }
-        if (viewModel.kbHasVibration.value!!) vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong() + 100L)
+        if (viewModel.kbHasVibration.value!!) vibrate()
     }
 
     fun moveCursorToHead() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                clearComposingStep(imeService)
+                clearComposingStep()
                 if (viewModel.isSelectingText) {
                     imeService.currentInputConnection.sendKeyEvent(
                         KeyEvent(
@@ -368,7 +379,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                clearComposingStep(imeService)
+                clearComposingStep()
                 if (viewModel.isSelectingText) {
                     imeService.currentInputConnection.sendKeyEvent(
                         KeyEvent(
@@ -396,7 +407,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         val currentCursorPositionEnd =
             imeService.currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).selectionEnd
 
-        clearComposingStep(imeService)
+        clearComposingStep()
         if (viewModel.isSelectingText) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
@@ -460,7 +471,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                 ExtractedTextRequest(),
                 0
             ).selectionEnd
-        clearComposingStep(imeService)
+        clearComposingStep()
         if (viewModel.isSelectingText) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
@@ -521,7 +532,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         val wholeText =
             imeService.currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
 
-        clearComposingStep(imeService)
+        clearComposingStep()
         if (viewModel.isSelectingText) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
@@ -590,7 +601,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                 ExtractedTextRequest(),
                 0
             ).text.length
-        clearComposingStep(imeService)
+        clearComposingStep()
         if (viewModel.isSelectingText) {
             imeService.currentInputConnection.sendKeyEvent(
                 KeyEvent(
@@ -648,7 +659,66 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         }
     }
 
-    fun clearComposingStep(imeService: InputMethodService) {
+    fun copyText() {
+        viewModel.switchSelectingTextMode(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
+                clearComposingStep()
+                if (imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES) == null) {
+                    Toast.makeText(imeService, "문구를 복사하시려면\n문구를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
+                } else {
+                    imeService.currentInputConnection.performContextMenuAction(android.R.id.copy)
+                }
+            }
+        }
+    }
+
+    fun pasteText() {
+        viewModel.switchSelectingTextMode(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
+                clearComposingStep()
+                imeService.currentInputConnection.performContextMenuAction(android.R.id.paste)
+            }
+        }
+    }
+
+    fun cutText() {
+        viewModel.switchSelectingTextMode(false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
+                clearComposingStep()
+                if (imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES) == null) {
+                    Toast.makeText(
+                        imeService,
+                        "문구를 잘라내시려면\n문구를 먼저 선택해주세요.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    imeService.currentInputConnection.performContextMenuAction(android.R.id.cut)
+                }
+            }
+        }
+    }
+
+    fun selectAllText() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
+                val textLength =
+                    imeService.currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
+                clearComposingStep()
+                imeService.currentInputConnection.setSelection(0, textLength)
+                viewModel.initializeSavedCursorPosition()
+                if (textLength == 0) Toast.makeText(imeService, "선택할 문구가 없습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun selectText() {
+        viewModel.switchSelectingTextMode(!viewModel.isSelectingText)
+    }
+
+    fun clearComposingStep() {
         imeService.currentInputConnection.finishComposingText()
 
         HanguelQWERTY.initChar()
@@ -680,16 +750,15 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         return false
     }
 
-    fun inputBoilerplateText(button: View, vibrator: Vibrator) {
-        clearComposingStep(imeService)
+    fun inputBoilerplateText(button: View) {
+        clearComposingStep()
         imeService.currentInputConnection.commitText((button as Button).text, 1)
 
-        if (viewModel.kbHasVibration.value!!) vibrate(vibratorService = vibrator, intensity = viewModel.kbVibrationIntensity.value!!.toLong())
+        if (viewModel.kbHasVibration.value!!) vibrate()
     }
 
     enum class KeyType {
         Enter,
-        Special,
-        Dot
+        Special
     }
 }

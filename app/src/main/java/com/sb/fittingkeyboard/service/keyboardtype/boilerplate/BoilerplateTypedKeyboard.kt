@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sb.fittingKeyboard.databinding.FragmentBoilerplatetextBinding
 import com.sb.fittingkeyboard.service.BoilerplateTextAdapter
 import com.sb.fittingkeyboard.service.MainKeyboardService
+import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingkeyboard.service.util.RepeatTouchListener
 import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 
 class BoilerplateTypedKeyboard(
@@ -18,11 +20,10 @@ class BoilerplateTypedKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(VIBRATOR_SERVICE) as Vibrator
 
         val boilerplateTextsAdapter = BoilerplateTextAdapter(
             boilerplateTextsList = mutableMapOf(),
-            onClick = { view -> inputBoilerplateText(view, vibrator) },
+            onClick = { view -> inputBoilerplateText(view) },
             onLongClick = { _, i -> jumpToBoilerplateEditor(i) }
         )
 
@@ -36,9 +37,44 @@ class BoilerplateTypedKeyboard(
 
         viewModel.boilerplateTexts.observe(imeService) { boilerplateTextsAdapter.setBoilerplateTextsList(it) }
 
-        binding.recyviewBoilerplateBoilerplatetextItemsContainer.apply {
-            adapter = boilerplateTextsAdapter
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        viewModel.kbLongClickInterval.observe(imeService) {
+            val longClickInterval = it.toLong() + 100L
+
+            binding.imgbtnBoilerplateDelete.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { _, _ ->
+                        deleteChar()
+                    }
+                )
+            )
+
+            binding.btnBoilerplateSpace.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ ->
+                        inputSpecialKey(view)
+                    }
+                )
+            )
+        }
+
+        binding.apply {
+            imgbtnBoilerplateEnter.setOnClickListener {
+                inputEnter()
+            }
+
+            imgbtnBoilerplateBack.setOnClickListener {
+                vibrate()
+                viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
+            }
+
+            recyviewBoilerplateBoilerplatetextItemsContainer.apply {
+                adapter = boilerplateTextsAdapter
+                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            }
         }
     }
 }

@@ -9,10 +9,6 @@
             type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
         <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
-
-        <variable
-            name="kbservice"
-            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout
@@ -35,7 +31,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㄱㅋ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -51,7 +46,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㄴㄹ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -67,7 +61,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㅣ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -90,8 +83,7 @@
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
-                    app:customTheme_view="@{3}"
-                    app:onTouch="@{kbservice.repeatTouchListenerDels[7]}" />
+                    app:customTheme_view="@{3}" />
             </LinearLayout>
 
             <LinearLayout
@@ -106,7 +98,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㄷㅌ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -122,7 +113,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㅂㅍ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -138,7 +128,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ᆞ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -175,7 +164,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㅅㅎ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -191,7 +179,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㅈㅊ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -207,7 +194,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㅡ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -225,8 +211,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.inputEnter()}"
-                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.kbEnterKeyOnLongClickFunction)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_enter_black"
                     app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -246,8 +230,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
-                    android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.SPECIAL_FIRST)}"
-                    android:onLongClick="@{() -> kbservice.addFunction(kbviewmodel.kbSpecialKeyOnLongClickFunction)}"
                     android:text="!#$"
                     android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
                     android:textSize="12sp"
@@ -265,7 +247,6 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight=".5"
                     android:elevation="2dp"
-                    android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.EN_UPPER)}"
                     android:scaleType="fitCenter"
                     android:src="@drawable/keyic_language_black"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
@@ -277,7 +258,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> kbservice.inputChar(v)}"
                     android:text="ㅇㅁ"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
@@ -296,7 +276,6 @@
                     android:layout_weight="1"
                     android:elevation="2dp"
                     android:scaleType="fitCenter"
-                    android:onClick="@{() -> kbservice.initChunJiIn()}"
                     android:src="@drawable/keyic_arrowright_black"
                     app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
                     app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
@@ -308,8 +287,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".5"
-                    android:onClick="@{(v) -> kbservice.inputSpecial(v)}"
-                    android:onLongClick="@{(v) -> kbservice.longClickInputSpecial(v)}"
                     android:text=".,"
                     android:textAllCaps="false"
                     android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -333,8 +310,7 @@
                     app:customTheme_theme="@{kbviewmodel.kbTheme}"
                     app:customTheme_view="@{2}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"
-                    app:onTouch="@{kbservice.repeatTouchListenerSpecials[20]}" />
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

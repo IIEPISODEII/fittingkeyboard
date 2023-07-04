@@ -26,7 +26,34 @@ class QwertyKrTypedKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(VIBRATOR_SERVICE) as Vibrator
+        val charKeyList = listOf(
+            binding.btnKrQwertyQ,
+            binding.btnKrQwertyW,
+            binding.btnKrQwertyE,
+            binding.btnKrQwertyR,
+            binding.btnKrQwertyT,
+            binding.btnKrQwertyY,
+            binding.btnKrQwertyU,
+            binding.btnKrQwertyI,
+            binding.btnKrQwertyO,
+            binding.btnKrQwertyP,
+            binding.btnKrQwertyA,
+            binding.btnKrQwertyS,
+            binding.btnKrQwertyD,
+            binding.btnKrQwertyF,
+            binding.btnKrQwertyG,
+            binding.btnKrQwertyH,
+            binding.btnKrQwertyJ,
+            binding.btnKrQwertyK,
+            binding.btnKrQwertyL,
+            binding.btnKrQwertyZ,
+            binding.btnKrQwertyX,
+            binding.btnKrQwertyC,
+            binding.btnKrQwertyV,
+            binding.btnKrQwertyB,
+            binding.btnKrQwertyN,
+            binding.btnKrQwertyM
+        )
 
         viewModel.kbHasSwipeableSpace.observe(imeService) {
             binding.btnKrQwertySpace.apply {
@@ -34,25 +61,17 @@ class QwertyKrTypedKeyboard(
                     if (it) {
                         SwipeableButtonTouchListener(
                             actionUpEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                clearComposingStep()
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 imeService.currentInputConnection.commitText(" ", 1)
                             },
                             actionSwipeEvent = { _, _ ->
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                             }
                         )
                     } else {
-                        RepeatTouchListener(
-                            initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                            normalInterval = normalInterval,
-                            actionDownEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                                imeService.currentInputConnection.commitText(" ", 1)
-                            }
-                        )
+                        spaceRepeatTouchListener
                     }
                 )
 
@@ -84,142 +103,80 @@ class QwertyKrTypedKeyboard(
             )
         }
 
-        viewModel.kbHasVibration.observe(imeService) {
-            binding.btnKrQwertySpace.setOnTouchListener(
-                if (it) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-
-            binding.imgbtnKrQwertyLang.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                        viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                    }
-                )
-            )
-
-            binding.imgbtnKrQwertyShift.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                        viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
-                    }
-                )
-            )
-
-            binding.btnKrQwertySpecial.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                        viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
-                    }
-                )
-            )
-        }
-
-        viewModel.kbVibrationIntensity.observe(imeService) {
-            binding.btnKrQwertySpace.setOnTouchListener(
-                if (viewModel.kbHasVibration.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-
-            binding.imgbtnKrQwertyLang.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                        viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                    }
-                )
-            )
-
-            binding.imgbtnKrQwertyShift.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                        viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
-                    }
-                )
-            )
-
-            binding.btnKrQwertySpecial.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                        viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
-                    }
-                )
-            )
-        }
-
         viewModel.kbLongClickInterval.observe(imeService) {
-            binding.btnKrQwertySpace.setOnTouchListener(
-                if (viewModel.kbHasVibration.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
+            val longClickInterval = it.toLong() + 100L
+
+            spaceRepeatTouchListener.setInitialInterval(longClickInterval)
+
+            charKeyList.forEach { btn ->
+                btn.setOnTouchListener(
                     RepeatTouchListener(
-                        initialInterval = it.toLong(),
+                        initialInterval = longClickInterval,
                         normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
+                        actionDownEvent = { view, _ ->
+                            inputCharKey(view)
                         }
                     )
-                }
+                )
+            }
+
+            binding.imgbtnKrQwertyDel.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { _, _ ->
+                        deleteChar()
+                    }
+                )
             )
+
+            binding.btnKrQwertyComma.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ ->
+                        inputSpecialKey(view)
+                    }
+                )
+            )
+
+            binding.btnKrQwertyDot.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ ->
+                        inputSpecialKey(view)
+                    }
+                )
+            )
+        }
+
+        binding.apply {
+            btnKrQwertySpecial.setOnTouchListener(
+                SingleTouchListener(
+                    actionDownEvent = { _, _ ->
+                        vibrate()
+                        viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
+                    }
+                )
+            )
+
+            btnKrQwertySpecial.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Special)
+            }
+
+            imgbtnKrQwertyLang.setOnClickListener {
+                vibrate()
+                viewModel.setInputTypeState(InputTypeState.EN_UPPER)
+            }
+
+            imgbtnKrQwertyEnter.setOnClickListener {
+                inputEnter()
+            }
+
+            imgbtnKrQwertyEnter.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Enter)
+            }
         }
     }
 }

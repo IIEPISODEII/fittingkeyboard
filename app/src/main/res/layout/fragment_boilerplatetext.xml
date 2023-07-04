@@ -9,10 +9,6 @@
             type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
         <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
-
-        <variable
-            name="kbservice"
-            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout
@@ -50,8 +46,7 @@
                 app:layout_constraintBottom_toTopOf="@id/btn_boilerplate_space"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/recyview_boilerplate_boilerplatetext_items_container"
-                app:layout_constraintTop_toTopOf="parent"
-                app:onTouch="@{kbservice.repeatTouchListenerDels[9]}" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btn_boilerplate_space"
@@ -69,8 +64,7 @@
                 app:layout_constraintBottom_toTopOf="@id/imgbtn_boilerplate_enter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/recyview_boilerplate_boilerplatetext_items_container"
-                app:layout_constraintTop_toBottomOf="@id/imgbtn_boilerplate_delete"
-                app:onTouch="@{kbservice.repeatTouchListenerSpecials[22]}" />
+                app:layout_constraintTop_toBottomOf="@id/imgbtn_boilerplate_delete" />
 
             <ImageButton
                 android:id="@+id/imgbtn_boilerplate_enter"
@@ -78,7 +72,6 @@
                 android:layout_height="0dp"
                 android:elevation="2dp"
                 android:gravity="center"
-                android:onClick="@{() -> kbservice.inputEnter()}"
                 android:scaleType="fitCenter"
                 android:src="@drawable/keyic_enter_black"
                 app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
@@ -95,7 +88,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:onClick="@{() -> kbservice.setInputTypeState(InputTypeState.KR_NORMAL)}"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_keyboard_black"
                 app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"

@@ -1,10 +1,8 @@
 package com.sb.fittingkeyboard.service.keyboardtype.danmo
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
 import android.graphics.PorterDuff
 import android.os.Build
-import android.os.Vibrator
 import android.util.TypedValue
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
@@ -28,7 +26,30 @@ class DanmoumTypedKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(VIBRATOR_SERVICE) as Vibrator
+        val charKeyList = listOf(
+            binding.btnKrDanmoQ,
+            binding.btnKrDanmoW,
+            binding.btnKrDanmoE,
+            binding.btnKrDanmoR,
+            binding.btnKrDanmoT,
+            binding.btnKrDanmoH,
+            binding.btnKrDanmoO,
+            binding.btnKrDanmoP,
+            binding.btnKrDanmoA,
+            binding.btnKrDanmoS,
+            binding.btnKrDanmoD,
+            binding.btnKrDanmoF,
+            binding.btnKrDanmoG,
+            binding.btnKrDanmoJ,
+            binding.btnKrDanmoK,
+            binding.btnKrDanmoL,
+            binding.btnKrDanmoZ,
+            binding.btnKrDanmoX,
+            binding.btnKrDanmoC,
+            binding.btnKrDanmoV,
+            binding.btnKrDanmoN,
+            binding.btnKrDanmoM
+        )
 
         viewModel.kbHasSwipeableSpace.observe(imeService) {
             binding.btnKrDanmoSpace.apply {
@@ -36,25 +57,17 @@ class DanmoumTypedKeyboard(
                     if (it) {
                         SwipeableButtonTouchListener(
                             actionUpEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                clearComposingStep()
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 imeService.currentInputConnection.commitText(" ", 1)
                             },
                             actionSwipeEvent = { _, _ ->
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
+                                if (viewModel.kbHasVibration.value!!) vibrate()
                                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                             }
                         )
                     } else {
-                        RepeatTouchListener(
-                            initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                            normalInterval = normalInterval,
-                            actionDownEvent = { _, _ ->
-                                clearComposingStep(imeService)
-                                if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                                imeService.currentInputConnection.commitText(" ", 1)
-                            }
-                        )
+                        spaceRepeatTouchListener
                     }
                 )
 
@@ -94,106 +107,80 @@ class DanmoumTypedKeyboard(
             else binding.btnKrDanmoSpace.textSize = it / binding.btnKrDanmoSpace.resources.displayMetrics.density
         }
 
-        viewModel.kbHasVibration.observe(imeService) {
-            binding.btnKrDanmoSpace.setOnTouchListener(
-                if (it) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-
-            binding.imgbtnKrDanmoLang.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (it) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                        viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                    }
-                )
-            )
-        }
-
-        viewModel.kbVibrationIntensity.observe(imeService) {
-            binding.btnKrDanmoSpace.setOnTouchListener(
-                if (viewModel.kbHasVibration.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
-                    RepeatTouchListener(
-                        initialInterval = viewModel.kbLongClickInterval.value!!.toLong(),
-                        normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        }
-                    )
-                }
-            )
-
-            binding.imgbtnKrDanmoLang.setOnTouchListener(
-                SingleTouchListener(
-                    actionDownEvent = { _, _ ->
-                        if (viewModel.kbHasVibration.value!!) vibrate(vibrator, it.toLong())
-                        viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                    }
-                )
-            )
-        }
-
         viewModel.kbLongClickInterval.observe(imeService) {
-            binding.btnKrDanmoSpace.setOnTouchListener(
-                if (viewModel.kbHasVibration.value!!) {
-                    SwipeableButtonTouchListener(
-                        actionUpEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
-                        },
-                        actionSwipeEvent = { _, _ ->
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                        }
-                    )
-                } else {
+            val longClickInterval = it.toLong() + 100L
+
+            spaceRepeatTouchListener.setInitialInterval(longClickInterval)
+
+            charKeyList.forEach { btn ->
+                btn.setOnTouchListener(
                     RepeatTouchListener(
-                        initialInterval = it.toLong(),
+                        initialInterval = longClickInterval,
                         normalInterval = normalInterval,
-                        actionDownEvent = { _, _ ->
-                            clearComposingStep(imeService)
-                            if (viewModel.kbHasVibration.value!!) vibrate(vibrator, viewModel.kbVibrationIntensity.value!!.toLong())
-                            imeService.currentInputConnection.commitText(" ", 1)
+                        actionDownEvent = { view, _ ->
+                            inputCharKey(view)
                         }
                     )
-                }
+                )
+            }
+
+            binding.imgbtnKrDanmoDel.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { _, _ ->
+                        deleteChar()
+                    }
+                )
             )
+
+            binding.btnKrDanmoComma.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ ->
+                        inputSpecialKey(view)
+                    }
+                )
+            )
+
+            binding.btnKrDanmoDot.setOnTouchListener(
+                RepeatTouchListener(
+                    initialInterval = longClickInterval,
+                    normalInterval = normalInterval,
+                    actionDownEvent = { view, _ ->
+                        inputSpecialKey(view)
+                    }
+                )
+            )
+        }
+
+        binding.apply {
+            btnKrDanmoSpecial.setOnClickListener {
+                vibrate()
+                viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
+            }
+
+            btnKrDanmoSpecial.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Special)
+            }
+
+            imgbtnKrDanmoLang.setOnTouchListener(
+                SingleTouchListener(
+                    actionDownEvent = { _, _ ->
+                        vibrate()
+                        viewModel.setInputTypeState(InputTypeState.EN_UPPER)
+                    }
+                )
+            )
+
+            imgbtnKrDanmoEnter.setOnClickListener {
+                inputEnter()
+            }
+
+            imgbtnKrDanmoEnter.setOnLongClickListener { view ->
+                inputKeyLong(view = view, keyType = KeyType.Enter)
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ import com.sb.fittingkeyboard.Constants
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingkeyboard.service.util.RepeatTouchListener
 import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
 
 class MainFrameKeyboard(
@@ -27,7 +28,18 @@ class MainFrameKeyboard(
     @SuppressLint("ClickableViewAccessibility")
     override fun init() {
         val viewModel: KeyboardViewModel = binding.kbviewmodel!!
-        val vibrator = binding.root.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        val charKeyList = listOf(
+            binding.btn0,
+            binding.btn1,
+            binding.btn2,
+            binding.btn3,
+            binding.btn4,
+            binding.btn5,
+            binding.btn6,
+            binding.btn7,
+            binding.btn8,
+            binding.btn9
+        )
 
         val goSettingImageButton by lazy {
             ImageButton(binding.root.context).apply {
@@ -84,16 +96,7 @@ class MainFrameKeyboard(
                     )
                 )
                 setOnClickListener {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                            val textLength =
-                                imeService.currentInputConnection.getExtractedText(ExtractedTextRequest(), 0).text.length
-                            clearComposingStep(imeService)
-                            imeService.currentInputConnection.setSelection(0, textLength)
-                            viewModel.initializeSavedCursorPosition()
-                            if (textLength == 0) Toast.makeText(imeService, "선택할 문구가 없습니다.", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                    selectAllText()
                 }
                 setBackgroundColor(
                     ResourcesCompat.getColor(
@@ -108,17 +111,7 @@ class MainFrameKeyboard(
             ImageButton(binding.root.context).apply {
                 setImageDrawable(ResourcesCompat.getDrawable(this.resources, R.drawable.ic_copy, null))
                 setOnClickListener {
-                    viewModel.switchSelectingTextMode(false)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                            clearComposingStep(imeService)
-                            if (imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES) == null) {
-                                Toast.makeText(imeService, "문구를 복사하시려면\n문구를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
-                            } else {
-                                imeService.currentInputConnection.performContextMenuAction(android.R.id.copy)
-                            }
-                        }
-                    }
+                    copyText()
                 }
                 setBackgroundColor(ResourcesCompat.getColor(this.resources, R.color.white, null))
             }
@@ -133,21 +126,7 @@ class MainFrameKeyboard(
                     )
                 )
                 setOnClickListener {
-                    viewModel.switchSelectingTextMode(false)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                            clearComposingStep(imeService)
-                            if (imeService.currentInputConnection.getSelectedText(InputConnection.GET_TEXT_WITH_STYLES) == null) {
-                                Toast.makeText(
-                                    imeService,
-                                    "문구를 잘라내시려면\n문구를 먼저 선택해주세요.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                imeService.currentInputConnection.performContextMenuAction(android.R.id.cut)
-                            }
-                        }
-                    }
+                    cutText()
                 }
                 setBackgroundColor(
                     ResourcesCompat.getColor(
@@ -168,13 +147,7 @@ class MainFrameKeyboard(
                     )
                 )
                 setOnClickListener {
-                    viewModel.switchSelectingTextMode(false)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (imeService.currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)) {
-                            clearComposingStep(imeService)
-                            imeService.currentInputConnection.performContextMenuAction(android.R.id.paste)
-                        }
-                    }
+                    pasteText()
                 }
                 setBackgroundColor(
                     ResourcesCompat.getColor(
@@ -244,6 +217,54 @@ class MainFrameKeyboard(
                         this.resources,
                         R.color.white,
                         null
+                    )
+                )
+            }
+        }
+
+        viewModel.inputTypeState.observe(imeService) {
+            showBoilerPlateImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    showBoilerPlateImageButton.resources,
+                    if (it == InputTypeState.BOILERPLATE) R.drawable.ic_keyboard_black else R.drawable.ic_boilerplatetext_black,
+                    null
+                )
+            )
+
+            showCursorImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    showCursorImageButton.resources,
+                    if (it == InputTypeState.CURSOR) R.drawable.ic_keyboard_black else R.drawable.ic_move,
+                    null
+                )
+            )
+
+            showNumberImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    showNumberImageButton.resources,
+                    if (it == InputTypeState.NUMBER) R.drawable.ic_keyboard_black else R.drawable.ic_number_keypad,
+                    null
+                )
+            )
+
+            showEmojiImageButton.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    showEmojiImageButton.resources,
+                    if (it == InputTypeState.EMOJI) R.drawable.ic_keyboard_black else R.drawable.ic_outline_emoji_emotions_24,
+                    null
+                )
+            )
+        }
+
+        viewModel.kbLongClickInterval.observe(imeService) {
+            val longClickInterval = it.toLong() + 100L
+
+            charKeyList.forEach { btn ->
+                btn.setOnTouchListener(
+                    RepeatTouchListener(
+                        initialInterval = longClickInterval,
+                        normalInterval = normalInterval,
+                        actionDownEvent = { view, _ -> inputSpecialKey(view) }
                     )
                 )
             }
