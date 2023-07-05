@@ -1,11 +1,8 @@
 package com.sb.fittingkeyboard.service.keyboardtype.boilerplate
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
-import android.os.Vibrator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sb.fittingKeyboard.databinding.FragmentBoilerplatetextBinding
-import com.sb.fittingkeyboard.service.BoilerplateTextAdapter
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard

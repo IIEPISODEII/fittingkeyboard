@@ -9,10 +9,6 @@
             type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
         <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
-
-        <variable
-            name="kbservice"
-            type="com.sb.fittingkeyboard.service.MainKeyboardService" />
     </data>
 
     <FrameLayout

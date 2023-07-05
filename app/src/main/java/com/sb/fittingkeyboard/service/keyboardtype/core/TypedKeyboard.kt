@@ -15,7 +15,11 @@ import android.view.inputmethod.InputConnection
 import android.widget.Button
 import android.widget.Toast
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN
+import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN_AMBI
+import com.sb.fittingkeyboard.IME_KR_FLAG_DAN
+import com.sb.fittingkeyboard.IME_KR_FLAG_NARAT
+import com.sb.fittingkeyboard.IME_KR_FLAG_QWERTY
 import com.sb.fittingkeyboard.keyboardsettings.ui.MainActivity
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.koreanautomata.HanguelChunjiin
@@ -70,7 +74,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
         when (viewModel.inputTypeState.value!!) {
             InputTypeState.KR_NORMAL, InputTypeState.KR_SHIFT -> {
                 when (viewModel.kbKrImeMode.value!!) {
-                    Constants.IME_KR_FLAG_QWERTY -> {
+                    IME_KR_FLAG_QWERTY -> {
                         val (c1, c2) = HanguelQWERTY.composeChar((view as Button).text!!.single())
                         if (c1 != null) {
                             imeService.currentInputConnection.commitText(c1, 1)
@@ -80,7 +84,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                         }
                         if (viewModel.inputTypeState.value!! == InputTypeState.KR_SHIFT) viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
                     }
-                    Constants.IME_KR_FLAG_CHUN, Constants.IME_KR_FLAG_CHUN_AMBI -> {
+                    IME_KR_FLAG_CHUN, IME_KR_FLAG_CHUN_AMBI -> {
                         var c1: String?
                         var c2: String?
                         when (view.id) {
@@ -114,7 +118,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                             }
                         }
                     }
-                    Constants.IME_KR_FLAG_NARAT -> {
+                    IME_KR_FLAG_NARAT -> {
                         val c1: String?
                         val c2: String?
 
@@ -139,7 +143,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                             if (c2 != null) imeService.currentInputConnection.setComposingText(c2, 1)
                         }
                     }
-                    Constants.IME_KR_FLAG_DAN -> {
+                    IME_KR_FLAG_DAN -> {
                         val (c1, c2) = HanguelDanmoum.composeChar(
                             (view as Button).text!!.single(),
                             System.currentTimeMillis()
@@ -228,7 +232,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
             } else {
                 if (viewModel.inputTypeState.value!! in listOf(InputTypeState.KR_NORMAL, InputTypeState.KR_SHIFT)) {
                     when (viewModel.kbKrImeMode.value!!) {
-                        Constants.IME_KR_FLAG_QWERTY -> {
+                        IME_KR_FLAG_QWERTY -> {
                             val (c1, c2) = HanguelQWERTY.delete()
                             if (c1 == null) {
                                 if (c2 == null) {
@@ -240,7 +244,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                             }
                             if (viewModel.inputTypeState.value!! == InputTypeState.KR_SHIFT) viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
                         }
-                        Constants.IME_KR_FLAG_CHUN, Constants.IME_KR_FLAG_CHUN_AMBI -> {
+                        IME_KR_FLAG_CHUN, IME_KR_FLAG_CHUN_AMBI -> {
                             val (c1, c2) = HanguelChunjiin.delete(System.currentTimeMillis())
                             if (c1 == null) {
                                 if (c2 == null) {
@@ -251,7 +255,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                                 }
                             }
                         }
-                        Constants.IME_KR_FLAG_NARAT -> {
+                        IME_KR_FLAG_NARAT -> {
                             val (c1, c2) = HanguelNARATGUL.delete()
                             if (c1 == null) {
                                 if (c2 == null) {
@@ -262,7 +266,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
                                 }
                             }
                         }
-                        Constants.IME_KR_FLAG_DAN -> {
+                        IME_KR_FLAG_DAN -> {
                             val (c1, c2) = HanguelDanmoum.delete(inputTime = System.currentTimeMillis())
                             if (c1 == null) {
                                 if (c2 == null) {

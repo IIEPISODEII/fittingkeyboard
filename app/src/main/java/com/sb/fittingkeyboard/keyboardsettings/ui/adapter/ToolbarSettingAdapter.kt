@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.keyboardsettings.data.ToolbarSettingDataHolder
+import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.ToolbarSettingDataHolder
 
 class ToolbarSettingAdapter(
     var toolbarSettingDataHolderList: MutableList<ToolbarSettingDataHolder>

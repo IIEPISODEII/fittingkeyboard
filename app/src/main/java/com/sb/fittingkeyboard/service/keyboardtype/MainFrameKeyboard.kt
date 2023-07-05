@@ -6,7 +6,16 @@ import android.widget.ImageButton
 import androidx.core.content.res.ResourcesCompat
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.LayoutKeyboardBinding
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.PACKAGE_NAME
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_COPY
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_CUT
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_PASTE
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI
+import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
@@ -45,7 +54,7 @@ class MainFrameKeyboard(
                 )
                 setOnClickListener {
                     val intent = binding.root.context.packageManager
-                        .getLaunchIntentForPackage(Constants.PACKAGE_NAME) ?: return@setOnClickListener
+                        .getLaunchIntentForPackage(PACKAGE_NAME) ?: return@setOnClickListener
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     binding.root.context.startActivity(intent)
                 }
@@ -271,15 +280,15 @@ class MainFrameKeyboard(
             sortedToolbarSetting.keys.toList().forEachIndexed { _, key ->
                 val ordering = sortedToolbarSetting[key]!!-1
                 when (key) {
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarLinearLayout.reorderChild(goSettingImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarLinearLayout.reorderChild(showBoilerPlateImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL -> toolbarLinearLayout.reorderChild(selectAllImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_COPY -> toolbarLinearLayout.reorderChild(copyImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_CUT -> toolbarLinearLayout.reorderChild(cutImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_PASTE -> toolbarLinearLayout.reorderChild(pasteImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR -> toolbarLinearLayout.reorderChild(showCursorImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER -> toolbarLinearLayout.reorderChild(showNumberImageButton, ordering)
-                    Constants.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI -> toolbarLinearLayout.reorderChild(showEmojiImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarLinearLayout.reorderChild(goSettingImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarLinearLayout.reorderChild(showBoilerPlateImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL -> toolbarLinearLayout.reorderChild(selectAllImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_COPY -> toolbarLinearLayout.reorderChild(copyImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_CUT -> toolbarLinearLayout.reorderChild(cutImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_PASTE -> toolbarLinearLayout.reorderChild(pasteImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR -> toolbarLinearLayout.reorderChild(showCursorImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER -> toolbarLinearLayout.reorderChild(showNumberImageButton, ordering)
+                    KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI -> toolbarLinearLayout.reorderChild(showEmojiImageButton, ordering)
                 }
             }
         }

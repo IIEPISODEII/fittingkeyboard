@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service
+package com.sb.fittingkeyboard.service.keyboardtype.boilerplate
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
@@ -10,7 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.data.KEYBOARD_BOILERPLATE_TEXTS_LIST
 
 class BoilerplateTextAdapter(
     private val boilerplateTextsList: MutableMap<String, String>,
@@ -62,7 +62,7 @@ class BoilerplateTextAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(position: Int) {
             boilerplateButton.apply {
-                text = boilerplateTextsList[Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST[position]]
+                text = boilerplateTextsList[KEYBOARD_BOILERPLATE_TEXTS_LIST[position]]
                 typeface = when(mFontType) {
                     1 -> ResourcesCompat.getFont(this.context, R.font.aritta)
                     2 -> ResourcesCompat.getFont(this.context, R.font.dovemayo)
@@ -110,9 +110,9 @@ class BoilerplateTextAdapter(
     }
 
     fun setBoilerplateTextsList(newMap: MutableMap<String, String>) {
-        for (key in Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST) {
+        for (key in KEYBOARD_BOILERPLATE_TEXTS_LIST) {
             if (newMap[key] == boilerplateTextsList[key]) continue
-            notifyItemChanged(Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST.indexOf(key))
+            notifyItemChanged(KEYBOARD_BOILERPLATE_TEXTS_LIST.indexOf(key))
             boilerplateTextsList[key] = newMap[key]!!
         }
     }

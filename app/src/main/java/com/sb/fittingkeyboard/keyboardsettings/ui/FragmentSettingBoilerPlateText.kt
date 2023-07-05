@@ -9,16 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.data.KEYBOARD_BOILERPLATE_TEXTS_LIST
+import com.sb.fittingkeyboard.data.KEYBOARD_SETTING
 import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.BoilerplateTextSettingAdapter
-import com.sb.fittingkeyboard.keyboardsettings.data.BoilerplateTextSettingDataHolder
+import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.BoilerplateTextSettingDataHolder
 
-class FragmentSettingBoilerPlateText : Fragment() {
+class  FragmentSettingBoilerPlateText : Fragment() {
 
     private lateinit var myView: View
     private val boilerplatesRecyclerview by lazy { myView.findViewById<RecyclerView>(R.id.boilerplate_setting_rv) }
     private val boilerplateDataHolderList = mutableListOf<BoilerplateTextSettingDataHolder>()
-    private val prefSetting by lazy { requireContext().getSharedPreferences(Constants.KEYBOARD_SETTING, Context.MODE_PRIVATE) }
+    private val prefSetting by lazy { requireContext().getSharedPreferences(KEYBOARD_SETTING, Context.MODE_PRIVATE) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +52,12 @@ class FragmentSettingBoilerPlateText : Fragment() {
     }
 
     private fun saveData(boilerplateIndex: Int, boilerplateString: String) {
-        prefSetting.edit().putString(Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST[boilerplateIndex], boilerplateString).apply()
+        prefSetting.edit().putString(KEYBOARD_BOILERPLATE_TEXTS_LIST[boilerplateIndex], boilerplateString).apply()
     }
 
     private fun loadData(focusedIndex: Int) {
-        if (boilerplateDataHolderList.size >= Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST.size) return
-        Constants.KEYBOARD_BOILERPLATE_TEXTS_LIST.forEachIndexed { idx, key ->
+        if (boilerplateDataHolderList.size >= KEYBOARD_BOILERPLATE_TEXTS_LIST.size) return
+        KEYBOARD_BOILERPLATE_TEXTS_LIST.forEachIndexed { idx, key ->
             boilerplateDataHolderList.add(BoilerplateTextSettingDataHolder(prefSetting.getString(key, "")!!, idx==focusedIndex))
         }
     }

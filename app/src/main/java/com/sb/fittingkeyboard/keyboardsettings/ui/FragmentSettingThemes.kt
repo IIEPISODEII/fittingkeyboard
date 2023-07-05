@@ -10,12 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.keyboardsettings.data.KeyboardThemesDataHolder
+import com.sb.fittingkeyboard.data.KEYBOARD_FONT_COLOR
+import com.sb.fittingkeyboard.data.KEYBOARD_FONT_TYPE
+import com.sb.fittingkeyboard.data.KEYBOARD_FUNCTION_FONT_COLOR
 import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.ThemeRecyclerAdapter
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.data.KEYBOARD_SETTING
+import com.sb.fittingkeyboard.data.KEYBOARD_THEME
+import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.KeyboardThemesDataHolder
 
 class FragmentSettingThemes: Fragment() {
-    private val prefSetting by lazy { requireContext().getSharedPreferences(Constants.KEYBOARD_SETTING, Context.MODE_PRIVATE) }
+    private val prefSetting by lazy { requireContext().getSharedPreferences(KEYBOARD_SETTING, Context.MODE_PRIVATE) }
 
     private var selectedKbdTheme = 0
     private var selectedFontColor = 0xFF000000.toInt()
@@ -52,10 +56,6 @@ class FragmentSettingThemes: Fragment() {
     private val btnShowDefaultFontColorPicker   by lazy { fragmentView!!.findViewById<Button>(R.id.btn_themesetting_normalkey_font_color) }
     private val btnShowFunctionFontColorPicker  by lazy { fragmentView!!.findViewById<Button>(R.id.btn_themesetting_functionkey_font_color) }
     private val btnShowFontTypePicker           by lazy { fragmentView!!.findViewById<Button>(R.id.btn_themesetting_font_type) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentView = inflater.inflate(R.layout.fragment_themesetting, container, false)
@@ -98,135 +98,135 @@ class FragmentSettingThemes: Fragment() {
         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
         themeRecyclerviewAdapter.setOnPickThemeListener(object: ThemeRecyclerAdapter.OnPickThemeListener {
             override fun onPick(themeIndex: Int) {
-                prefSetting.edit().putInt(Constants.KEYBOARD_THEME, themeIndex).apply()
+                prefSetting.edit().putInt(KEYBOARD_THEME, themeIndex).apply()
                 when (themeIndex) {
                     0 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFF000000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     1 -> {
                         selectedFontColor = 0xFFFFFFFF.toInt()
                         selectedFunctionFontColor = 0xFFFFFFFF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     2 -> {
                         selectedFontColor = 0xFF343434.toInt()
                         selectedFunctionFontColor = 0xFFFFFFFF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     3 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFFFF0000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     4 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFFFF0000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     5 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFFFFFFFF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, 0xFF000000.toInt()).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, 0xFF000000.toInt()).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     6 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFF0000FF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     7, 8, 9 -> {
                         selectedFontColor = 0xFFFFFFFF.toInt()
                         selectedFunctionFontColor = 0xFFFFFFFF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     10, 11 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFF000000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     12 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFFFFFFFF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     13 -> {
                         selectedFontColor = 0xFF0000FF.toInt()
                         selectedFunctionFontColor = 0xFF000000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     14 -> {
                         selectedFontColor = 0xFF7F00FF.toInt()
                         selectedFunctionFontColor = 0xFF000000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     15 -> {
                         selectedFontColor = 0xFFFFFFFF.toInt()
                         selectedFunctionFontColor = 0xFFFFFFFF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     16 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFF000000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     17 -> {
                         selectedFontColor = 0xFFFFFFFF.toInt()
                         selectedFunctionFontColor = 0xFFFFFFFF.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     18 -> {
                         selectedFontColor = 0xFF000000.toInt()
                         selectedFunctionFontColor = 0xFF000000.toInt()
                         dialogDefaultFontColor.setFontColor(selectedFontColor)
                         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, selectedFontColor).apply()
-                        prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, selectedFontColor).apply()
+                        prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, selectedFunctionFontColor).apply()
                     }
                     else -> {
                     }
@@ -235,27 +235,27 @@ class FragmentSettingThemes: Fragment() {
         })
         dialogDefaultFontColor.setOnPickColorListener(object: DialogSettingFontColorPicker.OnPickColorListener {
             override fun onPick(color: Int) {
-                prefSetting.edit().putInt(Constants.KEYBOARD_FONT_COLOR, color).apply()
+                prefSetting.edit().putInt(KEYBOARD_FONT_COLOR, color).apply()
             }
         })
         dialogFunctionFontColor.setOnPickColorListener(object: DialogSettingFontColorPicker.OnPickColorListener {
             override fun onPick(color: Int) {
-                prefSetting.edit().putInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, color).apply()
+                prefSetting.edit().putInt(KEYBOARD_FUNCTION_FONT_COLOR, color).apply()
             }
         })
         dialogFontTypePicker.setOnCheckFontTypeListener(object: DialogSettingFontTypePicker.OnCheckFontTypeListener {
             override fun onCheck(index: Int) {
-                prefSetting.edit().putInt(Constants.KEYBOARD_FONT_TYPE, index).apply()
+                prefSetting.edit().putInt(KEYBOARD_FONT_TYPE, index).apply()
             }
         })
     }
 
     private fun loadData() {
-        selectedKbdTheme = prefSetting.getInt(Constants.KEYBOARD_THEME, 0)
-        selectedFontColor = prefSetting.getInt(Constants.KEYBOARD_FONT_COLOR, 0xFF000000.toInt())
-        selectedFunctionFontColor = prefSetting.getInt(Constants.KEYBOARD_FUNCTION_FONT_COLOR, 0xFF000000.toInt())
+        selectedKbdTheme = prefSetting.getInt(KEYBOARD_THEME, 0)
+        selectedFontColor = prefSetting.getInt(KEYBOARD_FONT_COLOR, 0xFF000000.toInt())
+        selectedFunctionFontColor = prefSetting.getInt(KEYBOARD_FUNCTION_FONT_COLOR, 0xFF000000.toInt())
         dialogDefaultFontColor.setFontColor(selectedFontColor)
         dialogFunctionFontColor.setFontColor(selectedFunctionFontColor)
-        selectedFontType = prefSetting.getInt(Constants.KEYBOARD_FONT_TYPE, 0)
+        selectedFontType = prefSetting.getInt(KEYBOARD_FONT_TYPE, 0)
     }
 }

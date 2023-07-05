@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="kbviewmodel"
-            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
+            name="kb_setting_viewmodel"
+            type="com.sb.fittingkeyboard.keyboardsettings.viewmodel.KeyboardSettingViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -133,7 +133,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{kbviewmodel.kbHasDivision}"
+                        android:checked="@{kb_setting_viewmodel.kbHasDivision}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -172,7 +172,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:max="40"
-                            android:progress="@{kbviewmodel.kbMoeumSize}"
+                            android:progress="@{kb_setting_viewmodel.kbMoeumSize}"
                             android:progressDrawable="@drawable/view_seekbar_track"
                             android:thumb="@drawable/view_switch_thumb" />
 
@@ -183,7 +183,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:padding="3dp"
-                            android:text="@{kbviewmodel.kbMoeumSize+80+`%`}"
+                            android:text="@{kb_setting_viewmodel.kbMoeumSize+80+`%`}"
                             android:textAllCaps="false"
                             android:textColor="#000000"
                             android:textIsSelectable="false"
@@ -219,7 +219,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{(kbviewmodel.kbHasTopRowGap==View.VISIBLE) ? true : false}"
+                        android:checked="@{(kb_setting_viewmodel.kbHasTopRowGap==View.VISIBLE) ? true : false}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -265,7 +265,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:max="400"
-                            android:progress="@{kbviewmodel.kbLongClickInterval}"
+                            android:progress="@{kb_setting_viewmodel.kbLongClickInterval}"
                             android:progressDrawable="@drawable/view_seekbar_track"
                             android:thumb="@drawable/view_switch_thumb" />
 
@@ -276,7 +276,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:padding="3dp"
-                            android:text="@{kbviewmodel.kbLongClickInterval+100+`ms`}"
+                            android:text="@{kb_setting_viewmodel.kbLongClickInterval+100+`ms`}"
                             android:textAllCaps="false"
                             android:textColor="#000000"
                             android:textIsSelectable="false"
@@ -312,7 +312,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{kbviewmodel.kbHasVibration}"
+                        android:checked="@{kb_setting_viewmodel.kbHasVibration}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -348,7 +348,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:max="100"
-                            android:progress="@{kbviewmodel.kbVibrationIntensity}"
+                            android:progress="@{kb_setting_viewmodel.kbVibrationIntensity}"
                             android:progressDrawable="@drawable/view_seekbar_track"
                             android:thumb="@drawable/view_switch_thumb" />
 
@@ -359,7 +359,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:padding="3dp"
-                            android:text="@{kbviewmodel.kbVibrationIntensity+`%`}"
+                            android:text="@{kb_setting_viewmodel.kbVibrationIntensity+`%`}"
                             android:textAllCaps="false"
                             android:textColor="#000000"
                             android:textIsSelectable="false"
@@ -395,7 +395,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{kbviewmodel.kbHasAutoCapitalization}"
+                        android:checked="@{kb_setting_viewmodel.kbHasAutoCapitalization}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -428,7 +428,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{kbviewmodel.kbHasTypeChange}"
+                        android:checked="@{kb_setting_viewmodel.kbHasTypeChange}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -461,7 +461,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{kbviewmodel.kbHasSwipeableSpace}"
+                        android:checked="@{kb_setting_viewmodel.kbHasSwipeableSpace}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -501,7 +501,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{kbviewmodel.kbToolbarVisibility==View.VISIBLE ? true : false}"
+                        android:checked="@{kb_setting_viewmodel.kbToolbarVisibility==View.VISIBLE ? true : false}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -532,7 +532,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.75"
-                        android:checked="@{kbviewmodel.kbNumberRowVisibility==View.VISIBLE ? true : false}"
+                        android:checked="@{kb_setting_viewmodel.kbNumberRowVisibility==View.VISIBLE ? true : false}"
                         android:paddingRight="20dp"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
@@ -571,7 +571,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:max="200"
-                            android:progress="@{kbviewmodel.kbBottomMargin}"
+                            android:progress="@{kb_setting_viewmodel.kbBottomMargin}"
                             android:progressDrawable="@drawable/view_seekbar_track"
                             android:thumb="@drawable/view_switch_thumb" />
 
@@ -582,7 +582,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:padding="3dp"
-                            android:text="@{String.valueOf(kbviewmodel.kbBottomMargin)}"
+                            android:text="@{String.valueOf(kb_setting_viewmodel.kbBottomMargin)}"
                             android:textAllCaps="false"
                             android:textColor="#000000"
                             android:textIsSelectable="false"
@@ -624,7 +624,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:max="25"
-                            android:progress="@{kbviewmodel.kbLeftSideMargin}"
+                            android:progress="@{kb_setting_viewmodel.kbLeftSideMargin}"
                             android:progressDrawable="@drawable/view_seekbar_track"
                             android:thumb="@drawable/view_switch_thumb" />
 
@@ -635,7 +635,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:padding="3dp"
-                            android:text="@{String.valueOf(kbviewmodel.kbLeftSideMargin)}"
+                            android:text="@{String.valueOf(kb_setting_viewmodel.kbLeftSideMargin)}"
                             android:textAllCaps="false"
                             android:textColor="#000000"
                             android:textIsSelectable="false"
@@ -677,7 +677,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:max="25"
-                            android:progress="@{kbviewmodel.kbRightSideMargin}"
+                            android:progress="@{kb_setting_viewmodel.kbRightSideMargin}"
                             android:progressDrawable="@drawable/view_seekbar_track"
                             android:thumb="@drawable/view_switch_thumb" />
 
@@ -688,12 +688,45 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:padding="3dp"
-                            android:text="@{String.valueOf(kbviewmodel.kbRightSideMargin)}"
+                            android:text="@{String.valueOf(kb_setting_viewmodel.kbRightSideMargin)}"
                             android:textAllCaps="false"
                             android:textColor="#000000"
                             android:textIsSelectable="false"
                             android:textSize="12sp" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.75dp"
+                    android:background="@color/semi_grey"
+                    android:layout_marginHorizontal="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/tv_detailedsetting_description_for_spacebar_position"
+                        style="@style/FKButtonLightGrey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="스페이스바 위치"
+                        app:drawableEndCompat="@drawable/ic_baseline_help"
+                        app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                    <Switch
+                        android:id="@+id/switch_detailedsetting_toggling_spacebar_position"
+                        style="@style/FKSwitch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.75"
+                        android:checked="@{kb_setting_viewmodel.kbKrChunSpacebarPosition}"
+                        android:paddingRight="20dp"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout

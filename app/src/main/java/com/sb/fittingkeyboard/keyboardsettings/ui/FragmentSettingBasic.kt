@@ -11,11 +11,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.data.KEYBOARD_ENTERKEY_LONGCLICK
+import com.sb.fittingkeyboard.data.KEYBOARD_HEIGHT
+import com.sb.fittingkeyboard.data.KEYBOARD_IME_KR
+import com.sb.fittingkeyboard.data.KEYBOARD_SETTING
+import com.sb.fittingkeyboard.data.KEYBOARD_SPECIALKEY_LONGCLICK
 import com.sb.fittingkeyboard.keyboardsettings.util.showHelpDialog
 
 class FragmentSettingBasic : Fragment() {
-    private val prefSetting by lazy { requireContext().getSharedPreferences(Constants.KEYBOARD_SETTING, Context.MODE_PRIVATE) }
+    private val prefSetting by lazy { requireContext().getSharedPreferences(KEYBOARD_SETTING, Context.MODE_PRIVATE) }
 
     private var keyboardHeight: Int = 0
     private var specialkeyLongClickFunction: Int = 0
@@ -88,7 +92,7 @@ class FragmentSettingBasic : Fragment() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 keyboardHeight = seekBar?.progress!!
                 tvKeyboardHeightSetting.text = "${keyboardHeight + 75}%"
-                prefSetting.edit().putInt(Constants.KEYBOARD_HEIGHT, keyboardHeight).apply()
+                prefSetting.edit().putInt(KEYBOARD_HEIGHT, keyboardHeight).apply()
 
             }
 
@@ -98,7 +102,7 @@ class FragmentSettingBasic : Fragment() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 keyboardHeight = seekBar?.progress!!
-                prefSetting.edit().putInt(Constants.KEYBOARD_HEIGHT, keyboardHeight).apply()
+                prefSetting.edit().putInt(KEYBOARD_HEIGHT, keyboardHeight).apply()
 
             }
         })
@@ -140,12 +144,12 @@ class FragmentSettingBasic : Fragment() {
 
     private fun initializeSetting() {
         dialogSettingSpecialkeyLongClick.apply {
-            initializeSetting(prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0))
+            initializeSetting(prefSetting.getInt(KEYBOARD_ENTERKEY_LONGCLICK, 0))
 
             setOnRadioButtonSelectListener(object: DialogSettingLongClickFunction.OnRadioButtonSelectListener {
                 override fun onSelect(functionIndex: Int) {
                     specialkeyLongClickFunction = functionIndex
-                    prefSetting.edit().putInt(Constants.KEYBOARD_SPECIALKEY_LONGCLICK, functionIndex).apply()
+                    prefSetting.edit().putInt(KEYBOARD_SPECIALKEY_LONGCLICK, functionIndex).apply()
 
                     btnSpecialKeyLongClickSetting.text = requireActivity().resources.getString(
                         when(functionIndex) {
@@ -162,12 +166,12 @@ class FragmentSettingBasic : Fragment() {
             setTitleText("특수키 부가기능")
         }
         dialogSettingEnterkeyLongClick.apply {
-            initializeSetting(prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0))
+            initializeSetting(prefSetting.getInt(KEYBOARD_ENTERKEY_LONGCLICK, 0))
 
             setOnRadioButtonSelectListener(object: DialogSettingLongClickFunction.OnRadioButtonSelectListener {
                 override fun onSelect(functionIndex: Int) {
                     enterkeyLongClickFunction = functionIndex
-                    prefSetting.edit().putInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, functionIndex).apply()
+                    prefSetting.edit().putInt(KEYBOARD_ENTERKEY_LONGCLICK, functionIndex).apply()
 
                     btnEnterKeyLongClickSetting.text = requireActivity().resources.getString(
                         when(functionIndex) {
@@ -186,13 +190,13 @@ class FragmentSettingBasic : Fragment() {
     }
 
     private fun loadData() {
-        keyboardHeight = prefSetting.getInt(Constants.KEYBOARD_HEIGHT, 25)
+        keyboardHeight = prefSetting.getInt(KEYBOARD_HEIGHT, 25)
 
-        enterkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_ENTERKEY_LONGCLICK, 0)
+        enterkeyLongClickFunction = prefSetting.getInt(KEYBOARD_ENTERKEY_LONGCLICK, 0)
 
-        specialkeyLongClickFunction = prefSetting.getInt(Constants.KEYBOARD_SPECIALKEY_LONGCLICK, 0)
+        specialkeyLongClickFunction = prefSetting.getInt(KEYBOARD_SPECIALKEY_LONGCLICK, 0)
 
-        selectedInputMethodKR = prefSetting.getInt(Constants.KEYBOARD_IME_KR, 0)
+        selectedInputMethodKR = prefSetting.getInt(KEYBOARD_IME_KR, 0)
 
 
         dialogSettingSpecialkeyLongClick.initializeSetting(specialkeyLongClickFunction)

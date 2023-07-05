@@ -8,8 +8,6 @@
             name="kbviewmodel"
             type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
 
-        <import type="com.sb.fittingkeyboard.Constants" />
-
         <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
 
         <import type="android.view.View" />

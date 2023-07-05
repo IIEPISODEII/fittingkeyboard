@@ -17,7 +17,11 @@ import androidx.lifecycle.*
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.*
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN
+import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN_AMBI
+import com.sb.fittingkeyboard.IME_KR_FLAG_DAN
+import com.sb.fittingkeyboard.IME_KR_FLAG_NARAT
+import com.sb.fittingkeyboard.IME_KR_FLAG_QWERTY
 import com.sb.fittingkeyboard.service.keyboardtype.MainFrameKeyboard
 import com.sb.fittingkeyboard.service.keyboardtype.boilerplate.BoilerplateTypedKeyboard
 import com.sb.fittingkeyboard.service.keyboardtype.chun.ChunjiinBasicTypedKeyboard
@@ -254,11 +258,11 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         viewModel.kbKrImeMode.observe(this) {
             currentKRView =
                 when (it) {
-                    Constants.IME_KR_FLAG_QWERTY -> qwertyKrNormalKBView
-                    Constants.IME_KR_FLAG_CHUN -> chunjiinKBView
-                    Constants.IME_KR_FLAG_CHUN_AMBI -> chunjiinLeftKBView
-                    Constants.IME_KR_FLAG_NARAT -> naratguelKBView
-                    Constants.IME_KR_FLAG_DAN -> danmoKBView
+                    IME_KR_FLAG_QWERTY -> qwertyKrNormalKBView
+                    IME_KR_FLAG_CHUN -> chunjiinKBView
+                    IME_KR_FLAG_CHUN_AMBI -> chunjiinLeftKBView
+                    IME_KR_FLAG_NARAT -> naratguelKBView
+                    IME_KR_FLAG_DAN -> danmoKBView
                     else -> qwertyKrNormalKBView
                 }
             if (viewModel.inputTypeState.value == InputTypeState.KR_NORMAL) {

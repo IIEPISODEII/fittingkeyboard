@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.keyboardsettings.data.BoilerplateTextSettingDataHolder
+import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.BoilerplateTextSettingDataHolder
 
 class BoilerplateTextSettingAdapter(
     val boilerplateTextsList: MutableList<BoilerplateTextSettingDataHolder>,

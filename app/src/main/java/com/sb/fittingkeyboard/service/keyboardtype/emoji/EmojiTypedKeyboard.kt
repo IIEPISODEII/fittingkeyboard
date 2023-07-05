@@ -9,7 +9,7 @@ import android.widget.HorizontalScrollView
 import androidx.viewpager2.widget.ViewPager2
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.FragmentEmojiBinding
-import com.sb.fittingkeyboard.Constants
+import com.sb.fittingkeyboard.EMOJI_ICON_WIDTH
 import com.sb.fittingkeyboard.service.MainKeyboardService
 import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
 import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
@@ -155,8 +155,8 @@ class EmojiTypedKeyboard(
     }
 
     private fun getEmojiIconXPosition(view: FrameLayout, position: Int): Int {
-        val emojiIconWidth = (Constants.EMOJI_ICON_WIDTH * Resources.getSystem().displayMetrics.density).toInt()
-        val _position: Float = (view.width/ emojiIconWidth) / 2F
+        val emojiIconWidth = (EMOJI_ICON_WIDTH * Resources.getSystem().displayMetrics.density).toInt()
+        val _position: Float = (view.width / emojiIconWidth) / 2F
 
         return (emojiIconWidth * (position - _position) + emojiIconWidth /2).toInt()
     }

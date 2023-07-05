@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.data
+package com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder
 
 /**
  * TY

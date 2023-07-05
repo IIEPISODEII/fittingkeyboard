@@ -88,6 +88,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearlayout_chun_2nd_row"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -137,20 +138,6 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
-
-                <com.sb.fittingkeyboard.service.ui.CompoundButton
-                    android:id="@+id/btn_kr_chun_space"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="SPACE"
-                    android:textAllCaps="false"
-                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
-                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
-                    app:customTheme_view="@{2}"
-                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
-                    app:customFontStyle="@{kbviewmodel.kbFontType}"/>
             </LinearLayout>
 
             <LinearLayout
@@ -220,6 +207,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearlayout_chun_4th_row"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -267,20 +255,6 @@
                     app:customTheme_view="@{0}"
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
-
-                <ImageButton
-                    android:id="@+id/imgbtn_kr_chun_initialize"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:elevation="2dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/keyic_arrowright_black"
-                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
-                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
-                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
-                    app:customTheme_view="@{1}" />
 
                 <Button
                     android:id="@+id/btn_kr_chun_dot"
