@@ -6,9 +6,9 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
-        <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
+        <import type="com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState" />
 
     </data>
 

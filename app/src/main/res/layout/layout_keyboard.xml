@@ -6,9 +6,9 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
-        <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
+        <import type="com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState" />
 
         <import type="android.view.View" />
     </data>
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.sb.fittingkeyboard.service.ui.ToolbarLayout
+        <com.sb.fittingKeyboard.service.ui.ToolbarLayout
             android:id="@+id/keyboardToolBarLine"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -111,7 +111,7 @@
                 android:background="@color/white"
                 android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.EMOJI, false)}"
                 android:src="@{kbviewmodel.inputTypeState==InputTypeState.EMOJI ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}" />
-        </com.sb.fittingkeyboard.service.ui.ToolbarLayout>
+        </com.sb.fittingKeyboard.service.ui.ToolbarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout_keyboard_wrapper"

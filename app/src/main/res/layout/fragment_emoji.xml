@@ -6,9 +6,9 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
-        <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
+        <import type="com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState" />
     </data>
 
     <FrameLayout
@@ -43,7 +43,7 @@
                     android:layout_weight="0.7"
                     android:scrollbarSize="1dp">
 
-                    <com.sb.fittingkeyboard.service.keyboardtype.emoji.indicator.CustomIndicator
+                    <com.sb.fittingKeyboard.service.keyboardtype.emoji.indicator.CustomIndicator
                         android:id="@+id/indicator_emoji_list"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

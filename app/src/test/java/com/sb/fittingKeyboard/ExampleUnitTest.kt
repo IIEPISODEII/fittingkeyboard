@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard
+package com.sb.fittingKeyboard
 
 import org.junit.Test
 

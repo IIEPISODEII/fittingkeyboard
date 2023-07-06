@@ -7,7 +7,7 @@
 
         <variable
             name="kb_setting_viewmodel"
-            type="com.sb.fittingkeyboard.keyboardsettings.viewmodel.KeyboardSettingViewModel" />
+            type="com.sb.fittingKeyboard.keyboardsettings.viewmodel.KeyboardSettingViewModel" />
 
         <import type="android.view.View" />
     </data>

@@ -6,9 +6,9 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
 
-        <import type="com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState" />
+        <import type="com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState" />
     </data>
 
     <FrameLayout
@@ -137,7 +137,7 @@
                     app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
                     app:customFontStyle="@{kbviewmodel.kbFontType}" />
 
-                <com.sb.fittingkeyboard.service.ui.CompoundButton
+                <com.sb.fittingKeyboard.service.ui.CompoundButton
                     android:id="@+id/btn_kr_narat_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

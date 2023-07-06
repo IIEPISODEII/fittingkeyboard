@@ -6,7 +6,7 @@
 
         <variable
             name="kbviewmodel"
-            type="com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel" />
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
