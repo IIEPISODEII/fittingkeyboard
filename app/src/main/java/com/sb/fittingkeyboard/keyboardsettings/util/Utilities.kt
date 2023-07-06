@@ -1,6 +1,5 @@
 package com.sb.fittingKeyboard.keyboardsettings.util
 
-import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.res.Resources

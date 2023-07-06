@@ -1,8 +1,5 @@
 package com.sb.fittingKeyboard.service.koreanautomata
 
-import com.sb.fittingKeyboard.service.koreanautomata.Automata
-import com.sb.fittingKeyboard.service.koreanautomata.UpdatedChars
-
 object HanguelChunjiin: Automata() {
     private val rrr: Array<Char> = arrayOf('ㄱ', 'ㅋ', 'ㄲ')
     private val ss: Array<Char> = arrayOf('ㄴ', 'ㄹ')

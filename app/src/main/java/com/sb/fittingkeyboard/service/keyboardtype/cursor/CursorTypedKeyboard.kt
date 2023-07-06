@@ -1,12 +1,6 @@
 package com.sb.fittingKeyboard.service.keyboardtype.cursor
 
 import android.annotation.SuppressLint
-import android.content.Context.VIBRATOR_SERVICE
-import android.os.Build
-import android.os.Vibrator
-import android.view.inputmethod.ExtractedTextRequest
-import android.view.inputmethod.InputConnection
-import android.widget.Toast
 import com.sb.fittingKeyboard.databinding.FragmentCursorkeypadBinding
 import com.sb.fittingKeyboard.service.MainKeyboardService
 import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
