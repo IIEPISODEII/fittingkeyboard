@@ -502,14 +502,21 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
         return if (kbHasDivision.value!!) ((kbMoeumSize.value!! + 80) / 100.toFloat()) else 1.toFloat()
     }
 
+    private val heightPixels = Resources.getSystem().displayMetrics.heightPixels
+    private val widthPixels = Resources.getSystem().displayMetrics.widthPixels
+    private val verticalScreenHeight = if (heightPixels >= widthPixels) heightPixels else widthPixels
+    private val horizontalScreenHeight = if (heightPixels >= widthPixels) widthPixels else heightPixels
+
     private fun setKbdHeightsInternally(): Float {
         val maxKbHeight = 600F
-        val minKbHeight = 350F
-        val screenHeight = Resources.getSystem().displayMetrics.heightPixels.toFloat()/2.5F
+        val minKbHeight = 360F
+
+        val screenHeight = if (orientation.value!! == Orientation.VERTICAL) verticalScreenHeight / 2.5F else horizontalScreenHeight / 2.5F
+
         val totalKbHeight = when {
             screenHeight >= maxKbHeight -> maxKbHeight * (75 + kbHeight.value!!) / 100
-            screenHeight < maxKbHeight && screenHeight >= minKbHeight -> screenHeight * (75 + kbHeight.value!!) / 100
-            else -> minKbHeight * (75 + kbHeight.value!!) / 100
+            screenHeight in minKbHeight..maxKbHeight -> screenHeight * (75 + kbHeight.value!!) / 100
+            else -> screenHeight * 2.5F / 1.8F
         }
         return totalKbHeight
     }
