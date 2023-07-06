@@ -59,8 +59,8 @@ class FragmentSettingBasic : Fragment() {
         loadData()
         dialogSettingInputMethodKR.setFunction(selectedInputMethodKR)
 
-        keyboardHeight = seekbarKeyboardHeightSetting.progress
         tvKeyboardHeightSetting.text = "${keyboardHeight+75}%"
+        seekbarKeyboardHeightSetting.progress = keyboardHeight
         btnEnterKeyLongClickSetting.text = requireActivity().resources.getString(
             when(enterkeyLongClickFunction) {
                 1 -> R.string.longclick_funciton_boilerplate
