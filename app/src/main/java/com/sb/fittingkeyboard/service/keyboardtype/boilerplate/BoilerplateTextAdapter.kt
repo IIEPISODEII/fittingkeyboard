@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype.boilerplate
+package com.sb.fittingKeyboard.service.keyboardtype.boilerplate
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
@@ -10,7 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.data.KEYBOARD_BOILERPLATE_TEXTS_LIST
+import com.sb.fittingKeyboard.data.KEYBOARD_BOILERPLATE_TEXTS_LIST
 
 class BoilerplateTextAdapter(
     private val boilerplateTextsList: MutableMap<String, String>,

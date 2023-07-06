@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui.adapter
+package com.sb.fittingKeyboard.keyboardsettings.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.ToolbarSettingDataHolder
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.dataholder.ToolbarSettingDataHolder
 
 class ToolbarSettingAdapter(
     var toolbarSettingDataHolderList: MutableList<ToolbarSettingDataHolder>

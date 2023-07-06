@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui
+package com.sb.fittingKeyboard.keyboardsettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.data.KEYBOARD_BOILERPLATE_TEXTS_LIST
-import com.sb.fittingkeyboard.data.KEYBOARD_SETTING
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.BoilerplateTextSettingAdapter
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.BoilerplateTextSettingDataHolder
+import com.sb.fittingKeyboard.data.KEYBOARD_BOILERPLATE_TEXTS_LIST
+import com.sb.fittingKeyboard.data.KEYBOARD_SETTING
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.BoilerplateTextSettingAdapter
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.dataholder.BoilerplateTextSettingDataHolder
 
 class  FragmentSettingBoilerPlateText : Fragment() {
 

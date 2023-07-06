@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui.adapter
+package com.sb.fittingKeyboard.keyboardsettings.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

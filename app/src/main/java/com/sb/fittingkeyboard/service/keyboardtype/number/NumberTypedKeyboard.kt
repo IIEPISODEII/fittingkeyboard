@@ -1,12 +1,12 @@
-package com.sb.fittingkeyboard.service.keyboardtype.number
+package com.sb.fittingKeyboard.service.keyboardtype.number
 
 import android.annotation.SuppressLint
 import com.sb.fittingKeyboard.databinding.FragmentKeyboardNumberBinding
-import com.sb.fittingkeyboard.service.MainKeyboardService
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
-import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
-import com.sb.fittingkeyboard.service.util.RepeatTouchListener
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.service.MainKeyboardService
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingKeyboard.service.util.RepeatTouchListener
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class NumberTypedKeyboard(
     private val binding: FragmentKeyboardNumberBinding,

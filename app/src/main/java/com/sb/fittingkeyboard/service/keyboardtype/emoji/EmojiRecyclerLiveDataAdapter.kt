@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype.emoji
+package com.sb.fittingKeyboard.service.keyboardtype.emoji
 
 import android.view.LayoutInflater
 import android.view.View

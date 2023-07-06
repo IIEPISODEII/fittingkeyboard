@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype.cursor
+package com.sb.fittingKeyboard.service.keyboardtype.cursor
 
 import android.annotation.SuppressLint
 import android.content.Context.VIBRATOR_SERVICE
@@ -8,11 +8,11 @@ import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection
 import android.widget.Toast
 import com.sb.fittingKeyboard.databinding.FragmentCursorkeypadBinding
-import com.sb.fittingkeyboard.service.MainKeyboardService
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
-import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
-import com.sb.fittingkeyboard.service.util.RepeatTouchListener
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.service.MainKeyboardService
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingKeyboard.service.util.RepeatTouchListener
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class CursorTypedKeyboard(
     private val binding: FragmentCursorkeypadBinding,

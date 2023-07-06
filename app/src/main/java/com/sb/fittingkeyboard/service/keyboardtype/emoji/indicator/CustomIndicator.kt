@@ -1,12 +1,12 @@
-package com.sb.fittingkeyboard.service.keyboardtype.emoji.indicator
+package com.sb.fittingKeyboard.service.keyboardtype.emoji.indicator
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.EMOJI_ICON_WIDTH
-import com.sb.fittingkeyboard.keyboardsettings.util.changeDPtoPX
+import com.sb.fittingKeyboard.EMOJI_ICON_WIDTH
+import com.sb.fittingKeyboard.keyboardsettings.util.changeDPtoPX
 
 class CustomIndicator : LinearLayout {
     constructor(context: Context) : super(context) {

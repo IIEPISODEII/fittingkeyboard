@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service
+package com.sb.fittingKeyboard.service
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -17,30 +17,30 @@ import androidx.lifecycle.*
 import com.sb.fittingKeyboard.BR
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.*
-import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN
-import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN_AMBI
-import com.sb.fittingkeyboard.IME_KR_FLAG_DAN
-import com.sb.fittingkeyboard.IME_KR_FLAG_NARAT
-import com.sb.fittingkeyboard.IME_KR_FLAG_QWERTY
-import com.sb.fittingkeyboard.service.keyboardtype.MainFrameKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.boilerplate.BoilerplateTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.chun.ChunjiinBasicTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.chunleft.ChunjiinLeftTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
-import com.sb.fittingkeyboard.service.keyboardtype.cursor.CursorTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.danmo.DanmoumTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.emoji.EmojiTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.english.QwertyEnglishTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.narat.NaratguelTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.number.NumberTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.qwertykr.QwertyKrTypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.special.QwertySpecialTypedKeyboard
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelChunjiin
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelDanmoum
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelNARATGUL
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelQWERTY
-import com.sb.fittingkeyboard.service.util.*
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.IME_KR_FLAG_CHUN
+import com.sb.fittingKeyboard.IME_KR_FLAG_CHUN_AMBI
+import com.sb.fittingKeyboard.IME_KR_FLAG_DAN
+import com.sb.fittingKeyboard.IME_KR_FLAG_NARAT
+import com.sb.fittingKeyboard.IME_KR_FLAG_QWERTY
+import com.sb.fittingKeyboard.service.keyboardtype.MainFrameKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.boilerplate.BoilerplateTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.chun.ChunjiinBasicTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.chunleft.ChunjiinLeftTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.cursor.CursorTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.danmo.DanmoumTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.emoji.EmojiTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.english.QwertyEnglishTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.narat.NaratguelTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.number.NumberTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.qwertykr.QwertyKrTypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.special.QwertySpecialTypedKeyboard
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelChunjiin
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelDanmoum
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelNARATGUL
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelQWERTY
+import com.sb.fittingKeyboard.service.util.*
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 @SuppressLint("ClickableViewAccessibility")
 class MainKeyboardService : InputMethodService(), LifecycleOwner {

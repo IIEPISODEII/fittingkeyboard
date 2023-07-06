@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype
+package com.sb.fittingKeyboard.service.keyboardtype
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,21 +6,21 @@ import android.widget.ImageButton
 import androidx.core.content.res.ResourcesCompat
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.LayoutKeyboardBinding
-import com.sb.fittingkeyboard.PACKAGE_NAME
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_COPY
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_CUT
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_PASTE
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI
-import com.sb.fittingkeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER
-import com.sb.fittingkeyboard.service.MainKeyboardService
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
-import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
-import com.sb.fittingkeyboard.service.util.RepeatTouchListener
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.PACKAGE_NAME
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_COPY
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_CUT
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_PASTE
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_CURSOR
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_EMOJI
+import com.sb.fittingKeyboard.data.KEYBOARD_TOOLBAR_ACTIVE_SHOW_NUMBER
+import com.sb.fittingKeyboard.service.MainKeyboardService
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingKeyboard.service.util.RepeatTouchListener
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class MainFrameKeyboard(
     private val binding: LayoutKeyboardBinding,

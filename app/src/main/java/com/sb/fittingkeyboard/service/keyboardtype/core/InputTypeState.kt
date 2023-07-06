@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype.core
+package com.sb.fittingKeyboard.service.keyboardtype.core
 
 enum class InputTypeState {
     EN_BOLD_UPPER,

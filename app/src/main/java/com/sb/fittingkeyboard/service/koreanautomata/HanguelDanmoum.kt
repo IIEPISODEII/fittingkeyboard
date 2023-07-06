@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.koreanautomata
+package com.sb.fittingKeyboard.service.koreanautomata
 
 object HanguelDanmoum : Automata() {
     fun composeChar(inputChar: Char, inputTime: Long): UpdatedChars { // 한글완성 오토마타

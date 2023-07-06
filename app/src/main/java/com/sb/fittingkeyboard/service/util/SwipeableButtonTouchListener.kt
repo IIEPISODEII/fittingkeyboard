@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.util
+package com.sb.fittingKeyboard.service.util
 
 import android.os.Handler
 import android.os.Looper

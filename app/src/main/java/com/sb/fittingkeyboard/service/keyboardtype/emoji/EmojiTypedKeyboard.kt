@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype.emoji
+package com.sb.fittingKeyboard.service.keyboardtype.emoji
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
@@ -9,23 +9,23 @@ import android.widget.HorizontalScrollView
 import androidx.viewpager2.widget.ViewPager2
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.FragmentEmojiBinding
-import com.sb.fittingkeyboard.EMOJI_ICON_WIDTH
-import com.sb.fittingkeyboard.service.MainKeyboardService
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
-import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
-import com.sb.fittingkeyboard.service.keyboardtype.emoji.indicator.CustomIndicator
-import com.sb.fittingkeyboard.service.util.RepeatTouchListener
-import com.sb.fittingkeyboard.service.util.e1SmileysAndEmoticons
-import com.sb.fittingkeyboard.service.util.e2PeopleAndBody
-import com.sb.fittingkeyboard.service.util.e3AnimalsAndNature
-import com.sb.fittingkeyboard.service.util.e4FoodAndDrink
-import com.sb.fittingkeyboard.service.util.e5TravelAndPlaces
-import com.sb.fittingkeyboard.service.util.e6Activities
-import com.sb.fittingkeyboard.service.util.e7Objects
-import com.sb.fittingkeyboard.service.util.e8Symbols
-import com.sb.fittingkeyboard.service.util.e9Flags
-import com.sb.fittingkeyboard.service.util.emojiIconList
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.EMOJI_ICON_WIDTH
+import com.sb.fittingKeyboard.service.MainKeyboardService
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingKeyboard.service.keyboardtype.emoji.indicator.CustomIndicator
+import com.sb.fittingKeyboard.service.util.RepeatTouchListener
+import com.sb.fittingKeyboard.service.util.e1SmileysAndEmoticons
+import com.sb.fittingKeyboard.service.util.e2PeopleAndBody
+import com.sb.fittingKeyboard.service.util.e3AnimalsAndNature
+import com.sb.fittingKeyboard.service.util.e4FoodAndDrink
+import com.sb.fittingKeyboard.service.util.e5TravelAndPlaces
+import com.sb.fittingKeyboard.service.util.e6Activities
+import com.sb.fittingKeyboard.service.util.e7Objects
+import com.sb.fittingKeyboard.service.util.e8Symbols
+import com.sb.fittingKeyboard.service.util.e9Flags
+import com.sb.fittingKeyboard.service.util.emojiIconList
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 import org.json.JSONArray
 
 class EmojiTypedKeyboard(

@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype.qwertykr
+package com.sb.fittingKeyboard.service.keyboardtype.qwertykr
 
 import android.annotation.SuppressLint
 import android.graphics.PorterDuff
@@ -8,13 +8,13 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import com.sb.fittingKeyboard.R
 import com.sb.fittingKeyboard.databinding.FragmentKeyboardQwertyKrNormalBinding
-import com.sb.fittingkeyboard.service.MainKeyboardService
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
-import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
-import com.sb.fittingkeyboard.service.util.RepeatTouchListener
-import com.sb.fittingkeyboard.service.util.SingleTouchListener
-import com.sb.fittingkeyboard.service.util.SwipeableButtonTouchListener
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.service.MainKeyboardService
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingKeyboard.service.util.RepeatTouchListener
+import com.sb.fittingKeyboard.service.util.SingleTouchListener
+import com.sb.fittingKeyboard.service.util.SwipeableButtonTouchListener
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class QwertyKrTypedKeyboard(
     private val binding: FragmentKeyboardQwertyKrNormalBinding,

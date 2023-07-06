@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui
+package com.sb.fittingKeyboard.keyboardsettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.data.KEYBOARD_FONT_COLOR
-import com.sb.fittingkeyboard.data.KEYBOARD_FONT_TYPE
-import com.sb.fittingkeyboard.data.KEYBOARD_FUNCTION_FONT_COLOR
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.ThemeRecyclerAdapter
-import com.sb.fittingkeyboard.data.KEYBOARD_SETTING
-import com.sb.fittingkeyboard.data.KEYBOARD_THEME
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.KeyboardThemesDataHolder
+import com.sb.fittingKeyboard.data.KEYBOARD_FONT_COLOR
+import com.sb.fittingKeyboard.data.KEYBOARD_FONT_TYPE
+import com.sb.fittingKeyboard.data.KEYBOARD_FUNCTION_FONT_COLOR
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.ThemeRecyclerAdapter
+import com.sb.fittingKeyboard.data.KEYBOARD_SETTING
+import com.sb.fittingKeyboard.data.KEYBOARD_THEME
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.dataholder.KeyboardThemesDataHolder
 
 class FragmentSettingThemes: Fragment() {
     private val prefSetting by lazy { requireContext().getSharedPreferences(KEYBOARD_SETTING, Context.MODE_PRIVATE) }

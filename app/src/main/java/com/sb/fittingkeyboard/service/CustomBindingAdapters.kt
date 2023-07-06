@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service
+package com.sb.fittingKeyboard.service
 
 import android.graphics.Typeface
 import android.os.Build
@@ -14,7 +14,7 @@ import androidx.core.view.setPadding
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
 
 object CustomBindingAdapters {
 

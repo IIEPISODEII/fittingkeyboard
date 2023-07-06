@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.koreanautomata
+package com.sb.fittingKeyboard.service.koreanautomata
 
 object HanguelQWERTY : Automata() {
     fun composeChar(inputChar: Char): UpdatedChars {

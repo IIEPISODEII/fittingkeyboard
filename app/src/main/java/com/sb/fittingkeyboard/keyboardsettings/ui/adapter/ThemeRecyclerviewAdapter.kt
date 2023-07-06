@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui.adapter
+package com.sb.fittingKeyboard.keyboardsettings.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.KeyboardThemesDataHolder
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.dataholder.KeyboardThemesDataHolder
 
 class ThemeRecyclerAdapter(private val themeList: List<KeyboardThemesDataHolder>)
     : RecyclerView.Adapter<ThemeRecyclerAdapter.ThemeDataViewHolder>() {

@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard
+package com.sb.fittingKeyboard
 
 const val PACKAGE_NAME = "com.sb.fittingKeyboard"
 

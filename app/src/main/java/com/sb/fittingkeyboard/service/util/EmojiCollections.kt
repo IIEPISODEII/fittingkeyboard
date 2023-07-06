@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.util
+package com.sb.fittingKeyboard.service.util
 
 // All emojis are from @{https://unicode.org/emoji/charts/full-emoji-list.html}
 val e1SmileysAndEmoticons = mutableListOf(

@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui.adapter
+package com.sb.fittingKeyboard.keyboardsettings.ui.adapter
 
 import android.annotation.SuppressLint
 import android.text.Editable
@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.dataholder.BoilerplateTextSettingDataHolder
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.dataholder.BoilerplateTextSettingDataHolder
 
 class BoilerplateTextSettingAdapter(
     val boilerplateTextsList: MutableList<BoilerplateTextSettingDataHolder>,

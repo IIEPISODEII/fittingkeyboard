@@ -1,13 +1,13 @@
-package com.sb.fittingkeyboard.service.keyboardtype.boilerplate
+package com.sb.fittingKeyboard.service.keyboardtype.boilerplate
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sb.fittingKeyboard.databinding.FragmentBoilerplatetextBinding
-import com.sb.fittingkeyboard.service.MainKeyboardService
-import com.sb.fittingkeyboard.service.keyboardtype.core.InputTypeState
-import com.sb.fittingkeyboard.service.keyboardtype.core.TypedKeyboard
-import com.sb.fittingkeyboard.service.util.RepeatTouchListener
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.service.MainKeyboardService
+import com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState
+import com.sb.fittingKeyboard.service.keyboardtype.core.TypedKeyboard
+import com.sb.fittingKeyboard.service.util.RepeatTouchListener
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 class BoilerplateTypedKeyboard(
     private val binding: FragmentBoilerplatetextBinding,

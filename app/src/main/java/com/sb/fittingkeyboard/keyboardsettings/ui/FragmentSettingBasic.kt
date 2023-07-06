@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui
+package com.sb.fittingKeyboard.keyboardsettings.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -11,12 +11,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.data.KEYBOARD_ENTERKEY_LONGCLICK
-import com.sb.fittingkeyboard.data.KEYBOARD_HEIGHT
-import com.sb.fittingkeyboard.data.KEYBOARD_IME_KR
-import com.sb.fittingkeyboard.data.KEYBOARD_SETTING
-import com.sb.fittingkeyboard.data.KEYBOARD_SPECIALKEY_LONGCLICK
-import com.sb.fittingkeyboard.keyboardsettings.util.showHelpDialog
+import com.sb.fittingKeyboard.data.KEYBOARD_ENTERKEY_LONGCLICK
+import com.sb.fittingKeyboard.data.KEYBOARD_HEIGHT
+import com.sb.fittingKeyboard.data.KEYBOARD_IME_KR
+import com.sb.fittingKeyboard.data.KEYBOARD_SETTING
+import com.sb.fittingKeyboard.data.KEYBOARD_SPECIALKEY_LONGCLICK
+import com.sb.fittingKeyboard.keyboardsettings.util.showHelpDialog
 
 class FragmentSettingBasic : Fragment() {
     private val prefSetting by lazy { requireContext().getSharedPreferences(KEYBOARD_SETTING, Context.MODE_PRIVATE) }

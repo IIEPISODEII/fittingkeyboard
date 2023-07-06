@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.data
+package com.sb.fittingKeyboard.data
 
 const val KEYBOARD_SETTING = "keyboardSetting"
 const val KEYBOARD_HEIGHT = "KeyboardHeight"

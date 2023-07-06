@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui
+package com.sb.fittingKeyboard.keyboardsettings.ui
 
 import android.graphics.Color
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.service.keyboardtype.core
+package com.sb.fittingKeyboard.service.keyboardtype.core
 
 import android.content.Context.VIBRATOR_SERVICE
 import android.content.Intent
@@ -15,20 +15,20 @@ import android.view.inputmethod.InputConnection
 import android.widget.Button
 import android.widget.Toast
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN
-import com.sb.fittingkeyboard.IME_KR_FLAG_CHUN_AMBI
-import com.sb.fittingkeyboard.IME_KR_FLAG_DAN
-import com.sb.fittingkeyboard.IME_KR_FLAG_NARAT
-import com.sb.fittingkeyboard.IME_KR_FLAG_QWERTY
-import com.sb.fittingkeyboard.keyboardsettings.ui.MainActivity
-import com.sb.fittingkeyboard.service.MainKeyboardService
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelChunjiin
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelDanmoum
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelNARATGUL
-import com.sb.fittingkeyboard.service.koreanautomata.HanguelQWERTY
-import com.sb.fittingkeyboard.service.util.RepeatTouchListener
-import com.sb.fittingkeyboard.service.util.decToHex
-import com.sb.fittingkeyboard.service.viewmodel.KeyboardViewModel
+import com.sb.fittingKeyboard.IME_KR_FLAG_CHUN
+import com.sb.fittingKeyboard.IME_KR_FLAG_CHUN_AMBI
+import com.sb.fittingKeyboard.IME_KR_FLAG_DAN
+import com.sb.fittingKeyboard.IME_KR_FLAG_NARAT
+import com.sb.fittingKeyboard.IME_KR_FLAG_QWERTY
+import com.sb.fittingKeyboard.keyboardsettings.ui.MainActivity
+import com.sb.fittingKeyboard.service.MainKeyboardService
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelChunjiin
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelDanmoum
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelNARATGUL
+import com.sb.fittingKeyboard.service.koreanautomata.HanguelQWERTY
+import com.sb.fittingKeyboard.service.util.RepeatTouchListener
+import com.sb.fittingKeyboard.service.util.decToHex
+import com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel
 
 abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private val imeService: MainKeyboardService) {
 

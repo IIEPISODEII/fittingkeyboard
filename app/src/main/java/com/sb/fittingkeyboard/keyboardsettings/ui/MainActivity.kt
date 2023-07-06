@@ -1,4 +1,4 @@
-package com.sb.fittingkeyboard.keyboardsettings.ui
+package com.sb.fittingKeyboard.keyboardsettings.ui
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
@@ -18,8 +18,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sb.fittingKeyboard.R
-import com.sb.fittingkeyboard.keyboardsettings.ui.adapter.FragmentViewPagerAdapter
-import com.sb.fittingkeyboard.keyboardsettings.util.showHelpDialog
+import com.sb.fittingKeyboard.keyboardsettings.ui.adapter.FragmentViewPagerAdapter
+import com.sb.fittingKeyboard.keyboardsettings.util.showHelpDialog
 
 class MainActivity : AppCompatActivity() {
     private val currentIMEList = mutableListOf<InputMethodInfo>()
