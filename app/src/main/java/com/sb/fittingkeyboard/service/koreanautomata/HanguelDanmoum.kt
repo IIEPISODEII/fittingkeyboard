@@ -1461,7 +1461,7 @@ object HanguelDanmoum : Automata() {
                         }
                     }
                     isInputCharMiddleChar -> { // 모음이 들어온다면 ex) 간+ㅏ -> 가나
-                        var temp: String? = null
+                        val temp: String?
                         when (finalChar) {
                             'ㄳ' -> {
                                 finalChar = 'ㄱ'
@@ -1642,19 +1642,19 @@ object HanguelDanmoum : Automata() {
                         middleChar = 'ㅗ'
                         composeResult()
                         setFirstInputTimer(inputTime = inputTime)
-                        return UpdatedChars(null, composedResult.toString())
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅝ', 'ㅞ', 'ㅟ' -> {
                         middleChar = 'ㅜ'
                         composeResult()
                         setFirstInputTimer(inputTime = inputTime)
-                        return UpdatedChars(null, composedResult.toString())
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     'ㅢ' -> {
                         middleChar = 'ㅡ'
                         composeResult()
                         setFirstInputTimer(inputTime = inputTime)
-                        return UpdatedChars(null, composedResult.toString())
+                        return UpdatedChars(null, middleChar.toString())
                     }
                     else -> {
                         state = 0
