@@ -1,0 +1,30 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <style name="appBar">
+        <item name="android:background">#007BFF</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <style name="ThemeCustom.TabLayout" parent="Theme.AppCompat.DayNight"/>
+
+    <style name="FKSwitch">
+        <item name="android:thumb">@drawable/view_switch_thumb</item>
+        <item name="android:track">@drawable/view_switch_track</item>
+    </style>
+
+    <style name="FKButtonLightGrey">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textIsSelectable">false</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+</resources>

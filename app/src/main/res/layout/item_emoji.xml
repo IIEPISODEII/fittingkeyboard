@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="kbviewmodel"
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
+
+        <variable
+            name="kbservice"
+            type="com.sb.fittingKeyboard.service.MainKeyboardService" />
+    </data>
+
+    <androidx.emoji.widget.EmojiButton
+        android:layout_margin="0.75dp"
+        android:id="@+id/emjbtn_emoji"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="20sp"
+        style="?android:attr/borderlessButtonStyle" />
+
+</layout>

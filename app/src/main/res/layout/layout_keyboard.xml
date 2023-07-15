@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="kbviewmodel"
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
+
+        <import type="com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.sb.fittingKeyboard.service.ui.ToolbarLayout
+            android:id="@+id/keyboardToolBarLine"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:visibility="@{kbviewmodel.kbToolbarVisibility}"
+            app:layout_constraintBottom_toTopOf="@id/constraint_layout_keyboard_wrapper"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageButton
+                android:id="@+id/shortCutButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_settings" />
+
+            <ImageButton
+                android:id="@+id/bpButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.BOILERPLATE, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.BOILERPLATE ? @drawable/ic_keyboard_black : @drawable/ic_boilerplatetext_black}" />
+
+            <ImageButton
+                android:id="@+id/selectAll"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_select" />
+
+            <ImageButton
+                android:id="@+id/toolBarCopy"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_baseline_copy_all_24" />
+
+            <ImageButton
+                android:id="@+id/toolBarCut"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_baseline_content_cut_24" />
+
+            <ImageButton
+                android:id="@+id/toolBarPaste"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@drawable/ic_baseline_content_paste_go_24" />
+
+            <ImageButton
+                android:id="@+id/cursorButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.CURSOR, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.CURSOR ? @drawable/ic_keyboard_black : @drawable/ic_move}" />
+
+            <ImageButton
+                android:id="@+id/numberKeypadButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.NUMBER, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.NUMBER ? @drawable/ic_keyboard_black : @drawable/ic_number_keypad}" />
+
+            <ImageButton
+                android:id="@+id/emoticon_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:onClick="@{() -> kbviewmodel.setInputTypeState(InputTypeState.EMOJI, false)}"
+                android:src="@{kbviewmodel.inputTypeState==InputTypeState.EMOJI ? @drawable/ic_keyboard_black : @drawable/ic_outline_emoji_emotions_24}" />
+        </com.sb.fittingKeyboard.service.ui.ToolbarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout_keyboard_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_keyboard_bg_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="KeyboardBackgroundImage"
+                android:scaleType="centerCrop"
+                app:customTheme_padding="@{0}"
+                app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                app:customTheme_view="@{5}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout_keyboard_main_board"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/keyboard_number_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="@{kbviewmodel.kbNumberRowVisibility}"
+                    app:height="@{kbviewmodel.kbResultedHeight}"
+                    app:height_weight="@{18}"
+                    app:layout_constraintBottom_toTopOf="@id/constraint_layout_keyboard_character_rows_wrapper"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/view_keyboard_number_row_left_margin"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{6}" />
+
+                    <Button
+                        android:id="@+id/btn1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="1"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="2"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="3"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="4"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="5"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="6"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="7"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="8"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn9"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="9"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/btn0"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                        android:textSize="@{kbviewmodel.kbFontSize}"
+                        app:customFontStyle="@{kbviewmodel.kbFontType}"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{2}"
+                        app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                    <Button
+                        android:id="@+id/view_keyboard_number_row_right_margin"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{6}" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_layout_keyboard_character_rows_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:height="@{kbviewmodel.kbResultedHeight}"
+                    app:height_weight="@{82}"
+                    app:layout_constraintBottom_toTopOf="@id/view_keyboard_bottom_margin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/keyboard_number_row">
+
+                    <FrameLayout
+                        android:id="@+id/framelayout_keyboard_character_rows_left_margin"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{6}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <FrameLayout
+                        android:id="@+id/framelayout_keyboard_character_rows"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/framelayout_keyboard_character_rows_right_margin"
+                        app:layout_constraintStart_toEndOf="@id/framelayout_keyboard_character_rows_left_margin"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <FrameLayout
+                        android:id="@+id/framelayout_keyboard_character_rows_right_margin"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                        app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                        app:customTheme_view="@{6}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/view_keyboard_bottom_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{6}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/constraint_layout_keyboard_character_rows_wrapper" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="kbviewmodel"
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
+
+        <import type="com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_q"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.KR_NORMAL ? @string/krq : @string/krQ}"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_w"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.KR_NORMAL ? @string/krw : @string/krW}"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_e"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.KR_NORMAL ? @string/kre : @string/krE}"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_r"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.KR_NORMAL ? @string/krr : @string/krR}"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_t"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.KR_NORMAL ? @string/krt : @string/krT}"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_blank"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.35"
+                    android:visibility="@{kbviewmodel.kbHasTopRowGap}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{6}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_y"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅛ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_u"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅕ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_i"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅑ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_o"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.KR_NORMAL ? @string/kro : @string/krO}"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_p"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.inputTypeState == InputTypeState.KR_NORMAL ? @string/krp : @string/krP}"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_a"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:text="ㅁ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_s"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㄴ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_d"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅇ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_f"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㄹ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_g"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅎ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_h"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅗ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_j"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅓ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_k"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅏ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_l"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:text="ㅣ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.3F}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtn_kr_qwerty_shift"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1.3"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{3}"
+                    app:image="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_z"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅋ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_x"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅌ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_c"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅊ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_v"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅍ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_b"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅠ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_n"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅜ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_m"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="ㅡ"
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbNormalKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{0}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}"
+                    app:layout_weight="@{kbviewmodel.kbRightSize}"
+                    app:weight_constant="@{1.0F}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_kr_qwerty_del"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1.3"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_delete_black"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{3}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_special"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".9"
+                    android:text="!#$"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="12sp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_kr_qwerty_lang"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight=".9"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_language_black"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{3}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_comma"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:text=","
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_space"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="@string/korean"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_kr_qwerty_dot"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:text="."
+                    android:textAllCaps="false"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="@{kbviewmodel.kbFontSize}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.KR_NORMAL}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_kr_qwerty_enter"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1.25"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_enter_black"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{4}" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

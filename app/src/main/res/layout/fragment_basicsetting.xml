@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/setting_main_tab1_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_ime_kr"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="한글입력기 선택"
+                    style="@style/FKButtonLightGrey"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <Button
+                    android:id="@+id/btn_basicsetting_ime_kr"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:text="쿼티(기본)"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:background="@color/semi_grey"
+                android:layout_marginHorizontal="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_keyboard_height"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="키보드 높이"
+                    style="@style/FKButtonLightGrey"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".75"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/seekbar_basicsetting_keyboard_height"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.5"
+                        android:max="75"
+                        android:progress="25"
+                        android:progressDrawable="@drawable/view_seekbar_track"
+                        android:thumb="@drawable/view_switch_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_basicsetting_keyboard_height_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:textIsSelectable="false"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:background="@color/semi_grey"
+                android:layout_marginHorizontal="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_specialkey_longclick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="특수문자키 부가기능"
+                    style="@style/FKButtonLightGrey"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <Button
+                    android:id="@+id/btn_basicsetting_specialkey_longclick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:text="없음"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:background="@color/semi_grey"
+                android:layout_marginHorizontal="12dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_basicsetting_description_for_enterkey_longclick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="엔터키 부가기능"
+                    style="@style/FKButtonLightGrey"
+                    app:drawableEndCompat="@drawable/ic_baseline_help"
+                    app:drawableRightCompat="@drawable/ic_baseline_help" />
+
+                <Button
+                    android:id="@+id/btn_basicsetting_enterkey_longclick"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.75"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:text="없음"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="kbviewmodel"
+            type="com.sb.fittingKeyboard.service.viewmodel.KeyboardViewModel" />
+
+        <import type="com.sb.fittingKeyboard.service.keyboardtype.core.InputTypeState" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cursorkeypad_copy"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="복사"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="12dp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_cursorkeypad_paste"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="붙여넣기"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="12dp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <Button
+                    android:id="@+id/btn_cursorkeypad_cut"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="잘라내기"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="12dp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.25"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cursorkeypad_select_all"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="전체 선택"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="12dp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_move_to_head"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_firstpage_black"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{1}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_move_up"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_arrowup_black"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{1}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_move_to_tail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_lastpage_black"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{1}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_delete_previous_char"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_foredelete_black"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{3}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.25"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cursorkeypad_select"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@{kbviewmodel.isSelectingText==true ? @string/selection_cancel : @string/selection_activate}"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="12dp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_move_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_arrowleft_black"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{1}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_move_down"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_arrowdown_black"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{1}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_move_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_arrowright_black"
+                    app:colorFilter="@{kbviewmodel.kbNormalKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{1}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_delete_black"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{3}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_back"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_kbd_black"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{3}" />
+
+                <Button
+                    android:id="@+id/btn_cursorkeypad_space"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:text="SPACE"
+                    android:textColor="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    android:textSize="14sp"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{2}"
+                    app:fontBold="@{kbviewmodel.inputTypeState!=null ? kbviewmodel.inputTypeState : InputTypeState.CURSOR}"
+                    app:customFontStyle="@{kbviewmodel.kbFontType}" />
+
+                <ImageButton
+                    android:id="@+id/imgbtn_cursorkeypad_enter"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/keyic_enter_black"
+                    app:colorFilter="@{kbviewmodel.kbFunctionKeysFontColor}"
+                    app:customTheme_padding="@{kbviewmodel.kbResultedHeight}"
+                    app:customTheme_theme="@{kbviewmodel.kbTheme}"
+                    app:customTheme_view="@{4}" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

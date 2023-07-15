@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:inset="@dimen/keyInset">
+    <layer-list>
+        <item>
+            <shape android:shape="rectangle">
+                <corners android:radius="3dp" />
+                <gradient
+                    android:startColor="#fdfbfb"
+                    android:endColor="#ebedee"/>
+            </shape>
+        </item>
+    </layer-list>
+</inset>
