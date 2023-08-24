@@ -1356,6 +1356,17 @@ object HanguelNARATGUL : Automata() {
                             currChar = firstChar
                             return UpdatedChars(null, firstChar.toString())
                         }
+                        'ㄷ' -> {
+                            firstChar = 'ㄹ'
+                            firstSubChar = 'ㄸ'
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
+                        }
                         'ㄸ' -> {
                             firstChar = 'ㄹ'
                             firstSubChar = 'ㄷ'
@@ -1416,6 +1427,37 @@ object HanguelNARATGUL : Automata() {
                             composedResult = nullChar
                             currChar = firstChar
                             return UpdatedChars(temp, firstChar.toString())
+                        }
+                    }
+                    'ㄴ' -> when (firstSubChar) {
+                        nullChar -> {
+                            firstChar = 'ㄹ'
+                            firstSubChar = 'ㄴ'
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
+                        }
+                        else -> {
+                            val temp = firstChar.toString() + firstSubChar.toString()
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                temp,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
                         }
                     }
                     'ㅁ' -> when (firstSubChar) {
@@ -3769,6 +3811,28 @@ object HanguelNARATGUL : Automata() {
                             composeResult()
                             currChar = composedResult
                             return UpdatedChars(null, composedResult.toString())
+                        }
+                        'ㄷ' -> {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㄸ'
+                            composeResult()
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
+                            )
+                        }
+                        'ㄸ' -> {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㄷ'
+                            composeResult()
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
+                            )
                         }
                         'ㅃ' -> {
                             firstSubChar = nullChar
