@@ -1268,6 +1268,31 @@ object HanguelNARATGUL : Automata() {
                         nullChar -> {
                             return UpdatedChars(null, null)
                         }
+                        'ㄴ' -> {
+                            firstChar = 'ㄹ'
+                            firstSubChar = 'ㄷ'
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            currChar = firstSubChar
+                            return UpdatedChars(
+                                null,
+                                firstChar.toString() + firstSubChar.toString()
+                            )
+                        }
+                        'ㄷ' -> {
+                            firstChar = 'ㄾ'
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString())
+                        }
                         'ㅇ' -> {
                             firstChar = 'ㅀ'
                             firstSubChar = nullChar
@@ -1330,6 +1355,17 @@ object HanguelNARATGUL : Automata() {
                             composedResult = nullChar
                             currChar = firstChar
                             return UpdatedChars(null, firstChar.toString())
+                        }
+                        'ㄸ' -> {
+                            firstChar = 'ㄹ'
+                            firstSubChar = 'ㄷ'
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            currChar = firstChar
+                            return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
                         }
                         'ㅃ' -> {
                             firstChar = 'ㄼ'
@@ -1717,6 +1753,46 @@ object HanguelNARATGUL : Automata() {
                         val temp = "ㄹ"
                         state = 2
                         firstChar = 'ㅍ'
+                        firstSubChar = nullChar
+                        middleChar = inputChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    else -> {
+                        val temp = firstChar.toString()
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                }
+                'ㄾ' -> when (inputChar) {
+                    'ᆞ' -> {
+                        firstChar = 'ㄹ'
+                        firstSubChar = 'ㄴ'
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        currChar = firstSubChar
+                        return UpdatedChars(null, firstChar.toString() + firstSubChar.toString())
+                    }
+                    'ᆢ' -> {
+                        return UpdatedChars(null, null)
+                    }
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
+                        val temp = "ㄹ"
+                        state = 2
+                        firstChar = 'ㅌ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
@@ -3632,6 +3708,25 @@ object HanguelNARATGUL : Automata() {
                             currChar = composedResult
                             return UpdatedChars(null, composedResult.toString())
                         }
+                        'ㄴ' -> {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㄷ'
+                            composeResult()
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
+                            )
+                        }
+                        'ㄷ' -> {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄾ'
+                            finalSubChar = nullChar
+                            composeResult()
+                            currChar = composedResult
+                            return UpdatedChars(null, composedResult.toString())
+                        }
                         'ㅇ' -> {
                             firstSubChar = nullChar
                             finalChar = 'ㅀ'
@@ -3725,6 +3820,32 @@ object HanguelNARATGUL : Automata() {
                             composeResult()
                             currChar = composedResult
                             return UpdatedChars(null, composedResult.toString())
+                        }
+                        else -> {
+                            val temp = composedResult.toString() + finalSubChar.toString()
+                            state = 1
+                            firstChar = inputChar
+                            firstSubChar = nullChar
+                            middleChar = nullChar
+                            finalChar = nullChar
+                            finalSubChar = nullChar
+                            composeResult()
+                            composedResult = nullChar
+                            currChar = firstChar
+                            return UpdatedChars(temp, firstChar.toString())
+                        }
+                    }
+                    'ㄴ' -> when (finalSubChar) {
+                        nullChar -> {
+                            firstSubChar = nullChar
+                            finalChar = 'ㄹ'
+                            finalSubChar = 'ㄴ'
+                            composeResult()
+                            currChar = finalSubChar
+                            return UpdatedChars(
+                                null,
+                                composedResult.toString() + finalSubChar.toString()
+                            )
                         }
                         else -> {
                             val temp = composedResult.toString() + finalSubChar.toString()
@@ -4037,6 +4158,46 @@ object HanguelNARATGUL : Automata() {
                         val temp = composedResult.toString()
                         state = 2
                         firstChar = 'ㅅ'
+                        firstSubChar = nullChar
+                        middleChar = inputChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        currChar = composedResult
+                        return UpdatedChars(temp, composedResult.toString())
+                    }
+                    else -> {
+                        val temp = composedResult.toString()
+                        state = 1
+                        firstChar = inputChar
+                        firstSubChar = nullChar
+                        middleChar = nullChar
+                        finalChar = nullChar
+                        finalSubChar = nullChar
+                        composeResult()
+                        composedResult = nullChar
+                        currChar = firstChar
+                        return UpdatedChars(temp, firstChar.toString())
+                    }
+                }
+                'ㄾ' -> when (inputChar) {
+                    'ᆞ' -> {
+                        firstSubChar = nullChar
+                        finalChar = 'ㄹ'
+                        finalSubChar = 'ㄴ'
+                        composeResult()
+                        currChar = composedResult
+                        return UpdatedChars(null, composedResult.toString() + finalSubChar.toString())
+                    }
+                    'ᆢ' -> {
+                        return UpdatedChars(null, null)
+                    }
+                    'ㅏ', 'ㅗ', 'ㅡ', 'ㅣ' -> {
+                        finalChar = 'ㄹ'
+                        composeResult()
+                        val temp = composedResult.toString()
+                        state = 2
+                        firstChar = 'ㅌ'
                         firstSubChar = nullChar
                         middleChar = inputChar
                         finalChar = nullChar
