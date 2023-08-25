@@ -5300,7 +5300,7 @@ object HanguelNARATGUL : Automata() {
                     currChar = composedResult
                     return UpdatedChars(null, composedResult.toString())
                 }
-                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㅀ' -> {
+                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ' -> {
                     finalChar = 'ㄹ'
                     finalSubChar = nullChar
                     composeResult()
