@@ -1580,12 +1580,12 @@ object HanguelDanmoum : Automata() {
     }
 
     fun delete(inputTime: Long): UpdatedChars { // 삭제 버튼
-        when ( state ) {
+        when (state) {
             0-> {
                 return UpdatedChars(null, null)
             }
             1 -> {
-                when ( firstChar ) {
+                when (firstChar) {
                     'ㄲ', 'ㄳ' -> {
                         firstChar = 'ㄱ'
                         composeResult()
@@ -1694,7 +1694,7 @@ object HanguelDanmoum : Automata() {
                 }
             }
             3 -> {
-                when ( finalChar ) {
+                when (finalChar) {
                     'ㄲ', 'ㄳ' -> {
                         finalChar = 'ㄱ'
                         composeResult()

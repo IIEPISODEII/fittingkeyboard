@@ -5154,7 +5154,7 @@ object HanguelNARATGUL : Automata() {
                     currChar = firstChar
                     return UpdatedChars(null, firstChar.toString())
                 }
-                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄿ', 'ㅀ' -> {
+                'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄿ', 'ㄾ', 'ㅀ' -> {
                     firstChar = 'ㄹ'
                     firstSubChar = nullChar
                     composeResult()

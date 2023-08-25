@@ -266,7 +266,21 @@ class MainFrameKeyboard(
                     RepeatTouchListener(
                         initialInterval = longClickInterval,
                         normalInterval = normalInterval,
-                        actionDownEvent = { view, _ -> inputSpecialKey(view) }
+                        actionDownEvent = { view, _ -> inputSpecialKey(view, viewModel.kbHasVibration.value ?: true) }
+                    )
+                )
+            }
+        }
+
+        viewModel.kbHasVibration.observe(imeService) {
+            val longClickInterval = viewModel.kbLongClickInterval.value!!.toLong() + 100L
+
+            charKeyList.forEach { btn ->
+                btn.setOnTouchListener(
+                    RepeatTouchListener(
+                        initialInterval = longClickInterval,
+                        normalInterval = normalInterval,
+                        actionDownEvent = { view, _ -> inputSpecialKey(view, it) }
                     )
                 )
             }
