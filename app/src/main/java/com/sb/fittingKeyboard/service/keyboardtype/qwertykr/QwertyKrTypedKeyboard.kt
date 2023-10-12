@@ -153,7 +153,7 @@ class QwertyKrTypedKeyboard(
             btnKrQwertySpecial.setOnTouchListener(
                 SingleTouchListener(
                     actionDownEvent = { _, _ ->
-                        vibrate()
+                        if (viewModel.kbHasVibration.value!!) vibrate()
                         viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
                     }
                 )
@@ -164,7 +164,7 @@ class QwertyKrTypedKeyboard(
             }
 
             imgbtnKrQwertyLang.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
             }
 

@@ -171,7 +171,7 @@ abstract class TypedKeyboard(private val viewModel: KeyboardViewModel, private v
 
     fun inputSpecialKey(view: View, vibrationEnabled: Boolean = true) {
         clearComposingStep()
-        if (vibrationEnabled) vibrate()
+        if (vibrationEnabled && viewModel.kbHasVibration.value!!) vibrate()
 
         if (view !is Button) return
         when (view.text) {

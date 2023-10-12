@@ -132,12 +132,12 @@ class NaratguelTypedKeyboard(
             }
 
             imgbtnKrNaratLang.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
             }
 
             btnKrNaratSpecial.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
             }
 

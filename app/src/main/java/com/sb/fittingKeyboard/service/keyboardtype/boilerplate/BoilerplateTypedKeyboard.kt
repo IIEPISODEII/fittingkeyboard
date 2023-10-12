@@ -64,7 +64,7 @@ class BoilerplateTypedKeyboard(
             }
 
             imgbtnBoilerplateBack.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
             }
 

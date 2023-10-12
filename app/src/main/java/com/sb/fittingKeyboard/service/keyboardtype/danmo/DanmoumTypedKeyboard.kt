@@ -157,7 +157,7 @@ class DanmoumTypedKeyboard(
 
         binding.apply {
             btnKrDanmoSpecial.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
             }
 
@@ -168,7 +168,7 @@ class DanmoumTypedKeyboard(
             imgbtnKrDanmoLang.setOnTouchListener(
                 SingleTouchListener(
                     actionDownEvent = { _, _ ->
-                        vibrate()
+                        if (viewModel.kbHasVibration.value!!) vibrate()
                         viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                     }
                 )

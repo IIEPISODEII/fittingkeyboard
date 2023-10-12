@@ -65,7 +65,7 @@ class EmojiTypedKeyboard(
 
         binding.apply {
             imgbtnEmojiBack.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
             }
         }

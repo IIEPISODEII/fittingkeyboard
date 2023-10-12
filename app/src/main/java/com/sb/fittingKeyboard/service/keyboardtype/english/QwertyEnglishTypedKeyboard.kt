@@ -153,7 +153,7 @@ class QwertyEnglishTypedKeyboard(
             btnEnSpecial.setOnTouchListener(
                 SingleTouchListener(
                     actionDownEvent = { _, _ ->
-                        vibrate()
+                        if (viewModel.kbHasVibration.value!!) vibrate()
                         viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
                     }
                 )
@@ -166,7 +166,7 @@ class QwertyEnglishTypedKeyboard(
             imgbtnEnLang.setOnTouchListener(
                 SingleTouchListener(
                     actionDownEvent = { _, _ ->
-                        vibrate()
+                        if (viewModel.kbHasVibration.value!!) vibrate()
                         viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
                     }
                 )
@@ -183,7 +183,7 @@ class QwertyEnglishTypedKeyboard(
             imgbtnEnShift.setOnTouchListener(
                 SingleTouchListener(
                     actionDownEvent = { _, _ ->
-                        vibrate()
+                        if (viewModel.kbHasVibration.value!!) vibrate()
                         viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                     }
                 )

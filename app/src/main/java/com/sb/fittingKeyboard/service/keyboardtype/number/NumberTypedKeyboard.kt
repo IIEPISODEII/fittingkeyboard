@@ -106,7 +106,7 @@ class NumberTypedKeyboard(
             }
 
             imgbtnNumLang.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.KR_NORMAL)
             }
         }

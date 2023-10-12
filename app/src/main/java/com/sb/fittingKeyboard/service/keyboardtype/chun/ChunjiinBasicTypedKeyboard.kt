@@ -329,7 +329,7 @@ class ChunjiinBasicTypedKeyboard(
             }
 
             btnKrChunSpecial.setOnClickListener { view ->
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
             }
 
@@ -338,7 +338,7 @@ class ChunjiinBasicTypedKeyboard(
             }
 
             imgbtnKrChunLang.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
             }
 
@@ -352,7 +352,7 @@ class ChunjiinBasicTypedKeyboard(
 
             btnKrChunDot.setOnLongClickListener {
                 clearComposingStep()
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 imeService.currentInputConnection.commitText(",", 1)
 
                 true

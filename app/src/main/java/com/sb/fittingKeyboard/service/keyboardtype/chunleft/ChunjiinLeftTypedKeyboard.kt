@@ -292,7 +292,7 @@ class ChunjiinLeftTypedKeyboard(
 
             btnKrChunLeftSpecial.setOnClickListener {
                 viewModel.setInputTypeState(InputTypeState.SPECIAL_FIRST)
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
             }
 
             btnKrChunLeftSpecial.setOnLongClickListener { view ->
@@ -301,11 +301,11 @@ class ChunjiinLeftTypedKeyboard(
 
             btnKrChunLeftSpecial.setOnClickListener {
                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
             }
 
             imgbtnKrChunLeftLang.setOnClickListener {
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 viewModel.setInputTypeState(InputTypeState.EN_UPPER)
             }
 
@@ -319,7 +319,7 @@ class ChunjiinLeftTypedKeyboard(
 
             btnKrChunLeftDot.setOnLongClickListener {
                 clearComposingStep()
-                vibrate()
+                if (viewModel.kbHasVibration.value!!) vibrate()
                 imeService.currentInputConnection.commitText(",", 1)
 
                 true

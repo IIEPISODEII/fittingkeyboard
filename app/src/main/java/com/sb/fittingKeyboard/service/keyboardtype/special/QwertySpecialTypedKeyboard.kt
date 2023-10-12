@@ -166,7 +166,7 @@ class QwertySpecialTypedKeyboard(
             imgbtnSpecialLang.setOnTouchListener(
                 SingleTouchListener(
                     actionDownEvent = { _, _ ->
-                        vibrate()
+                        if (viewModel.kbHasVibration.value!!) vibrate()
                         viewModel.setInputTypeState(InputTypeState.EN_UPPER)
                     }
                 )
@@ -175,7 +175,7 @@ class QwertySpecialTypedKeyboard(
             imgbtnSpecialShift.setOnTouchListener(
                 SingleTouchListener(
                     actionDownEvent = { _, _ ->
-                        vibrate()
+                        if (viewModel.kbHasVibration.value!!) vibrate()
                         viewModel.setInputTypeState(InputTypeState.SPECIAL_SECOND)
                     }
                 )
