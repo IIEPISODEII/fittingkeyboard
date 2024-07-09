@@ -82,8 +82,6 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
     private val emojiKBView by lazy { layoutInflater.inflate(R.layout.fragment_emoji, null) }
     private val mLifecycle = LifecycleRegistry(this)
 
-    override fun getLifecycle(): Lifecycle = mLifecycle
-
     private val inputTypeNumbers = arrayOf(
         InputType.TYPE_CLASS_NUMBER,
         InputType.TYPE_NUMBER_FLAG_DECIMAL,
@@ -442,4 +440,7 @@ class MainKeyboardService : InputMethodService(), LifecycleOwner {
         HanguelDanmoum.composeResult()
         HanguelDanmoum.initResult()
     }
+
+    override val lifecycle: Lifecycle
+        get() = mLifecycle
 }

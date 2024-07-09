@@ -419,7 +419,7 @@ class KeyboardViewModel(application: Application) : AndroidViewModel(application
             KEYBOARD_IME_KR -> _kbKrImeMode.postValue(pref.getInt(key, 0))
             RECENTLY_USED_EMOTICONS -> _kbRecentlyUsedEmoticons.postValue(pref.getString(key, ""))
             KEYBOARD_CHUN_SPACEBAR_POSITION -> _kbKrChunSpacebarPosition.postValue(pref.getBoolean(key, false))
-            in KEYBOARD_BOILERPLATE_TEXTS_LIST -> boilerplateTextMap[key] = pref.getString(key, "") ?: ""
+            in KEYBOARD_BOILERPLATE_TEXTS_LIST -> boilerplateTextMap[key ?: ""] = pref.getString(key, "") ?: ""
             KEYBOARD_TOOLBAR_ACTIVE_GO_SETTING -> toolbarSettingMap[key] = pref.getInt(key, 1)
             KEYBOARD_TOOLBAR_ACTIVE_SHOW_BOILERPLATE -> toolbarSettingMap[key] = pref.getInt(key, 2)
             KEYBOARD_TOOLBAR_ACTIVE_SELECT_ALL -> toolbarSettingMap[key] = pref.getInt(key, 3)
